@@ -1,0 +1,22 @@
+<ion-header-bar align-title="center"  class="header">
+    <a class="header_left"  ui-sref="membInfoUpdate({membNum:curMembNum})"></a>
+    <h1 style="font-size:1.4rem">来源渠道 </h1>
+</ion-header-bar>
+<ion-content  class="has-header memb_radio radio_line"  overflow-scroll="false" >
+    <!--<ion-radio  ng-model="choice1" value="A" style="height: 55px;font-size:14px;" >gsd</ion-radio>
+    <ion-radio  ng-model="choice2" value="A" style="height: 55px;font-size:14px;">C/S</ion-radio>
+    <ion-radio  ng-model="choice3" value="A" style="height: 55px;font-size:14px;">eysty</ion-radio>-->
+
+
+    <!--<ion-radio ng-repeat="item in serverSideList"
+               ng-value="item.value"
+               ng-model="data.serverSide"
+               ng-change="serverSideChange(item)"
+               name="server-side">-->
+    <ion-radio ng-repeat="chan in allChannel" style="height: 56px;"
+               ng-value="chan.key"
+               ng-model="membEditProvChnl" ng-click="chnlSelectSelect(chan.key)">
+        <span ng-bind="chan.text"></span>
+    </ion-radio>
+</ion-content>
+

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="Zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge, chrome=1" /><!-- 强制内核以谷歌方式来渲染 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+    <title>比度克CRM</title>
+    <link rel="stylesheet" type="text/css" href="crm.css" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
+    <script type="text/javascript" src="js/crm.js"></script>
+</head>
+<body>
+
+<!--PC端-->
+<div class="pc" style="display: none" id="pcDiv">
+    <div class="container">
+        <ul>
+            <li class="shouji"><img src="images/download_pc.png" width="300" /></li>
+            <li>
+                <!--<div class="common">
+                    <div class="com"><img src="images/ewm.jpg" width="100%"/></div>
+                    <div class="android"><img src="images/download_pc_android.png" width="100%"/></div>
+                </div>
+                <div class="common">
+                    <div class="com"><img src="images/ewm.jpg" width="100%"/></div>
+                    <div class="apple"><img src="images/download_pc_ios.png" width="100%"/></div>
+                </div>-->
+
+                <div class="common">
+                    <div class="com" id="androidQrCode" style="width: 100px; height: 100px"></div>
+                    <div class="android" id="androidImg"><img src="images/download_pc_android.png" width="100%"/></div>
+                </div>
+                <div class="common">
+                    <div class="com" id="iosQrCode" width="100px"></div>
+                    <div class="apple" id="iosImg"><img src="images/download_pc_ios.png" width="100%"/></div>
+                </div>
+
+                <!--<div id="img1" width="20"></div>
+                <div id="img2"></div>
+                <span>比度克CRM</span>-->
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!--移动端-->
+<div class="phone" style="display: none" id="mobileDiv">
+<!--page1-->
+    <div class="pattern bg_left">
+        <img src="images/hand_a.png" />
+    </div>
+    <div class="pattern bg_right">
+        <img src="images/hand_b.png" />
+    </div>
+
+    <div class="container">
+        <div class="logo"> </div>
+        <div class="main">
+            <h1><img src="images/android.png" alt="" width="20"/>
+                <img src="images/iphone.png" alt="" width="20"/>
+                <span>比度克CRM</span>
+            </h1>
+
+            <div class="line"></div>
+            <div class="info">
+                <p>版本号：<span id="verNo"></span></p>
+                <p>更新于：<span id="updtTm"></span></p>
+            </div>
+            <div class="download" id="downInstall">下载安装</div>
+        </div>
+    </div>
+
+<!--page2-->
+    <div class="weixin">
+        <div class="finger">
+            <img src="images/hand.png" width="150"/>
+            <div class="choose">
+                <p>点击不能下载？</p>
+                <p>请点击右上角<span class="red">【</span>三个点图标<span class="red">】</span></p>
+                <p>选择"<span class="red">浏览器(安卓版)</span>或者<span class="red">Safari(IOS版)</span>"</p>
+                <p>中打开</p>
+            </div>
+        </div>
+    </div>
+
+<!--page3-->
+    <div class="ios" id="downloadDiv">
+        <div class="success">
+            <img src="images/download.png"  />
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

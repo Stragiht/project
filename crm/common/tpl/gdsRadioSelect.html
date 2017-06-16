@@ -1,0 +1,101 @@
+
+<div class="modal-header" style="overflow: hidden;">
+	<h3 class="modal-title" style="float: left;">选择商品规格</h3>
+	<span class="glyphicon glyphicon-remove" ng-click="cancel()" style="cursor:pointer;float: right;display: inline-block;height: 34px;line-height: 34px;"></span>
+</div>
+<!--<script type="text/ng-template" id="headerCheckbox.html">-->
+	<!--<input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>-->
+	<!--全选-->
+<!--</script>-->
+<div class="panel-heading">
+	<accordion close-others="oneAtATime">
+		<accordion-group is-open="status.open"> <accordion-heading>
+			查询<i class="pull-right fa fa-angle-right"
+		ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+	</accordion-heading>
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">规格编号：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" ng-model="gdsSearchFilter.gdsSpecDtlNum">
+			</div>
+			<label class="col-sm-2 control-label">规格名称：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" ng-model="gdsSearchFilter.gdsSpecDtlNm">
+			</div>
+
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">销售渠道：</label>
+			<div class="col-sm-2">
+	            <select ng-model="gdsSearchFilter.chnlNum" class="form-control inline" style="max-width: 115px;" ng-options="chnl.key as chnl.text for chnl in chnlList">
+	            </select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">商品分类：</label>
+			<div class="col-sm-8">
+	            <!--<select ng-model="stfbas.jobPos" class="form-control inline" style="max-width: 115px;" ng-options="jp.posNum as jp.posNm for jp in jobPosData" ng-change="changeJobPos(stfbas.jobPos)">-->
+	            <!--</select>-->
+				<select ng-if="selectedGdsClsLevel>$index" ng-model="selectedGdsCls[$index]"
+						ng-options="clsList.key as clsList.text for clsList in gcList"
+						ng-change="changeSuperGdsCls($index)" required style="height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px; padding-left: 13px;"ng-repeat="gcList in gdsClsList">
+				</select>
+			</div>
+			<!--<div>-->
+	            <!--<select ng-model="stfbas.posLvl" class="form-control inline" style="max-width: 115px;" ng-options="pl.posGrdNum as pl.posGrdNm for pl in posLvlData">-->
+	            <!--</select>-->
+			<!--</div>-->
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-2">
+				<a class="btn btn-info" ng-click="searchMultiGds()" style="width: 118px;">搜索</a>
+			</div>
+		</div>
+	</form>
+</div>
+<div style="padding:15px;">
+	<lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ＃EEEEEE; border:none;outline:medium;color: #f05050"ng-model="gdsCount" readonly="readonly"> 条记录</lable>
+	<lable ng-if="gdsCount<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+</div>
+<div class="table-responsive"
+	style="padding-left: 10px; padding-right: 10px;">
+	<div ng-table="tableParams">
+		<table cellspacing="0"
+			class="table table-bordered table-condensed   table-striped"
+			 style="width: 100%; margin-bottom: 20px;">
+			<tr ng-repeat="gdsInfo in $data">
+				<td style="font-weight: bold; min-width: 90px;  ">
+					<input type="radio" ng-model="selectedRD" name="selectedRD" ng-true-value="1" ng-false-value="2" ng-click="selectClick(gdsInfo.gdsSpecDtlNum)" />
+				</td>
+
+				<td title="'规格编号'" style="text-align: center"
+					ng-bind="gdsInfo.gdsSpecDtlNum"></td>
+				<td title="'规格条形码'" style="text-align: center"
+					ng-bind="gdsInfo.gdsSpecBarcode"></td>
+				<td title="'规格名称'" style="text-align: center"
+					ng-bind="gdsInfo.gdsSpecDtlNm"></td>
+				<td title="'规格'" style="text-align: center;">
+					<span ng-if="gdsInfo.gdsSpec != ''"
+					ng-bind="gdsInfo.gdsSpec + (gdsInfo.gdsSpecUnitNum | dicNameFilter:'C031')"></span>
+				</td>
+				<!--<td title="'销售渠道'" style="text-align: center;"
+					ng-bind="gdsInfo.gdsSpec"></td>-->
+				<td title="'销售渠道（是否上架）'" style="text-align: center;">
+                          <span ng-repeat="item in gdsInfo.gdsSpecDtlChnlVoList">
+                              <span ng-bind="(item.chnlNum | chnlInfoFilter) + '('+ (item.sellFlg | dicNameFilter:'C002')+ ')'"></span>
+                              <span ng-if="$last"></span>
+                              <span ng-if="!$last">,</span>
+                          </span>
+				</td>
+				<td title="'市场售价'" style="text-align: center;"
+					ng-bind="gdsInfo.curPc | currency:'￥'" ></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-info" ng-click="ok()" style="width: 85px;float:left;margin-left: 28px; margin-right:15px;">确定</button>
+	<button class="btn btn-default" ng-click="cancel()" style="float:left;width: 85px;">取消</button>
+</div>

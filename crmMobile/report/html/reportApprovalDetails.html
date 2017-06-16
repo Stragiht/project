@@ -1,0 +1,86 @@
+<div >
+	<ion-header-bar align-title="center" class="header">
+		<a ui-sref="reportApproval({flag:flag,keys:keys})" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">详情</h1>
+		<a class="head_right2" ng-if="stfList.submitFlag == '1'" ng-click="soumettrebaobiao()" user-power="MREP01005003">
+			<div class="head_right_box float_l">
+				<img src="common/images/zhengque.png" width="22" height="22">
+				<p>提交</p>
+			</div>
+			<div class="float_l ml10 color06">|</div>
+		</a>
+		<a class="head_right" ng-if="stfList.editFlag == '1'" ui-sref="reportApprovalModification({repApplNum:stfList.repApplNum})" user-power="MREP01005003">
+			<div class="head_right_box">
+				<img src="common/images/qianbi.png" width="22" height="22">
+				<p>编辑</p>
+			</div>
+		</a>
+		<a class="head_right" ng-if="stfList.apprFlag == '1'" ui-sref="approvalSalesReport({repApplNum:stfList.repApplNum,updtTm:stfList.updtTm})" user-power="MREP01005002">
+			<div class="head_right_box">
+				<img src="common/images/zhan.png" width="22" height="22">
+				<p>审批</p>
+			</div>
+		</a>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- reportApprovalDetails.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix">
+				<li><span class="w140">申请编号</span><span class="f_10">{{stfList.repApplNum}}</span></li>
+				<li><span class="w140">门店名称</span><span class="f_10">{{stfList.strNm}}</span></li>
+				<li ng-repeat="personnel in achievements">
+					<span class="w140">相关人员</span>
+					<span class=" f_10">{{personnel.stfNm}}</span>
+					<span class="float_r">
+						<img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 1.5rem;" ng-click="callPhone(personnel.phone)">
+					</span>
+				</li>
+				<li><span class="w140">提交时间</span><span class=" f_10">{{stfList.sbmtTm | date:'yyyy-MM-dd HH:mm'}}</span></li>
+				<li><span class="w140">审批状态</span><span class=" color05 f_10">{{stfList.apprStat}}</span></li>
+			</ul>
+		</div>
+        <div class="index_work_bt">{{stfList.strNm}}业绩</div>
+        <div class="wrap">
+			<ul class="listvrew clearfix">
+				<li><span class="w140">销售业绩时间</span><span class="f_10">{{stfList.repApprStartDt}} ~ {{stfList.repApprEndDt}}</span></li>
+				<li><span class="w140">财务导入销售业绩</span><span class="f_10">{{stfList.fcImpSaleAmt | currency : "￥"}}</span></li>
+				<li><span class="w140">人员提交销售业绩</span><span class="f_10">{{stfList.stfRepSaleAmtSum | currency : "￥"}}</span></li>
+				<li><span class="w140">比对结果</span><span ng-class="{true:'f_10',false:'color05 f_10'}[stfList.compRslt == '正确']">{{stfList.compRslt}}</span></li>
+				
+				<li ng-repeat="achievement in achievements">
+					<a ui-sref="storePerformance({stfNm:achievement.stfNm,apprStfNum:achievement.apprStfNum,strNum:stfList.strNum,repApplNum:stfList.repApplNum,repApprStartDt:stfList.repApprStartDt,repApprEndDt:stfList.repApprEndDt})">
+						<span class="w140">{{achievement.stfNm | stfNmLast2}}本店业绩</span><span class="f_10">{{achievement.stfRepSaleAmt | customCurrency : "￥"}}</span>
+						<span class="float_r"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;"></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="index_work_bt">审批历史</div>
+        <div class="shls clearfix">
+      		<div class="shls_wen">
+      			<div class="shls_wen_box2" ng-if="zhuangtai =='编辑' || zhuangtai =='待审批'">
+					<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+						<h4>{{name}}</h4>
+		                <p>{{zhuangtai}}</p>
+						<p></p>
+				</div>
+				<div class="shls_wen_box" ng-if="zhuangtai !='编辑' && zhuangtai !='待审批'">
+					<div class="ziyuan"></div>
+					<h4>{{name}}&nbsp;{{zhuangtai}}</h4>
+					<p>{{time}}</p>
+				</div>
+	            <div class="shls_wen_box" ng-repeat="lishi in lishis">
+	            	<div class="ziyuan"></div>
+	            	<h4>{{lishi.stfNm}} {{lishi.status}}<br>
+						{{lishi.apprComments}}</h4>
+	                <p>{{lishi.updtTm}}</p>
+	            </div>
+	            <div class="shls_wen_box border_none" ng-if="stfNms != null && dicNms != null && updtTm != null">
+	            	<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+	            	<h4>{{stfNms}} {{dicNms}}</h4>
+	                <p>{{updtTm}}</p>
+	            </div>
+	        </div>
+    	</div>
+	</ion-content>
+</div>

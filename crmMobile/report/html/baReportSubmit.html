@@ -1,0 +1,234 @@
+<!-- 提交销售报表选择画面 -->
+<div ng-show="pageShow.submit">
+	<ion-header-bar align-title="center"  class="header">
+	        <a ng-click="gotoFtontPage()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	        <h1 style="font-size:1.4rem">提交报表</h1>
+		    <a class="head_right3" ng-click="submitReport(1)" user-power="MREP01004002"><div class="btn_line" ng-show="editShow">提交 </div></a>
+		    <a class="head_right" ng-click="submitReport(0)" user-power="MREP01004002"><div class="btn_line" ng-show="editShow">存为草稿</div></a>
+	</ion-header-bar>
+	<ion-content class="has-header" delegate-handle="contentScroll">
+	<!-- baReportSubmit.html -->
+		<div class="wrap">
+		    <div class="listvrew clearfix mb_15" style="border-top: none;">
+		        <ion-list>
+	                <ion-item ng-click="saleDateSelect()">
+		                <span>销售日期</span>
+		                <span class="float_r mr20">{{submitInfo.saleDate | dateEditFilter}} <img src="common/images/you_btn.png" style="position: absolute;top: 16px;right: 15px;"></span>    
+	                </ion-item>
+	                <ion-item ng-click="storesSelect()">
+	                    <span>销售门店</span>
+	                    <span class="float_r mr20">{{submitInfo.strNm}} <img src="common/images/you_btn.png" style="position: absolute;top: 16px;right: 15px;"></span>
+	                </ion-item>
+	                <ion-item>
+	                    <span>销售金额</span>
+			            <input type="number" ng-model="submitInfo.saleAmt" ng-required="true" style="text-align: right;float: right;font-size: 14px;color: #b1b1b1;height:22px;"
+			                    maxlength="13"/>
+	                </ion-item>
+	                <ion-item>
+	                    <span>成交单数</span>
+	                    <input type="number" ng-model="submitInfo.dealQty" ng-required="true" style="text-align: right;float: right;font-size: 14px;color: #b1b1b1;height:22px;"
+                                maxlength="11"/>
+	                </ion-item>
+	            </ion-list>
+	         </div>
+	         <div class="index_work_bt" ng-if="submitInfo.gdsSpecList.length > 0"></div>
+	         <div class="listvrew clearfix" ng-if="submitInfo.gdsSpecList.length > 0">
+	            <ion-list>
+	                <ion-item ng-repeat="specInfo in submitInfo.gdsSpecList" ng-click="gdsSpecSelect($index)">
+                        <span>{{specInfo.gdsSpecDtlNm | characters : 20}}</span>
+                        <span class="float_r mr20">{{specInfo.gdsQty | number}} <img src="common/images/you_btn.png" style="position: absolute;top: 16px;right: 15px;"></span>  
+	                </ion-item>
+	            </ion-list>
+	         </div>
+	     </div>
+	     <ion-infinite-scroll ng-if="moredata.gdsSpecDtl" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+	</ion-content>
+</div>
+<!-- 销售日期选择画面 -->
+<div ng-show="pageShow.saleDate">
+	<ion-header-bar align-title="center" class="header">
+	    <a ng-click="backToSubmit()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	    <h1 style="font-size:1.4rem">销售日期</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- baReportSubmit.html -->
+	    <div class="wrap">
+	         <div class="listvrew clearfix">
+	            <ion-list>
+                    <ion-radio name="saleDate" ng-repeat="info in saleDateList" ng-value="info.saleDate" ng-model="selectedSaleDate" ng-click="saleDateSelected(info.saleDate)">
+                        <span>{{info.saleDate | dateEditFilter}}</span>
+                    </ion-radio>
+	            </ion-list>
+	         </div>
+	     </div> 
+	</ion-content>
+</div>
+<!-- 销售门店选择画面 -->
+<div ng-show="pageShow.stores">
+    <ion-header-bar align-title="center"  class="header">
+        <a ng-click="backToSubmit()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">销售门店</h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader" style="border-bottom: solid 1px #e0e0e0;" ng-show="chnlList.length > 0">
+        <div class="xzk_a" style="margin-top: 1px;">
+            <a ng-repeat="chnlInfo in chnlList" ng-click="chnlTabClick(chnlInfo.chnlNum)" 
+                    ng-class="{'xuanzong_a':chnlInfo.chnlNum==selectedChnlNum,'weixuanzong_a':chnlInfo.chnlNum!=selectedChnlNum}" style="width:{{chnlWidth}}">{{chnlInfo.chnlNm}}</a>
+        </div>
+    </div>
+    <ion-content class="has-header" ng-class="{'has-subheader' : chnlList.length > 0}" delegate-handle="contentScrollStore">
+   	<!-- baReportSubmit.html -->
+        <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefreshStore()"></ion-refresher>
+        <div class="wrap" ng-show="chnlList.length > 0">
+            <div class="listvrew clearfix">
+               <ion-list>
+                    <ion-radio name="stores" ng-repeat="info in strList" ng-if="info.chnlNum == selectedChnlNum && $index == 0" style="border-top:0px" ng-value="info.strNum" ng-model="selectedStrNum" ng-click="storesSelected(info.strNum, info.strNm)">
+                        <span>{{info.strNm}}</span>
+                    </ion-radio>
+                    <ion-radio name="stores" ng-repeat="info in strList" ng-if="info.chnlNum == selectedChnlNum && $index > 0" ng-value="info.strNum" ng-model="selectedStrNum" ng-click="storesSelected(info.strNum, info.strNm)">
+                        <span>{{info.strNm}}</span>
+                    </ion-radio>
+               </ion-list>
+            </div>
+        </div> 
+        <div class="wushuju" my-nodata-show="chnlList.length == 0 && !moredata.store">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+        <ion-infinite-scroll ng-if="moredata.store" on-infinite="loadMoreStore()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</div>
+<!-- 商品购买者画面 -->
+<div ng-show="pageShow.buyer">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="buyerBackToSubmit()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">商品购买者</h1>
+        <a class="head_right" ng-click="changeDeleteCancel(!buyerDelete)" ng-if="!buyerDelete">
+            <div class="head_right_box">
+                <img src="common/images/sc_btn.png" width="22" height="22">
+                <p>删除</p>
+            </div>
+        </a>
+        <a class="head_right" ng-click="changeDeleteCancel(!buyerDelete)" ng-if="buyerDelete">
+            <div class="head_right_box">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+        </a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+	<!-- baReportSubmit.html -->
+        <div class="wrap">
+            <div ng-repeat="buyerInfo in submitInfo.gdsSpecList[gdsSpecIndex].buyerInfoList">
+                <div class="leave100">购买者{{$index + 1}} 
+                    <a ng-if="$index == 0 && !buyerDelete" ng-click="addBuyerInfo()" ng-disabled="buyerDelete">新增</a>
+                    <a class="back_none" ng-if="$index == 0 && buyerDelete" ng-click="addBuyerInfo()" ng-disabled="buyerDelete">新增</a>
+                </div>
+                <div ng-if="buyerDelete">
+	                <div class="tingzhi" style="height:145px">
+	                    <a ng-click="deleteBuyerInfo($index)">
+	                       <img src="common/images/tingzhi.png" width="30" height="30"> 
+	                    </a>
+	                </div>
+	                <ul class="listtwo clearfix">
+	                    <li style="width:93.5%;margin-left:0;height: 48px;">
+	                        <span class="w140" style="margin-left:16px;width: 35%;">购买金额</span>
+	                        <span class="float_r gmz_left" style="font-size: 14px;width: 65%;">{{buyerInfo.buyAmt}}</span>
+	                    </li>
+	                    <li style="width:93.5%;margin-left:0;height: 48px;">
+	                        <span class="w140" style="margin-left:16px;width: 35%;">购买数量</span>
+	                        <span class="float_r gmz_left" style="font-size: 14px;width: 65%;">{{buyerInfo.buyQty}}</span>
+                        </li>
+	                    <li style="width:93.5%;margin-left:0;height: 48px;">
+                            <span class="w140" style="margin-left:16px">选择会员</span>
+                            <span class="float_r" style="position: absolute;right: 10%;">{{buyerInfo.membNm}} </span>
+                            <span class="float_r" style="position: absolute;right: 4%;margin-top: 3px;">
+                                <img src="common/images/you_btn.png">
+                            </span>
+	                    </li>
+	                </ul>
+                </div>
+                <div ng-if="!buyerDelete">
+                    <ul class="listtwo clearfix" style="width:100%">
+                        <li>
+                            <span class="w140" style="width: 35%;">购买金额</span>
+                            <input type="number" class="float_r" ng-model="buyerInfo.buyAmt" ng-required="true" style="text-align:right;height:48px;padding: 0px;margin-right:-1px;width: 65%;"
+                                maxlength="13"/>
+                        </li>
+                        <li>
+                            <span class="w140" style="width: 35%;">购买数量</span>
+                            <input type="number" class="float_r" ng-model="buyerInfo.buyQty" ng-required="true" style="text-align:right;height:48px;padding: 0px;margin-right:-1px;width: 65%;"
+                                maxlength="11"/>
+                        </li>
+                        <li ng-click="gotoMembSelect($index)"><span class="w140">选择会员</span> <span class="float_r" style="position: absolute;right: 10%;">{{buyerInfo.membNm}}</span><span class="float_r" style="position: absolute;right: 4%;margin-top: 3px;"><img src="common/images/you_btn.png"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</div>
+<!-- 会员选择画面 -->
+<div ng-show="pageShow.member">
+    <ion-header-bar align-title="center"  class="header">
+        <a ng-click="backToBuyer()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">选择会员</h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset" style="border-bottom: solid 1px #e0e0e0;">
+        <div class="item-input-wrapper">
+            <img src="common/images/sousuo.png" width="14px">
+            <input type="search" placeholder="请输入联系电话" ng-click="searchShow()" style="padding-left: 10px;"/>
+        </div>
+    </div>
+    <ion-content class="has-header has-subheader" delegate-handle="contentScrollMemb">
+	<!-- baReportSubmit.html -->
+        <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefreshMemb()"></ion-refresher>
+        <div class="wrap">
+
+            <div class="listvrew clearfix" ng-if="membList.length > 0">
+               <ion-list>
+                   <ion-item ng-repeat="info in membList" ng-if="$index == 0" style="border-top:0px" ng-click="membSelected(info.membNum, info.membNm, info.phone)">
+                       <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                   </ion-item>
+                   <ion-item  ng-repeat="info in membList" ng-if="$index > 0" ng-click="membSelected(info.membNum, info.membNm, info.phone)">
+                       <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                   </ion-item>
+               </ion-list>
+            </div>
+            <div my-nodata-show="membList.length == 0 && !moredata.memb" class="wushuju">
+                <img src="common/images/bear.gif" >
+                <p>没有符合条件的数据</p>
+            </div>
+         </div>
+         <ion-infinite-scroll ng-if="moredata.memb" on-infinite="loadMoreMemb()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</div>
+<!-- 搜索画面 -->
+<div ng-show="pageShow.search">
+    <ion-header-bar align-title="center" class="header">
+	    <a ng-click="backToMember()" class="angle_left" style="left:15px;"><img src="common/images/back_btn.png" width="18"></a>
+	    <div class="item-input-inset" style="left:12%;width:86%;">
+	        <div class="item-input-wrapper" style="padding-right: 0px;">
+	            <img src="common/images/sousuo.png" width="14px">
+	            <input type="search" placeholder="请输入联系电话" ng-model="searchPhone" ng-change="searchMembByPhone(searchPhone)" maxlength="15" style="padding-left: 10px;width:86%"/>
+	            <img src="common/images/search_delete.png" ng-show="searchPhone != null && searchPhone != ''" ng-click="deleteSearchPhone()">
+	        </div>
+	    </div>
+    </ion-header-bar>
+    <ion-content class="has-header" delegate-handle="contentScrollSearch">
+	<!-- baReportSubmit.html -->
+	    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefreshSearch()"></ion-refresher>
+        <div class="wrap">
+            <div class="listvrew clearfix" ng-if="searchMembList.length > 0">
+               <ion-list>
+                   <ion-item  ng-repeat="info in searchMembList" ng-click="membSelected(info.membNum, info.membNm, info.phone)">
+                       <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                   </ion-item>
+               </ion-list>
+            </div>
+            <div my-nodata-show="searchMembList.length == 0 && !moredata.search" class="wushuju">
+                <img src="common/images/bear.gif" >
+                <p>没有符合条件的数据</p>
+            </div>
+         </div>
+         <ion-infinite-scroll ng-if="moredata.search" on-infinite="loadMoreSearch()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</div>

@@ -1,0 +1,33 @@
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4">批量导入
+  </h4>
+</div>
+<!-- 内容 -->
+<div class="wrapper-md"  ng-controller="socialSecurityBathImportCtrl">
+    <div class="panel-heading"   >
+	    <form name="form" class="form-horizontal">
+	        <!--<h5><strong>温馨提示：</strong></h5>-->
+	        <!--<p>1、为提高添加会员效率，可下载规范格式文件，根据指定格式填写编辑后再进行导入；</p>-->
+	        <!--<p>2、excel文件中一次上传商品数量最好不要超过1000，excel文件大小最好不要超过500K；</p></p>-->
+	        <!--<p>3、碰到“是否启用”之类的字段，填写数字0或者1，0代表“否”，1代表“是”。</p>-->
+	        <p>马上下载规范格式文件:<a href="../import/社保批量导入模板.xlsx"><img src="common/img/import.jpg" width="100"></a></p>
+	    </form>
+		<div class="form-group">
+	    	<label class="col-sm-1 control-label" style="width: 120px;"> 
+	    		<span style="color: red;">*</span>上传文件：
+	    	</label>
+			<div class="col-xs-4">
+			    <input class="form-control" ng-model="membFileName"  readonly/>
+			</div>
+			<div class="col-xs-2  btn btn-default fileUpload">
+			    <span>本地上传</span>
+			    <input id="fileInputMemBat" type="file" ngf-pattern="'.xlsx'" accept=".xlsx" class="upload" style="height: 100%" />
+			</div>
+		</div>
+	</div>
+    <div style="margin-left: 45px;margin-top: 30px;">
+        <button class="btn btn-success " ng-click="importFile()"> 提交保存</button>
+        <button class="btn btn-success " style="display: none;" id="outSocialSecurityBathExcelImportErrorMsg" ng-csv="csvData" add-bom="true" lazy-load="true" filename="{{csvFileName}}" field-separator="," >提交保存</button>
+    </div>
+</div>

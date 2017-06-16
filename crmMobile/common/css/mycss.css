@@ -1,0 +1,411 @@
+.bar{padding: 5px 0;}
+
+/*响应背景颜色*/
+.item.activated{
+background-color: #efefef;}
+.item-complex.activated .item-content, .item .item-content.active, .item .item-content.activated {
+    background-color: #efefef;}
+
+/*分割线高度*/
+.item-divider {
+    min-height: 14px;
+    background-color: transparent;
+}
+
+/*弹框安卓系统*/
+.platform-android .popover .item:active {background-color: #efefef;}
+.platform-android .popover {border-radius: 10px; top: 38px !important; }
+
+.popover-arrow{left: 97px;}
+
+.platform-android .popover-arrow {
+    left: 88px;
+    position: absolute;
+    display: block;
+    top: -16px;
+    width: 30px;
+    height: 19px;
+    overflow: hidden;
+}
+.platform-android .popover-arrow:after {
+    position: absolute;
+    top: 12px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+    content: '';
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+/*.popover .item:first-child {*/
+    /*border-radius: 5px 5px 0 0;*/
+/*}*/
+/*.popover .item:last-child {*/
+    /*border-radius:0 0 5px 5px;*/
+/*}*/
+
+/*会员管理*/
+.user-defined .item-complex .item-content {
+    /*padding: 0;*/
+    /*margin: 0 0 1px 0;*/
+    padding: 0 0 1px 0;
+    /*padding: 0 0 2px 0;*/
+
+}
+
+/*拨号和微信*/
+.item-options {
+    height: 63px;
+}
+
+.call ul li{height:25px;}
+/*回访记录*/
+.xx_item .item {
+    padding: 5%;
+}
+.mem_c .tabs-color-royal .tab-item {
+    color: rgba(000, 000, 000, 0.4);
+    opacity: 1;
+}
+.tabs-striped .tabs {
+    background-color: white;
+    border-bottom:hidden;
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    line-height: 48px; overflow: hidden;
+}
+
+element.style {
+    left: 0;
+}
+
+/*弹出框*/
+
+.popover-arrow {
+    position: absolute;
+    display: block;
+    top: -16px;
+    width: 30px;
+    height: 19px;
+    overflow: hidden;
+}
+.platform-ios .popover-arrow {
+    position: absolute;
+    display: block;
+    top: -16px;
+    width: 30px;
+    height: 19px;
+    overflow: hidden;
+}
+.popover-backdrop.active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.platform-android .popover-backdrop.active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.platform-ios .popover-backdrop.active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*会员信息筛选*/
+.membInfo .saixuan_box2 .radio-content .item-content {
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-style:hidden;
+    height: 55px;
+}
+
+.membInfo .saixuan_box2 .item-radio input:checked + .radio-content .item-content {
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-style:hidden;
+    height: 55px;
+}
+
+.membInfo .item-radio input:checked + .radio-content .item-content{background: #fff;}
+/*.membInfo .toggle-small input:checked + .track .handle {background: #fff;}*/
+
+/*会员概况底线*/
+.mem_c .hygk .item {
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    line-height: 55px; overflow: hidden;
+    border-style:hidden;
+    margin: 0;
+    padding: 0 5%;
+}
+/*购买明细底线*/
+.mem_c .gmmx .item {
+    border: none;
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    margin: 0;
+    /*line-height: 80px;*/
+    /*padding: 0 10px;*/
+}
+.mem_c .gmmx a.item-content {
+    color: #37393d;
+    height: 63px;
+    width: 100%;
+    /*padding: 11px 0 11px 0;*/
+    padding: 0;
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    line-height: 45px; overflow: hidden;
+    border-style:hidden;
+}
+.mem_c .item-content.activated{border-color:#fff !important;background-color: #fff !important;}
+.mem_c .item-complex .item-content, .item-radio .item-content {padding: 16px 5%;}
+.mem .item { padding: 16px 5%;}
+/*会员信息详细资料多选页面居中*/
+.mem_radio .item { padding: 0 5%;}
+
+/*单选框*/
+.ion-checkmark:before {
+    background: #6145fe;}
+.memb_radio .radio-content .disable-pointer-events {
+    background: #fff;
+    border-width:inherit;
+    height: 55px !important;
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom ;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-style:hidden;
+    margin:0;}
+.memb_radio .item-radio input:checked + .radio-content .item-content {
+    background: #fff;
+    border-width:inherit;
+    height: 55px !important;
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom ;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-style:hidden;
+    margin:0;
+    font-size: 16px;
+}
+
+
+/*.ion-checkmark:before {*/
+    /*display: table;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*border-width: 1px;*/
+    /*border-style: solid;*/
+    /*border-radius: 28px;*/
+    /*background: #fff;*/
+    /*content: ' ';*/
+    /*-webkit-transition: background-color 20ms ease-in-out;*/
+    /*transition: background-color 20ms ease-in-out;*/
+
+/*}*/
+/*.memb_radio .item-radio .radio-icon {*/
+/*right: -10px;}*/
+
+/*复选框*/
+/*安卓系统圆形样式*/
+.platform-android .checkbox-platform input:before, .platform-android .checkbox-platform .checkbox-icon:before, .checkbox-square input:before, .checkbox-square .checkbox-icon:before{
+    display: table;
+    width: 100%;
+    height: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 28px;
+    background: #fff;
+    content: ' ';
+    -webkit-transition: background-color 20ms ease-in-out;
+    transition: background-color 20ms ease-in-out;
+}
+
+.platform-android .checkbox-platform input:after, .platform-android .checkbox-platform .checkbox-icon:after, .checkbox-square input:after, .checkbox-square .checkbox-icon:after {
+    -webkit-transition: opacity 0.05s ease-in-out;
+    transition: opacity 0.05s ease-in-out;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    display: table;
+    width: 10px;
+    height: 5px;
+    border: 1px solid #fff;
+    border-top: 0;
+    border-right: 0;
+    content: ' ';
+    opacity: 0;
+}
+
+.platform-android .checkbox-platform input:before, .platform-android .checkbox-platform .checkbox-icon:before, .checkbox-square input:before, .checkbox-square .checkbox-icon:before {
+    margin-top: 0;
+    margin-left: 0;}
+
+/*安卓系统圆形样式end*/
+
+.checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
+    background: #6145fe;
+    border-color:  #6145fe;
+}
+.memb_checkbox .item-checkbox {
+    padding-left: 5%;
+}
+.memb_checkbox .item-checkbox .checkbox {
+    margin-top: -17px;  right: 5%; left: inherit; }
+.memb_checkbox .checkbox { padding: 7px 0;}
+.radio_line .zdy .item {height:inherit !important; }
+
+/*自定义按钮*/
+.zdy .zdy_time{ background:#f9f9fb; width:47%; height:35px;text-align: center;line-height: 35px; border:solid 1px #d4d4d4 !important; float:left; margin-bottom:10px;}
+.membInfo .item.activated{background-color: #fff;}
+/*ios*/
+.ion-checkmark:before {
+    background: #6145fe !important;}
+.toggle input:checked + .track {
+    border-color: #6145fe !important;
+    background-color: #6145fe !important;
+}
+.toggle input:checked + .track .handle {
+    background-color: #6145fe !important;
+    border: 2px solid #fff !important;
+}
+/*关闭时*/
+.toggle .track {
+    background-color: #f1f1f1 !important;border: solid 2px #f1f1f1;}
+
+.toggle .handle {
+    background-color: #f1f1f1;
+    border: 2px solid #fff !important;
+    box-shadow: none;
+}
+
+/*安卓*/
+.toggle-small .track {
+    width: 51px;
+    height: 31px;}
+.toggle-small.item-toggle .toggle {
+    top: 10px;
+}
+.toggle-small .handle {
+    top: 7px;
+    left: 7px;
+    width: 27px;
+    height: 27px;
+    border-radius: 27px;
+    /*box-shadow: 0 2px 7px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.15);*/
+    box-shadow: none;
+}
+.toggle-small input:checked + .track .handle {
+    -webkit-transform: translate3d(20px, 0, 0);
+    transform: translate3d(20px, 0, 0);
+   
+}
+
+/*加载状态*/
+/*.loading-container .loading{padding: 16px 18px 16px 18px;}*/
+.loading-container .loading{padding: 0;}
+
+
+
+/*没数据小熊居中*/
+.Data .scroll {height: 100%;}
+/*.popup .list:last-child {margin-bottom: -1px;}*/
+.scroll-content{padding: 0;}
+
+/*所在地区页面换行*/
+.LocalArea .item{white-space:normal;}
+
+/*回访指导编辑框*/
+.card, .list-inset {
+    margin: 20px 5%;}
+
+/*消息弹出*/
+.popup-container .popup {border-radius: 8px; width:80%;    background-color: rgba(255, 255, 255, 1);overflow: hidden;}
+.popup-container .popup .popup-head{display: none;width: 80%;    padding: 30px 10px; margin:0px auto 40px auto;}
+.popup-container .popup .popup-body span{text-align: center;
+    width: 100%;
+    display: block;
+    padding: 40px 0px;
+    font-size: 18px;
+    color: #565656;}
+.popup-container .popup .popup-body{border-width:inherit;
+    background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom ;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-style:hidden;}
+.popup-container .popup .popup-buttons{padding: 0px; min-height: 52px; }
+.popup-container .popup .popup-buttons .button {
+    background-color: #fff;
+    color: #0068ff;
+	border-radius: 0px 0px 0px 8px;
+}
+.popup-container .popup .popup-buttons .button-positive {
+    background-color: #fff;
+    color: #0068ff;
+	border-radius: 0px 0px 8px 8px;
+	
+
+}
+.popup-container .popup .popup-buttons .button-default{	border-width:inherit;
+    background-image:-webkit-linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: right ;
+    background-size: 1px 100%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-style:hidden;
+    margin:0;}
+.xiaoxi_tcc_p{ margin-bottom:30px;margin-top: 30px;}
+.leftLoop .hd ul li.on {
+    border: none;
+}
+.leftLoop .hd ul {
+    width: 30px;
+    margin-left: -15px;
+}
+	/*修改线 头部*/	
+.list{ padding-top:0px; padding-bottom:0px;}
+.bar-subheader{background: none;}
+.xiaoxi_img2{ margin-left:0px !important;}
+.xiaoxizhongxin_bj1 ion-item{margin-left:15px !important;}
+.bar-subheader{ top:48px}
+.item-content{ background:none;}
+
+.item-checkbox .checkbox{margin-top:-15px;}
+/*去除选中背景灰色*/
+.item-radio input:checked + .radio-content .item-content{background: #FFF;}
+
+/*wjp*/
+/*tab标签栏*/
+/*.tabs-top.tabs-striped .tab-item.tab-item-active{*/
+    /*border-width: 0!important;*/
+/*}*/

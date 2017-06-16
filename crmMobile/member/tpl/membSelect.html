@@ -1,0 +1,55 @@
+<ion-header-bar  class="header bar bar-header item-input-inset" >
+    <a class="header_left" ui-sref="membInfo" ></a>
+    <div class="item-input-wrapper" ui-sref="membSelect" style="background-color:#fff;height: 32px;margin-left: 15%;margin-right: 5%;border-radius: 6px;line-height: 32px;padding: 0;position: relative;">
+        <span class="search_img"></span>
+        <input  type="text" placeholder="请输入联系电话" id="searchbox" style="background-color:#fff;margin-top: 2px;width: 79%;color: #b1b1b1;" ng-model="MembBas4App.params.phone" ng-change="searchMembByPhone(1, false)">
+        <span class="delete_img" ng-click="clearInput()" ng-if="clickState"></span>
+        <span class="delete_img_2" ng-click="clearInput()" ng-if="clickState==false"></span>
+    </div>
+    <!--<button ng-mousedown="searchMembByPhone()">搜索</button>-->
+</ion-header-bar>
+<ion-content  ></ion-content>
+
+
+<!--<ion-content class="light-bg" overflow-scroll="false">
+    <ion-list ng-repeat="mnp in membNameAndPhoneList">
+        <div class="sousuo_line padding-left">
+                 <span>
+                    <h2 style="line-height: 55px!important;font-size:16px; margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>
+                 </span>
+        </div>
+    </ion-list>
+    &lt;!&ndash;<ion-list>
+        <div class="sousuo_line padding-left">
+            <span>
+                <h2 style="line-height: 55px!important;font-size:16px;"><span ng-bind="MembBas4App.pageNum"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;">15920463243</span></h2>
+            </span>
+        </div>
+    </ion-list>&ndash;&gt;
+</ion-content>-->
+<ion-content class="Data"   delegate-handle="contentScrollSearch">
+    <ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefresh()"  refreshing-text="加载中..."></ion-refresher>
+    <div class="wrap data" style="height: 100%;" on-touch="hideKeyboard()">
+        <ion-list ng-repeat="mnp in membNameAndPhoneList" ui-sref="membDetailInfo({membNum:mnp.membNum})">
+            <div class="bottom_line p-Left light-bg ">
+                     <span>
+                        <h2 style="line-height: 55px;font-size:16px;margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>
+                     </span>
+            </div>
+        </ion-list>
+        <!--<ion-list>
+            <div class="sousuo_line padding-left">
+                <span>
+                    <h2 style="line-height: 35px;margin-bottom: 0;"><span ng-bind="MembBas4App.pageNum"></span>：<span style="line-height: 35px;margin-top2px;color:#b1b1b1;">15920463243</span></h2>
+                </span>
+            </div>
+        </ion-list>-->
+
+        <div class="no_data" ng-if="dataShow">
+            <img src="common/images/bear.gif" width="80">
+            <p>没有符合条件的数据</p>
+        </div>
+    </div>
+
+    <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="hasNextPage"></ion-infinite-scroll>
+</ion-content>

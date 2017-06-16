@@ -1,0 +1,24 @@
+
+<div class="modal-header"><button class="close" type="button" ng-click="cancel()" >×</button>
+	<h3 class="modal-title">批量审核</h3>
+</div>
+<div class="panel-heading">
+
+	<form name="form" class="form-horizontal">
+		
+		<div class="form-group">
+			<label class="col-xs-3 control-label"><span style="color: red;">*</span> 是否通过：</label>
+			<div class="col-xs-2" ng-repeat="apprRstInfo in apprRstList">
+				<div class="radio">
+					<label class="i-checks i-checks-sm"><input name="apprRadio" type="radio" ng-model="salarybykey.apprRst" value="{{apprRstInfo.key}}" ng-required="true" /><i></i>{{apprRstInfo.text}}</label>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-info" ng-click="ok()">确定</button>
+	<button class="btn btn-default" ng-click="cancel()">取消</button>
+
+</div>

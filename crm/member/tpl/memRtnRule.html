@@ -1,0 +1,65 @@
+<div class="bg-light lter wrapper-md">
+  <h4 class="m-n font-thin h4"style="color:#000"> 回访规则设置</h4>
+   <button class="btn btn-success btn-addon" style="float:right;margin:-25px 10px 0 0;"  ui-sref="app.member.memRtnRuleInsert" user-power="WMEM01008002"> 新增规则</button>
+</div>
+
+<!-- 内容 -->
+
+
+  <div class="panel panel-default" ng-controller="memRtnRuleCtrl" >
+      <div>
+          <script type="text/ng-template" id="delete.html">
+              <div ng-include="'common/tpl/delete.html'"></div>
+          </script>
+      </div>
+
+      <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    <div class="panel-heading"   >
+        <accordion close-others="oneAtATime">
+          <accordion-group is-open="status.open"  >
+              <accordion-heading>
+              回访内容属性设置<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+              </accordion-heading>
+ 
+              <form name="form" class="form-horizontal" style="margin-left:35px">
+                  <h5><strong>温馨提示：</strong></h5>
+                  <p>维护‘回访内容’的相关下拉内容，可进行设置维护</p>
+              </form>
+              <a href="#" >
+              <button class="btn btn-info" style="margin:20px 0 20px 35px" ui-sref="app.member.memRtnItem"  user-power="WMEM01008002"> 回访内容属性设置</button>
+              </a>
+          </accordion-group>
+        </accordion>    
+    </div><!-- panel-heading -->
+    <!-- 表格 -->
+    <div class="table-responsive" style="padding-left:10px;padding-right:10px; ">
+    <div style="padding:15px;">
+        <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ＃EEEEEE; border:none;outline:medium;color: #f05050"ng-model="gydst" readonly="readonly"> 条回访规则数据</lable>
+        <lable ng-if="gydst<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+    </div>
+
+   <div ng-table="tableParams">
+       <table class="table table-bordered text-center table-condensed " >
+           <tr ng-repeat="membRtnRule in $data">
+               <td title="'规则名称'" style="text-align:center;min-width:120px; ">
+                   <span ng-bind="membRtnRule.rntRuleNm"></span>
+               </td>
+               <td title="'应用于'" style="text-align:center;min-width:120px; ">
+                   <!--<span ng-bind="posNum | stfBasPosNum" ng-trim="false" ng-repeat="posNum in membRtnRule.posNumList"></span>-->
+                   <span ng-bind=" membRtnRule.posNumList" ></span>
+               </td>
+               <td title="'状态'" style="text-align:center;min-width:120px;color: red; ">
+                  <!-- {{userinfo.c}}-->
+                   <span ng-bind="membRtnRule.ruleEnableFlg | dicNameFilter:'C013'"></span>
+               </td>
+               <td title="'操作'" style="text-align:center;min-width:120px; ">
+                   <a style="text-decoration:underline;color: #05b5ff;" ui-sref="app.member.memRtnRuleUpdate({oId:membRtnRule.oId})" user-power="WMEM01008002">编辑</a>
+                   <a style="text-decoration:underline;color: #05b5ff;" ng-click="delMemRtnRule(membRtnRule.oId)" user-power="WMEM01008002">删除</a>
+               </td>
+           </tr>
+       </table>
+   </div>
+
+  </div><!-- panel -->
+
+</div>

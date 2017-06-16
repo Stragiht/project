@@ -1,0 +1,65 @@
+<style>
+.list{
+ padding-top: 0px; 
+}
+.scroll-view.scroll-x {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+</style>
+<ion-header-bar align-title="center" class="header">
+    <a ui-sref="attendanceAdmin" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size:1.4rem">审批排班申请</h1>
+    <a class="head_right" ng-click="insertSchedule()">
+        <div class="head_right_box float_l" user-power="MSTF01006007">
+            <img src="common/images/xzpb.png" width="22" height="22" >
+            <p>新增</p>
+        </div>
+    </a>
+    <a class="head_right" ui-sref="baShiftMngAppList" user-power="MSTF01006002">
+        <div class="head_right_box">
+            <img src="common/images/fenlei.png" width="22" height="22">
+            <p>批量审批</p>
+        </div>
+    </a>
+</ion-header-bar>
+<div class="bar bar-subheader" style="padding: 0;">
+    <div class="rzlc_bt">
+        <ion-scroll direction="x" scrollbar-x="false" scrollbar-y="false" zooming="false" paging="false">
+            <div class="rzlc_bt_nei" style="overflow: auto; width: 560px;margin:0px;">
+                <a ng-repeat="apprStat in apprStatList" style="width: 60px; margin:0px 5px;height: 44px;line-height: 44px;" ng-class="{'active':apprStat.key == apprStatCnd}" ng-click="selectBAShiftMngAppl('{{apprStat.key}}')">{{apprStat.text}}</a>
+            </div>
+        </ion-scroll>
+    </div>
+</div>
+<ion-content class="has-header has-subheader" style="top: 91px;" delegate-handle="contentScroll">
+<!-- schedulingForApproval.html -->
+    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+    <div class="wrap">
+        <div ng-repeat="dataInfo in scheduleList">
+            <div class="xiaoxizhongxin_bj1" ng-show="scheduleList.length > 0"  >
+                <ion-list >
+                    <div class="index_work_bt">{{dataInfo.phaStartTm}}~{{dataInfo.phaEndTm}}</div>
+                    <ion-item class="bottom_line" style="padding-top: 0px;padding-bottom: 0px;margin-left:0px;padding:0px;margin: 0px 0px;" ng-repeat="scheduleInfo in dataInfo.list">
+                        <a ui-sref="baShiftMngApplInfo({applNum:scheduleInfo.schNum,flag:true})" user-power="MSTF01006001">
+                            <div class="xiaoxi_img2" style="margin-left: 15px;">{{scheduleInfo.bySchStf}}</div>
+                            <div class="xiaoxi_line" style="width: 79%;">
+                                <div class="xiaoxizhongxin_text2">
+                                    <h2 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width:150px">{{scheduleInfo.strNum}}</h2>
+                                    <p><span ng-if="scheduleInfo.sbmtTm != null">{{scheduleInfo.sbmtTm}} 申请</span></p> 
+                                </div>
+                                <img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;margin-right: 15px;">
+                                <span class="float_r line_height50" style="margin-right: 15px">{{scheduleInfo.apprRslt}}</span>
+                            </div>
+                        </a>
+                    </ion-item>
+                </ion-list> 
+            </div>
+        </div>
+        <div class="wushuju" my-nodata-show="scheduleList.length == 0 && !moredata"">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+    </div>
+    <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>

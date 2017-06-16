@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<div>  
+	        <fieldset>  
+	            <table>  
+	                <tbody>  
+	                    <tr>  
+	                        <td>id</td>  
+	                        <td><input id="id" type=text value="OPERA0000001"/></td>  
+	                    </tr>  
+	                    <tr>  
+	                        <td>password</td>  
+	                        <td><input id="password" type=password value="123"/></td>  
+	                    </tr> 
+	                    <tr>  
+	                        <td><button id="login" onclick="sendAjaxReq()">登陆</button></td>  
+	                    </tr>  
+	                </tbody>            
+	            </table>  
+	        </fieldset>  
+	    </div>  
+	</div>
+	
+	<script type="text/javascript" src="../../common/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<!-- Ajax -->
+	<script type="text/javascript">
+        function createAjaxObj() {
+			var req;
+			if (window.XMLHttpRequest) {
+				req = new XMLHttpRequest();
+			} else {
+				req = new ActiveXObject("Msxml2.XMLHTTP"); //ie
+			}
+			return req;
+		}
+
+		function sendAjaxReq() {
+			var req = createAjaxObj();
+			req.open("GET", "/CrmWeb/api/login/" + $("#id").val() + "/" + $("#password").val());
+			req.setRequestHeader("accept", "application/json");
+			req.onreadystatechange = function() {
+				if(req.readyState==4) {
+					if (req.status==200) {
+						var result = JSON.parse( req.responseText );
+						for(var index in result) {
+						  if (result[index].success) {
+						      window.location.href="../user/user.html";
+						  } else {
+						      alert(result[index].message);
+						  }
+							
+						}
+					} else {
+						var result = JSON.parse( req.responseText );
+						for(var index in result) {
+							alert(result[index].message);
+						}
+					}
+				}
+			}
+			req.send(null);
+		}
+	</script>
+</body>
+</html>

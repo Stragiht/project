@@ -1,0 +1,147 @@
+
+<div class="bg-light lter wrapper-md">
+  <h4 class="m-n font-thin h4"style="color:#000"> 批量修改会员信息</h4>
+</div>                                                                                              
+
+<!-- 内容 -->
+<div class="panel panel-default" ng-controller="memBatUpdateCtrl as demo">
+
+
+    <!--<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>-->
+    <div class="panel-heading"   >
+        <accordion close-others="oneAtATime">
+          <accordion-group is-open="status.open"  >
+              <accordion-heading>
+                  查询<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+              </accordion-heading>
+
+              <form name="form" class="form-horizontal">
+                  <!-- 第一行 -->
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label">会员编号：</label>
+
+                      <div class="col-sm-2">
+                          <input type="text" class="form-control" ng-model="selectMembList.params.membNum">
+                      </div>
+                      <label class="col-sm-2 control-label">姓名：</label>
+
+                      <div class="col-sm-2">
+                          <input type="text" class="form-control" ng-model="selectMembList.params.membNm">
+                      </div>
+
+                      <label class="col-sm-2 control-label">联系电话：</label>
+
+                      <div class="col-sm-2">
+                          <input type="text" class="form-control" ng-model="selectMembList.params.phone">
+                      </div>
+
+                  </div>
+                  <!-- 第二行 -->
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label">创建人员：</label>
+
+                      <div class="col-sm-2">
+                          <input type="text" class="form-control" placeholder="姓名"
+                                 ng-model="selectMembList.params.crtdStfNm">
+                      </div>
+
+                  </div>
+                  <!-- 第三行 -->
+                  <div class="form-group">
+
+                      <label class="col-sm-2 control-label">加入时间：</label>
+
+                      <div class="col-sm-3">
+                          <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                              <input type="text" class="form-control"
+                                     datepicker-popup="yyyy-MM-dd" is-open="opened"
+                                     datepicker-options="dateOptions" readonly="readonly"
+                                     ng-model="selectMembList.params.startTime"/>
+                                    <span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+						            </span>
+                          </div>
+                      </div>
+                      <label class="col-sm-1 control-label"
+                             style="margin-left: 40px;text-align: center;">至</label>
+
+                      <div class="col-sm-3">
+                          <div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+                                  >
+                              <input type="text" class="form-control"
+                                     datepicker-popup="yyyy-MM-dd" is-open="opened"
+                                     datepicker-options="dateOptions" readonly="readonly"
+                                     ng-model="selectMembList.params.endTime"/>
+                                    <span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+						            </span>
+                          </div>
+                      </div>
+
+                  </div>
+
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label"></label>
+                      <button class="col-sm-2 btn btn-info btn-addon" style="margin-left: 15px;width: 121px;"
+                              ng-click="searchMemblist()" user-power="WMEM01003001">搜索
+                      </button>
+                  </div>
+
+              </form>
+              
+          </accordion-group>
+        </accordion>
+    </div>
+    <script type="text/ng-template" id="headerCheckbox.html">
+        <input type="checkbox" ng-model="demo.checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+        全选
+    </script>
+    <!-- 表格 -->
+    <div style=" margin:15px;">
+        <button class="btn btn-default btn-addon" ng-click="allEdit()" user-power="WMEM01003001"> 统一编辑</button>
+        <button class="btn btn-default btn-addon" ng-click="oneByOneEdit()" user-power="WMEM01003001"> 一个个编辑</button>
+        <label class="control-label" style="margin:10px;line-height:30px;">共有<input type="text" ng-model="gydst" style="width:30px; text-align:center; background:no-repeat 0 0 scroll; border:none;outline:medium;color: #f05050" ng-model="gydst" readonly="readonly";> 条记录</label>
+        <lable ng-if="gydst<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+    </div>
+
+    <div class="table-responsive" style="padding-left:15px;padding-right:15px; "  >
+        <div ng-table="tableParams">
+            <table class="table table-bordered table-condensed   table-striped ">
+                <tr ng-repeat="memBas in $data">
+                    <td header="'headerCheckbox.html'"
+                        style="font-weight: bold; min-width: 90px; text-align: center;  ">
+                        <input type="checkbox" ng-model="demo.checkboxes.items[memBas.membNum]"
+                               ng-click="checkItem()"/>
+                    </td>
+                    <td title="'会员编号'" style="text-align:center;min-width:120px; ">
+                        {{memBas.membNum}}
+                    </td>
+                    <td title="'姓名'" style="text-align:center;min-width:120px; ">
+                        {{memBas.membNm}}
+                    </td>
+                    <td title="'联系电话'" style="text-align:center;min-width:120px; ">
+                        {{memBas.phone}}
+                    </td>
+                    <td title="'来源渠道'" style="text-align:center;min-width:120px; ">
+                        {{memBas.provChnl | chnlInfoFilter}}
+                    </td>
+                    <td title="'会员组别'" style="text-align:center;min-width:120px;">
+                        {{memBas.grpId | membGrpFilter}}
+                    </td>
+                    <td title="'创建人员'" style="text-align:center;min-width:120px;">
+                        {{memBas.crtdStfNm}}
+                    </td>
+
+                    <td title="'加入时间'" style="text-align:center;min-width:180px;">
+                        {{memBas.registTm | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+</div>

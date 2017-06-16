@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceGroup>
+<!--     <service name="LoginService" scope="application">web service名称   -->
+<!--         <description>LoginService</description>接口描述   -->
+<!--         <module ref="Logging"/> 引用logging模块  -->
+<!--         <parameter name="SpringBeanName">loginServicePojo</parameter>接口实现类   -->
+<!--         <parameter name="ServiceObjectSupplier"> -->
+<!--            org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier -->
+<!--        </parameter>  -->
+<!--         <operation name="login">接口名称(WebService登录用接口)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--     </service> -->
+<!--     <service name="UserService" scope="application">web service名称   -->
+<!--         <description>UserService(测试用)</description>接口描述   -->
+<!--         <module ref="Logging"/> 引用logging模块  -->
+<!--         <parameter name="SpringBeanName">userServicePojo</parameter>接口实现类   -->
+<!--         <parameter name="ServiceObjectSupplier"> -->
+<!--            org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier -->
+<!--        </parameter>  -->
+<!--         <operation name="getUserById">接口名称(通过用户ID从用户情报中取得一条数据)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--         <operation name="insertUser">接口名称(向用户情报中登录一条数据)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--     </service> -->
+<!--     <service name="BigDataTestService" scope="application">web service名称   -->
+<!--         <description>BigDataTestService(测试用)</description>接口描述   -->
+<!--         <module ref="Logging"/> 引用logging模块  -->
+<!--         <parameter name="SpringBeanName">bigDataTestServicePojo</parameter>接口实现类   -->
+<!--         <parameter name="ServiceObjectSupplier"> -->
+<!--            org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier -->
+<!--        </parameter>  -->
+<!--         <operation name="getBigDataTestByOid">接口名称(通过OID从大数据测试用表中取得一条数据)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--         <operation name="getBigDataList">接口名称(从大数据测试用表中取得多条数据)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--         <operation name="insertSingle">接口名称(向大数据测试用表中登录一条数据)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--         <operation name="insertList">接口名称(向大数据测试用表中登录多条数据)   -->
+<!--             <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>   -->
+<!--         </operation> -->
+<!--     </service> -->
+</serviceGroup>

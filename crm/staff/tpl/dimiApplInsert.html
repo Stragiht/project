@@ -1,0 +1,107 @@
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">
+		新增离职流程
+		<a class="btn btn-default btn-addon mr_8" ui-sref="app.staff.dimiAppl">返回离职流程管理</a>
+	</h4>
+</div>
+
+<div ng-controller="dimiApplInsertController">
+	<form name="form" class="form-horizontal form-validation">
+		<div class="panel-heading">
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.dimiBaseInfoOpen">
+					<accordion-heading>
+						离职信息<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.dimiBaseInfoOpen, 'fa-angle-right': !status.dimiBaseInfoOpen}"></i>
+					</accordion-heading>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span class="text-red">*</span>提交方式：</label>
+						<div class="col-xs-4" ng-repeat="applTypeInfo in applTypeList">
+							<div class="radio">
+								<label class="i-checks i-checks-sm"><input name="applTypeRadio" type="radio" ng-model="dimiInfo.applType" value="{{applTypeInfo.key}}" ng-required="true" /><i></i>{{applTypeInfo.text}}</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span class="text-red">*</span>离职人：</label>
+						<div class="col-xs-2">
+							<a class="btn m-b-xs w-xs btn-default" ng-click="openStf('lg')">添加</a>
+						</div>
+						<div class="col-xs-4">
+							<input type="hidden" name="jobLeaver" ng-model="dimiInfo.jobLeaver" ng-required="true" />
+							<input type="hidden" name="jobLeaverNm" ng-model="dimiInfo.jobLeaverNm" />
+							<div ng-messages="form.jobLeaver.$error" ng-if="(form.jobLeaver.$dirty && form.jobLeaver.$invalid)">
+								<span ng-message="required" class="error">离职人不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"></label>
+						<div class="col-xs-10">
+							<table class="table table-bordered table-condensed table-striped table-hover">
+								<tr>
+									<th style="width: 18%;">人员编号</th>
+									<th style="width: 18%;">姓名</th>
+									<th style="width: 18%;">职位</th>
+									<th style="width: 18%;">等级</th>
+									<th style="width: 18%;">所在城市</th>
+									<th style="width: 10%;">操作</th>
+								</tr>
+								<tr ng-repeat="stfInfo in stfList">
+									<td title="'人员编号'">{{stfInfo.stfNum}}</td>
+									<td title="'姓名'">{{stfInfo.stfNm}}</td>
+									<td title="'职位'">{{stfInfo.posNm}}</td>
+									<td title="'等级'">{{stfInfo.posGrdNm}}</td>
+									<td title="'所在城市'">{{stfInfo.rgnNm}}</td>
+									<td title="'操作'" class="mr_22">
+										<a class="mr_9" ng-click="delStf($index)">删除</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span class="text-red">*</span>离职时间：</label>
+						<div class="col-xs-3">
+							<div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+								<input type="text" class="form-control" name="dimiDt" datepicker-popup="yyyy-MM-dd" ng-model="dimiInfo.dimiDt" is-open="opened" datepicker-options="dateOptions" ng-required="true" ng-readonly="true" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</div>
+							<div ng-messages="form.dimiDt.$error" ng-if="(form.dimiDt.$dirty && form.dimiDt.$invalid)">
+								<span ng-message="required" class="error">离职时间不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label"><span class="text-red">*</span>离职原因：</label>
+						<div class="col-xs-3">
+							<select class="form-control" name="dimiReasonCate" ng-model="dimiInfo.dimiReasonCate" ng-options="data.key as data.text for data in dimiReasonCateList" ng-required="true"></select>
+							<div ng-messages="form.dimiReasonCate.$error" ng-if="(form.dimiReasonCate.$dirty && form.dimiReasonCate.$invalid)">
+								<span ng-message="required" class="error">离职原因不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label">离职描述：</label>
+						<div class="col-xs-6">
+							<textarea class="form-control" rows="5" name="dimiDesc" ng-model="dimiInfo.dimiDesc" ng-maxlength="1000" maxLength="1000"></textarea>
+							<div ng-messages="form.dimiDesc.$error" ng-if="(form.dimiDesc.$dirty && form.dimiDesc.$invalid)">
+								<span ng-message="maxlength" class="error">离职描述长度不能超过1000位</span>
+							</div>
+						</div>
+					</div>
+				</accordion-group>
+			</accordion>
+		</div>
+		<div class="panel-heading">
+			<button class="btn btn-info btn-addon mr_10" ng-click="saveDimiAppl()" ng-disabled="form.$invalid" user-power="WSTF01010002">保存</button>
+			<button class="btn btn-info btn-addon mr_10" ng-click="submitDimiAppl()" ng-disabled="form.$invalid" user-power="WSTF01010002">提交</button>
+		</div>
+	</form>
+	<div>
+		<script type="text/ng-template" id="multiselectstaff.html">
+			<div ng-include="'common/tpl/multiselectstaff.html'"></div>
+		</script>
+	</div>
+</div>

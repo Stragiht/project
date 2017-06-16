@@ -1,0 +1,26 @@
+<ion-header-bar align-title="center" class="header"> 
+	<a href="" ui-sref="approvalDetails({applNum:stfList.applNum})" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">应扣合计</h1>
+</ion-header-bar>
+<ion-content  class="has-header ">
+<!-- totalDeductionShenpi.html -->
+	<ion-list>
+ 		<ion-item  >
+           	<span class="w140">社保</span>
+           	<span class=" stfInfoItem">{{stfList.sclSecurity | currency : ""}}<span>元</span></span>
+        </ion-item>
+        <ion-item >
+           	<span class="w140">公积金</span>
+           	<span class=" stfInfoItem">{{stfList.accumFunds | currency : ""}}<span>元</span></span>
+        </ion-item >
+        <ion-item >
+          	<span class="w140">个税</span>
+          	<span class=" stfInfoItem">{{stfList.persIncomeTax | currency : ""}}<span>元</span></span>
+        </ion-item>
+        <ion-item >
+          	<span class="w140">其它</span>
+          	<span class=" stfInfoItem">{{stfList.otherDedu | currency : ""}}<span>元</span></span>
+        </ion-item>
+	</ion-list> 
+</ion-content>
+

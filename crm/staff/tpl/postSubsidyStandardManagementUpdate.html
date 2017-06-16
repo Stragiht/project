@@ -1,0 +1,55 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">编辑</h4>
+</div>
+ 
+<div class="wrapper-md" ng-controller="BjZwbzbzglCtrl">
+    <div class="panel-heading">
+        <form name="form" class="form-horizontal form-validation" novalidate>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">规则名称：</label>
+                <label class="col-sm-8 control-label" style="text-align: left;" readOnly>{{gzname}}</label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <span style="color: red;">*</span>补助明细：
+                </label>
+                <div class="col-sm-2">
+                    <button class="btn m-b-xs btn-default" ng-click="add()">继续新增</button>
+                </div>
+            </div>
+            <div ng-table="tableParams">
+	            <table class="table table-bordered table-condensed table-striped table-hover">
+	                <tr>
+						<th style="width: 200px"><span style="color:red;">*</span>补助职位等级</th>
+						<th style="width: 150px"><span style="color:red;">*</span>补助金额</th>
+						<th style="width: 100px"><span style="color:red;">*</span>补助类型</th>
+						<th style="width: 150px">备注</th>
+						<th style="width: 100px">操作</th>
+					</tr>
+	                <tr ng-repeat="userinfo in bjgzbzbz" ng-form="rowForm" ng-if="userinfo.delflg != 1">
+	                    <td ng-if="flase">{{$index+1}}</td>
+	                    <td title="'补助职位等级'" style="text-align: center; font-weight: bold; min-width: 250px;">
+	                        <select style = "width:100px;display:inherit;font-weight: normal;" class="form-control" name=userinfo.position ng-model=userinfo.position ng-change="grade('',$index)" ng-options="position.text for position in positions"></select>
+	                        <select style = "width:100px;display:inherit;font-weight: normal;" class="form-control" name=userinfo.grade ng-model=userinfo.grade ng-options="grade.text for grade in userinfo.grades"></select>
+	                    </td>
+	                    <td title="'补助金额'" style="text-align: center; min-width: 150px;">
+	                    	<input type="text" class="form-control" id="grant" name = "grant"  style="width: 165px;display:inherit;" ng-model=userinfo.grant ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" required maxLength=12/>元
+	                    </td>
+	                    <td title="'补助类型'" style="text-align: center; width: 100px;">
+	                        <input type="checkbox" style="width: 20px;" name="trafficExpense" ng-model="userinfo.trafficExpense"> 交通费
+	                        <input type="checkbox" style="width: 20px;" name="mobilePhoneCharges" ng-model="userinfo.mobilePhoneCharges"> 手机费
+	                    </td>
+	                    <td title="'备注'" style="text-align: center; width: 150px;">
+	                        <input type="textarea" name="beizhu" class="form-control" ng-model=userinfo.beizhu>
+	                    </td>
+	                    <td title="'操作'" style="text-align: center; font-weight: bold; min-width: 100px;">
+	                    	<a class="mr_9" ng-click="del($index)">删除</a>
+	                    </td>
+	                </tr>
+	            </table>
+            </div>
+        </form>
+        <button ng-disabled="form.$invalid||isSubmit" class="btn btn-info" ng-click="insertZwbzbzgl()"> 提交</button>
+        <button class="btn btn-default  btn-addon" ui-sref="app.staff.postSubsidyStandardManagement"> 返回</button>
+     </div>
+</div>

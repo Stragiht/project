@@ -1,0 +1,189 @@
+<ion-header-bar align-title="center"  class="header">
+<!--
+        <a style="height: 38px;width: 40px;display:block;position: absolute;line-height: 38px;z-index: 999;"  ui-sref="membRevisitMenu" ><img src="common/images/fanhui_icon.png" width="14" height="20" class="back_left" ></a>
+-->
+    <a class="header_left" ng-click="backHideSelect()"></a>
+    <h1 style="font-size:1.4rem">BA回访任务</h1>
+</ion-header-bar>
+
+<div class=" bar bar-subheader quanbu_bt select_line" style="height:43px;padding: 12px 0;background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+	background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+	background-position: bottom;
+	background-size: 100% 1px;
+	background-repeat: no-repeat;">
+        <a href="" ng-click="timeSelect()"  ng-class="{'active' : selectTime}" user-power="MMEM01003001">{{titleTime}} <i class="fa "  ng-class="{'fa-caret-down ': !selectTime,'fa-caret-up': selectTime}"></i></a>
+        <a href=""  ng-click="personSelect()" class="biankuang" ng-class="{'active' : selectPerson}" user-power="MMEM01003001">{{titlePerson}} <i class="fa " ng-class="{'fa-caret-down ': !selectPerson,'fa-caret-up': selectPerson}"></i></a>
+        <a href=""  ng-click="stateSelect()" class="" ng-class="{'active' : selectState}" user-power="MMEM01003001">{{titleState}} <i class="fa " ng-class="{'fa-caret-down ': !selectState,'fa-caret-up': selectState}"></i></a>
+</div>
+
+<!--<ion-content class="has-header has-subheader"  ng-show="selectArea">
+      <div class="list">
+        <div ng-repeat="item in citys" >
+          <div class="item item-divider" ng-if="item.rgnNum == '999999'" style="font-size:14px;" id="{{item.rgnNm}}"> 
+            {{item.rgnNm}}
+          </div>
+          <ion-radio
+                  name="area"
+                   ng-value="item.rgnNum"
+                   ng-model="search.rgnNum" ng-if="item.rgnNum != '999999'  &&  item.firstPinyin != '999' "   style="font-size:14px;" ng-click="cityChange(item.rgnNum,item.rgnNm);">
+            {{ item.rgnNm }}
+          </ion-radio>
+        </div>
+      </div>
+</ion-content>-->
+
+<ion-content class="has-header has-subheader memb_radio radio_line"  ng-show="selectTime" overflow-scroll="false" user-power="MMEM01003001" >
+    <div class="list">
+        <div class="zdy">
+            <!--<div class="item item-divider" ng-if="item.rgnNum == '999999'" style="font-size:14px;" id="{{item.rgnNm}}">
+                {{item.rgnNm}}
+            </div>
+            <ion-radio
+                    name="area"
+                    ng-value="item.rgnNum"
+                    ng-model="search.rgnNum" ng-if="item.rgnNum != '999999'  &&  item.firstPinyin != '999' "   style="font-size:14px;" ng-click="cityChange(item.rgnNum,item.rgnNm);">
+                {{ item.rgnNm }}
+            </ion-radio>-->
+            <ion-radio name="selTime" ng-value="revTime.all" ng-model="revTime.selectedDate" ng-click="timeChange('', '', '应回访时间')">
+                全部
+            </ion-radio>
+            <ion-radio name="selTime" ng-value="revTime.today" ng-model="revTime.selectedDate" ng-click="timeChange(revTime.today, revTime.today, '今天回访')">
+                今天回访
+            </ion-radio>
+            <ion-toggle style="background-size: 100% 0;padding: 16px 5% !important;" name="selTime" ng-model="toggleStatus.dateChecked" ng-checked="toggleStatus.dateChecked" ng-change="timeChange('','','CUSTOM')">
+                自定义
+            </ion-toggle>
+            <div class="item" ng-if="toggleStatus.dateChecked" style="background-size: 100% 0;top: -6px;padding-top: 0px;">
+                <p style="margin-top: 5px;width:100%;">
+                    <input type="text" readonly class="zdy_time" ng-model="revTime.inputStartDate" ng-click="openDatePicker(1)" >
+                    <span style="line-height:30px;text-align: center;float:left; width: 6%">&nbsp;~</span>
+                    <input type="text" readonly class="zdy_time" ng-model="revTime.inputEndDate" ng-click="openDatePicker(2)" >
+                </p>
+                <a style="display: block;width: 60px;height: 30px;" class="btn_queding" ng-click="timeChange(membRevTsk.params.startTime, membRevTsk.params.endTime, '自定义')">确定</a>
+            </div>
+        </div>
+    </div>
+</ion-content>
+
+<!--<ion-content class="has-header has-subheader"  ng-show="selectStore">
+      <div class="list">
+        <div ng-repeat="item in stores" >
+          <ion-radio 
+                    name="store"
+                   ng-value="item.strNum"
+                   ng-model="search.strNum"  style="font-size:14px;" ng-click="personChange(item.strNum,item.strNm);">
+            {{ item.strNm }}
+          </ion-radio>
+        </div>
+      </div>
+</ion-content>-->
+
+<ion-content class="has-header has-subheader memb_radio radio_line"  ng-show="selectPerson" overflow-scroll="false" user-power="MMEM01003001">
+    <div class="list">
+        <div>
+            <!--<ion-radio
+                    name="store"
+                    ng-value="item.strNum"
+                    ng-model="search.strNum"  style="font-size:14px;" ng-click="personChange(item.strNum,item.strNm);">
+                {{ item.strNm }}
+            </ion-radio>-->
+            <ion-radio name="staff" ng-value="revPerson.all" ng-model="revPerson.selectedPerNum" ng-click="personChange('','')" style="border-top:0px">
+                全部
+            </ion-radio>
+            <ion-radio name="staff" ng-value="revPerson.mySelf" ng-model="revPerson.selectedPerNum" ng-click="personChange(revPerson.mySelf,'我')">
+                我
+            </ion-radio>
+            <ion-radio name="staff" ng-value="person.stfNum" ng-model="revPerson.selectedPerNum" ng-click="personChange(person.stfNum, person.stfNm)" ng-repeat="person in createPersonnel">
+                <span ng-bind="person.stfNm"></span>
+            </ion-radio>
+        </div>
+    </div>
+</ion-content>
+
+<ion-content class="has-header has-subheader memb_radio radio_line"  ng-show="selectState" overflow-scroll="false" user-power="MMEM01003001">
+      <div class="list">
+        <div ng-repeat="rtns in selRtnStats" >
+          <ion-radio 
+                    name="job"
+                   ng-value="rtns.key"
+                   ng-model="revStats"   ng-click="stateChange(rtns.key,rtns.text);">
+            {{ rtns.text }}
+          </ion-radio>
+        </div>
+      </div>
+</ion-content>
+
+
+<ion-content  class="has-header has-subheader Data"  ng-show="!selectState && !selectTime && !selectPerson" overflow-scroll="false" user-power="MMEM01003001" delegate-handle="contentScrollSearch">
+    <!--<ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>-->
+    <ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefresh()"  refreshing-text="加载中..." user-power="MMEM01003001"></ion-refresher>
+    <div class="wrap data" style="height: 100%;">
+        <ion-list ng-if="membRevTskList != undefined && membRevTskList != '' && membRevTskList.length > 0">
+            <!--<div class="padding-left" >
+                <a ui-sref="membRevisitTskDetail">
+                    <div class="hycz_line">
+                        <span class="w240 float_l">
+                            <div class="hycz_img">小龙</div>
+                            <h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">受访会员：13820463246</h2>
+                            <p style="line-height: 28px;color:#b1b1b1;">今天回访</p>
+                        </span>
+                        <span class="float_r">
+                            <span style="line-height: 72px;color:#b1b1b1;">未回访</span>
+                            <div class="go_right_img3"></div>
+                        </span>
+
+                    </div>
+                </a>
+            </div>-->
+            <div ng-repeat="mbrt in membRevTskList" >
+                <a class="item touch-item-1"  ui-sref="membRevisitTskDetail({curMembIndex:$index})" user-power="MMEM01003001" ng-if="$index < membRevTskList.length-1">
+
+                        <div class="bottom_line" >
+                        <span class="float_l p-Left" style="width: 70%">
+                            <div class="hycz_img"><span ng-bind="mbrt.stfNm | limitTo:-2"></span></div>
+                            <h2 class="f_H2">受访会员：<span ng-bind="mbrt.membNm"></span></h2>
+                            <p class="f_p"><span ng-bind="mbrt.rtnTm | date:'MM-dd'"></span></p>
+                        </span>
+                            <div class="go_right_img3"></div>
+                            <span class="float_r" style="line-height: 63px;color:#b1b1b1;"><span ng-bind="mbrt.rtnStat | dicNameFilter:'C024'"></span></span>
+                        </div>
+
+                </a>
+
+                <a class="item touch-item-0"  ui-sref="membRevisitTskDetail({curMembIndex:$index})" user-power="MMEM01003001" ng-if="$index == membRevTskList.length - 1">
+                    <div class="bottom_line" >
+                        <span class="float_l p-Left" style="width: 70%">
+                            <div class="hycz_img"><span ng-bind="mbrt.stfNm | limitTo:-2"></span></div>
+                            <h2 class="f_H2">受访会员：<span ng-bind="mbrt.membNm"></span></h2>
+                            <p class="f_p"><span ng-bind="mbrt.rtnTm | date:'MM-dd'"></span></p>
+                        </span>
+                        <div class="go_right_img3"></div>
+                        <span class="float_r" style="line-height: 63px;color:#b1b1b1;"><span ng-bind="mbrt.rtnStat | dicNameFilter:'C024'"></span></span>
+                    </div>
+                </a>
+            </div>
+
+            <!--<div ng-repeat="mbrt in membRevTskList" >
+                <a class="item touch-item-0"  ui-sref="membRevisitTskDetail({curMembIndex:$index})" user-power="MMEM01003001">
+                        <div class="bottom_line" >
+                        <span class="float_l p-Left" style="width: 70%">
+                            <div class="hycz_img"><span ng-bind="mbrt.stfNm | limitTo:-2"></span></div>
+                            <h2 class="f_H2">受访会员：&nbsp;&nbsp;<span ng-bind="mbrt.membNm"></span></h2>
+                            <p class="f_p"><span ng-bind="mbrt.rtnTm | date:'MM-dd'"></span></p>
+                        </span>
+                            <div class="go_right_img3"></div>
+                            <span class="float_r" style="line-height: 63px;color:#b1b1b1;"><span ng-bind="mbrt.rtnStat | dicNameFilter:'C024'"></span></span>
+                        </div>
+                </a>
+            </div>-->
+
+        </ion-list>
+        <div class="no_data" ng-if="dataShow">
+            <img src="common/images/bear.gif" width="80">
+            <p>没有符合条件的数据</p>
+        </div>
+    </div>
+    <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="hasNextPage"></ion-infinite-scroll>
+</ion-content>
+
+

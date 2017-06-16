@@ -1,0 +1,199 @@
+<div ng-controller="gdsPropInsertCtrl">
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4" style="color:#000"> 新增属性<a class="btn btn-info    btn-addon"
+                                                            ui-sref="app.goods.gdsProp({isBack:true})"
+                                                            style="float:right;margin:-8px 10px 0 0;">返回商品属性管理</a></h4>
+</div>
+
+<div class="wrapper-md" >
+
+        <ng-form class="bs-example form-horizontal" name="formAttr">
+            <!-- 第一行 -->
+            <form class="form-horizontal" style="margin-left: -13px;" name="form">
+
+                <div class="form-group" style="margin:15px 0 10px 12px; ">
+                    <label class="col-sm-2 control-label"><span style="color:red;">*</span>属性组名称： </label>
+
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" ng-model="gdsProGrp.gdsPropGrpNm"
+                               name="gdsPropGrpNm" required ng-required="true" maxlength="20">
+                        <div ng-messages="form.gdsPropGrpNm.$error"
+                             ng-if="(form.gdsPropGrpNm.$dirty && form.gdsPropGrpNm.$invalid)">
+                            <span ng-message="required" class="error"> 属性组名称必须输入！ </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin:15px 0 0 12px;display: block; ">
+                    <label class="col-sm-2 control-label"></label>
+                    <!--  <button class="btn btn-info" ng-click="add()" style="margin-left: 15px;"> 添加属性</button>-->
+                    <input type="button" class="btn btn-info" ng-click="add()" style="margin-left: 15px;" value="添加属性"/>
+                </div>
+
+            </form>
+
+
+
+        <div class="panel-heading" >
+
+            <form  class="form-horizontal"
+                  style="background: #fff;margin-bottom:15px;" ng-repeat="gdsProp in gdsProGrp.gdsPropList" name="formName">
+
+                <hr/>
+                    <!-- 第二行 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>属性名称：</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" ng-model="gdsProp.gdsPropNm"
+                                   name="gdsPropNm" ng-required="true" style="position: relative" maxlength="20">
+                            <div ng-messages="formName.gdsPropNm.$error"
+                                 ng-if="(formName.gdsPropNm.$dirty && formName.gdsPropNm.$invalid)">
+                                <span ng-message="required" class="error"> 属性名称必须输入！ </span>
+                            </div>
+                        </div>
+
+                        <input class="col-sm-1 btn btn-info  btn-danger " ng-click="del($index)"
+                                style="color:red;float:right;margin-right: 30px;width: 84px;" value="删除属性"/>
+                        <!--<input type="button" class="btn btn-info" ng-click="add()" style="margin-left: 15px;" value="添加属性"/>-->
+                    </div>
+                    <!-- 第三行 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>是否必选：</label>
+
+                        <div class="col-lg-1">
+                            <div class="radio">
+                                <label class="i-checks i-checks-sm">
+                                    <input name="a" type="radio" value="1" ng-model="gdsProp.mustFlg" checked>
+                                    <i></i>
+                                    是
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="radio">
+                                <label class="i-checks i-checks-sm">
+                                    <input name="a" value="0" type="radio" ng-model="gdsProp.mustFlg">
+                                    <i></i>
+                                    否
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<script type="text/javascript">-->
+
+                    <!--$(function () {-->
+                    <!--$(".list").click(function () {-->
+                    <!--$("#add_text").css("visibility", "visible");-->
+                    <!--$("#add").css("visibility", "visible");-->
+
+                    <!--});-->
+                    <!--$(".hand_add").click(function () {-->
+                    <!--$("#add_text").css("visibility", "hidden");-->
+                    <!--$("#add").css("visibility", "hidden")-->
+                    <!--});-->
+                    <!--});-->
+
+                    <!--</script>-->
+                    <!-- 第四行 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>属性内容：</label>
+
+                        <div class="col-lg-1 " style="width:115px;line-height: 30px;">
+                            <div class="list">
+                                <label class="i-checks i-checks-sm">
+                                    <input name="b" type="radio" value="1" ng-model="gdsProp.valFlg" checked="checked"><!-- ng-model="goods.listSelect"-->
+                                    <i></i>
+                                    列表选择
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 " style="width:115px;line-height: 30px;">
+                            <div class="hand_add">
+                                <label class="i-checks i-checks-sm">
+                                    <input name="b" type="radio" value="0" ng-model="gdsProp.valFlg" checked="checked"><!--ng-model="goods.listSelect"-->
+                                    <i></i>
+                                    手工录入
+                                </label>
+                            </div>
+                        </div>
+
+                        <input type="button" style="width: 84px;" class="col-sm-1 btn btn-info" id="add" ng-if="gdsProp.valFlg=='1'"
+                                ng-click="add2(gdsProp.gdsPropValList)" value="添加文本"/>
+
+                        <!--<input type="button" class="btn btn-info" ng-click="add()" style="margin-left: 15px;" value="添加属性"/>-->
+                    </div>
+                    <!-- 第五行 -->
+                    <div class="form-group " id="add_text" ng-if="gdsProp.valFlg=='1'">
+
+                        <label class="col-sm-2 control-label" style="margin-right: 15px;"> </label>
+                        <table class="table table-bordered table-condensed   table-striped"
+                               style="width: 350px;text-align: center;">
+                            <tr>
+                                <td style="min-width: 250px; ">属性内容</td>
+                                <td style="width:100px;">操作</td>
+                            </tr>
+
+                            <!--<input type="text" class="form-control" ng-model="gdsProp.gdsPropNm"-->
+                                   <!--name="gdsPropNm" ng-required="true" style="position: relative" maxlength="20">-->
+                            <!--<div ng-messages="formAttr.gdsPropNm.$error"-->
+                                 <!--ng-if="(formAttr.gdsPropNm.$dirty && formAttr.gdsPropNm.$invalid)">-->
+                                <!--<span ng-message="required" class="error"> 属性名称必须输入！ </span>-->
+                            <!--</div>-->
+
+                            <tr ng-repeat="gdsProVal in gdsProp.gdsPropValList" >
+                                <td>
+                                    <input type="text" class="form-control"  maxlength="20" ng-required="true" ng-model="gdsProVal.gdsPropValNm" name="gdsPropValNm"/>
+                                    <div ng-messages="formName.gdsPropValNm.$error"
+                                         ng-if="(formName.gdsPropValNm.$dirty && formName.gdsPropValNm.$invalid)">
+                                        <span ng-message="required" class="error"> 属性内容必须输入！ </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a style=" text-decoration:underline;color: #05b5ff;" ng-click="dell2(gdsProp.gdsPropValList,$index)" class="delete">删除<!-- ng-click="dell2(gdsProp.gdsPropValList,$index)"-->
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </table>
+
+                    </div>
+
+                <!--居中弹出框-->
+                <!--<a  class="delete">sfsdfd</a>-->
+
+                <!--<div class="dark"-->
+                     <!--style="width: 100%;height: 100%;background: #000;position: fixed;top:0;left:0;display:none;z-index:9998;">-->
+                <!--</div>-->
+                <!--<div class="box" style="height: 150px;width: 200px;background:#fff;z-index:9999;-->
+                <!--width: 300px;position: fixed;left:50%;top:50%;margin-left: -250px; margin-top: -75px;display:none;">-->
+                    <!--<p style="position: absolute;left:30%;top:30%;">第一个不可以删！！！</p>-->
+                    <!--<span style="width: 85px;height: 35px;background:#f05050;cursor:pointer;color: #fff;font-size:14px;-->
+                     <!--position: absolute;left:50%;top:60%;margin-left: -42.5px;text-align: center;padding-top: 8px;">-->
+                        <!--确定-->
+                    <!--</span>-->
+                <!--</div>-->
+
+                <!--<script>-->
+                    <!--$(function () {-->
+                            <!--$('.delete').click(function(event) {-->
+                                <!--$('.dark').fadeTo(300,0.2)-->
+                                <!--$('.box').fadeIn(300)-->
+                            <!--});-->
+                            <!--$('.box span').click(function(event) {-->
+                                <!--$('.box,.dark').fadeOut(400)-->
+                            <!--});-->
+                    <!--});-->
+                <!--</script>-->
+
+            </form>
+        </div>
+
+        <div>
+            <label class="col-sm-2 control-label"> </label>
+            <button class="btn btn-success " style="margin-left:15px" ng-click="insertGdsProp()"
+                    ng-disabled="formAttr.$invalid"  user-power="WGDS01007002"> 提交保存
+            </button>
+        </div>
+    </ng-form>
+</div>
+</div>

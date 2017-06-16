@@ -1,0 +1,175 @@
+<style>
+    .row a{margin-right:30px;display: inline-block; color:#333333;}
+    .row a:hover{color: #005de6;}
+    .row a:active{color: #005de6;}
+    .current{color: #005de6!important; font-weight: bold;}
+</style>
+
+
+<div class="bg-light lter wrapper-md">
+  <h4 class="m-n font-thin h4" style="color:#000"> BA回访任务</h4>
+</div>                                                                                              
+
+<!-- 内容 -->
+
+
+  <div class="panel panel-default"  ng-controller="memRevisitTskCtrl as demo"  >
+    <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    <div class="panel-heading"   >
+        <accordion close-others="oneAtATime">
+          <accordion-group is-open="status.open"  >
+              <accordion-heading>
+                  查询<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+              </accordion-heading>
+ 
+              <form name="form" class="form-horizontal">
+              <!-- 第一行 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">会员编号：</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" ng-model="selectMembRevisitList.params.membNum">
+                    </div>
+                  <label class="col-sm-2 control-label">会员姓名：</label>
+                  <div class="col-sm-2">
+                      <input type="text" class="form-control"  ng-model="selectMembRevisitList.params.membNm">
+                  </div>
+                 <label class="col-sm-2 control-label">联系电话：</label> 
+                  <div class="col-sm-2">
+                      <input type="text" class="form-control" ng-model="selectMembRevisitList.params.phone">
+                  </div>
+                </div>
+                <!-- 第二行 -->
+                <div class="form-group">   
+                  <label class="col-sm-2 control-label">回访人员：</label>
+                  <div class="col-sm-2">
+                      <input type="text" class="form-control" placeholder="姓名" ng-model="selectMembRevisitList.params.stfNm">
+                  </div>
+
+                </div>
+                <!-- 第三行 -->
+                <div class="form-group">
+    
+                  <label class="col-sm-2 control-label">应回访时间：</label>
+                  <div class="col-sm-3">
+                      <div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+                              >
+                          <input type="text" class="form-control"
+                                 datepicker-popup="yyyy-MM-dd" ng-model="selectMembRevisitList.params.startTime" is-open="opened" readonly
+                                 datepicker-options="dateOptions"/>
+                                    <span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+						            </span>
+                      </div>
+                  </div>
+                    <label class="col-sm-1 control-label" style="margin-left: 40px;text-align: center;">至</label>
+                       <div class="col-sm-3">
+                           <div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+                                   >
+                               <input type="text" class="form-control"
+                                      datepicker-popup="yyyy-MM-dd" ng-model="selectMembRevisitList.params.endTime" is-open="opened" readonly
+                                      datepicker-options="dateOptions" />
+                                    <span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+						            </span>
+                           </div>
+                  </div>
+                 
+                </div>
+
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label"></label>
+                      <button class=" btn btn-info btn-addon" style="margin-left: 15px;width: 121px;" ng-click="searchMemRevList()" user-power="WMEM01006001">搜索</button>
+                  </div>
+    
+              </form>
+              <accordion close-others="oneAtATime">
+                  <accordion-group is-open="status.checkopen"  >
+                      <accordion-heading>
+                      更多筛选条件<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.checkopen, 'fa-angle-right': !status.checkopen}"></i>
+                      </accordion-heading>
+      
+                <form name="form" class="form-horizontal">
+                    <div class="row">
+                      <strong class="col-sm-2 text-right">回访状态:</strong>
+                      <div class="col-sm-10">
+                         <!-- <a href="#" style="margin-right:25px; color:#19A9D5;">全部</a>
+                          <a href="#" style="margin-right:25px; color:#19A9D5;">已回访</a>
+                          <a href="#" style="margin-right:25px; color:#19A9D5;">未回访</a>-->
+                          <a ng-class="memVisitStyle[$index]" ng-repeat="memR in memRevStates" ng-click="searchMemRevList(memR.key, $index)" user-power="WMEM01006001">{{memR.text}}</a>
+                      </div>
+                    </div>
+
+                  </form><!-- 查询结果-->
+            </accordion-group>
+          </accordion-group>
+        </accordion>    
+    </div><!-- panel-heading -->
+
+      <!-- panel-heading -->
+
+      <!-- 表格 -->
+
+      <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+
+          <div style="padding:15px;">
+              <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ＃EEEEEE; border:none;outline:medium;color: #f05050"ng-model="gydst" readonly="readonly"> 条BA回访任务</lable>
+              <lable ng-if="gydst<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+          </div>
+
+          <div ng-table="tableParams">
+
+              <table class="table table-bordered table-condensed   table-striped " >
+
+                  <tr ng-repeat="memRev in $data">
+
+                      <td title="'回访人员'" style="text-align:center;min-width:120px; ">
+                          <!--{{memRev.stfNm}}-->
+                          <span ng-bind="memRev.stfNm"></span>
+                      </td>
+                      <td title="'职位'" style="text-align:center;min-width:120px; ">
+                          <!--{{memRev.posNm}}-->
+                          <span ng-bind="memRev.posNm"></span>
+                      </td>
+                      <td title="'直属主管'" style="text-align:center;min-width:120px; ">
+                          <!--{{memRev.supvrStfNm}}-->
+                          <span ng-bind="memRev.supvrStfNm"></span>
+                      </td>
+                      <td title="'应回访时间'" style="text-align:center;min-width:120px; ">
+                          <!--{{memRev.rtnTm | date:'yyyy-MM-dd HH:mm:ss'}}-->
+                          <!--<span ng-bind="memRev.rtnTm | date:'yyyy-MM-dd HH:mm:ss'"></span>-->
+                          <span ng-bind="memRev.rtnTm | date:'yyyy-MM-dd'"></span>
+                      </td>
+                      <td title="'受访会员编号'" style="text-align:center;min-width:120px; ">
+                          <!--{{memRev.membNum}}-->
+                          <span ng-bind="memRev.membNum"></span>
+                      </td>
+                      <td title="'会员姓名'" style="text-align:center;min-width:120px; ">
+                         <!-- {{memRev.membNm}}-->
+                          <span ng-bind="memRev.membNm"></span>
+                      </td>
+                      <td title="'联系电话'" style="text-align:center;min-width:120px; ">
+                          <!--{{memRev.phone}}-->
+                          <span ng-bind="memRev.phone"></span>
+                      </td>
+                      <td title="'状态'" style="text-align:center;min-width:120px;color:red; ">
+                          <!--{{memRev.rtnStat | dicNameFilter:"C024"}}-->
+                          <span ng-bind="memRev.rtnStat | dicNameFilter:'C024'"></span>
+                      </td>
+                      <td title="'操作'" style="text-align:center;min-width:120px; ">
+                          <a style="text-decoration:underline;color: #05b5ff;" ui-sref="app.member.memRevisitTskSelect({stfNum:memRev.stfNum,rtnTm:memRev.rtnTm,membNum:memRev.membNum})" user-power="WMEM01006001">查看</a>
+                          <a style="text-decoration:underline;color: #05b5ff;" ui-sref="app.member.memRevisitFbk({stfNum:memRev.stfNum,rtnTm:memRev.rtnTm,membNum:memRev.membNum})"  user-power="WMEM01006002">指导</a>
+                      </td>
+
+              </tr>
+
+          </table>
+
+        </div>
+
+    </div>
+  </div><!-- panel -->
+

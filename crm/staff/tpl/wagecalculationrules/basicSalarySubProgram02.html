@@ -1,0 +1,42 @@
+<div class="form-group">
+	<label class="col-sm-3 control-label">
+	   <span style="color: red;">*</span>试用期星级标准：
+    </label>
+	<div class="col-sm-3">
+		<input type="text" class="form-control" ng-model="syqxjbz" name="syqxjbz" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 required>
+        <div ng-messages="form.syqxjbz.$error" ng-if="(form.syqxjbz.$dirty && form.syqxjbz.$invalid)">
+			<span ng-message="required" class="error">计算规则不能为空！ </span>
+			<span ng-message="pattern" class="error">*计算规则只能输入数字.</span>
+		</div>
+	</div>
+    <label class="col-xs-1 control-label text-left">元</label>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">
+       <span style="color: red;">*</span>转正后星级标准：
+    </label>
+    <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="zzhxjbz" name="zzhxjbz" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 required>
+        <div ng-messages="form.zzhxjbz.$error" ng-if="(form.zzhxjbz.$dirty && form.zzhxjbz.$invalid)">
+			<span ng-message="required" class="error">计算规则不能为空！ </span>
+			<span ng-message="pattern" class="error">*计算规则只能输入数字.</span>
+		</div>
+    </div>
+    <label class="col-xs-1 control-label text-left">元</label>
+</div>
+<div class="form-group">
+	<table class="table table-bordered table-condensed   table-striped" style="text-align:center;margin-bottom: 20px;">
+		<tr>
+            <td>底薪组成分类</td>
+            <td>计算规则</td>
+        </tr>
+		<tr>
+            <td>档期底薪（A）</td>
+            <td style="text-align:Left;"">'所在城市底薪基数'÷'档期应出勤天数'X应发工资天数</td>
+        </tr>
+        <tr>
+            <td>档期绩效奖金（B）</td>
+            <td style="text-align:Left;">星级标准÷档期应出勤天数X应发工资天数-'档期底薪'</td>
+        </tr>
+	</table>
+</div>

@@ -1,0 +1,36 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4"> 新增城市底薪基数</h4>
+</div>
+<div class="wrapper-md" ng-controller="CsdxjsglInsertCtrl as demo">
+	<div class="panel-heading">
+       <form name="form" class="form-horizontal">
+		   <div class="form-group">
+			   <div class="col-sm-2">
+			   		<a class="btn m-b-xs btn-default" ng-click="add()">添加</a>
+		       </div>
+	       </div>
+		   <div ng-table="tableParams">
+			    <table class="table table-bordered table-condensed   table-striped table-hover" >
+	                <tr ng-repeat="userinfo in csdxjsdata" ng-form="rowForm" demo-tracked-table-row="userinfo">
+		                <td ng-if=flase>{{$index+1}}</td>
+		                <td title="'城市名称'" style = "min-width:350px;">
+	                        <select style = "width:140px;display:inherit;font-weight: normal;" class="form-control" name=userinfo.province ng-model=userinfo.province ng-change="shengshi('',$index)" ng-options="province.text for province in provinces"></select>
+	                        <select style = "width:180px;display:inherit;font-weight: normal;" class="form-control" name=userinfo.city ng-model=userinfo.city ng-options="city.text for city in userinfo.citys"></select>
+		                </td>
+		                <td title="'底薪基数'" style = "min-width:150px;text-align: center; font-weight: bold; ">
+                            <input type="text" id="basSalBase" name = "basSalBase"  style="width: 130px;height: 34px;font-weight: normal;" ng-model="userinfo.basSalBase" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12/>元
+                        </td>
+		                <td title="'备注'" style = "min-width:150px;">
+		                   <textarea name="remark" ng-model="userinfo.remark" style="height: 34px;font-weight: normal;"></textarea>
+		                </td>
+		                <td title="'操作'" style="text-align:center;max-width:70px;">
+		                   <a class="mr_9" ng-click="del($index)">删除</a>
+	                    </td>
+	                </tr>
+	            </table>
+		   </div>
+	   </form>
+	   <button class="btn btn-info" ng-click="insertCsdxjs()"> 提交</button>
+	   <button class="btn btn-default btn-addon" ui-sref="app.staff.cityBaseSalaryManagement"> 返回</button>
+	</div>
+</div>

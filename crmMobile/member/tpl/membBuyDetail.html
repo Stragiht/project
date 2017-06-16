@@ -1,0 +1,101 @@
+<div ng-show="membBuyDetShow.detailShow">
+    <ion-header-bar align-title="center"  class="header">
+            <a class="header_left" ui-sref="membDetailInfo({membNum:curMembNum})"></a>
+            <h1 style="font-size:1.4rem">购买明细</h1>
+    </ion-header-bar>
+    <ion-content  class="has-header stable">
+           <ion-list>
+                <ion-item style="padding: 0;border: none;"  >
+                    <div class="p-Left " >
+
+                        <div class="memInfoItem_line">
+                            <span class="float_l">购买时间</span>
+                            <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.buyTm | dateFormat"></span> <span ng-bind="membBuyDetl.buyTm | date:'HH:mm:ss'" ng-if="(membBuyDetl.buyTm | date:'HH:mm:ss') != '00:00:00'"></span></span>
+                        </div>
+                    </div>
+                    <div class="memInfoItem_line">
+                            <span class=" float_l p-Left">购买渠道</span>
+                            <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.buyChnl | chnlInfoFilter"></span></span>
+                    </div>
+               </ion-item>
+
+               <ion-item class="item-divider" style="border: none;">
+               </ion-item>
+
+               <ion-item style="padding: 0;border: none;">
+                   <div class="p-Left top_line" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">销售门店</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.buyStrNm | textAbbr:'10'" ng-if="membBuyDetl.buyStrNm.length <= 10"></span></span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.buyStrNm | textAbbr:'10'" ng-if="membBuyDetl.buyStrNm.length > 10" ng-click="viewStrField(membBuyDetl.buyStrNm, '销售门店')"></span></span>
+                       </div>
+
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class="w140 float_l">购买商品</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.buyGdsSpecDtlNm | textAbbr:'10'" ng-if="membBuyDetl.buyGdsSpecDtlNm.length <=10"></span></span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.buyGdsSpecDtlNm | textAbbr:'10'" ng-if="membBuyDetl.buyGdsSpecDtlNm.length >10" ng-click="viewStrField(membBuyDetl.buyGdsSpecDtlNm, '购买商品')"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">市场售价</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.curPc | currency:'￥'"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">商品数量</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.gdsQty"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">实收金额</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.gdsAmt | currency:'￥'"></span></span>
+                       </div>
+                   </div>
+                   <div  class="memInfoItem_line">
+                           <span class=" float_l p-Left">服务人员</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.stfNm"></span></span>
+                       </div>
+               </ion-item >
+
+               <ion-item class="item-divider" style="border: none;">
+               </ion-item>
+
+               <ion-item style="padding:0;border: none;">
+
+                   <div class="top_line" >
+                       <div class="memInfoItem_line ">
+                           <span class=" float_l p-Left">数据来源</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="membBuyDetl.sourceFrom | dicNameFilter:'C036'"></span></span>
+                       </div>
+                   </div>
+               </ion-item>
+           </ion-list>
+    </ion-content>
+</div>
+
+<div ng-show="membBuyDetShow.fieldShow">
+    <!--显示隐藏的字段-->
+    <ion-header-bar align-title="center" class="header" >
+        <a style="height: 38px;width: 40px;display:block;position: absolute;line-height: 38px;z-index: 999;" ng-click="backBuyDet()">
+            <img src="common/images/fanhui_icon.png" width="14"
+                 height="20" class="back_left"></a>
+
+        <h1 style="font-size:1.4rem"><span ng-bind="filedTitle"></span></h1>
+    </ion-header-bar>
+    <ion-content class="has-header mem"  overflow-scroll="false">
+        <ion-list>
+            <ion-item  class="view_line">
+                <span class="w120"><span ng-bind="filedDetail"></span></span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</div>
+
+
+

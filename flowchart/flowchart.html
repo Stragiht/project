@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>流程设计器</title>
+    <meta charset="UTF-8">
+    <script src="go.js"></script>
+    <script src="external/jquery/jquery.js"></script>
+    <script src="json2.js"></script>
+    <script src="flowchart.js"></script>
+    <script src="SinotaiyoBPM.js"></script>
+    <link href="jquery-ui.css" rel="stylesheet">
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.js"></script>
+    <style type="text/css">
+        /* CSS for the traditional context menu */
+        #contextMenu {
+            z-index: 300;
+            position: absolute;
+            left: 5px;
+            border: 1px solid #444;
+            background-color: #F5F5F5;
+            display: none;
+            box-shadow: 0 0 10px rgba( 0, 0, 0, .4 );
+            font-size: 12px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+            #contextMenu ul {
+                list-style: none;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+            }
+
+            #contextMenu li {
+                position: relative;
+                min-width: 60px;
+            }
+
+            #contextMenu a {
+                color: #444;
+                display: inline-block;
+                padding: 6px;
+                text-decoration: none;
+            }
+
+            #contextMenu li:hover {
+                background: #444;
+            }
+
+                #contextMenu li:hover a {
+                    color: #EEE;
+                }
+    </style>
+</head>
+<body onload="init()" style="font-size: 10px;">
+    <button onclick="NewBPM()">新建流程</button><br/>
+    流程编号：<input type="text" id="Q_nodeBPMcode" /><button onclick="GetBPMInfo()">查询</button><button onclick="SaveBPM()">保存当前编辑流程</button><br/>
+    <button onclick="RunBPM()">启动当前编辑流程</button>实例id：<input type="text" id="run_businessProcessOid" /><button onclick="EventRunBPM()">处理事件及数据（交互）</button><br/>
+    <button onclick="GetAllRole()">获取用户角色</button><input type="text" id="roleList" /><br/>
+    <div id="sample">
+        <div style="width:100%; white-space:nowrap;">
+            <div style="display: inline-block; vertical-align: top; padding: 5px; width:100px">
+                <div id="myPalette" style="border: solid 1px gray; width: 100px; height: 720px"></div>
+            </div>
+
+            <div style="display: inline-block; vertical-align: top; padding: 5px; width:800px">
+                <div id="pWindows">
+                    <div style="overflow:auto;">
+                        <div id="NodeType">
+                            <h3 id="F_nodeBPM">业务流程基础信息</h3>
+                            <div>
+                                <ul>
+                                    <li>流程名称：<input type="text" id="F_nodeBPMname" /></li>
+                                    <li>流程编号：<input type="text" id="F_nodeBPMcode" /></li>
+                                    <li>流程说明：<input type="text" id="F_nodeBPMcomment" /></li>
+                                </ul>
+                            </div>
+
+                            <h3 id="F_linkBase">连线基础信息</h3>
+                            <div>
+                                <ul>
+                                    <li>节点类型：连线</li>
+                                    <li>连线名称：<input type="text" id="F_linkName" /></li>
+                                    <li>连线编号：<input type="text" id="F_linkCode" /></li>
+                                    <li>连线说明：<input type="text" id="F_linkComment" /></li>
+                                    <li>开始节点：<span id="F_linkFrom"></span></li>
+                                    <li>结束节点：<span id="F_linkTo"></span></li>
+                                    <li>
+                                        <!-- 颜色值不要修改，Js中使用颜色值区分向前，还是向后 -->
+                                        路由方向：<label><input name="F_linkDirection" type="radio" checked value="gray" />向前</label>
+                                        <label><input name="F_linkDirection" type="radio" value="red" />向后</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h3 id="F_nodeBase">节点基础信息</h3>
+                            <div>
+                                <ul>
+                                    <li>节点类型：<span id="F_nodeProcessNodeType"></span></li>
+                                    <li>节点名称：<input type="text" id="F_nodeName" /></li>
+                                    <li>节点编号：<input type="text" id="F_nodeCode" /></li>
+                                    <li>节点说明：<input type="text" id="F_nodeComment" /></li>
+                                    <li>
+                                        处理类型：<label><input name="F_nodeProcessType" type="radio" value="AUTO" />自动节点</label>
+                                        <label><input name="F_nodeProcessType" type="radio" value="PEOPLE" />人机交互节点</label>
+                                        <label><input name="F_nodeProcessType" type="radio" value="SYSTEM" />系统交互节点</label>
+                                        <label><input name="F_nodeProcessType" type="radio" value="CHILD_BP" />子流程启动节点</label>
+                                    </li>
+                                    <li>子业务流程编号：<input type="text" id="F_nodeChildBusinessProcessCode" /></li>
+                                    <li>流程编号：<input type="text" id="F_nodeWaitForChildProcessNodeCode" /></li>
+                                    <li>
+        								等待流程：
+        								<label><input name="F_nodeWaitForChildBp" type="radio" value="NO" />否</label>
+                                        <label><input name="F_nodeWaitForChildBp" type="radio" value="YES" />是</label>
+                                    </li>
+                                    <li>
+										实例类型：
+										<label><input name="F_nodeInstanceType" type="radio" value="SINGLE_IN_RUN" />运行时单例</label>
+                                        <label><input name="F_nodeInstanceType" type="radio" value="MULTIPLE" />多例</label>
+                                        <label><input name="F_nodeInstanceType" type="radio" value="SINGLE_IN_BP" />流程单例</label>
+                                    </li>
+                                    <li>
+										等待节点：
+										<label><input name="F_nodeWaitForFrom" type="radio" value="ALL" />等待所有</label>
+                                        <label><input name="F_nodeWaitForFrom" type="radio" value="NO" />不等待</label>
+                                    </li>
+                                    <li>
+										启动判断：
+										<label><input name="F_nodeStartDecision" type="radio" value="YES" />是</label>
+                                        <label><input name="F_nodeStartDecision" type="radio" value="NO" />否</label>
+                                    </li>
+                                    <li>判断条件：<input type="text" id="F_nodeStartDecisionCondition" /></li>
+                                    <li>判断节点条件：<input type="text" id="F_nodeDecisionCondition" /></li>
+                                    <li>操作者角色：<input type="text" id="F_nodeSelectedRoles" /></li>
+                                    <li>
+                                    	操作者从属关系：
+                                    	<label><input name="F_nodeOperatorBelongRelation" type="radio" value="NO" />无</label>
+                                        <label><input name="F_nodeOperatorBelongRelation" type="radio" value="UP" />向上从属关系</label>
+                                        <label><input name="F_nodeOperatorBelongRelation" type="radio" value="DOWN" />向下从属关系</label>
+                                        <label><input name="F_nodeOperatorBelongRelation" type="radio" value="SAME" />同一操作者</label>
+                                    </li>
+                                    <li>
+                                    	组织从属关系：
+                                    	<label><input name="F_nodeOrganizationBelongRelation" type="radio" value="NO" />无</label>
+                                        <label><input name="F_nodeOrganizationBelongRelation" type="radio" value="UP" />向上从属关系</label>
+                                        <label><input name="F_nodeOrganizationBelongRelation" type="radio" value="DOWN" />向下从属关系</label>
+                                    </li>
+                                    <li>从属关系源节点编号：<input type="text" id="F_nodeRelationSrcPnCode" /></li>
+                                    <li>
+                                    	是否允许无操作者：
+                                    	<label><input name="F_nodeAllowOperatorNone" type="radio" value="YES" />是</label>
+                                        <label><input name="F_nodeAllowOperatorNone" type="radio" value="NO" />否</label>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            <h3 id="F_nodeInData">输入数据</h3>
+                            <div class="F_nodeInDataContent">
+                                <div style="position:relative;">
+                                    <input type="button" value="添加节点" class="AddInData" />
+                                </div>
+                                <div class="ListContent">
+                                    <fieldset class="fieldsetNode">
+                                        <legend class="Depth">1</legend>
+                                        <div>
+                                            <div>
+                                                <table style="width:100%;border-collapse:collapse;">
+                                                    <tr>
+                                                        <td colspan="2" style="text-align:right;">
+                                                            <input type="button" value="删除" class="DeleteNodes" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>数据名称：</label><input type="text" class="InputData_name" /></td>
+                                                        <td><label>数据编号：</label><input type="text" class="InputData_code" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>数据说明：</label><input type="text" class="InputData_comment" /></td>
+                                                        <td><label>唯一标示：</label><input type="text" class="InputData_key" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>默认数据：</label><input type="text" class="defaultValue" /></td>
+                                                        <td><label>校验正则：</label><input type="text" class="InputData_canBeNull" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <label>是否为空：</label>
+                                                            <label><input name="F_nodeCanBeNull" class="F_nodeCanBeNull" type="radio" checked value="CAN_BE_NULL_YES" />是</label>
+                                                            <label><input name="F_nodeCanBeNull" class="F_nodeCanBeNull" type="radio" value="CAN_BE_NULL_NO" />否</label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <h3 id="F_nodeOutData">输出数据</h3>
+                            <div class="F_nodeOutDataContent">
+                                <div style="position:relative;">
+                                    <input type="button" value="添加节点" class="AddInData" />
+                                </div>
+                                <div class="ListContent">
+                                </div>
+                            </div>
+                            <h3 id="F_nodeIf">条件路由</h3>
+                            <div class="RouteSelection">
+                                <input type="button" id="RouteSelectionAddButton" value="添加指向" />
+                                <div class="NodesContent">
+                                    <fieldset style="margin-top:10px;">
+                                        <table style="width:100%;border-collapse:collapse;">
+                                            <tr>
+                                                <td style="text-align:right;"><input type="button" value="删除" id="DeleteNode" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label>判断结果：</label><input type="text" id="decisionResult" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="CheckboxContent"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="myDiagram" style="border: solid 1px gray; height: 720px"></div>
+                <div id="contextMenu">
+                    <ul>
+                        <li><a href="#" id="cut" onclick="cxcommand('Cut')">剪切</a></li>
+                        <li><a href="#" id="copy" onclick="cxcommand('Copy')">复制</a></li>
+                        <li><a href="#" id="paste" onclick="cxcommand('Paste')">粘贴</a></li>
+                        <li><a href="#" id="delete" onclick="cxcommand('Delete')">删除</a></li>
+                        <li><a href="#" id="property" onclick="cxcommand('property')">属性</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+<div id="IntOurData">
+    <div style="overflow:auto;">
+        <div id="IntOurData_list">
+            <div>
+                <h3 class="IntOurData_tabTitle">节点名称</h3>
+                <div class="IntOurData_tabData">
+                    <fieldset>
+                        <legend class="IntOurData_DataType">输入数据</legend>
+                        <div class="IntOurData_NoedDataitem">
+                            <div>key:<input type="text" class="datakey"/>  value:<input type="text" class="datavalue"/><span class="datavname"></span></div>
+                        </div>
+                        <button class="IntOurData_newItem">新建数据</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+		<button id="ClearTest" onclick="clearTest()">清空调试信息</button>
+		<input id="debugFlag" type="checkbox" value=""/>是否打印调试信息
+		<textarea id="jsonTest" style="width:100%;height:300px">
+		
+		</textarea>
+        <button id="SaveButton" onclick="save()">Save</button>
+        <button onclick="load()">Load</button>
+        <textarea id="mySavedModel" style="width:100%;height:300px">
+            { "class": "go.GraphLinksModel",
+            "linkFromPortIdProperty": "fromPort",
+            "linkToPortIdProperty": "toPort",
+            "nodeDataArray": [
+            {"category":"Comment", "loc":"360 -10", "text":"Kookie Brittle", "key":-13},
+            {"key":-1, "category":"Start","fill":"#EE9999", "loc":"175 0", "text":"开始9"},
+            {"key":0, "loc":"0 77", "text":"Preheat oven to 375 F"},
+            {"key":1, "loc":"175 100", "text":"In a bowl, blend: 1 cup margarine, 1.5 teaspoon vanilla, 1 teaspoon salt"},
+            {"key":2, "loc":"175 190", "text":"Gradually beat in 1 cup sugar and 2 cups sifted flour"},
+            {"key":3, "loc":"175 270", "text":"Mix in 6 oz (1 cup) Nestle's Semi-Sweet Chocolate Morsels"},
+            {"key":4, "loc":"175 370", "text":"Press evenly into ungreased 15x10x1 pan"},
+            {"key":5, "loc":"352 85", "text":"Finely chop 1/2 cup of your choice of nuts"},
+            {"key":6, "loc":"175 440", "text":"Sprinkle nuts on top"},
+            {"key":7, "loc":"175 500", "text":"Bake for 25 minutes and let cool"},
+            {"key":8, "loc":"175 570", "text":"Cut into rectangular grid"},
+            {"key":-2, "category":"End", "loc":"175 640", "text":"结束"}
+            ],
+            "linkDataArray": [
+            {"from":1, "to":2, "fromPort":"B", "toPort":"T"},
+            {"from":2, "to":3, "fromPort":"B", "toPort":"T"},
+            {"from":3, "to":4, "fromPort":"B", "toPort":"T"},
+            {"from":4, "to":6, "fromPort":"B", "toPort":"T"},
+            {"from":6, "to":7, "fromPort":"B", "toPort":"T"},
+            {"from":7, "to":8, "fromPort":"B", "toPort":"T"},
+            {"from":8, "to":-2, "fromPort":"B", "toPort":"T"},
+            {"from":-1, "to":0, "fromPort":"B", "toPort":"T"},
+            {"from":-1, "to":1, "fromPort":"B", "toPort":"T"},
+            {"from":-1, "to":5, "fromPort":"B", "toPort":"T"},
+            {"from":5, "to":4, "fromPort":"B", "toPort":"T"},
+            {"from":0, "to":4, "fromPort":"B", "toPort":"T"}
+            ]}
+        </textarea>
+
+        <button onclick="ReadBPM()">读取文本框中定义</button>
+        <button onclick="GetBPM()">获取当前编辑定义</button>
+        <button onclick="PostBPM()">新增当前编辑定义</button>
+        <textarea id="BPMJSON" style="width:100%;height:300px"> </textarea>
+    </div>
+</body>
+</html>

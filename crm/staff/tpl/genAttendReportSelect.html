@@ -1,0 +1,104 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        查看
+    </h4>
+</div>
+<!-- 标题信息开始 -->
+<style>
+    .tab-container.ng-isolate-scope {
+        margin: 10px 10px 0px 10px;
+        overflow: hidden;
+    }
+    .panel-body{
+        padding: 15px;
+    }
+</style>
+<div ng-controller="genAttendReportSelect" style="padding-top: 20px">
+            <div class="panel-heading">
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open1" >
+                        <accordion-heading>
+                            1.个人基本资料<i class="pull-right fa fa-angle-right"
+                                 ng-class="{'fa-angle-down': status.open1, 'fa-angle-right': !status.open1}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-3">
+                            人员编号：{{ledata.stfNum}}
+                        </div>
+                        <div class="col-xs-3">
+                            姓名：{{ledata.stfNm}}
+                        </div>
+                        <div class="col-xs-3">
+                            部门：{{ledata.depNm}}
+                        </div>
+                        <div class="col-xs-3">
+                            职位：{{ledata.posNm}}
+                        </div>
+                        <div class="col-xs-12" style="padding-top: 20px;">
+                            所属门店：{{ledata.Stores}}
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 20px;">
+                            直属主管：{{ledata.zszg}}
+                        </div>
+                        <div class="col-xs-9" style="padding-top: 20px;">
+                            所属大区总监：{{ledata.StfBasPos}}
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open2">
+                        <accordion-heading>
+                            2.考勤概况<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open2, 'fa-angle-right': !status.open2}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-4">
+                            考勤档期：{{ledata.phaGrpNm}}.{{ledata.phaNm}}
+                        </div>
+                        <div class="col-xs-5">
+                            档期时间段：{{ledata.phaStartTm}} ~ {{ledata.phaEndTm}}
+                        </div>
+                        <div class="col-xs-3">
+                            是否全勤：<span style="color:red;">{{ledata.fullAttnDays | dicNameFilter:"C002"}}</span>
+                        </div>
+                        <div class="col-xs-4" style="padding-top: 20px;">
+                            应出勤天数：{{ledata.supAttdDays}} 天
+                        </div>
+                        <div class="col-xs-5" style="padding-top: 20px;">
+                            实际出勤天数：{{ledata.actualAttnDays}} 天
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 20px;">
+                            应发工资天数：{{ledata.supPayDays}} 天
+                        </div>
+                        <div class="col-xs-4" style="padding-top: 20px;">
+                            请假天数：{{ledata.persLeaveDays}} 天
+                        </div>
+                        <div class="col-xs-5" style="padding-top: 20px;">
+                            借调天数：{{ledata.secDays}} 天
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 20px;">
+                            旷工天数：{{ledata.absentDays}} 天
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open3">
+                        <accordion-heading>
+                            3.考勤明细<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open3, 'fa-angle-right': !status.open3}"></i>
+                        </accordion-heading>
+                        <div ng-table="tableParams" style="width: 400px">
+                            <table class="table table-bordered table-condensed table-striped table-hover">
+                                <tr ng-repeat="row in $data">
+                                    <td title="'日期'" style="min-width: 130px;">{{row.attendDt}}</td>
+                                    <td title="'出勤情况'" style="min-width: 130px;" >
+                                        <span ng-if="row.attendSitu == '0'">{{row.attendSitu | dicNameFilter:"C040"}}</span>
+                                        <span style="color:red;" ng-if="row.attendSitu != '0'">{{row.attendSitu | dicNameFilter:"C040"}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </accordion-group>
+                </accordion>
+            </div>
+    <button ng-click="returnUp()" class="btn btn-sm btn-icon btn-default" style="width: 80px;margin-left: 15px">返回</button>
+</div>

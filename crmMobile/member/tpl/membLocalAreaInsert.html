@@ -1,0 +1,425 @@
+<div ng-show="proCityPreShow.localAreaShow">
+<ion-header-bar align-title="center"  class="header">
+<!--
+    <a style="height: 38px;width: 40px;display:block;position: absolute;line-height: 38px;z-index: 999;"  ui-sref="membBasInsert" ><img src="common/images/fanhui_icon.png" width="14" height="20" class="back_left" ng-click="locationBegin()"></a>
+-->
+    <a class="header_left" ng-click="goFrontPage()" ></a>
+    <h1 style="font-size:1.4rem">所在地区</h1>
+</ion-header-bar>
+<ion-content  class="has-header mem" overflow-scroll="false">
+    <ion-list>
+        <ion-item class="item item-divider divider_line" style="height: 34px;line-height: 1px;color: #ddd;" ng-click="locationBegin()">
+            <span>定位到的位置</span>
+        </ion-item>
+
+        <ion-item class="view_line" ng-click="addAddress()" style="padding: 0 0 0 5%;">
+            <span class="w140" ng-bind="curAddr"></span>
+        </ion-item>
+
+        <ion-item class="item item-divider divider_line" >
+        </ion-item>
+
+        <ion-item class="view_line"  ng-click="searchPrev('provShow')" style="padding: 0;" >
+            <a>
+                <div  class="p-Left">
+                    <span class=" float_l">省、市、区</span>
+                    <div class="go_right_img2"></div>
+                    <span class="memInfoItem float_r" ng-bind="curAddress | textAbbr:11"></span>
+                    <span class="memInfoItem float_r"></span>
+                </div>
+
+            </a>
+        </ion-item >
+       <!-- <ionic-city-picker options='vm.CityPickData2' class="view_line"></ionic-city-picker>-->
+
+        <ion-item class="textarea_line" style="padding: 0 ;">
+            <textarea placeholder="详细地址"   ng-model="localInfo.detailAddr" rows="6"
+                      style="width:100%;outline:none;resize:none;
+	                    border-style:hidden;padding-left: 5%;padding-top: 10px;font-size:16px;;"></textarea>
+        </ion-item>
+
+    </ion-list>
+</ion-content>
+</div>
+
+<!--选择省份-->
+<div ng-show="proCityPreShow.provShow">
+    <ion-header-bar align-title="center"  class="header">
+        <a class="header_left"  ng-click="changeAreaShow('localAreaShow')" ></a>
+        <h1 style="font-size:1.4rem">选择省份</h1>
+    </ion-header-bar>
+
+    <ion-content  class="has-header" overflow-scroll="false" >
+        <ion-list>
+            <div ng-repeat="prov in findPrev">
+                <ion-item class="item item-divider divider_line divider-Left" ng-if="prov.rgnNum == '999999'">
+                    <span style="color: #ddd;" ng-bind="prov.rgnNmPinyinFirstChar"></span>
+                </ion-item>
+
+                <ion-item class="view_line" style="padding: 0 0 1px 0;border: none;" ng-if="prov.rgnNum != '999999'" ng-click="">
+                    <a ng-click="searchCity('cityShow', prov.rgnNm, prov.rgnNum)" ng-if="prov.rgnNm">
+                        <div class="memInfoItem_line p-Left">
+                            <span class="w140 float_l" ng-bind="prov.rgnNm"></span>
+                            <div class="go_right_img2"></div>
+                            <span class="memInfoItem float_r" ng-if="selectPrev1 == prov.rgnNm">已选地区</span>
+                        </div>
+                    </a>
+
+                    <!-- <a ng-click="searchPref('prefShow', city.rgnNm, city.rgnNum)" ng-if="prov.rgnNm">
+                         <div class="padding-left">
+                             <span class="w140 float_l" ng-bind="prov.rgnNm"></span>
+                             <div class="go_right_img2"></div>
+                             <span class="memInfoItem float_r" ng-if="selectCtiy == prov.rgnNm">已选地区</span>
+                         </div>
+                     </a>-->
+                    <!--<a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">安庆省</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>-->
+                </ion-item >
+            </div>
+            <!--<div>
+                <ion-item class="item item-divider bottom_line">
+                    <span style="color: #ddd;">A</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">安徽省</span>
+                            <div class="go_right_img2"></div>
+                            <span class="memInfoItem float_r">已选地区</span>
+                        </div>
+                    </a>
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">安庆省</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+            </div>
+            <div>
+                <ion-item class="item item-divider bottom_line">
+                    <span style="color: #ddd;">A</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">安徽省</span>
+                            <div class="go_right_img2"></div>
+                            <span class="memInfoItem float_r">已选地区</span>
+                        </div>
+                    </a>
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">安庆省</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+            </div>
+
+            <div>
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+            </div>-->
+
+
+            <!--<ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >
+            <ion-item class="item item-divider divider_line" >
+                <span style="color: #ddd;">B</span>
+            </ion-item>
+
+            <ion-item style="padding: 0 0 1px 0;border: none;">
+                <a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">北京市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>
+            </ion-item >-->
+
+        </ion-list>
+    </ion-content>
+</div>
+
+<!--选择城市-->
+<div ng-show="proCityPreShow.cityShow">
+    <ion-header-bar align-title="center"  class="header">
+        <a class="header_left" ng-click="changeAreaShow('provShow')"  ></a>
+        <h1 style="font-size:1.4rem">选择城市</h1>
+    </ion-header-bar>
+
+    <ion-content  class="has-header" overflow-scroll="false" >
+        <ion-list>
+            <ion-item style="padding: 0 0 1px 0;border: none;" ng-repeat="city in findCity">
+                <a ng-click="searchPref('prefShow', city.rgnNm, city.rgnNum)" >
+
+                    <div class="memInfoItem_line p-Left">
+                        <span class="w140 float_l" ng-bind="city.rgnNm"></span>
+                        <div class="go_right_img2"></div>
+                        <!-- <span class="memInfoItem float_r">已选地区</span>-->
+                        <span class="memInfoItem float_r" ng-if="selectCtiy1 == city.rgnNm">已选地区</span>
+                    </div>
+                </a>
+                <!--<a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">佛山市</span>
+                        <div class="go_right_img2"></div>
+                    </div>
+                </a>-->
+            </ion-item >
+
+        </ion-list>
+    </ion-content>
+</div>
+
+
+<!--选择区域-->
+<div ng-show="proCityPreShow.prefShow">
+    <ion-header-bar align-title="center"  class="header">
+        <a class="header_left" ng-click="changeAreaShow('cityShow')" ></a>
+        <h1 style="font-size:1.4rem">选择区域</h1>
+    </ion-header-bar>
+
+    <ion-content  class="has-header" overflow-scroll="false" >
+        <ion-list>
+            <ion-item style="padding: 0 0 1px 0;border: none;" ng-repeat="pref in findPref">
+                <a ng-click="selectPref('localAreaShow', pref.rgnNm, pref.rgnNum)" >
+
+                    <div class="memInfoItem_line p-Left">
+
+                        <span class="w140 float_l" ng-bind="pref.rgnNm"></span>
+                        <span class="memInfoItem float_r" ng-if="selectPref1 == pref.rgnNm">已选地区</span>
+                        <!--<span class="memInfoItem float_r">已选地区</span>-->
+
+                    </div>
+                </a>
+                <!--<a ui-sref="" >
+                    <div class="memInfoItem_line padding-left">
+                        <span class="w140 float_l">荔湾区</span>
+                    </div>
+                </a>-->
+            </ion-item >
+
+        </ion-list>
+    </ion-content>
+</div>
+

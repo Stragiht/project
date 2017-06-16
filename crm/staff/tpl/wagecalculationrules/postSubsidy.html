@@ -1,0 +1,21 @@
+<div class="form-group">
+	<label class="col-sm-3 control-label">是否引用职位补助标准：</label>
+	<div class="col-sm-2">
+		<input type="radio" name="sf"
+			class="input-icon input-icon-right" value="1"
+			ng-model="sfyyzwbzbz" />是 
+	   <input type="radio" name="sf"
+			class="input-icon input-icon-right" value="0"
+			ng-model="sfyyzwbzbz" />否
+	</div>
+	<div ng-if="sfyyzwbzbz == '0'">
+		<div class="col-sm-3">
+			<input class="form-control" type="text" ng-model="yuan" name="yuan" class="form-control" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 required>
+			<div ng-messages="form.yuan.$error" ng-if="(form.yuan.$dirty && form.yuan.$invalid)">
+				<span ng-message="required" class="error">补助标准不能为空！ </span>
+				<span ng-message="pattern" class="error">*补助标准只能输入数字.</span>
+			</div>
+		</div>
+		<label class="col-xs-1 control-label text-left">元</label>
+	</div>
+</div>

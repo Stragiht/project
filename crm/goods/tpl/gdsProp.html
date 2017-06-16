@@ -1,0 +1,54 @@
+﻿
+<div  ng-controller="GdsPropCtrl">
+
+    <div>
+        <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+        </script>
+    </div>
+
+
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4" style="color:#000"> 商品属性
+  <button class="btn btn-info btn-addon" style="float:right;margin:-8px 10px 0 0;" ui-sref="app.goods.gdsPropInsert" user-power="WGDS01007002"> 新增属性</button>
+   </h4> 
+</div>
+
+<!-- 内容 -->
+<div class="wrapper-md" >
+
+    <!-- 表格 -->
+    <div  class="table-responsive" style="padding-left:10px;padding-right:10px; ">
+
+        <div style="padding:15px;">
+            <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ＃EEEEEE; border:none;outline:medium;color: #f05050"ng-model="gydst" readonly="readonly"> 条商品属性数据</lable>
+            <lable ng-if="gydst<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+        </div>
+
+        <div ng-table="tableParams">
+          <table  class="table table-bordered table-condensed   table-striped table-hover"   style=" margin-bottom:20px;top:50px;"  >
+             	  	 
+              <tr ng-repeat="gdsProp in $data">
+
+                  <td title="'属性组名称'"  style="text-align:center;min-width:120px;">
+                      {{gdsProp.gdsPropGrpNm}}
+                  </td>
+                  <td title="'属性名称'"  style="text-align:center;min-width:120px;">
+                      <!--<span  ng-repeat="gdsPropLis in gdsProp.gdsPropVoList">
+                        {{gdsPropLis.gdsPropNm+" "}}
+                      </span>-->
+                      {{gdsProp.gdsProMos}}
+                  </td>
+                  <td title="'操作'"   style="text-align:center;min-width:120px; ">
+                      <a style=" text-decoration:underline;color: #05b5ff;"   ui-sref="app.goods.gdsPropUpdate({oId:gdsProp.oId})" user-power="WGDS01007003">编辑</a>
+                      <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="delGdsProp(gdsProp.oId)" user-power="WGDS01007004">删除</a>
+                  </td> 
+              </tr>
+
+          </table>
+        </div>
+    </div>
+
+</div><!-- wrapper-md-->
+</div>

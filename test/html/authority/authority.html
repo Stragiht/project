@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <div>
+        <fieldset>
+            <table>
+                <tbody>
+                    <tr>
+                        <td colspan="3">更新操作者角色情报</td>
+                    </tr>
+                    <tr>
+                        <td>操作者ID</td>
+                        <td><input id="operatorId" type=text value=""/></td>
+                    </tr>
+                    <tr>
+                        <td>角色ID</td>
+                        <td><input id="roleId" type=text value=""/></td>
+                    </tr>
+                    <tr>
+                        <td><button id="addOperator" onclick="addOperator()">登录</button></td>
+                        <td><button id="delOperator" onclick="delOperator()">删除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+       <br/><br/>
+        <fieldset>
+            <table>
+                <tbody>
+                    <tr>
+                        <td colspan="3">更新角色权限情报</td>
+                    </tr>
+                    <tr>
+                        <td>角色ID</td>
+                        <td><input id="roleAuthId" type=text value=""/></td>
+                    </tr>
+                    <tr>
+                        <td>功能编号</td>
+                        <td><input id="functionNo" type=text value=""/></td>
+                    </tr>
+                    <tr>
+                        <td>权限分配方式</td>
+                        <td><input id="typeFlg" type=text value=""/></td>
+                    </tr>
+                    <tr>
+                        <td><button id="addRoleAuth" onclick="addRoleAuth()">登录</button></td>
+                        <td><button id="delRoleAuth" onclick="delRoleAuth()">删除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <script type="text/javascript" src="../../common/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../../common/js/common.js"></script>
+    <!-- Ajax -->
+    <script type="text/javascript">
+        function addOperator() {  
+            var key = {};  
+            key.operatorId = $("#operatorId").val();
+            key.roleId = $("#roleId").val();  
+            var jsonStr = JSON.stringify(key);  
+
+            $.ajax({  
+                type : "post",  
+                contentType : "application/json;charset=UTF-8",  
+                url : "/CrmWeb/api/auth/addOperator",  
+                dataType : "json",  
+                processData : false,  
+                data : jsonStr,
+                
+                success : function(msg) {  
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                },  
+                error : function(msg) {
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                }  
+            });  
+        }
+        
+        function delOperator() {  
+           var key = {};  
+            key.operatorId = $("#operatorId").val();
+            key.roleId = $("#roleId").val();  
+            var jsonStr = JSON.stringify(key);  
+
+            $.ajax({  
+                type : "post",  
+                contentType : "application/json;charset=UTF-8",  
+                url : "/CrmWeb/api/auth/delOperator",  
+                dataType : "json",  
+                processData : false,  
+                data : jsonStr,
+                
+                success : function(msg) {  
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                },  
+                error : function(msg) {
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                }  
+            });  
+        }
+        
+        function addRoleAuth() {  
+            var key = {};  
+            key.roleId = $("#roleAuthId").val();
+            key.functionNo = $("#functionNo").val();  
+            key.typeFlg = $("#typeFlg").val(); 
+            var jsonStr = JSON.stringify(key);  
+
+            $.ajax({  
+                type : "post",  
+                contentType : "application/json;charset=UTF-8",  
+                url : "/CrmWeb/api/auth/addRoleAuth",  
+                dataType : "json",  
+                processData : false,  
+                data : jsonStr,
+                
+                success : function(msg) {  
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                },  
+                error : function(msg) {
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                }  
+            });  
+        }
+        
+        function delRoleAuth() {  
+            var key = {};  
+            key.roleId = $("#roleAuthId").val();
+            key.functionNo = $("#functionNo").val();  
+            key.typeFlg = $("#typeFlg").val();  
+            var jsonStr = JSON.stringify(key);  
+
+            $.ajax({  
+                type : "post",  
+                contentType : "application/json;charset=UTF-8",  
+                url : "/CrmWeb/api/auth/delRoleAuth",  
+                dataType : "json",  
+                processData : false,  
+                data : jsonStr,
+                
+                success : function(msg) {  
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                },  
+                error : function(msg) {
+                    for(var index in msg) {
+                        if (index == "meta") {
+                            alert(msg[index].message);
+                            break;
+                        }
+                    }
+                }  
+            });  
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4"> 城市底薪基数管理
+        <button class="btn btn-success btn-addon mr_8" style="float:right;margin-right:10px;" ui-sref="app.staff.cityBaseSalaryManagementInsert"> 新增城市底薪基数</button>
+        <button class="btn btn-info  btn-addon mr_8" style="float:right;margin-right:10px;" ui-sref="app.staff.cityBaseSalaryManagementImport"> 批量导入</button>
+    </h4>
+</div>
+
+<div class="panel-heading">
+	<div ng-controller="CsdxjsglCtrl as demo">
+		<div class="panel-heading">
+		    <label class="control-label mt_6">共有<span class="text-red">{{countfalg}}</span>条数据 </label>
+		    <label class="control-label mt_6" ng-if="countfalg==0">（没有符合条件的数据）</label>
+		</div>
+	   	<div ng-table="tableParams">
+		    <table class="table table-bordered table-condensed   table-striped table-hover" >
+                <tr ng-repeat="userinfo in $data" ng-form="rowForm" demo-tracked-table-row="userinfo">
+	                <td ng-if=flase>{{$index+1}}</td>
+	                <td ng-if=flase>{{userinfo.oid}}</td>
+	                <td title="'城市名称'" ng-switch="userinfo.isEditing" ng-class="city.$dirty ? 'bg-warning' : ''" ng-form="city" demo-tracked-table-cell>
+	                    <span ng-switch-default class="editable-text">{{userinfo.city|stfBasPCV}}</span>
+	                    <!-- TODO:因为要根据城市修改数据所以先把城市写为不可修改的了 -->
+	                    <div class="controls" ng-class="city.$invalid && city.$dirty ? 'has-error' : ''" ng-switch-when="true">
+	                       <span class="editable-text">{{userinfo.city|stfBasPCV}}</span>
+	                    </div>
+	                </td>
+	                <td title="'底薪基数'" ng-switch="userinfo.isEditing" ng-class="basSalBase.$dirty ? 'bg-warning' : ''" ng-form="basSalBase" demo-tracked-table-cell>
+	                    <span ng-switch-default class="editable-text">￥{{userinfo.basSalBase | fromMoney}}</span>
+	                    <div class="controls" ng-class="basSalBase.$invalid && basSalBase.$dirty ? 'has-error' : ''" ng-switch-when="true">
+	                        <input type="text" name="basSalBase" ng-model="userinfo.basSalBase" class="editable-input form-control input-sm" maxLength=10 required/>
+	                    </div>
+	                </td>
+	                <td title="'备注'" style="min-width:100px;max-width:400px;" ng-switch="userinfo.isEditing" ng-class="remark.$dirty ? 'bg-warning' : ''" ng-form="remark" >
+	                    <span ng-switch-default class="editable-text">{{userinfo.remark}}</span>
+	                    <div class="controls" ng-class="remark.$invalid && remark.$dirty ? 'has-error' : ''" ng-switch-when="true">
+	                        <input type="text" name="remark" ng-model="userinfo.remark" class="editable-input form-control input-sm" required/>
+	                    </div>
+	                </td>
+	                <td title="'操作'" style="text-align:center;min-width:210px;">
+	                    <a class="mr_9" ng-click="save(userinfo,rowForm)" ng-if="userinfo.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid">保存</a>
+	                    <a class="mr_9" ng-click="cancel(userinfo)" ng-if="userinfo.isEditing">取消</a>
+	                    <a class="mr_9"  ng-click="userinfo.isEditing = true" ng-if="!userinfo.isEditing">编辑</a>
+	                    <a class="mr_9" ng-click="del(userinfo.oId,$index)" ng-if="!userinfo.isEditing">删除</a>
+		           </td>
+                </tr>
+            </table>
+	   </div>
+	</div>
+</div>
+<div>
+	<script type="text/ng-template" id="delete.html">
+		<div ng-include="'common/tpl/delete.html'"></div>
+ 	</script>
+</div>

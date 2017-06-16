@@ -1,0 +1,88 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        查看
+    </h4>
+</div>
+<!-- 标题信息开始 -->
+<style>
+    .tab-container.ng-isolate-scope {
+        margin: 10px 10px 0px 10px;
+        overflow: hidden;
+    }
+    .panel-body{
+        padding: 15px;
+    }
+</style>
+<div ng-controller="leaveManagementSelectController" style="padding-top: 20px">
+    <tabset  class="tab-container">
+        <tab style="padding-left: 30px;"><tab-heading>申请信息</tab-heading>
+            <div class="panel-heading">
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open1" >
+                        <accordion-heading>
+                            1.基本信息<i class="pull-right fa fa-angle-right"
+                                 ng-class="{'fa-angle-down': status.open1, 'fa-angle-right': !status.open1}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-4">
+                            申请编号：{{ledata.leaveNm}}
+                        </div>
+                        <div class="col-xs-4">
+                            提交人：{{ledata.stfNm}}
+                        </div>
+                        <div class="col-xs-4">
+                            审批状态：<span style="color:red;">{{ledata.strute | dicNameFilter:"C018"}}</span>
+                        </div>
+                        <div class="col-xs-4" style="padding-top: 10px;">
+                            提交时间：{{ledata.sbmtTm}}
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open2">
+                        <accordion-heading>
+                            2.申请内容<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open2, 'fa-angle-right': !status.open2}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-4">
+                            职位：{{ledata.posNm}}
+                        </div>
+                        <div class="col-xs-4">
+                            请假天数：{{ledata.lapdate}}天
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open3">
+                        <accordion-heading>
+                            3.请假明细<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open3, 'fa-angle-right': !status.open3}"></i>
+                        </accordion-heading>
+                        <div ng-table="tableParams" style="width: 400px">
+                            <table class="table table-bordered table-condensed table-striped table-hover">
+                                <tr ng-repeat="row in $data">
+                                    <td title="'请假时间'" style="min-width: 130px;">{{row.leaveTm}}</td>
+                                    <td title="'请假状态'" style="min-width: 130px;">{{row.leaveType}}</td>
+                                    <td title="'请假事由'" style="min-width: 130px;">{{row.leaveYY}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </accordion-group>
+                </accordion>
+            </div>
+        </tab>
+        <tab style="padding-left: 10px;" select="selecttabs()"><tab-heading>审批历史</tab-heading>
+            <div ng-table="apptableParams" >
+                <table class="table table-bordered table-condensed table-striped table-hover">
+                    <tr ng-repeat="row in $data">
+                        <td title="'操作时间'" style="min-width: 130px;">{{row.updtTm}}</td>
+                        <td title="'操作人'" style="min-width: 130px;">{{row.stfNm}}</td>
+                        <td title="'审批状态'" style="min-width: 130px;">{{row.status | dicNameFilter:"C019"}}</td>
+                        <td title="'备注'" style="min-width: 130px;">{{row.apprComments}}</td>
+                    </tr>
+                </table>
+            </div>
+        </tab>
+    </tabset>
+    <button ng-click="returnUp()" class="btn btn-sm btn-icon btn-default" style="width: 80px;margin-top: 15px;margin-left: 10px">返回</button>
+</div>

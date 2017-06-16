@@ -1,0 +1,113 @@
+<style>
+.bottom_line_to_item_content {
+  border-width: 0px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  
+  background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+  background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+  background-position: bottom;
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border-style:hidden;
+}
+.bottom_line_to_item_content .item-content{
+	background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+	background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+	background-position: bottom;
+	background-size: 100% 1px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	border-style:hidden;
+}
+</style>
+<ion-header-bar align-title="center"  class="header">
+        <a href=""  ui-sref="home" class="angle_left" style="z-index:1000;left:16px" ng-show="!selectArea && !selectStore && !selectJob"><img src="common/images/back_btn.png" width="18" ></a>
+        <a href=""  ng-click="closeSelect()" class="angle_left" style="z-index:1000;left:16px" ng-show="selectArea || selectStore || selectJob"><img src="common/images/back_btn.png" width="18" ></a>
+        <h1 style="font-size:1.4rem">人员信息</h1>
+</ion-header-bar>
+<div class=" bar bar-subheader quanbu_bt" style="padding-top: 10px;">
+        <a href="" ng-click="citySelect()"  ng-class="{'active' : selectArea}">{{titleArea | characters : 4}} <i class="fa "  ng-class="{'fa-caret-down ': !selectArea,'fa-caret-up': selectArea}"></i></a>
+        <a href=""  ng-click="storeSelect()" class="biankuang" ng-class="{'active' : selectStore}">{{titleStore  | characters : 4 }} <i class="fa " ng-class="{'fa-caret-down ': !selectStore,'fa-caret-up': selectStore}"></i></a>
+        <a href=""  ng-click="jobSelect()" class="" ng-class="{'active' : selectJob}">{{titleJob  | characters : 4}} <i class="fa " ng-class="{'fa-caret-down ': !selectJob,'fa-caret-up': selectJob}"></i></a>
+</div>
+ <ion-content class="has-header has-subheader"  ng-show="selectArea">
+ <!-- stfList.html -->
+      <div class="list">
+        <div ng-repeat="item in citys" >
+          <div class="item item-divider" ng-if="item.rgnNum == '999999' && item.firstPinyin != '0' " style="font-size:14px;" id="{{item.rgnNm}}"> 
+            {{item.rgnNm}}
+          </div>
+          <ion-radio 
+                  name="area"
+                   ng-value="item.rgnNum"
+                   ng-model="search.rgnNum" ng-if="item.rgnNum != '999999'  &&  item.firstPinyin != '999' "   style="font-size:14px;" ng-click="cityChange(item.rgnNum,item.rgnNm);">
+            {{ item.rgnNm }}<span  class="color07 ml10" ng-if="item.firstPinyin == '00'">当前定位城市</span>
+          </ion-radio>
+        </div>
+      </div>
+</ion-content>
+      <div class="initials"  id="letterdiv" ng-show="selectArea" >
+          <ul>
+             <li style="height:{{liheight}}px" ng-click="goToTop();">#</li>
+             <li ng-repeat = "letter in letters"  ng-click="goToLetter(letter)" style="height:{{liheight}}px">{{letter}}</li>
+          </ul>
+      </div>
+<ion-content class="has-header has-subheader"  ng-show="selectStore">
+<!-- stfList.html -->
+      <div class="list" >
+        <div ng-repeat="item in stores" >
+          <ion-radio 
+                    name="store"
+                   ng-value="item.strNum"
+                   ng-model="search.strNum"  style="font-size:14px;" ng-click="storeChange(item.strNum,item.strNm);">
+            {{ item.strNm }}
+          </ion-radio>
+        </div>
+      </div>
+</ion-content>
+<ion-content class="has-header has-subheader"  ng-show="selectJob">
+<!-- stfList.html -->
+      <div class="list">
+        <div ng-repeat="item in jobs" >
+          <ion-radio 
+                    name="job"
+                   ng-value="item.posNum"
+                   ng-model="search.posNum"  style="font-size:14px;" ng-click="jobChange(item.posNum,item.posNm);">
+            {{ item.posNm }}
+          </ion-radio>
+        </div>
+      </div>
+</ion-content>
+<ion-content  class="has-header has-subheader"  ng-show="!selectArea && !selectStore && !selectJob" delegate-handle="contentScroll">
+<!-- stfList.html -->
+<ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+<div class="wrap">
+	<div class="xiaoxizhongxin_bj1"  style="margin-top: 1px;">
+	   <ion-list>
+        	<ion-item class="bottom_line_to_item_content stfItem" ng-repeat="stfItem in stfList">
+           	  <a href="" ui-sref="stfInfo({stfNum:stfItem.stfNum})">
+               	<div class="xiaoxi_img2">{{stfItem.stfNm | stfNmLast2}}</div>
+                <div class="xiaoxi_line" style="">
+                	<div class="xiaoxizhongxin_text4">
+                		<h2 style=" line-height: 25px;">{{stfItem.phone}}</h2>
+                    	<p  style=" line-height: 20px;">{{stfItem.strNm | characters : 12}}</p> 
+                	</div>
+               		<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;margin-right: 15px;">
+                	<span class="float_r line_height50" style="margin-right:12px;">{{stfItem.posNm}} </span>
+                </div>
+                </a>
+                <ion-option-button class="button-assertive"  style="font-size:26px;" ng-click="callPhone(stfItem.phone)"><i class="fa fa-phone"></i></ion-option-button>
+                <ion-option-button class="button-balanced" style="font-size:26px;" ng-click="callWeixin()"><i class="fa fa-weixin"></i></ion-option-button>
+           </ion-item>
+       </ion-list> 
+    </div>
+    <div class="wushuju" my-nodata-show="!selectArea && !selectStore && !selectJob && stfList.length == 0 && !moredata">
+			<img src="common/images/bear.gif" >
+			<p>没有符合条件的数据</p>
+    </div>
+</div>
+<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>

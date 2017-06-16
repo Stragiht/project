@@ -1,0 +1,134 @@
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">
+		编辑
+		<a class="btn btn-default btn-addon mr_8" ui-sref="app.staff.baPromote">返回BA晋升督导流程</a>
+	</h4>
+</div>
+<div ng-controller="baPromoteUpdateController">
+	<form name="form" class="form-horizontal form-validation">
+		<div class="panel-heading">
+			<!--BA晋升信息-->
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.entBaseInfoOpen">
+					<accordion-heading>
+						BA晋升信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.entBaseInfoOpen, 'fa-angle-right': !status.entBaseInfoOpen}"></i>
+					</accordion-heading>
+					<div class="form-group">
+                        <label class="col-xs-2 control-label" style="width:180px;"><span class="text-red">*</span>晋升人员：</label>
+                        <div class="col-xs-4">
+                            <div class="input-group w-md">
+                                <input type="hidden" ng-model="baPromoteInfo.posChgStf" ng-required="true" />
+                                <input type="text" class="form-control" name="supvrStfNum1" ng-model="supvrStfNumDisplay1" ng-click="openStf1('lg')" ng-readonly="true" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openStf1('lg')">浏览</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label" style="width:180px;"><span class="text-red">*</span>晋升职位：</label>
+						<div class="col-xs-4">
+							<select class="form-control" name="stfPos" ng-model="baPromoteInfo.newPos" ng-options="data.key as data.text for data in positionList" ng-change="changePosition(baPromoteInfo.newPos)" style="width: 49%;display: inline;" ng-required="true"></select>
+							<select class="form-control" ng-model="baPromoteInfo.posGrdNum" ng-options="data.key as data.text for data in positionLevelList" style="width: 49%;display: inline;" ng-if="positionLevelList.length > 0"></select>
+						</div>                                               
+					</div>
+					<div class="form-group">
+                        <label class="col-xs-2 control-label" style="width:180px;"><span class="text-red">*</span>晋升之后直属主管：</label>
+                        <div class="col-xs-4">
+                            <div class="input-group w-md">
+                                <input type="hidden" ng-model="baPromoteInfo.supvrStfNum" ng-required="true" />
+                                <input type="text" class="form-control" name="supvrStfNum" ng-model="supvrStfNumDisplay" ng-click="openStf('lg')" ng-readonly="true" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openStf('lg')">浏览</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" style="width:180px;"><span style="color: red;">*</span>晋升之后管理的人员：</label>
+                            <div class="col-xs-3">
+                                <a class="btn m-b-xs w-xs btn-default" ng-click="openStfs('lg')">添加</a>
+                            </div>
+                            <div class="col-xs-4"> 
+                               <input type="hidden" ng-model="baPromoteInfo.mngStf" ng-required="true" />
+                            </div>
+                     </div>
+                     <div class="form-group">
+                         <label class="col-xs-2 control-label"></label>
+                         <div class="col-xs-10">
+                            <table class="table table-bordered table-condensed table-striped table-hover">
+                                <tr>
+                                    <th>人员编号</th>
+                                    <th>姓名</th>
+                                    <th>职位</th>
+                                    <th>等级</th>
+                                    <th>所在城市</th>
+                                    <th>操作</th>
+                                </tr>           
+                                <tr ng-repeat="datainfoOne in datas">
+                                    <td>{{datainfoOne.stfNum}}</td>
+                                    <td>{{datainfoOne.stfNm}}</td>
+                                    <td>{{datainfoOne.posNm}}</td>
+                                    <td>{{datainfoOne.posGrdNm}}</td>
+                                    <td>{{datainfoOne.rgnNm}}</td>
+                                    <td class="mr_22">
+                                        <a class="mr_9" ng-click="datas.splice($index,1)">删除</a>
+                                    </td>           
+                                </tr>                   
+                             </table>                           
+                         </div>
+                    </div>    
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label" style="width:180px;"><span class="text-red">*</span>晋升之后管理的门店：</label>
+                        <div class="col-xs-2">
+                            <a class="btn m-b-xs w-xs btn-default" ng-click="openDep('lg')">添加</a>
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="hidden" name="subStore" ng-model="baPromoteInfo.mngStr" ng-required="true" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label"></label>
+                        <div class="col-xs-10">
+                            <table class="table table-bordered table-condensed table-striped table-hover">
+                                <tr>
+                                    <th>门店编号</th>
+                                    <th>门店名称</th>
+                                    <th>所属渠道</th>
+                                    <th>所属销售大区</th>
+                                    <th>所属城市</th>
+                                    <th>所属城市分区</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr ng-repeat="store in storeList ">
+                                    <td title="'门店编号'">{{store.strNum}}</td>
+                                    <td title="'门店名称'">{{store.strNm}}</td>
+                                    <td title="'所属渠道'">{{store.chnlNm}}</td>
+                                    <td title="'所属销售大区'">{{store.majRgnNm}}</td>
+                                    <td title="'所属城市'">{{store.cityNum}}</td>
+                                    <td title="'所属城市分区'">{{store.partiNm}}</td>
+                                    <td title="'操作'" class="mr_22">
+                                        <a class="mr_9" ng-click="delStore($index)">删除</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+		</div>
+		<div class="panel-heading">
+			<button class="btn btn-info btn-addon mr_10" ng-click="saveBaPromote()" ng-disabled="form.$invalid">保存</button>
+			<button class="btn btn-info btn-addon mr_10" ng-click="submitBaPromote()" ng-disabled="form.$invalid">提交</button>
+		</div>
+	</form>
+	<div>
+		<script type="text/ng-template" id="multiselectstore.html">
+			<div ng-include="'common/tpl/multiselectstore.html'"></div>
+		</script>
+		<script type="text/ng-template" id="radiostaff.html">
+			<div ng-include="'common/tpl/radiostaff.html'"></div>
+		</script>
+		<script type="text/ng-template" id="multiselectstaff.html">
+            <div ng-include="'common/tpl/multiselectstaff.html'"></div>
+	    </script>
+	</div>
+</div>

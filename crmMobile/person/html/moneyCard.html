@@ -1,0 +1,40 @@
+<div ng-show="moneyCardFormShow">
+<ion-header-bar align-title="center"  class="header">
+        <a  ng-click="goFrontPage()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">工资卡</h1>
+        <a href="" class="head_right" ng-click="save()" style="margin-top:8px;font-size:1.2rem"><i user-power="MPER01004001">保存</i></a>
+</ion-header-bar>
+<ion-content class="has-header">
+<!-- moneyCard.html -->
+<div class="wrap">
+	<ul class="listvrew clearfix mb_15">
+        <li ng-click="moneyCardChoose()">
+       		<span style="padding-right: 6px;">银行名称</span>
+			<span class="fn_16">{{moneyCard.cardNameDis}}</span>
+			<span class="float_r line_height40" style="margin-right: 16px">
+				<img src="common/images/you_btn.png" style="position: absolute;top: 17px;right: 14px;">
+			</span>
+        </li>
+        <li>
+             <span style="padding-right: 6px;">银行卡号</span>
+             <input type="number" class="f_10" style="display:inline;width:200px" ng-model="moneyCard.cardNo" maxlength="30" />
+        </li>
+    </ul>	
+</div>
+</ion-content>
+</div>
+<!-- 银行卡名称选择 -->
+<div ng-show="moneyCardSelect">
+	<ion-header-bar align-title="center" class="header">
+		<a  ng-click="goBack()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">银行名称</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- moneyCard.html -->
+	<div class="wrap">
+		<ion-list>
+			<ion-radio name="sex" ng-repeat="dic in dicList" ng-value="dic.key" ng-model="moneyCard.cardName" ng-click="clickmoneyCard(dic)">{{dic.text}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>

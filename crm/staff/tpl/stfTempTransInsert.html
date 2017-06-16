@@ -1,0 +1,94 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">新增BA借调记录</h4>
+</div>
+<script type="text/ng-template" id="multiselectstaff.html">
+	<div ng-include="'common/tpl/multiselectstaff.html'"></div>
+</script>
+<script type="text/ng-template" id="radiostore.html">
+	<div ng-include="'common/tpl/radiostore.html'"></div>
+</script>
+<!-- 标题信息结束 -->
+<!-- 导出系列按钮面板开始 -->
+<div class="panel-heading" ng-controller="stfTempTransInsert">
+	<form class="bs-example form-horizontal form-validation" name = "form">
+		<div class="form-group">
+			<label class="col-xs-3 control-label"><span style="color: red;">*</span>借调人员：</label>
+				<div class="col-xs-3">
+					<a class="btn m-b-xs w-xs btn-default" ng-click="openStf('lg')">添加</a>
+				</div>
+		 </div>
+		 <div class="form-group">
+			 <label class="col-xs-1 control-label"></label>
+			 <div class="col-xs-10">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+					<tr>
+						<th width="'100px'">人员编号</th>
+						<th width="'100px'">姓名</th>
+						<th width="'100px'">职位</th>
+						<th width="'100px'">等级</th>
+						<th width="'100px'">所在城市</th>
+						<th width="'100px'">操作</th>
+					</tr>			
+					<tr ng-repeat="datainfoOne in datas">
+						<td>{{datainfoOne.stfNum}}</td>
+						<td>{{datainfoOne.stfNm}}</td>
+						<td>{{datainfoOne.posNm}}</td>
+						<td>{{datainfoOne.posGrdNm}}</td>
+						<td>{{datainfoOne.rgnNm}}</td>
+						<td class="mr_22">
+							<a class="mr_9" ng-click="datas.splice($index,1)">删除</a>
+						</td>			
+					</tr>					
+				 </table>							
+		     </div>
+		</div>			
+		<div class="form-group">
+			<label class="col-xs-3 control-label"><span style="color: red;">*</span>借调到门店：</label>
+			<div class="col-xs-3">
+				<input type="text" class="form-control" name="supvrStfNum" ng-model="supvrStfNumDisplay" ng-required="true" ng-click="openStr('lg')" ng-readonly="true" />
+				
+			</div>
+			<div class="col-xs-2">
+				<a class="btn m-b-xs w-xs btn-default" ng-click="openStr('lg')">浏览</a>
+			</div>						
+		</div>
+		<div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red;">*</span>借调时间：</label>
+                <div class="col-sm-3">
+                     <div class="input-group w-md" style="width: 205px" ng-controller="DatepickerDemoCtrl">
+                         <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"  ng-model = "sec.secStartTm"
+                                 is-open="opened" readonly="readonly"  datepicker-options="dateOptions" ng-required="true"/> 
+                         <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button></span>       
+                     </div>       
+                </div>        
+             <label class="col-sm-1 control-label" style="text-align: center;">~</label>
+                <div class="col-sm-3">
+                      <div class="input-group w-md" style="width: 205px" ng-controller="DatepickerDemoCtrl">
+                          <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd"  ng-model = "sec.secEndTm"
+                                  is-open="opened" readonly="readonly" datepicker-options="dateOptions" ng-required="true"/>
+                          <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button></span>      
+                      </div>      
+              	</div>        
+        </div>            
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span style="color: red;">*</span>事由 ：</label>
+            <div class="col-sm-3">
+                 <select class="form-control" ng-model="stf.dicNm" name="account" ng-options="zt.key as zt.text for zt in reasons" ng-required="true">  
+				 </select>
+            </div>            
+		</div>
+		<div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="col-lg-6" style="padding-left:0px;">
+                    <button class="btn btn-info  btn-addon" style="float:left;" ng-click = "saveStfTempTrans()" user-power = "WSTF01012002">提交保存</button>
+                </div>
+                <div class="col-lg-6">
+                    <button class="btn btn-default btn-addon" style="float:left; " ui-sref="app.staff.stfTempTransSelect"> 返回</button>
+                </div>
+            </div>
+        </div>
+	</form>
+
+</div>

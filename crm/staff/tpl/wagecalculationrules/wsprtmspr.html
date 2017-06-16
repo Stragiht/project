@@ -1,0 +1,25 @@
+<div class="form-group" ng-controller="qcsyjtcflCtrl">
+	<label class="col-sm-3 control-label">选择子方案：</label>
+	<div class="col-sm-3">
+		<select name="tdxzzfa" ng-model="tdxzzfa" class="form-control" required>
+			<option ng-repeat="qcsyjtcfl in qcsyjtcfls" value={{qcsyjtcfl.key}}>C037{{qcsyjtcfl.text}}</option>
+		</select>
+		<p style="text-align:Left" ng-if="form.tdxzzfa.$error.required && !form.tdxzzfa.$pristine">*子方案不能为空.</p>
+	</div>
+
+</div>
+<div class="form-group">
+	<table class="table table-bordered table-condensed   table-striped"
+            style="margin-bottom: 20px;">
+        <tr>
+            <td style="text-align: center;">提成类别</td>
+            <td style="text-align: center;">计算规则</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">业绩提成</td>
+            <td style="text-align: Left;">总销售业绩提成
+            	<input type="text" class="form-control" id="tdyjtcbfb" name = "tdyjtcbfb"  style="width: 165px;display:inherit;" ng-model="tdyjtcbfb" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" required maxLength=5/>%
+            </td>
+        </tr>
+    </table>
+</div>

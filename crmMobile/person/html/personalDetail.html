@@ -1,0 +1,76 @@
+<ion-header-bar align-title="center"  class="header">
+        <a href=""  ui-sref="personalCenter" class="angle_left" style="z-index:1000;left:15px">
+            <img src="common/images/back_btn.png" width="18">
+        </a>
+        <h1 style="font-size:1.4rem">个人信息</h1>
+</ion-header-bar>
+<ion-content  class="has-header "  >
+<!-- personalDetail.html -->
+<style>
+.listvrew li .float_r a {
+    color: #ccc;
+}
+</style>
+<div class="wrap">
+    <ion-list>
+	<ul class="listvrew clearfix" style="border-top: 0px;">
+        <li ng-click="uploadPicture()">
+       		<span >头像</span>
+			<i class="" style="float: right;font-size: 26px; margin-top: 5px;margin-left: 10px;"><img src="common/images/sandian2.png" width="4"></i>
+               	<div style="width:45px; height:45px;     border-radius: 50%;  margin-top: 6px; overflow: hidden; float:right; ">
+	               	<img ng-if="ifXs=='0'" src="{{stfInfo.figure|  defaultFigure}}" class="zuoche_img" style="width:45px; height:45px;" id="figurePicSrc">
+	               	<img ng-if="ifXs=='1'" src="common/images/touxiang.png" class="zuoche_img" style="width:50px; height:50px;" id="figurePicSrc">
+               	</div>
+               	<input type="hidden" id="figurePic" />
+        </li>
+        <li>
+             <span >人员编号</span>
+             <span class=" stfInfoItem float_r">{{stfInfo.stfNum}}</span>
+        </li>
+        <li>
+             <span class="w140">姓名</span>
+             <span class=" stfInfoItem float_r">{{stfInfo.stfNm}}</span>
+        </li>
+        <li>
+             <span class="w140">部门</span>
+               	<span class=" stfInfoItem float_r">{{stfInfo.depNm}}</span>
+        </li>
+        <li>
+            <span class="w140">职位等级</span>
+               	<span class=" stfInfoItem float_r">{{stfInfo.posNm}}>{{stfInfo.posGrdNm}}</span>
+        </li>
+        <li>
+             <span class="w140">联系电话</span>
+               	<span class=" stfInfoItem float_r">{{stfInfo.phone}}</span>
+        </li>
+        <li>
+             <span class="w140">入职日期</span>
+               	<span class=" stfInfoItem float_r">{{stfInfo.stfEntDt}}</span>
+        </li>
+        <li>
+             <span class="w140">提交会员</span>
+               	<span class=" stfInfoItem float_r">{{stfInfo.mebAmt}}个</span>
+        </li>
+    </ul> 
+    </ion-list>
+    <div  class="index_work_bt" style="border-bottom:0px" ng-if="superItems.length > 0">岗位职责</div>	
+   	<ul class="listvrew clearfix" ng-if="superItems.length > 0">
+		<li ng-repeat = "  superitem  in superItems">
+			<span class="w140"  ng-if="$index == 0">直属主管</span>
+            <span class="w140"  ng-if="$index > 0">{{superitem.posNm}}</span>
+            <span class=" stfInfoItem float_r" >{{superitem.stfNm}}</span>	
+		</li>		
+	</ul>	    
+	<div class="index_work_bt" style="border-bottom:0px" ng-if="strItems.length > 0">所属门店</div>
+    <ul class="listvrew clearfix"> 
+        <li ng-repeat = "strItem in strItems">
+           <span class="w140"  >门店{{$index+1}}</span>
+           <span class=" stfInfoItem float_r">{{strItem.strNm}}</span>
+        </li>   
+    </ul>       
+</div>
+<div class=""  style="margin-bottom:10px;">
+	<a ng-click="signup()" class="btn_tcdl">退出登录</a>
+</div>
+</ion-content>
+

@@ -1,0 +1,55 @@
+<!-- 汇总详情画面 -->
+<ion-header-bar align-title="center"  class="header">
+        <a ui-sref="saleAmountSum" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">详情</h1>
+</ion-header-bar>
+<ion-content class="has-header">
+<!-- saleAmountSumDetail.html -->
+    <div class="wrap">
+        <div class="listvrew clearfix mb_15">
+            <ion-list>
+                <ion-item>
+                    <span>销售日期</span>
+                    <span class="float_r">{{saleAmountSumDetail.saleDate}}</span>
+                </ion-item>
+                <ion-item>
+                    <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</span>
+                    <span class="float_r">{{saleAmountSumDetail.stfNm}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位</span>
+                    <span class="float_r">{{saleAmountSumDetail.posNm}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>直属主管</span>
+                    <span class="float_r">{{saleAmountSumDetail.supvrStfNm}}</span>    
+                </ion-item>
+                   <ion-item>
+                       <span>所在城市</span>
+                       <span class="float_r">{{saleAmountSumDetail.cityNm}}</span>    
+                   </ion-item>
+            </ion-list>
+         </div>
+         <div class="index_work_bt"></div>
+         <div class="listvrew clearfix">
+            <ion-list>
+                <ion-item>
+                    <span>实际销售额</span>
+                    <span class="color05 float_r">{{saleAmountSumDetail.saleAmt | currency : "￥"}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>同职位排名</span>
+                    <span class="color05 float_r">{{saleAmountSumDetail.ranking}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>其下人数</span>
+                    <span class="float_r">{{saleAmountSumDetail.stfUnderQty | number}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>人均单产</span>
+                    <span class="color05 float_r">{{saleAmountSumDetail.avgAmt | currency : "￥"}}</span>    
+                </ion-item>
+            </ion-list>
+         </div>
+     </div> 
+</ion-content>

@@ -1,0 +1,61 @@
+<style>
+.item{padding-top:0px; padding-bottom:0px}
+.item-checkbox {
+    padding-left: 50px;
+}
+</style>
+<ion-header-bar align-title="center" class="bar bar-royal"
+                style="background:#5338fe;height:48px; line-height:48px;">
+    <h3 class="title" >消息中心</h3>
+    <a href="" class="head_right"  style=" margin:5px 5px;color:#fff; font-size:16px" ng-click="goEdit()" ng-if="!msgInfo.isEdit">编辑</a>
+    <a href="" class="head_right"  style=" margin:5px 5px;color:#fff; font-size:16px" ng-click="goEdit()" ng-if="msgInfo.isEdit">取消</a>
+</ion-header-bar>
+<ion-content style={{stylebottom}} delegate-handle="contentScroll">
+<!-- msgList.html -->
+      <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+      <ion-list>
+       <ion-checkbox ng-repeat="msgItem in msgList"  ng-model="msgItem.checked"  ng-checked="msgItem.checked" ng-if="msgInfo.isEdit" ng-click="checkItem()">
+              <a href="" class="xiaoxizhongxin_a">
+                 <div class="rzlc_img float_l">
+                     <div style=" font-size:14px; width:28px; margin:0px auto;  display: block;white-space: initial;">{{msgItem.msgType}}</div>
+                 </div>
+                 <div class="xiaoxizhongxin_text3" style="margin-left: 15px;">
+                	<h2 class="" ng-if="msgItem.status != '3'">{{msgItem.msgContent }}</h2>
+                	<h2  style="color:#DDD" ng-if="msgItem.status == '3'">{{msgItem.msgContent }}</h2>
+                	 <p class=""  ng-if="msgItem.status != '3'"><span ng-bind="msgItem.sendTm | dateFormat"></span><span>&nbsp;</span> <span ng-bind="msgItem.sendTm | date:'HH:mm:ss'"></span></p>
+                    <p class="" style="color:#ddd" ng-if="msgItem.status == '3'"><span ng-bind="msgItem.sendTm | dateFormat"></span><span>&nbsp;</span> <span ng-bind="msgItem.sendTm | date:'HH:mm:ss'"></span></p>
+                </div>
+              </a>
+        </ion-checkbox>
+        <div ng-repeat="msgItem in msgList"  ng-if="!msgInfo.isEdit"  style="background: #FFF; padding-left: 15px;">
+         <ion-item style ="border: 0px;margin-bottom: 0px; padding:0px;" class="select_line">
+             <a href="" class="xiaoxizhongxin_a"  ng-click="showDetail(msgItem.msgContent,msgItem.sendTm,msgItem.msgType,msgItem.status,msgItem.oId,$index)">
+                 <div class="rzlc_img float_l">
+                 <div style=" font-size:14px; width:28px; margin:0px auto;  display: block;white-space: initial;">{{msgItem.msgType}}
+                 </div>
+                 </div>
+                 <div class="xiaoxizhongxin_text3" style="margin-left: 15px;">
+                	<h2 class="" ng-if="msgItem.status != '3'">{{msgItem.msgContent }}</h2>
+                	<h2 class=""  style="color:#999"ng-if="msgItem.status == '3'">{{msgItem.msgContent }}</h2>
+                	 <p class=""  ng-if="msgItem.status != '3'"><span ng-bind="msgItem.sendTm | dateFormat"></span><span>&nbsp;</span> <span ng-bind="msgItem.sendTm | date:'HH:mm:ss'"></span></p>
+                    <p class="" style="color:#ddd" ng-if="msgItem.status == '3'"><span ng-bind="msgItem.sendTm | dateFormat"></span><span>&nbsp;</span> <span ng-bind="msgItem.sendTm | date:'HH:mm:ss'"></span></p>
+                </div>
+             </a>
+         </ion-item>
+         </div>
+      </ion-list>
+          <div class="wushuju" my-nodata-show="msgList.length == 0 && !moredata">
+			<img src="common/images/bear.gif" >
+			<p>没有符合条件的数据</p>
+    </div>
+    <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>
+<div class=" bar bar-subfooter"  style="background:#fff;border-top: solid 1px #e0e0e0; "ng-if="msgInfo.isEdit">
+    <ion-list >
+       <ion-checkbox   ng-model="msgInfo.checkallm"  ng-checked="msgInfo.checkallm" style="padding-top:4px;   float:left;margin-top: 4px;border-width:0;background:#fff" ng-click="checkAll()">
+              全选
+        </ion-checkbox>
+        <a href="" class="float_r" style=" margin-top: 9px; margin-right:15px; color:#444;" ng-click="deleteAll()">删除</a>
+    </ion-list>
+</div>

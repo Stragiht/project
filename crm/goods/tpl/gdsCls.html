@@ -1,0 +1,56 @@
+﻿
+<div ng-controller="GdsClsCtrl" >
+    <div>
+        <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+        </script>
+    </div>
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4" style="color:#000"> 商品分类
+    <button class="btn btn-success btn-addon" style="float:right;margin:-8px 10px 0 0;" ui-sref="app.goods.gdsClsInsert" user-power="WGDS01005002"> 新增分类</button>
+  </h4>
+</div>
+
+<div class="wrapper-md" >
+
+      <!-- 表格 -->
+    <div class="table-responsive" style="padding-left:10px;padding-right:10px; "  >
+        <div style="padding:15px;">
+            <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ＃EEEEEE; border:none;outline:medium;color: #f05050"ng-model="gydst" readonly="readonly"> 条商品分类数据</lable>
+            <lable ng-if="gydst<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+        </div>
+        <div ng-table="tableParams">
+           <table  class="table table-bordered table-condensed table-striped table-hover"  >
+                <tr ng-repeat="gdsCls in $data">
+                  <td title="'分类名称'" style="text-align:center;">
+                      <!--{{gdsCls.cateNm}}-->
+                      <span ng-bind="gdsCls.cateNm"></span>
+                  </td>
+                  <td title="'类别'"  style="text-align:center;min-width:120px;">
+                      <span ng-bind="gdsCls.category"></span>
+                  </td>
+                  <td title="'上级分类'"  style="text-align:center;min-width:120px;">
+                      <span ng-bind="gdsCls.supeClsNm"></span>
+                  </td>
+                  <td title="'商品规格数量'"  style="text-align:center;min-width:120px;">
+                      <span ng-bind="gdsCls.gdsNum"></span>
+                  </td>
+                  <!--<td title="'排序'"   style="text-align:center;min-width:120px;">-->
+                      <!--<span ng-bind="gdsCls.seqNum"></span>-->
+                  <!--</td>-->
+
+                  <td title="'操作'" style="text-align:center;min-width:120px;" >
+                      <a style=" text-decoration:underline;color: #05b5ff;" ui-sref="app.goods.gdsClsUpdate({oId:gdsCls.oId})" user-power="WGDS01005003">编辑</a>
+                      <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="delGdsCls(gdsCls.oId)" user-power="WGDS01005004">删除</a>
+                      <!--<a  style=" text-decoration:underline;color: #05b5ff;" ng-click="openDel(gdsCls.oId)">删除</a>-->
+                      <!--ng-click="delGdsCls(gdsCls.oId)"-->
+                  </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+
+</div>
+
+</div>

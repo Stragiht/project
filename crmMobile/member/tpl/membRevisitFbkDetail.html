@@ -1,0 +1,62 @@
+<ion-header-bar align-title="center"  class="header">
+    <a class="header_left" ui-sref="membRevisitTskDetail({curMembIndex:curIndex})"  ></a>
+    <h1 style="font-size:1.4rem"> 回访指导详情</h1>
+</ion-header-bar>
+
+
+<ion-content  class="has-header stable"  overflow-scroll="false">
+    <ion-list >
+        <ion-item style="padding: 0 0 1px 0;border: none;">
+            <div class="p-Left" >
+                <div class="memInfoItem_line" style="padding: 0;">
+                    <span class="float_l " >指导时间</span>
+                       <span class="memInfoItem2 float_r" >
+                           <span ng-bind="membRevFbkDetail.fbkTm | date:'MM-dd HH:mm'"></span>
+                       </span>
+                </div>
+            </div>
+            <div style="border: none;" >
+                <div class="memInfoItem_line" style="padding: 0;">
+                    <span class="float_l p-Left" >指导人员</span>
+                       <span class="memInfoItem2  float_r">
+                           <span ng-bind="membRevFbkDetail.fbkStfNm"></span>
+                       </span>
+                </div>
+            </div>
+        </ion-item >
+
+        <!--<ion-item class=" bottom_line"  style="padding: 0;border: none;" ng-if="voicdss != undefined && voicdss != null && voicdss != ''">-->
+        <ion-item class=" bottom_line"  style="padding: 0;border: none; white-space: normal;" >
+                <div class="info_line3" style="padding: 0;">
+                    <div style="margin:10px 5% 0 5%;" ng-bind="membRevFbkDetail.fbkCont"></div>
+                    <div style="margin:10px;white-space: normal;" ></div>
+                   <!-- <div ng-show="switchKeyOrVoice" ng-click="switchAnimateVoice()" style="position: relative; width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;margin:15px 10px 15px 10px;display: inline-block;padding: 9px;">
+                        <img src="common/images/cv_yy_1.png" width="11"   style="position: absolute;top:8px;" />
+                    </div>-->
+                   <!-- <div ng-show="!switchKeyOrVoice" ng-click="switchAnimateVoice()" style="position: relative; width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;margin:15px 10px 15px 10px;display: inline-block;padding: 9px;">
+                        <img src="common/images/cv_yy_2.gif" width="11"   style="position: absolute;top:8px;" />
+                    </div>-->
+                    <!--<span style="color: #ddd;display: inline-block;">8"</span>--><!--membRevFbkDetail.fbkVoice-->
+                    <div style="left: 70px;bottom: 90px; margin: 5%"  ng-repeat="voi in voicdss" ng-if="voi.voice != undefined && voi.voice != null && voi.voice != ''" ng-click="audioPlay(voi.voice, voi)">
+
+                        <!--<div style="position: relative;">-->
+                            <div ng-show="!voi.playAudio" style="position: relative;width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">
+                                <img src="common/images/cv_yy_1.png" width="11" style="position: absolute;top:8px;" />
+                                <span style="position:absolute;left: 105%;top:8px;color: #ccc;" ng-bind="voi.dura"></span>
+                            </div>
+                            <div ng-show="voi.playAudio" style="position: relative;width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">
+                                <img ng-src="{{audioImg}}" width="11" style="position: absolute;top:8px;" />
+                                <span style="position:absolute;left: 105%;top:8px;color: #ccc;" ng-bind="voi.dura"></span>
+                            </div>
+                            <!--<span style="position:absolute;left: 110px;top:8px;color: #ccc;" ng-bind="voi.dura"></span>-->
+                        <!--</div>-->
+
+                    </div>
+                </div>
+
+
+        </ion-item >
+    </ion-list>
+
+
+</ion-content>

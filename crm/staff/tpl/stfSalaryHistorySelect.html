@@ -1,0 +1,178 @@
+<div class="bg-light lter b-b wrapper-md"  >
+	<h4 class="m-n font-thin h4">
+		查看
+	</h4>
+</div>
+<div class="wrapper-md"  ng-controller="salaryHistorySelectCtrl">
+ 	<form name="form" class="form-horizontal form-validation">
+ 		<tabset class="tab-container">
+			<tab>
+				<tab-heading> 申请信息 </tab-heading>
+				 	<accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.baseopen">
+						<accordion-heading>
+							1.基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.baseopen, 'fa-angle-right': !status.baseopen}"></i>
+						</accordion-heading>
+							
+								<div class="form-group">
+									<label class="col-xs-3 control-label">申请编号：</label><label class="col-xs-3 control-label text-left">{{salarybykey.applNum}}</label>
+									<label class="col-xs-3 control-label">审批状态：</label><label class="col-xs-3 control-label text-left"><span style="color: red;">{{salarybykey.apprStat|dicNameFilter:"C018"}}</span></label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">提交人：</label><label class="col-xs-3 control-label text-left">{{salarybykey.applicant}}</label>
+									<label class="col-xs-3 control-label">提交时间：</label><label class="col-xs-3 control-label text-left">{{salarybykey.applSbmtTm}}</label>
+								</div>
+					 </accordion-group> </accordion>
+					 <accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.stfopen">
+						<accordion-heading>
+							2.人员基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.stfopen, 'fa-angle-right': !status.stfopen}"></i>
+						</accordion-heading>
+							
+								<div class="form-group">
+									<label class="col-xs-3 control-label">人员编号：</label><label class="col-xs-3 control-label text-left">{{salarybykey.stfNum}}</label>
+									<label class="col-xs-3 control-label">姓名：</label><label class="col-xs-3 control-label text-left">{{salarybykey.stfNm}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">部门：</label><label class="col-xs-3 control-label text-left">{{salarybykey.subDep | stfBasSubDep}}</label>
+									<label class="col-xs-3 control-label">职位等级：</label><label class="col-xs-3 control-label text-left">{{salarybykey.position | stfBasPosNum}} > {{salarybykey.position | stfBasPosGrdNum:salarybykey.posGrd}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">入职日期：</label><label class="col-xs-3 control-label text-left">{{salarybykey.stfEntDt}}</label>
+									<label class="col-xs-3 control-label">离职日期：</label><label class="col-xs-3 control-label text-left">{{salarybykey.dimiDt}}</label>
+								</div>
+								<div class="form-group">	
+									<label class="col-xs-3 control-label">所在地城市：</label><label class="col-xs-3 control-label text-left">{{salarybykey.locCity | stfBasPCV}}</label>
+									<label class="col-xs-3 control-label">所在城市底薪基数：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.basSalBase | fromMoney}}</label>
+								</div>
+					 </accordion-group> </accordion>
+					 <div ng-if="salarybykey.fixSalAmt != 0"><accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.netsalopen">
+						<accordion-heading>
+							3.实发工资（固定工资+应加项目-应扣项目） <i class="pull-right fa fa-angle-right"
+								ng-class="{'fa-angle-down': status.netsalopen, 'fa-angle-right': !status.netsalopen}"></i>
+						</accordion-heading>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">实发工资： </label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.netSal | fromMoney}}</span></label>
+								</div>
+					</accordion-group> </accordion></div>
+					<div ng-if="salarybykey.fixSalAmt == 0"><accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.netsalopen">
+						<accordion-heading>
+							3.实发工资（考勤工资+应加项目-应扣项目） <i class="pull-right fa fa-angle-right"
+								ng-class="{'fa-angle-down': status.netsalopen, 'fa-angle-right': !status.netsalopen}"></i>
+						</accordion-heading>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">实发工资： </label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.netSal | fromMoney}}</span></label>
+								</div>
+					</accordion-group> </accordion></div>
+					<div class="panel-heading">
+						<div class="form-group" style="text-align:center;background-color: #c6c6c6">
+							<label class="col-xs-12 control-label " style="text-align:center;background-color: #c6c6c6;height: 40px;line-height: 30px;">工资明细 </label>
+						</div>
+					</div>
+					<div ng-if="salarybykey.fixSalAmt != 0"><accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.fixsalopen">
+						<accordion-heading>
+							A.固定工资信息<i class="pull-right fa fa-angle-right"
+								ng-class="{'fa-angle-down':status.fixsalopen, 'fa-angle-right': !status.fixsalopen}"></i>
+						</accordion-heading>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">固定工资：</label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.fixSalAmt | fromMoney}}</span></label>
+								</div>
+					</accordion-group> </accordion></div>
+					<div ng-if="salarybykey.fixSalAmt == 0"><accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.attendanceopen">
+						<accordion-heading>
+							A.考勤工资信息<i class="pull-right fa fa-angle-right"
+								ng-class="{'fa-angle-down':status.attendanceopen, 'fa-angle-right': !status.attendanceopen}"></i>
+						</accordion-heading>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">考勤工资：</label><label class="col-xs-6 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.basSalPerPha + salarybykey.fullAttend + salarybykey.perfBonus | fromMoney}}</span></label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">应发工资天数：</label><label class="col-xs-3 control-label text-left">{{salarybykey.supAttdDays}} 天</label>
+									<label class="col-xs-3 control-label">实际出勤天数：</label><label class="col-xs-3 control-label text-left">{{salarybykey.actualAttnDays}} 天</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">试用期星级标准：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.probStarStd | fromMoney}}</label>
+									<label class="col-xs-3 control-label">转正星级标准：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.regularStarStd | fromMoney}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">档期底薪：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.basSalPerPha | fromMoney}}</label>
+									<label class="col-xs-3 control-label">绩效奖金：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.perfBonus | fromMoney}}</label>
+								</div>
+								<div class="form-group" ng-if="salarybykey.baFlag == 1">	
+									<label class="col-xs-3 control-label">全  勤：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.fullAttend | fromMoney}}</label>
+								</div>
+					</accordion-group> </accordion></div>
+					<accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.summationopen">
+						<accordion-heading>
+							B.应加项目<i class="pull-right fa fa-angle-right"
+								ng-class="{'fa-angle-down':status.summationopen, 'fa-angle-right': !status.summationopen}"></i>
+						</accordion-heading>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">应加合计：</label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.summation | fromMoney}}</span></label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">加班工资：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.overTmSal | fromMoney}}</label>
+									<label class="col-xs-3 control-label">奖金及提成：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.commBonus | fromMoney}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">职位补助：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.allowance | fromMoney}}</label>
+									<label class="col-xs-3 control-label">补发工资：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.retroactivePay | fromMoney}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">其它应加：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.otherSummation | fromMoney}}</label>
+								</div>
+					</accordion-group> </accordion>
+					<accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.totdeduopen">
+						<accordion-heading>
+							C.应扣项目<i class="pull-right fa fa-angle-right"
+								ng-class="{'fa-angle-down':status.totdeduopen, 'fa-angle-right': !status.totdeduopen}"></i>
+						</accordion-heading>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">应扣项目：</label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.totDedu | fromMoney}}</span></label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">社保：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.sclSecurity | fromMoney}}</label>
+									<label class="col-xs-3 control-label">公积金：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.accumFunds | fromMoney}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">应计税金额：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.supTaxAmt | fromMoney}}</label>
+									<label class="col-xs-3 control-label">个税：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.persIncomeTax | fromMoney}}</label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">其它应扣：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.otherDedu | fromMoney}}</label>
+								</div>
+					</accordion-group> </accordion>
+		</tab>
+		<tab ng-show="status.apprHisDisplay">
+			<tab-heading> 审批历史 </tab-heading>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form class="bs-example form-horizontal">
+						<div class="form-group">
+							<div ng-table="tableParams">
+								<table class="table table-bordered table-condensed table-striped table-hover">
+									<tr ng-repeat="apprHisInfo in $data">
+										<td title="'操作时间'" style="text-align: center;width: 210px;">{{apprHisInfo.updtTm}}</td>
+										<td title="'操作人'" style="text-align: center;width: 150px;">{{apprHisInfo.stfNm}}</td>
+										<td title="'审批状态'" style="text-align: center;width: 90px;">{{apprHisInfo.status|dicNameFilter:"C019"}}</td>
+										<td title="'备注'" style="text-align: left">{{apprHisInfo.apprComments}}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</tab>
+	</tabset>
+	<div class="panel-heading">
+		<button class="btn btn-default btn-addon mr_10"  ui-sref="app.staff.stfSalaryHistory" user-power="WSTF01023002" >返回</button>
+	</div>
+	</form>
+</div>

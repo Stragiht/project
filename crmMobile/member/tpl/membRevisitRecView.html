@@ -1,0 +1,134 @@
+<ion-header-bar align-title="center" class="header">
+    <a class="header_left" ui-sref="membDetailInfo({membNum:curMembNum})"></a>
+    <h1 style="font-size:1.4rem">回访记录
+    </h1>
+</ion-header-bar>
+<ion-content class="scroll-content has-header xx_item" >
+    <!--<ul class="list">-->
+    <!--<li class="item">-->
+    <!--<h2>回访人员：<span style="color: #ddd;">小可</span></h2>-->
+    <!--</li>-->
+    <!--<li class="item">-->
+    <!--<h2 class="stable-bg" style="line-height: 35px;margin: 10px;height: 50px;">-->
+    <!--这人老是不理我，顾客感觉产品的使用效果不好。谢谢！阿萨辛嘎斯归属采用好似粗犷虽地处-->
+    <!--</h2>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <div class="list call">
+        <ul class="item bottom_line" >
+            <!--<li style="font-size:16px;color: #ccc;"><span  ng-bind="membRevisits.revisitTm | date:'MM-dd HH:mm'"></span></li>-->
+            <li style="font-size:16px;color: #ccc;"><span  ng-bind="membRevisits.revisitTm | dateFormat"></span></li>
+            <li><h2>回访人员：<span ng-bind="membRevisits.stfNm"></span></h2></li>
+            <li><h2>受访会员：<span ng-bind="membRevisits.membNm"></span></h2></li>
+            <li><h2>是否关联回访任务：<span ng-bind="membRevisits.isRelRevisitTsk | dicNameFilter:'C002'"></span></h2></li>
+            <li><h2>回访内容：</h2></li>
+            <li style=" height:auto;white-space: pre-line;padding: 5px;color: #ccc;" ng-bind="membRevisits.revisitCont">
+            </li>
+            <br/>
+           <!-- <li style="height: 250px;margin: 5px;border-radius: 5px;overflow: hidden;">
+                <img src="common/images/hf.jpg" style="height: 100%;width: 100%;">
+            </li>
+            <li style="margin-bottom: 15px;">
+                <div style="width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;margin:5px;display: inline-block;padding: 9px;">
+                    <img src="common/images/yy.png" width="15"/>
+                </div>
+                <p style="color: #ddd;height: 35px;line-height: 35px;padding-top: -10px;display: inline-block;margin-top: -5px;">8"</p>
+            </li>-->
+
+            <li style="height:150px;;overflow:hidden;margin: 5px;border-radius: 5px;overflow: hidden;" ng-repeat="mrImg in membRevDetImgShow">
+                <img ng-src="{{mrImg | imgpath}}" style="max-height:150px;">
+            </li>
+            <li style="margin-bottom: 15px;" ng-repeat="mrVoice in membRevDetVoiceShow" ng-click="audioPlay(mrVoice.voice, mrVoice)">
+                <!--<div style="width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;margin:5px;display: inline-block;padding: 9px;">
+                    <img src="common/images/yy.png" width="15"/>
+                </div>-->
+
+                <!--<div style="position: relative;">-->
+                    <div ng-show="!mrVoice.playAudio" style="position: relative;width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">
+                        <img src="common/images/cv_yy_1.png" width="11" style="position: absolute;top:8px;" />
+                        <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="mrVoice.dura"></span>
+                    </div>
+                    <div ng-show="mrVoice.playAudio" style="position: relative;width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">
+                        <!-- <img src="common/images/cv_yy_2.png" width="11" style="position: absolute;top:8px;" id="lunbo111"/>-->
+                        <img ng-src="{{audioImg}}" width="11" style="position: absolute;top:8px;" />
+                        <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="mrVoice.dura"></span>
+                    </div>
+                    <!--<span style="position:absolute;margin-left:30%;top:8px;color: #ccc;" ng-bind="mrVoice.dura"></span>-->
+                <!--</div>-->
+
+            </li>
+
+        </ul>
+
+
+        <!--<div class="padding-left" ng-repeat="memb in membRevisits.replyList">-->
+            <!--<div class="row" style="border-bottom: dashed 1px #ddd;padding: 0;">-->
+                <!--<div class="col" style="max-width: 60px;padding: 0;">-->
+                    <!--<div class="hycz_img"><span ng-bind="memb.replyUsrNm | limitTo:-2"></span></div>-->
+                <!--</div>-->
+
+                <!--<div class="col-80" style="padding:16px 0 0 0;">-->
+                    <!--<p style="overflow: hidden;margin: 0;">-->
+                        <!--<span class="float_l">回复&nbsp&nbsp<span style="color: #ddd;" ng-bind="memb.beRepliedUsrNm"></span>：</span>-->
+                        <!--<span class="float_r" ng-bind="memb.fbkTm | date:'MM-dd'"></span>-->
+                    <!--</p>-->
+                    <!--<p><span ng-bind="memb.fbkCont"></span></p>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div style="position: absolute;left: 70px;bottom: 90px;" ng-if="memb.fbkVoice != undefined && memb.fbkVoice != null && memb.fbkVoice != ''" ng-click="audioPlay(memb.fbkVoice, memb)">&lt;!&ndash;ng-repeat="voi in (reply.fbkVoice | pathStrSplit)" ng-if="voi != undefined && voi != null && voi != ''" ng-click="audioPlay(voi)"&ndash;&gt;-->
+
+                <!--<div style="position: relative;">-->
+                    <!--<div ng-show="!memb.playAudio" style="width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">-->
+                        <!--<img src="common/images/cv_yy_1.png" width="11" style="position: absolute;top:8px;" />-->
+                    <!--</div>-->
+                    <!--<div ng-show="memb.playAudio" style="width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">-->
+                        <!--&lt;!&ndash; <img src="common/images/cv_yy_2.png" width="11" style="position: absolute;top:8px;" id="lunbo111"/>&ndash;&gt;-->
+                        <!--<img ng-src="{{audioImg}}" width="11" style="position: absolute;top:8px;" />-->
+                    <!--</div>-->
+                    <!--<span style="position:absolute;margin-left:105%;top:8px;color: #ccc;" ng-bind="memb.dura"></span>-->
+                <!--</div>-->
+
+            <!--</div>-->
+            <!-- -->
+        <!--</div>-->
+        <div class="p-Left" >
+            <div class="bottom_dashed" ng-repeat="memb in membRevisits.replyList">
+                <div class="row" style="width: 100%;height: auto;padding: 0 !important;">
+                    <div class="col-20" style="max-width: 60px;padding: 0;">
+                        <div class="hycz_img"><span ng-bind="memb.replyUsrNm | limitTo:-2"></span></div>
+                    </div>
+
+                    <div class="col-80" style="padding:16px 5% 0 0;width: 100%; min-height: 80px;">
+                        <p style="overflow: hidden;margin: 0;width: 100%;">
+                            <span class="float_l">回复 <span span style="color: #ddd;" ng-bind="memb.beRepliedUsrNm"></span>：</span>
+
+                            <span class="float_r" >
+                                <span ng-bind="memb.fbkTm | dateFormat"></span>&nbsp;<span ng-bind="memb.fbkTm | date:'HH:mm:ss'" ng-if="(memb.fbkTm | date:'HH:mm:ss') != '00:00:00'"></span>
+                            </span>
+                        </p>
+
+                        <p style="width: 100%;"><span ng-bind="memb.fbkCont"></span></p>
+                    </div>
+                </div>
+
+                <div style="position: absolute;left: 60px;top: 40px;" ng-if="memb.fbkVoice != undefined && memb.fbkVoice != null && memb.fbkVoice != ''" ng-click="audioPlay(memb.fbkVoice, memb)"><!--ng-repeat="voi in (reply.fbkVoice | pathStrSplit)" ng-if="voi != undefined && voi != null && voi != ''" ng-click="audioPlay(voi)"-->
+
+                        <div ng-show="!memb.playAudio" style="position: relative;width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">
+                            <img src="common/images/cv_yy_1.png" width="11" style="position: absolute;top:8px;" />
+                            <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="memb.dura"></span>
+                        </div>
+                        <div ng-show="memb.playAudio" style="width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;padding: 9px;">
+                            <!-- <img src="common/images/cv_yy_2.png" width="11" style="position: absolute;top:8px;" id="lunbo111"/>-->
+                            <img ng-src="{{audioImg}}" width="11" style="position: absolute;top:8px;" />
+                            <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="memb.dura"></span>
+                        </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</ion-content>
+

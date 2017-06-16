@@ -1,0 +1,74 @@
+<!-- 提交报表详情画面 -->
+<ion-header-bar align-title="center"  class="header">
+        <a href="" ng-click="back()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">详情</h1>
+        <a ui-sref="baReportEdit({stfNum:baReportInfo.stfNum, saleDate:baReportInfo.saleDate, strNum:baReportInfo.strNum})" class="head_right" ng-show="editShow" user-power="MREP01004003">
+            <div class="head_right_box">
+                <img src="common/images/qianbi.png" width="22" height="22">
+                <p>编辑</p>
+            </div>
+        </a>
+</ion-header-bar>
+<ion-content class="has-header">
+<!-- baReportDetail.html -->
+    <div class="wrap">
+        <div class="listvrew clearfix mb_15">
+            <ion-list>
+                <ion-item>
+                    <span>销售日期</span>
+                    <span class="float_r">{{baReportInfo.saleDate | dateEditFilter}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>提&nbsp;&nbsp;交&nbsp;&nbsp;人</span>
+                    <span class="float_r">{{baReportInfo.stfNm}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>职位</span>
+                    <span class="float_r">{{baReportInfo.posNm}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>直属主管</span>
+                    <span class="float_r">{{baReportInfo.supvrStfNm}}</span>    
+                </ion-item>
+            </ion-list>
+         </div>
+         <div class="index_work_bt"></div>
+         <div class="listvrew clearfix mb_15">
+            <ion-list>
+                <ion-item>
+                    <span>销售门店</span>
+                    <span class="float_r">{{baReportInfo.strNm}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>销售金额</span>
+                    <span class="color05 float_r">{{baReportInfo.saleAmt | currency : "￥"}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>成交单数</span>
+                    <span class="float_r">{{baReportInfo.dealQty | number}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>商品数量</span>
+                    <span class="float_r">{{baReportInfo.gdsQty | number}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>提交时间</span>
+                    <span class="float_r" ng-if="baReportInfo.state == '1'">{{baReportInfo.rptTm | dateEditFilter}}&nbsp;{{baReportInfo.rptTm | date : "HH:mm"}}</span>    
+                </ion-item>
+                <ion-item>
+                    <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</span>
+                    <span class="color05 float_r">{{baReportInfo.dicNm}}</span>    
+                </ion-item>
+            </ion-list>
+         </div>
+         <div class="index_work_bt" ng-if="goodsDetail.length > 0"></div>
+         <div class="listvrew clearfix" ng-if="goodsDetail.length > 0">
+            <ion-list>
+                <ion-item  ng-repeat="goods in goodsDetail" ng-click="gotoGdsBuyerView(baReportInfo.stfNum, baReportInfo.saleDate, baReportInfo.strNum, goods.gdsSpecDtlNum)">
+                    <span>{{goods.gdsSpecDtlNm}}</span>
+                    <span class="float_r mr20">{{goods.gdsQty | number}} <img src="common/images/you_btn.png" style="position: absolute;top: 16px;right: 16px;"></span>  
+                </ion-item>
+            </ion-list>
+         </div>
+     </div> 
+</ion-content>

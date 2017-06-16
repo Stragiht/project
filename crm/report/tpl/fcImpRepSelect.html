@@ -1,0 +1,34 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<div ng-controller="fcImpRepSelectController">
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+                            销售报表导入
+        <a class="btn btn-success btn-addon mr_8" ui-sref="app.report.fcImpRepImport" user-power="WREP01005002">新增导入销售报表</a>
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+<!-- 导出系列按钮面板开始 -->
+<div class="panel-heading">
+    <label class="control-label mt_6">共有<span class="text-red">{{countNumber}}</span>条数据<span ng-if="countNumber == '0'">（没有符合条件的数据）</span> </label>
+</div>
+<!-- 导出系列按钮面板结束 -->
+<!-- table列表开始 -->
+<div class="panel-heading">
+   <div ng-table="tableParams">
+       <table class="table table-bordered table-condensed   table-striped table-hover">
+       <tr ng-repeat="fcImpRep in $data">
+           <td title="'上传时间'" style="min-width: 120px;">
+              {{fcImpRep.upldTm|date:'yyyy-MM-dd HH:mm:ss'}}
+           </td>
+           <td title="'匹配报表文件'" style="min-width: 120px;">
+              {{fcImpRep.upldFileNm}}
+           </td>
+       </tr>
+       </table>
+   </div>
+</div>
+<!-- table列表结束 -->
+</div>
+</html>

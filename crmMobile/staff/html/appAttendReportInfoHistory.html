@@ -1,0 +1,91 @@
+<div>
+    <ion-header-bar align-title="center" class="header">
+    	<a ui-sref="appAttendReportHistory" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem;">详情</h1>
+    </ion-header-bar>
+    <ion-content class="has-header ">
+    <!-- appAttendReportInfoHistory.html -->
+        <div class="wrap">
+	        <ul class="listvrew clearfix mb_15">
+	            <li>
+		            <span class="w140">审批编号</span>
+		            <span class="f_10">{{AttendDatas.applNum}}</span>
+	            <li>
+	                <span class="w140">相关人员</span>
+	                <span class="f_10">{{AttendDatas.stfNm}}</span>
+	                <span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 1.5rem;" ng-click="callPhone()"></span>
+	            </li>
+	            <li>
+	                <span class="w140">人员编号</span>
+	                <span class="f_10">{{AttendDatas.stfNum}}</span>
+	            </li>
+	            <li>
+	                <span class="w140">审批状态</span>
+	                <span class="color05 f_10">{{AttendDatas.apprStatNm}}</span>
+	            </li>
+	        </ul>
+	        <div class="index_work_bt"></div>
+	        <ul class="listvrew clearfix mb_15">
+	            <li>
+	                <span class="w140">考勤时间</span>
+	                <span class="f_10">{{AttendDatas.phaStartTm}} ～ {{AttendDatas.phaEndTm}}</span>
+	            </li>
+	            <li>
+	                <span class="w140">是否全勤</span>
+	                <span class="color05 f_10">{{AttendDatas.fullAttnDaysNm}}</span>
+	            </li>
+	            <li>
+	                <span class="w140">应出勤天数</span>
+	                <span class="f_10">{{AttendDatas.supAttdDays}}天</span>
+	            </li>
+	            <li>
+	                <span class="w140">应发工资天数</span>
+	                <span class="f_10">{{AttendDatas.supPayDays}}天</span>
+	            </li>
+	            <li>
+	                <span class="w140">请假天数</span>
+                    <span class="f_10">{{AttendDatas.persLeaveDays}}天</span>
+	            </li>
+	            <li>
+	                <span class="w140">旷工天数</span>
+	                <span class="f_10">{{AttendDatas.absentDays}}天</span>
+	            </li>
+	        </ul>
+	        <div class="index_work_bt">考勤明细</div>
+	        <ion-list>
+	            <ion-item ng-repeat="var in kqmxDatas">
+	                <span class="w140">{{var.attendDt | date :'MM-dd'}}</span>
+	                <span class="f_10">{{var.attendSituNm}}</span>
+	            </ion-item>
+	        </ion-list>
+	        <div class="index_work_bt" ng-if="apprHisDisplay">审核历史</div>
+	        <div class="shls_wen" ng-if="apprHisDisplay">
+	        	<div ng-repeat="apprHisInfo in approvalList">
+					<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+						<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+						<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+						<p></p>
+					</div>
+	
+					<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+						<div class="ziyuan"></div>
+						<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+						<p>{{apprHisInfo.updtTm}}</p>
+					</div>
+	
+					<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+						<div class="ziyuan"></div>
+						<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+						<p>{{apprHisInfo.updtTm}}</p>
+					</div>
+	
+					<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+						<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+						<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+						<p>{{apprHisInfo.updtTm}}</p>
+					</div>
+				</div>
+	        </div>
+        </div>
+    </ion-content>
+</div>

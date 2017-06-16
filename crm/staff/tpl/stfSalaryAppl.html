@@ -1,0 +1,81 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">
+	审批工资报表
+	</h4>
+</div>
+<!-- 标题信息开始 -->
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+<div ng-controller="stfSalaryApplCtrl">
+	<!-- 查询面板开始 -->
+	<div class="panel-heading">
+		<accordion close-others="oneAtATime">
+			<accordion-group is-open="status.open">
+				<accordion-heading>
+					查询<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+				</accordion-heading>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">审批状态：</label>
+					<div class="btn-group">
+						<button ng-repeat="apprStat in apprStatList" class="btn btn-default" ng-class="{'active':apprStat.key == selectedApprStat}"
+							ng-model="apprStatModel" ng-click="selectSalaryApplList('{{apprStat.key}}')"  user-power="WSTF01022001" >{{apprStat.text}}</button>
+					</div>
+				</div>
+			</accordion-group>
+		</accordion>
+	</div>
+
+	<!-- 批量审批及总件数显示开始 -->
+	<div class="panel-heading">
+		<button class="btn btn-default btn-addon" ng-click="applAll()"  user-power="WSTF01022002" >批量审批</button>
+		<label class="control-label mt_6">共有<span class="error">{{recordCount}}</span>条数据</label><label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+	</div>
+	<!-- 批量审批及总件数显示结束 -->
+
+	<!-- table列表开始 -->
+	<div class="panel-heading">
+		<div ng-table="tableParams">
+			<table class="table table-bordered table-condensed table-striped table-hover">
+				<tr ng-repeat="salaryListinfo in $data">
+					<td header="'headerCheckbox.html'" width="'90px'" style="font-weight: bold;  ">
+                        <input type="checkbox" ng-model="checkboxes.items[salaryListinfo.oId]" ng-click="checkItem()"/>
+                    </td>
+                    <td title="'申请编号'" width="'100px'">{{salaryListinfo.applNum}}</td>
+                    <td title="'人员编号'" width="'100px'">{{salaryListinfo.stfNum}}</td>
+					<td title="'姓名'" width="'100px'">{{salaryListinfo.stfNm}}</td>
+					<td title="'部门'" width="'100px'">{{salaryListinfo.subDep | stfBasSubDep}}</td>
+					<td title="'职位'" width="'100px'">{{salaryListinfo.position | stfBasPosNum}}</td>
+					<td title="'等级'" width="'100px'">{{salaryListinfo.position | stfBasPosGrdNum:salaryListinfo.posGrd}}</td>
+					<td title="'入职日期'" width="'100px'">{{salaryListinfo.stfEntDt}}</td>
+					<td title="'最后工作日'" width="'100px'">{{salaryListinfo.dimiDt}}</td>
+					<td title="'试用星级标准'" width="'100px'">￥{{salaryListinfo.probStarStd | fromMoney}}</td>
+					<td title="'转正星级标准'" width="'100px'">￥{{salaryListinfo.regularStarStd | fromMoney}}</td>
+					<td title="'考勤工资'" width="'100px'">￥{{salaryListinfo.attendAmt | fromMoney}}</td>
+					<td title="'应加合计'" width="'100px'">￥{{salaryListinfo.summation | fromMoney}}</td>
+					<td title="'应扣实计'" width="'100px'">￥{{salaryListinfo.totDedu | fromMoney}}</td>
+					<td title="'实发工资'" width="'100px'">￥{{salaryListinfo.netSal | fromMoney}}</td>
+					<td title="'社保'" width="'100px'">￥{{salaryListinfo.sclSecurity | fromMoney}}</td>
+					<td title="'公积金'" width="'100px'">￥{{salaryListinfo.accumFunds | fromMoney}}</td>
+					<td title="'应计税金额'" width="'100px'">￥{{salaryListinfo.supTaxAmt | fromMoney}}</td>
+					<td title="'个税'" width="'100px'">￥{{salaryListinfo.persIncomeTax | fromMoney}}</td>
+					<td title="'其它应扣'" width="'100px'">￥{{salaryListinfo.otherDedu | fromMoney}}</td>
+					<td title="'状态'" width="'100px'"class="text-red">{{salaryListinfo.apprStat | dicNameFilter:"C018"}}</td>
+					<td title="'操作'" width="'150px'" class="mr_22">
+					    <a class="mr_9" ng-click="infoSalaryAppl(salaryListinfo.oId,salaryListinfo.applNum)"  user-power="WSTF01022001" >查看</a>
+						<a class="mr_9" ng-if="salaryListinfo.editFlag == 1" ng-click="updateSalaryAppl(salaryListinfo.oId,salaryListinfo.applNum)"  user-power="WSTF01022003" >编辑</a>
+						<a class="mr_9" ng-if="salaryListinfo.applFlag == 1" ng-click="apprSalaryAppl(salaryListinfo.oId,salaryListinfo.applNum)"  user-power="WSTF01022002" >审批</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div>
+        <script type="text/ng-template" id="salaryApplWindow.html">
+            <div ng-include="'common/tpl/salaryApplWindow.html'"></div>
+        </script>
+      </div> 
+	<!-- table列表结束 -->
+</div>

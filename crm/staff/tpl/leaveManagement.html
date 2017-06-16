@@ -1,0 +1,65 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        请假管理
+    </h4>
+</div>
+<!-- 标题信息开始 -->
+
+<div ng-controller="leaveManagementController">
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    查询<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+                <div class="form-group" user-power="WSTF01009001">
+                    <label class="col-sm-2 control-label">审批状态：</label>
+                    <div class="btn-group">
+                        <button ng-repeat="apprStat in apprStatList" class="btn btn-default" ng-class="{'active':apprStat.key == selectedApprStat}"
+                                ng-model="apprStatModel" ng-click="buttonSelect('{{apprStat.key}}')">
+                            {{apprStat.text}}
+                        </button>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+
+    <!-- 总件数显示开始 -->
+    <div class="panel-heading">
+        <label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据</label>
+        <label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+    </div>
+    <!-- 总件数显示结束 -->
+
+    <!-- table列表开始 -->
+    <div class="panel-heading">
+
+        <div ng-table="tableParams">
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                <tr ng-repeat="row in $data">
+                    <td title="'申请编号'" width="'200px'">{{row.leaveNm}}</td>
+                    <td title="'申请人'" width="'150px'">{{row.stfNm}}</td>
+                    <td title="'职位'" width="'150px'">{{row.posNm}}</td>
+                    <td title="'请假明细'" width="'400px'" style="word-break: break-all;">
+                        {{row.lapdtl}}
+                    </td>
+                    <td title="'请假天数'" width="'100px'">{{row.lapdate}}天</td>
+                    <td title="'申请时间'" width="'150px'">{{row.sbmtTm}}</td>
+                    <td title="'状态'" class="text-red" width="'150px'">{{row.LAstatus | dicNameFilter:"C018"}}
+                    </td>
+                    <td title="'操作'" class="mr_22" width="'150px'">
+                        <a class="mr_9" ng-click="selectLeave(row.oId)" user-power="WSTF01019001">查看</a>
+                        <a class="mr_9" ng-if="row.appStatus.indexOf('130') >= 0" ng-click="selectLeaveDeit(row.oId, row.updtTm)"
+                           user-power="WSTF01019003">审批</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

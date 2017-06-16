@@ -1,0 +1,192 @@
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4" style="color:#000;">指导
+
+  </h4>
+</div>
+
+<div class="wrapper-md" ng-controller="memRevisitFbkCtrl">
+
+    <!--1.回访人信息-->
+    <accordion close-others="oneAtATime" >
+
+        <accordion-group is-open="status.oneopen" >
+
+            <accordion-heading>
+                <div class="font-bold">1.回访人信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.oneopen, 'fa-angle-right': !status.oneopen}"></i></div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">回访人员：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevFbkInfo.stfNm}}</p>
+                    </div>
+                    <label class="col-lg-2 control-label">职位：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevFbkInfo.posNm}}</p>
+                    </div>
+
+                    <label class="col-lg-2 control-label">联系电话：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevFbkInfo.stfPhone}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">直属主管：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevFbkInfo.supvrStfNm}}</p>
+                    </div>
+                </div>
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+    <!--2.受访会员信息-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.twoopen" >
+
+            <accordion-heading>
+                <div class="font-bold">2.受访会员信息<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.twoopen, 'fa-angle-right': !status.twoopen}"></i></div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">会员编号：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static"><span ng-bind="memRevFbkInfo.membNum"></span><!--{{memRevFbkInfo.membNum}}--></p>
+                    </div>
+                    <label class="col-lg-2 control-label">姓名：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static"><span ng-bind="memRevFbkInfo.membNm"></span><!--{{memRevFbkInfo.membNm}}--></p>
+                    </div>
+
+                    <label class="col-lg-2 control-label">联系电话：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static"><span ng-bind="memRevFbkInfo.phone"></span><!--{{memRevFbkInfo.phone}}--></p>
+                    </div>
+
+                </div>
+
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+
+    <!--3.任务详情-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.threeopen" >
+
+            <accordion-heading>
+                <div class="font-bold">3.任务详情<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.threeopen, 'fa-angle-right': !status.threeopen}"></i></div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">应回访时间:</label>
+
+                    <div class="col-lg-3">
+                        <p class="form-control-static"><span ng-bind="memRevFbkInfo.rtnTm | date:'yyyy-MM-dd HH:mm:ss'"></span><!--{{memRevFbkInfo.rtnTm | date:'yyyy-MM-dd HH:mm:ss'}}--></p>
+                    </div>
+                    <label class="col-lg-2 control-label">状态：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static"><span style="color: red;" ng-bind="memRevFbkInfo.rtnStat | dicNameFilter:'C024'"></span><!--{{memRevFbkInfo.rtnStat | dicNameFilter:'C024'}}--></p>
+                    </div>
+                </div>
+                <!--<div ng-table="tableParams" >-->
+                <table class="table table-bordered table-condensed table-striped" >
+                    <tr >
+
+                        <td title="'规格商品名称'"  style="text-align:center;min-width:120px;font-weight: bold; ">
+                            规格商品名称
+                        </td>
+                        <td title="'购买时间'"  style="text-align:center;min-width:120px;font-weight: bold; ">
+                            购买时间
+                        </td>
+                        <td title="'回访次数'"   style="text-align:center;min-width:120px;font-weight: bold; ">
+                            回访次数
+                        </td>
+                        <td title="'回访间隔'"  style="text-align:center;min-width:120px;font-weight: bold;">
+                            回访间隔
+                        </td>
+                        <td title="'回访事项'"  style="text-align:center;min-width:120px;font-weight: bold; ">
+                            回访事项
+                        </td>
+                    </tr>
+                    <tr ng-repeat="memRevFbkDtl in memRevFbkDtls">
+
+                        <td >
+                            <!--{{memRevFbkDtl.gdsSpecDtlNm}}-->
+                            <span ng-bind="memRevFbkDtl.gdsSpecDtlNm"></span>
+                        </td>
+                        <td >
+                            <!--{{memRevFbkDtl.buyTm | date:'yyyy:MM:dd HH:mm:ss'}}-->
+                            <span ng-bind="memRevFbkDtl.buyTm | date:'yyyy:MM:dd HH:mm:ss'"></span>
+                        </td>
+                        <td >
+                            <!--{{memRevFbkDtl.fbkTimes}}-->
+                            <span ng-bind="memRevFbkDtl.fbkTimes"></span>
+                        </td>
+                        <td >
+                            <!--{{memRevFbkDtl.fbkInterval}}-->
+                            <span ng-bind="memRevFbkDtl.fbkInterval"></span>
+                        </td>
+                        <td >
+                            <!--{{memRevFbkDtl.rtnItem}}-->
+                            <span ng-bind="memRevFbkDtl.rtnItem"></span>
+                        </td>
+                    </tr>
+
+                </table>
+                <!--</div>-->
+            </form>
+        </accordion-group>
+    </accordion>
+
+    <!--4.回访指导-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.fouropen" >
+
+            <accordion-heading>
+                <div class="font-bold">4.回访指导<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.fouropen, 'fa-angle-right': !status.fouropen}"></i></div>
+            </accordion-heading>
+            <div >
+                <ul ng-repeat="membRevFbk in membRevFbkLis">  <!--<span ng-bind="membRevFbk.fbkStfNm"></span> ：-->
+                    <li style="list-style: none;line-height: 35px;" ><span ng-bind="membRevFbk.fbkStfNm"><!--{{membRevFbk.fbkStfNm}}--></span> ：<span ng-bind="membRevFbk.fbkCont"><!--{{membRevFbk.fbkCont}}--></span>&nbsp;&nbsp;<span style="color: #A3B5CD;" ng-bind="membRevFbk.fbkTm | date:'yyyy:MM:dd HH:mm:ss'"><!--{{membRevFbk.fbkTm | date:'yyyy:MM:dd HH:mm:ss'}}--></span></li>
+                    <li style="list-style: none;line-height: 35px;"  ng-repeat="membAudio in membRevFbk.audioArr"><span ng-bind="membRevFbk.fbkStfNm"></span> ：
+                        <audio controls style="">
+                            <source ng-src="{{sce(membAudio)}}" type="audio/ogg">
+                            <source ng-src="{{sce(membAudio)}}" type="audio/mpeg">
+                        </audio>
+                        <span style="color: #A3B5CD;" ng-bind="membRevFbk.fbkTm | date:'yyyy:MM:dd HH:mm:ss'"><!--{{membRevFbk.fbkTm | date:'yyyy:MM:dd HH:mm:ss'}}--></span>
+                    </li>
+
+                </ul>
+            </div>
+        </accordion-group>
+    </accordion>
+    <!--4.填写回访指导-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.fiveopen" >
+
+            <accordion-heading>
+                <div class="font-bold">5.填写回访指导<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.fouropen, 'fa-angle-right': !status.fouropen}"></i></div>
+            </accordion-heading>
+            <textarea  style="resize:none;width:500px;" rows="5" class="form-control" ng-model="insertRevisitFbk.fbkCont" maxlength="1000">
+
+            </textarea>
+        </accordion-group>
+    </accordion>
+    <div style="margin-top: 30px;">
+        <button class="btn   btn-success " ng-click="insertMembRevisitFbk()" user-power="WMEM01006002"> 提交保存</button>
+        <button class="btn btn-info    btn-addon"  ui-sref="app.member.memRevisitTsk({isBack:true})" style="margin-left:35px;width: 85px;">返回</button>
+    </div>
+
+</div>

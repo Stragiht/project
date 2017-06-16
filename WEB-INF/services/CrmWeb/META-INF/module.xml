@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="Logging" class="com.pokeepera.common.module.WsLogModule">
+    <InFlow>
+        <handler name="InFlowLogHandler" class="com.pokeepera.common.handler.WsLogHandler">
+            <order phase="LoggingPhase"/>
+        </handler>
+    </InFlow>
+    <OutFlow>
+        <handler name="OutFlowLogHandler" class="com.pokeepera.common.handler.WsLogHandler">
+            <order phase="LoggingPhase"/> 
+        </handler>
+    </OutFlow>
+    <OutFaultFlow>
+        <handler name="FaultOutFlowLogHandler" class="com.pokeepera.common.handler.WsLogHandler">
+            <order phase="LoggingPhase"/>
+        </handler>
+    </OutFaultFlow>
+    <InFaultFlow>
+        <handler name="InFaultFlowLogHandler" class="com.pokeepera.common.handler.WsLogHandler">
+            <order phase="LoggingPhase"/>
+        </handler>
+    </InFaultFlow>
+</module>

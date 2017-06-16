@@ -1,0 +1,91 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">新增档期</h4>
+</div>
+<div class="col-xs-12 " ng-controller="salesScheduleInsertCol">
+    <form name = "form" class="form-horizontal form-validation" style="margin-top: 30px" novalidate>
+        <div class="form-group">
+            <div class="col-sm-5">
+               <label for="NAME"class="col-xs-5 control-label"><span style="color:red;">*</span> 档期组名称:</label>
+                <div class="col-xs-6">
+                    <input type="text" class="form-control" id="phagrpNm" name = "phagrpNm" ng-model="phagrpNm" ng-maxlength="50" required>
+                    <div ng-messages="form.phagrpNm.$error" ng-if="(form.phagrpNm.$dirty && form.phagrpNm.$invalid)">
+                       <span ng-message="required" class="error">档期组名称不能为空！</span>
+                       <span ng-message="maxlength" class="error">档期组名称最多不超过50位！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5">
+                <label for="SET"class="col-xs-5 control-label"><span style="color:red;">*</span> 设置具体档期:</label>
+                <div class="col-xs-6">
+                    <button class="btn btn-default  btn-addon" id = "SET" style="float:left; " ng-click="addSchedule()"> 新增档期</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div style="padding-left:10px;padding-right:10px; ">
+                    <table class="table table-bordered table-condensed   table-striped table-hover"  >
+						<tr><th style="width: 200px"><span style="color:red;">*</span>档期名称</th>
+						<th style="width: 250px"><span style="color:red;">*</span>档期开始时间</th>
+						<th style="width: 250px"><span style="color:red;">*</span>档期结束时间</th>
+						<th style="width: 86px">操作</th></tr>
+                        <tr ng-repeat="dqinfoOne in datas"  >
+                            <td title="'档期名称'" sortable="'name'">
+                                <input type="text" class="form-control" id="name" name = "name"  style="width: 165px" ng-model="dqinfoOne.name" ng-maxlength="60" required/>
+                            </td>
+                            <td title="'档期开始时间'" sortable="'start'" style="text-align:center; ">
+                                <div class="input-group w-md" ng-controller="DatepickerDemoCtrl" style="width: 180px">
+									<input type="text" id="start" name = "start"  class="form-control"
+										datepicker-popup="yyyy-MM-dd" ng-model="dqinfoOne.start"
+										 is-open="opened" readonly="readonly"
+										datepicker-options="dateOptions" ng-required="true" /><span
+										class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+                            </td>
+                            <td title="'档期结束时间'" sortable="'end'" style="text-align:center; ">
+                                <div class="input-group w-md" ng-controller="DatepickerDemoCtrl" style="width: 180px">
+									<input type="text" id="end" name = "end" class="form-control"
+										datepicker-popup="yyyy-MM-dd" ng-model="dqinfoOne.end"
+										 is-open="opened" readonly="readonly"
+										datepicker-options="dateOptions" ng-required="true"/> <span
+										class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+                            </td>
+                            <td title="'操作'"   style="text-align:center; ">
+                                <a class="mr_9" ng-click="datas.splice($index,1)">删除</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="BZ"class="col-xs-2 control-label">备注:</label>
+                <div class="col-xs-7">
+                    <textarea class="form-control" rows="3" id = "BZ"  style="width:100%;height:160px" ng-maxlength="1000" ng-model = "remark"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-5" style="padding-left:25px">
+                <button class="btn btn-info  btn-addon" ng-click = "saveSchedule(form.$valid)" user-power="WSTF01008002" ng-disabled="form.phagrpNm.$error.required"> 提交保存</button>
+                <button class="btn btn-default btn-addon mt_6" ui-sref="app.staff.salesScheduleManage"> 返回</button>
+            </div>
+        </div>
+    </form>
+</div>

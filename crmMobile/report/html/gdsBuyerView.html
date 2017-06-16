@@ -1,0 +1,18 @@
+<!-- 商品购买者画面 -->
+<ion-header-bar align-title="center"  class="header">
+    <a ui-sref="baReportDetail({stfNum:cond.stfNum, saleDate:cond.saleDate, strNum:cond.strNum, pageFlg:pageFlg, prePageFlg:prePageFlg})" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size:1.4rem">商品购买者</h1>
+</ion-header-bar>
+<ion-content class="has-header">
+<!-- gdsBuyerView.html -->
+    <div class="wrap">
+         <div class="listvrew clearfix" ng-if="boughtDetailList.length > 0">
+            <ion-list>
+                <ion-item ng-repeat="info in boughtDetailList">
+                    <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                    <span class="float_r">{{info.gdsQty | number}}&nbsp;{{info.saleAmt | currency : "￥"}}</span>  
+                </ion-item>
+            </ion-list>
+         </div>
+     </div> 
+</ion-content>

@@ -1,0 +1,118 @@
+<ion-header-bar align-title="center"  class="header">
+        <a href=""  ui-sref="approvalList" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">详情</h1>
+        <div ng-if="stfList.apprFlag == 1" >
+	        <a user-power="MSTF01011001" href="" ui-sref="approval({applNum:stfList.applNum,oid:stfList.oid,updtTm:stfList.updtTm})" class="head_right" ng-if="stfList.dicNm == '待审批'">
+		    	<div class="head_right_box">
+		            <img src="common/images/zhan.png" width="22" height="22">
+		            <p>审批</p>
+		    	</div>
+		    </a>
+	    </div>
+</ion-header-bar>
+<ion-content  class="has-header "  >
+<!-- approvalDetails.html -->
+	   <ion-list>
+        	<ion-item  >
+               	<span class="w140">申请编号</span>
+               	<span class=" stfInfoItem">{{stfList.applNum}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">相关人员</span>
+               	<span class=" stfInfoItem">{{stfList.stfNm}}</span>
+           </ion-item >
+           <ion-item >
+               	<span class="w140">审批状态</span>
+               	<span class=" stfInfoItem color05 f_10">{{stfList.dicNm}}</span>
+           </ion-item>
+           <div class="index_work_bt"></div>
+           <ion-item >
+               	<span class="w140">考勤工资时间</span>
+               	<span class=" stfInfoItem">{{stfList.phaStartTm}}~{{stfList.phaEndTm}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">销售业绩时间</span>
+               	<span class=" stfInfoItem">{{stfList.saleAmtStartDt}}~{{stfList.saleAmtEndDt}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">实发工资</span>
+               	<span class=" stfInfoItem color05 f_10"><span ng-if="stfList.netSal != 0 && stfList.netSal != undefined"></span>{{stfList.netSal | currency : "￥"}}</span>
+           </ion-item>
+           <ion-item >
+	           <a href="" ui-sref="attendanceSalaryShenpi({applNum:stfList.applNum})">
+	               	<div>
+		               	<span class="w140">考勤工资</span>
+		               	<span class=" stfInfoItem"><span ng-if="stfList.netSal != 0 && stfList.netSal != undefined"></span>{{stfList.kaoqingongzi | currency : "￥"}}</span>
+		           		<span class="float_r"><img src="common/images/you_btn.png" style="position: absolute;top: 15px;right: 16px;"></span>
+	           		</div>
+	           </a>
+           </ion-item>
+           <ion-item >
+	           <a href="" ui-sref="shouldBeAddedTogetherShenpi({applNum:stfList.applNum})">
+	           		<div>
+		               	<span class="w140">应加合计</span>
+		               	<span class=" stfInfoItem"><span ng-if="stfList.netSal != 0 && stfList.netSal != undefined"></span>{{stfList.summation | currency : "￥"}}</span>
+		               	<span class="float_r"><img src="common/images/you_btn.png" style="position: absolute;top: 15px;right: 16px;"></span>
+	           		</div>
+           		</a>
+           </ion-item>
+           <ion-item >
+	           <a href="" ui-sref="totalDeductionShenpi({applNum:stfList.applNum})">
+	           		<div>
+		               	<span class="w140">应扣合计</span>
+		               	<span class=" stfInfoItem"><span ng-if="stfList.netSal != 0 && stfList.netSal != undefined"></span>{{stfList.totDedu | currency : "￥"}}</span>
+		               	<span class="float_r"><img src="common/images/you_btn.png" style="position: absolute;top: 15px;right: 16px;"></span>
+	           		</div>
+	           </a>
+           </ion-item>
+           <div class="index_work_bt"></div>
+           <ion-item >
+               	<span class="w140">人员编号</span>
+               	<span class=" stfInfoItem">{{stfList.stfNum}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">所属部门</span>
+               	<span class=" stfInfoItem">{{stfList.depNm}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">职位等级</span>
+               	<span class=" stfInfoItem">{{stfList.posNm}} {{stfList.posGrdNm}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">入职日期</span>
+               	<span class=" stfInfoItem">{{stfList.stfEntDt}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">最后工作日</span>
+               	<span class=" stfInfoItem">{{stfList.dimiDt}}</span>
+           </ion-item>
+           <div class="index_work_bt">审批历史</div>
+           <div class="shls_wen">
+					<div ng-repeat="lishi in lishis">
+						<div class="shls_wen_box2" ng-if="lishis.length > 1 && $index == 0 && (lishi.status =='编辑' || lishi.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{lishi.stfNm}}&nbsp;{{lishi.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="lishis.length > 1 && $index == 0 && lishi.status !='编辑' && lishi.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{lishi.stfNm}}&nbsp;{{lishi.status}}</h4>
+							<p>{{lishi.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < lishis.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{lishi.stfNm}}&nbsp;{{lishi.status}}</h4>
+							<p>{{lishi.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == lishis.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{lishi.stfNm}}&nbsp;{{lishi.status}}</h4>
+							<p>{{lishi.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+       </ion-list>
+</ion-content>

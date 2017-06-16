@@ -1,0 +1,24 @@
+<div >
+	<ion-header-bar align-title="center" class="header">
+		<a class="angle_left" ui-sref="reportApprovalDetails({applNum:list.repApplNum})" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">{{list.stfNm}}本店业绩</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- storePerformance.html -->
+		<div class="wrap">
+			<div class="listvrew clearfix">
+				<ion-list>
+					<ion-item ng-repeat="stfItem in stfList" style="white-space: initial;">
+						<span>{{stfItem.billOfLandTm | date:'MM-dd'}}</span>
+						<span class="float_r" style="float:right;">{{stfItem.saleAmt | currency : "￥"}}</span>
+					</ion-item>
+				</ion-list>
+			</div>
+			<div my-nodata-show="stfList.length == 0 && !moredata" class="wushuju">
+		        <img src="common/images/bear.gif" >
+		        <p>没有符合条件的数据</p>
+		    </div>
+		</div>
+		<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+	</ion-content>
+</div>

@@ -1,0 +1,1139 @@
+
+<div ng-controller="stfBasInsert">
+	<div>
+		<script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+	</div>
+	<!-- 标题信息开始 -->
+	<div class="bg-light lter b-b wrapper-md" ng-show="nextOne">
+		<h4 class="m-n font-thin h4">
+			新增人员<a class="btn btn-default  btn-addon mr_8"
+				ui-sref="app.staff.stfBas">返回人员信息管理</a>
+		</h4>
+	</div>
+	<!-- 标题信息结束 -->
+	<!-- 导出系列按钮面板开始 -->
+	<div class="panel-heading" ng-show="nextOne" style="margin-top: 1rem;">
+		<form class="bs-example form-horizontal" name="formOne">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span
+					style="color: red;">*</span>所属部门：</label>
+
+				<div class="col-xs-3">
+					<select name="subDep" required class="form-control"
+						ng-model="insert.subDep"
+						ng-options="zt.key as zt.text for zt in departments">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" style="margin-right: 15px;"><span
+					style="color: red;">*</span>职位等级：</label>
+
+				<!--<div class="col-xs-3">-->
+					<!--<select name="posNum" class="form-control" ng-model="insert.posNum"-->
+						<!--ng-options="zt.key as zt.text for zt in jobs">-->
+					<!--</select>-->
+				<!--</div>-->
+				<div class="col-sm-10" style="margin-left: -15px;">
+					<select name="posNum" ng-model="insert.posNum" ng-change="getPosLvls(insert.posNum)"
+							ng-options="zt.key as zt.text for zt in jobs" style="height: 35px;margin-bottom: 5px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;padding-left: 12px;">
+					</select>
+
+					<select name="posNum" ng-model="insert.posGrdNum" ng-if="curPoslvl.length > 0"
+							ng-options="cpl.key as cpl.text for cpl in curPoslvl" style="height: 35px;margin-bottom: 5px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;padding-left: 12px;">
+					</select>
+				</div>
+
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span
+					style="color: red;">*</span>是否有直属主管：</label>
+				<div class="col-xs-4">
+					<div class="col-xs-3">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input name="a"
+								type="radio" value="true" ng-model="insert.hasDirSupFlg">
+								<i></i>是
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input name="a"
+								type="radio" value="false" ng-model="insert.hasDirSupFlg">
+								<i></i> 否
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-if="insert.hasDirSupFlg=='true'">
+				<label class="col-sm-2 control-label"> <span
+					style="color: red;">*</span>直属主管：
+				</label>
+
+				<div class="col-xs-3">
+					<input type="text" ng-click="openStf('lg')" class="form-control"
+						name="supvrStfNum" readonly="readonly"
+						ng-model="insert.supvrStfNums">
+					<div ng-if="xxxs" >
+						<span class="error">直属主管不能为空 </span>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<span>
+						<button class="btn m-b-xs w-xs btn-default"
+							ng-click="openStaff('lg')" user-power="WSTF01001003">浏览</button>
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-if="status.supvrStfInfoDisabled && insert.hasDirSupFlg=='true'">
+				<label class="col-xs-2 control-label"></label>
+				<div class="col-xs-5 control-label">
+					<table class="table table-bordered">
+						<tr>
+							<th colspan="2">直属主管相关信息</th>
+						</tr>
+						<tr>
+							<td style="text-align: right; width: 50%;">直属主管职位：</td>
+							<td>{{supvrStfPosNum|stfBasPosNum}}</td>
+						</tr>
+						<tr ng-repeat="supvrStfInfo in supvrStfList">
+							<td style="text-align: right; width: 50%;">所属{{supvrStfInfo.posNum|stfBasPosNum}}：</td>
+							<td>{{supvrStfInfo.stfnm}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"> </label>
+				<div class="col-sm-2">
+					<a class="btn m-b-xs w-xs btn-info" ng-click="next(formOne.$valid)"
+						user-power="WSTF01001003">下一步</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="bg-light lter b-b wrapper-md" ng-show="nextTwo">
+		<h4 class="m-n font-thin h4">新增人员</h4>
+	</div>
+	<div class="panel-heading" ng-show="nextTwo">
+		<!--1.基本信息-->
+		<form class="form-horizontal" name="formTwo" novalidate>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.jbxxopen"> <accordion-heading>
+			1.基本信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.jbxxopen, 'fa-angle-right': !status.jbxxopen}">
+			</i> </accordion-heading>
+
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 姓名：
+				</label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-model="insert.stfNm"
+						name="stfNm" required/>
+					<div ng-messages="formTwo.stfNm.$error"  
+						ng-if="(formTwo.stfNm.$dirty && formTwo.stfNm.$invalid)">
+						 
+						<span ng-message="required" class="error"> 姓名不能为空 </span>
+					</div>
+				</div>
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 性别：
+				</label>
+				<div class="col-xs-1">
+					<div class="radio">
+						<label class="i-checks i-checks-sm"> <input name="sex"
+							type="radio" ng-model="insert.sex" value="2"> <i> </i> 女
+						</label>
+					</div>
+				</div>
+				<div class="col-xs-1">
+					<div class="radio">
+						<label class="i-checks i-checks-sm"> <input name="sex"
+							type="radio" ng-model="insert.sex" value="1"> <i> </i> 男
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 联系电话：
+				</label>
+
+				<div class="col-xs-3">
+					<input type="text" name="phone" class="form-control"
+						ng-model="insert.phone" required maxLength="15" />
+					<div ng-messages="formTwo.phone.$error"  
+						ng-if="(formTwo.phone.$dirty && formTwo.phone.$invalid)">
+						 
+						<span ng-message="required" class="error"> 联系电话不能为空</span>
+					</div>
+				</div>
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 身份证号码：
+				</label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-model="insert.stfIdNum"
+						name="stfIdNum" required maxLength="18"
+						ng-pattern="/^\d{15}$|^\d{17}([0-9]|X)$/">
+					<div ng-messages="formTwo.stfIdNum.$error"  
+						ng-if="(formTwo.stfIdNum.$dirty && formTwo.stfIdNum.$invalid)">
+						 
+						<span ng-message="required" class="error"> 身份证号码不能为空 </span> <span
+							ng-message="pattern" class="error"> 请输入有效的身份证号码 </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 所在城市：
+				</label>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.locProv" required
+						ng-change="selectc()"
+						ng-options="zt.key as zt.text for zt in locProv">
+					</select>
+
+				</div>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.locCity"
+						ng-options="zt.key as zt.text for zt in locCity" name="locCity"
+						required>
+					</select>
+					<div ng-messages="formTwo.locCity.$error"  
+						ng-if="(formTwo.locCity.$dirty && formTwo.locCity.$invalid)">
+						 
+						<span ng-message="required" class="error"> 城市不能为空 </span>
+					</div>
+				</div>
+			</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label"> 籍贯： </label>
+					<div class="col-xs-2">
+						<select class="form-control" ng-model="insert.homeAddrProv"
+								ng-change="selectAddrCity()"
+								ng-options="zt.key as zt.text for zt in homeAddrProv">
+						</select>
+					</div>
+					<div class="col-xs-2">
+						<select class="form-control" ng-model="insert.homeAddrCity"
+								ng-options="zt.key as zt.text for zt in homeAddrCity">
+						</select>
+					</div>
+					<!--<div class="col-xs-2">-->
+						<!--<select class="form-control" ng-model="insert.homeAddrPref"-->
+								<!--ng-options="zt.key as zt.text for zt in homeAddrPref">-->
+						<!--</select>-->
+					<!--</div>-->
+					<!--<div class="col-xs-3">-->
+						<!--<input type="text" class="form-control"-->
+							   <!--ng-model="insert.homeAddrDtl">-->
+					<!--</div>-->
+				</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 现员工编号： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-model="insert.currStfNum">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 婚姻状况： </label>
+				<div class="col-xs-2">
+					<select name="maritalStatus" class="form-control" ng-model="insert.maritalStatus"
+							ng-options="ms.key as ms.text for ms in maritalStatuss">
+					</select>
+				</div>
+
+				<label class="col-xs-4 control-label" ><span style="color:red;">*</span>纸质资料是否收齐：</label>
+
+				<div class="col-sm-1">
+					<div class="radio">
+						<label class="i-checks i-checks-sm">
+							<input name="a" value="0" type="radio" ng-model="insert.materialCompleteFlag">
+							<i></i>
+							否
+						</label>
+					</div>
+				</div>
+
+				<div class="col-sm-1">
+					<div class="radio">
+						<label class="i-checks i-checks-sm">
+							<input name="a" type="radio" value="1" ng-model="insert.materialCompleteFlag" checked>
+							<i></i>
+							是
+						</label>
+					</div>
+				</div>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 紧急联系人： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control"
+						ng-model="insert.emerContact" maxLength=50>
+				</div>
+				<label class="col-xs-3 control-label"> 紧急联系人联系电话： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control"
+						ng-model="insert.emerContactPhNum" name="emerContactPhNum"
+						maxLength=15 />
+
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 备注： </label>
+				<div class="col-xs-4">
+					<textarea class="form-control" rows="3" ng-model="insert.remark"
+						maxLength=1000>
+              </textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 年龄： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-model="insert.ages" disabled="disabled" maxLength=3>
+				</div>
+				<label class="col-xs-3 control-label"> 出生日期： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control" ng-change="ngchange(insert.dtOfBirth)"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.dtOfBirth"
+							is-open="opened" datepicker-options="dateOptions" 
+							readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 邮箱： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control"
+						ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/"
+						ng-model="insert.mailbox" name="mailbox" maxlength="100">
+					<div ng-messages="formTwo.mailbox.$error"   
+						ng-if="(formTwo.mailbox.$dirty && formTwo.mailbox.$invalid)">
+						 
+						<span ng-message="pattern" class="error"> 请输入有效的邮箱 </span>
+					</div>
+				</div>
+				<!--<label class="col-xs-3 control-label"> 工作经验： </label>
+				<div class="col-xs-2">
+					<input type="number" class="form-control" ng-model="insert.workExp"
+						maxLength=2>
+				</div>
+				<label class="col-xs-1 control-label" style="text-align: left;">
+					年 </label>-->
+
+				<label class="col-xs-2 control-label"> 工作经验： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-pattern="/^[1-9]\d*|0$/"
+						   ng-model="insert.workExp"
+						   name="workExp" maxLength="2">
+					<div ng-messages="formTwo.workExp.$error"
+						 ng-if="(formTwo.workExp.$dirty && formTwo.workExp.$invalid)">
+						<!--<span ng-message="pattern" class="error"> 工作经验不小于0年 </span>-->
+						<span ng-message="pattern" class="error" ng-bind="workExpMsg"></span>
+					</div>
+
+				</div>
+				<label class="col-xs-1 control-label" style="text-align: left;">
+					年 </label>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 学历： </label>
+				<div class="col-xs-2">
+					<select name="degree" class="form-control" ng-model="insert.degree"
+						ng-options="zt.key as zt.text for zt in degree">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 毕业院校： </label>
+				<div class="col-xs-9">
+					<input type="text" class="form-control"
+						   ng-model="insert.school">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 家庭住址： </label>
+				<!--<div class="col-xs-2">-->
+					<!--<select class="form-control" ng-model="insert.homeAddrProv"-->
+						<!--ng-change="selectAddrCity()"-->
+						<!--ng-options="zt.key as zt.text for zt in homeAddrProv">-->
+					<!--</select>-->
+				<!--</div>-->
+				<!--<div class="col-xs-2">-->
+					<!--<select class="form-control" ng-model="insert.homeAddrCity"-->
+						<!--ng-change="selectAddrPref()"-->
+						<!--ng-options="zt.key as zt.text for zt in homeAddrCity">-->
+					<!--</select>-->
+				<!--</div>-->
+				<!--<div class="col-xs-2">-->
+					<!--<select class="form-control" ng-model="insert.homeAddrPref"-->
+						<!--ng-options="zt.key as zt.text for zt in homeAddrPref">-->
+					<!--</select>-->
+				<!--</div>-->
+				<div class="col-xs-9">
+					<input type="text" class="form-control"
+						ng-model="insert.homeAddrDtl">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 上传用户头像图片： </label>
+				<div class="col-xs-6">
+					<p class="form-control-static">图片支持JPG、PNG，大小不超过2M</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-3 control-label"></label>
+				<div class="wrapper-md col-lg-9" ng-controller="ImgMemCtrl">
+					<div style="margin-left: -15px;margin-top: -15px;">
+						<!--<input type="file" id="fileInput" style="margin-top: -15px;"/>-->
+						<a href="javascript:;" class="a-upload mt_6">
+							<input type="file" id="fileInput" ng-click="selectImg($event, insert.figure)" accept=".png,.jpg"/> 选择头像图片
+						</a>
+						<input type="text" style="display: none" ng-model="insert.figure"/>
+						<input type="button" value="上传" ng-click="uploadImg(insert.figure)" class="btn btn-default btn-addon mt_5" />
+						<!--<label class="control-label mt_5"> <span style="color: red;">-->
+							<!--{{figuredMemb}} </span> <span style="color: green;"> {{figuresMemb}} </span>-->
+						<!--</label>-->
+					</div>
+					<div class="hbox hbox-auto-xs">
+						<div class="col">
+							<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs" style="height:240px;width:240px;">
+								<div class="bg-light" style="height:220px;width:220px;">
+									<img-crop image="myImage" result-image="myCroppedImage" result-image-size="160" area-type="{{cropType}}"></img-crop>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="inline bg-white wrapper-sm b-a" style="border-radius: 50%;width: 140px;height: 140px;position: relative;">
+								<div class="bg-light" style="border-radius: 50%;">
+									<img ng-src="{{myCroppedImage}}" style="border-radius: 50%;width: 120px;height: 120px; margin: 0 auto"/>
+								</div>
+								<div class="finger" ng-if="insert.figure.fileArray[0].flag != uploadFlag.UN_SEL"
+									style="position: absolute;right: 5px;top: 5px;width: 30px;height: 30px;background:url(common/img/x_alt.png) no-repeat;background-size: 100%;border-radius: 50%;cursor: pointer;"
+									ng-click="delImgItem(insert.figure, insert.figure.fileArray[0])">
+								</div>
+								<div ng-if="insert.figure.fileArray[0].flag == uploadFlag.UPLOAD_SUCC" style="top: 150px;width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">已上传</div>
+								<div ng-if="insert.figure.fileArray[0].flag == uploadFlag.UN_UPLOAD" style="top: 150px;width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未上传</div>
+								<div ng-if="insert.figure.fileArray[0].flag == uploadFlag.UN_SEL" style="top: 150px;width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未选择</div>
+								<div ng-if="insert.figure.fileArray[0].flag == uploadFlag.UPLOAD_FAILED" style="top: 150px;width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">上传失败</div>
+							</div>
+						</div>
+					</div>
+					<div class="btn-group m-t">
+						<label class="btn btn-default" ng-model="cropType" btn-radio="'circle'">圆形</label>
+						<!--<label class="btn btn-default" ng-model="cropType"-->
+						<!--btn-radio="'square'">方形</label>-->
+					</div>
+				</div>
+			</div>
+
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.gwzzxxopen"> <accordion-heading>
+			2.岗位职责信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.gwzzxxopen, 'fa-angle-right': !status.gwzzxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 在岗状态：
+				</label>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.workStat"
+						autocomplete="off" required name="workstat"
+						ng-options="zt.key as zt.text for zt in workStat">
+					</select>
+
+				</div>
+				<label class="col-xs-3 control-label"><span class="error">
+						* </span>入职时间： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control" name="stfEntDt"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.stfEntDt"
+							is-open="opened" datepicker-options="dateOptions" required
+							readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+					<div ng-messages="formTwo.stfEntDt.$error"  
+						ng-if="(formTwo.stfEntDt.$dirty && formTwo.stfEntDt.$invalid)">
+						 
+						<span ng-message="required" class="error"> 入职时间不能为空 </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 转正时间： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.regularStfDt"
+							is-open="opened" datepicker-options="dateOptions"
+							readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+				<label class="col-xs-3 control-label"> 离职时间： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.dimiDt"
+							is-open="opened" datepicker-options="dateOptions"
+							readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 所属部门： </label>
+				<div class="col-xs-3">
+					<p class="form-control-static">{{insert.subDeps|stfBasSubDep}}
+					</p>
+				</div>
+				<label class="col-xs-3 control-label"> 职位等级： </label>
+				<div class="col-sm-3">
+					<p class="form-control-static">
+						<span ng-bind="insert.posNums|stfBasPosNum"></span><span ng-if="(insert.posGrdNum != '0000') && (insert.posGrdNum | isNotNullFilter)">></span><span ng-bind="insert.posGrdNum | stfBasPosLvlFilter"></span>
+					</p>
+				</div>
+			</div>
+			<!--<div class="form-group" ng-if="posGrdNums">
+				<label class="col-xs-3 control-label"> <span class="error">
+						* </span>职位等级： </label>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="insert.posGrdNum"
+						ng-options="zt.key as zt.text for zt in posGrdNum">
+					</select>
+				</div>
+			</div>-->
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 是否计算工资：
+				</label>
+				<div class="col-xs-3">
+					<div class="col-xs-5">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input
+								name="calcSalFlg" type="radio" ng-model="insert.calcSalFlg"
+								value="1"> <i> </i> 是
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-5">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input
+								name="calcSalFlg" type="radio" ng-model="insert.calcSalFlg"
+								value="0"> <i> </i> 否
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime" ng-if="marknum=='0'">
+			<accordion-group is-open="status.ssmdopen"> <accordion-heading>
+			3.所属门店 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.gzkxxopen, 'fa-angle-right': !status.gzkxxopen}">
+			</i> </accordion-heading> <script type="text/ng-template" id="multiselectstore.html">
+			<div ng-include="'common/tpl/multiselectstore.html'"></div>
+		</script>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 所属门店：
+				</label>
+				<div class="col-xs-3">
+					<button class="btn m-b-xs w-xs btn-default"
+						ng-click="openDep('lg')" user-power="WSTF01001003">添加</button>
+				</div>
+				 
+			</div>
+			<div class="form-group">
+				<label class="col-xs-1 control-label"></label>
+				<div class="col-xs-11">
+					<div ng-table="tableParams">
+						<table class="table table-bordered table-condensed table-striped table-hover">
+							<tr ng-repeat="userinfo in $data">
+								<td title="'门店编号'" style="min-width: 120px;">
+									{{userinfo.strNum}}</td>
+								<td title="'门店名称'" style="min-width: 120px;">
+									{{userinfo.strNm}}</td>
+								<td title="'所属渠道'" style="min-width: 120px;">
+									{{userinfo.chnlNm}}</td>
+								<td title="'所属销售大区'" style="min-width: 120px;">
+									{{userinfo.majRgnNm}}</td>
+								<td title="'所属城市'" style="min-width: 120px;">
+									{{userinfo.cityNum}}</td>
+								<td title="'所属城市分区'" style="min-width: 120px;">
+									{{userinfo.partiNm}}</td>
+								<td title="'操作'" style="min-width: 200px;" class="mr_22"
+									onmouseover=""><a class="mr_9"
+									ng-click="delsrot($index)"> 删除 </a></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.gzkxxopen"> <accordion-heading>
+			{{4-marknum}}.工资卡信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.gzkxxopen, 'fa-angle-right': !status.gzkxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 银行卡名称： </label>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.bnkCardBnkNm"
+						ng-options="zt.key as zt.text for zt in bnkCardBnkNm">
+					</select>
+				</div>
+				<label class="col-xs-3 control-label"> 银行卡号： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control"
+						ng-model="insert.bnkCardNum" maxLength=40>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-lg-6 ">
+					<div style="margin-left: -10px;">
+						<a href="javascript:;" class="a-upload mt_6">
+							<input type="file" id="gdsInUpl2" ng-click="selectImg($event, insert.bnkCardPic)" accept=".png,.jpg"/>
+							选择银行卡正面图片
+						</a>
+						<input type="button" value="上传" ng-click="uploadImg(insert.bnkCardPic)" class="btn btn-default btn-addon mt_5" />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-xs-7">
+					<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs box" style="height:240px;width:340px;position: relative;">
+						<div class="bg-light" style="height:220px;width:320px;">
+							<!--<img ng-src="{{insert.bnkCardPic}}" style="height:220px;width:220px;"/>-->
+							<img ng-src="{{insert.bnkCardPic.fileArray[0].basePath+insert.bnkCardPic.fileArray[0].fileUrl}}" style="height:220px;width:320px;"/>
+							<div class="finger" ng-if="insert.bnkCardPic.fileArray[0].flag != uploadFlag.UN_SEL"
+								style="position: absolute;right: 5px;top: 5px;width: 30px;height: 30px;background:url(common/img/x_alt.png) no-repeat;background-size: 100%;border-radius: 50%;cursor: pointer;"
+								ng-click="delImgItem(insert.bnkCardPic, insert.bnkCardPic.fileArray[0])">
+							</div>
+							<div ng-if="insert.bnkCardPic.fileArray[0].flag == uploadFlag.UPLOAD_SUCC" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">已上传</div>
+							<div ng-if="insert.bnkCardPic.fileArray[0].flag == uploadFlag.UN_UPLOAD" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未上传</div>
+							<div ng-if="insert.bnkCardPic.fileArray[0].flag == uploadFlag.UN_SEL" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未选择</div>
+							<div ng-if="insert.bnkCardPic.fileArray[0].flag == uploadFlag.UPLOAD_FAILED" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">上传失败</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.zjdzsmxxopen"> <accordion-heading>
+			{{5-marknum}}.证件电子扫描件信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.zjdzsmxxopen, 'fa-angle-right': !status.zjdzsmxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label">上传身份证图片： </label>
+				<div class="col-xs-6">
+					<p class="form-control-static">图片支持JPG、PNG，大小不超过2M</p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-lg-1"></div>
+				<div class="col-lg-5">
+					<div style="margin-left: -10px;">
+						<a href="javascript:;" class="a-upload mt_6">
+							<input type="file" id="gdsInUpl3" ng-click="selectImg($event, insert.idCardPosPic)" accept=".png,.jpg"/>
+							选择上传身份证正面图片
+						</a>
+						<input type="button" value="上传" ng-click="uploadImg(insert.idCardPosPic)" class="btn btn-default btn-addon mt_5" />
+					</div>
+				</div>
+				<div class="col-lg-5">
+					<div style="margin-left: -10px;">
+						<a href="javascript:;" class="a-upload mt_6">
+							<input type="file" id="gdsInUpl4" ng-click="selectImg($event, insert.idCardOppPic)" accept=".png,.jpg"/>
+							选择上传身份证反面图片
+						</a>
+						<input type="button" value="上传" ng-click="uploadImg(insert.idCardOppPic)" class="btn btn-default btn-addon mt_5" />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-1"></div>
+				<div class="col-xs-5">
+					<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs box" style="height:240px;width:340px;position: relative;">
+						<div class="bg-light" style="height:220px;width:320px;">
+							<!--<img ng-src="{{insert.idCardPosPic}}" style="height:220px;width:220px;"/>-->
+							<img ng-src="{{insert.idCardPosPic.fileArray[0].basePath+insert.idCardPosPic.fileArray[0].fileUrl}}" style="height:220px;width:320px;"/>
+							<div class="finger" ng-if="insert.idCardPosPic.fileArray[0].flag != uploadFlag.UN_SEL"
+								style="position: absolute;right: 5px;top: 5px;width: 30px;height: 30px;background:url(common/img/x_alt.png) no-repeat;background-size: 100%;border-radius: 50%;cursor: pointer;"
+								ng-click="delImgItem(insert.idCardPosPic, insert.idCardPosPic.fileArray[0])">
+							</div>
+							<div ng-if="insert.idCardPosPic.fileArray[0].flag == uploadFlag.UPLOAD_SUCC" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">已上传</div>
+							<div ng-if="insert.idCardPosPic.fileArray[0].flag == uploadFlag.UN_UPLOAD" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未上传</div>
+							<div ng-if="insert.idCardPosPic.fileArray[0].flag == uploadFlag.UN_SEL" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未选择</div>
+							<div ng-if="insert.idCardPosPic.fileArray[0].flag == uploadFlag.UPLOAD_FAILED" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">上传失败</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-5">
+					<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs box" style="height:240px;width:340px;position: relative;">
+						<div class="bg-light" style="height:220px;width:320px;">
+							<!--<img ng-src="{{insert.idCardOppPic}}" style="height:220px;width:220px;"/>-->
+							<img ng-src="{{insert.idCardOppPic.fileArray[0].basePath+insert.idCardOppPic.fileArray[0].fileUrl}}" style="height:220px;width:320px;"/>
+							<div class="finger" ng-if="insert.idCardOppPic.fileArray[0].flag != uploadFlag.UN_SEL"
+								style="position: absolute;right: 5px;top: 5px;width: 30px;height: 30px;background:url(common/img/x_alt.png) no-repeat;background-size: 100%;border-radius: 50%;cursor: pointer;"
+								ng-click="delImgItem(insert.idCardOppPic, insert.idCardOppPic.fileArray[0])">
+							</div>
+							<div ng-if="insert.idCardOppPic.fileArray[0].flag == uploadFlag.UPLOAD_SUCC" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">已上传</div>
+							<div ng-if="insert.idCardOppPic.fileArray[0].flag == uploadFlag.UN_UPLOAD" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未上传</div>
+							<div ng-if="insert.idCardOppPic.fileArray[0].flag == uploadFlag.UN_SEL" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未选择</div>
+							<div ng-if="insert.idCardOppPic.fileArray[0].flag == uploadFlag.UPLOAD_FAILED" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">上传失败</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 上传健康证图片： </label>
+				<div class="col-xs-6">
+					<p class="form-control-static">图片支持JPG、PNG，大小不超过2M</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-lg-6 ">
+					<div style="margin-left: -10px;">
+						<a href="javascript:;" class="a-upload mt_6">
+							<input type="file" id="gdsInUpl1" ng-click="selectImg($event, insert.healthCertPic)" accept=".png,.jpg"/>
+							选择健康证图片
+						</a>
+						<input type="button" value="上传" ng-click="uploadImg(insert.healthCertPic)" class="btn btn-default btn-addon mt_5" />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-xs-7">
+					<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs box" style="height:240px;width:340px;position: relative;">
+						<div class="bg-light" style="height:220px;width:320px;">
+							<!--<img ng-src="{{insert.healthCertPic}}" style="height:220px;width:220px;"/>-->
+							<img ng-src="{{insert.healthCertPic.fileArray[0].basePath+insert.healthCertPic.fileArray[0].fileUrl}}" style="height:220px;width:320px;"/>
+							<div class="finger" ng-if="insert.healthCertPic.fileArray[0].flag != uploadFlag.UN_SEL"
+								style="position: absolute;right: 5px;top: 5px;width: 30px;height: 30px;background:url(common/img/x_alt.png) no-repeat;background-size: 100%;border-radius: 50%;cursor: pointer;"
+								ng-click="delImgItem(insert.healthCertPic, insert.healthCertPic.fileArray[0])">
+							</div>
+							<div ng-if="insert.healthCertPic.fileArray[0].flag == uploadFlag.UPLOAD_SUCC" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">已上传</div>
+							<div ng-if="insert.healthCertPic.fileArray[0].flag == uploadFlag.UN_UPLOAD" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未上传</div>
+							<div ng-if="insert.healthCertPic.fileArray[0].flag == uploadFlag.UN_SEL" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">未选择</div>
+							<div ng-if="insert.healthCertPic.fileArray[0].flag == uploadFlag.UPLOAD_FAILED" style="width: 320px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 8px;">上传失败</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.grjlxxopen"> <!--5.个人简历信息--> <accordion-heading>
+			{{6-marknum}}.个人简历信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.grjlxxopen, 'fa-angle-right': !status.grjlxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<div class="wrapper-md">
+					<div class="col-xs-3"  >
+						<input class="form-control" ng-model="insert.resumeFileNm.fileArray[0].file.name"  readonly/>
+					</div>
+					<div class="col-xs-2  btn btn-default fileUpload">
+						<span>上传附件</span>
+						<input id="filefuj" type="file" class="upload" style="height: 100%" ng-click="selectFile($event, insert.resumeFileNm)"/>
+					</div>
+					<input type="button"
+						value="上传" ng-click="uploadFile(insert.resumeFileNm)"
+						class="btn btn-default btn-addon mt_5"> <label
+						class="control-label mt_5"> <!-- <span style="color: red;">
+							{{resumeFileNmd}} </span> <span style="color: green;">
+							{{resumeFileNms}} </span> -->
+					</label>
+				</div>
+
+				<div class="wrapper-md">
+					<textarea id = "resumeInfoInsert"></textarea>
+				</div>
+				<!--<div class="col-sm-12">
+					<div class="btn-toolbar m-b-sm btn-editor"
+						data-role="editor-toolbar" data-target="#editor">
+						<div class="btn-group dropdown" dropdown>
+							<a class="btn btn-default" dropdown-toggle tooltip="字体"> <i
+								class="fa fa-font"> </i> <b class="caret"> </b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href data-edit="fontName Serif"
+									style="font-family: 'Serif'"> Serif </a></li>
+								<li><a href data-edit="fontName Sans"
+									style="font-family: 'Sans'"> Sans </a></li>
+								<li><a href data-edit="fontName Arial"
+									style="font-family: 'Arial'"> Arial </a></li>
+							</ul>
+						</div>
+						<div class="btn-group dropdown" dropdown>
+							<a class="btn btn-default" dropdown-toggle data-toggle="dropdown"
+								tooltip="字体大小"> <i class="fa fa-text-height"> </i> &nbsp; <b
+								class="caret"> </b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href data-edit="fontSize 5" style="font-size: 24px">
+										大 </a></li>
+								<li><a href data-edit="fontSize 3" style="font-size: 18px">
+										正常 </a></li>
+								<li><a href data-edit="fontSize 1" style="font-size: 14px">
+										小 </a></li>
+							</ul>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-default" data-edit="bold"
+								tooltip="粗体 (Ctrl/Cmd+B)"> <i class="fa fa-bold"> </i>
+							</a> <a class="btn btn-default" data-edit="italic"
+								tooltip="斜体 (Ctrl/Cmd+I)"> <i class="fa fa-italic"> </i>
+							</a> <a class="btn btn-default" data-edit="strikethrough"
+								tooltip="删除线"> <i class="fa fa-strikethrough"> </i>
+							</a> <a class="btn btn-default" data-edit="underline"
+								tooltip="下划线 (Ctrl/Cmd+U)"> <i class="fa fa-underline">
+							</i>
+							</a>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-default" data-edit="insertunorderedlist"
+								tooltip="无需列表"> <i class="fa fa-list-ul"> </i>
+							</a> <a class="btn btn-default" data-edit="insertorderedlist"
+								tooltip="有序列表"> <i class="fa fa-list-ol"> </i>
+							</a> <a class="btn btn-default" data-edit="outdent"
+								tooltip="减少缩进 (Shift+Tab)"> <i class="fa fa-dedent"> </i>
+							</a> <a class="btn btn-default" data-edit="indent" tooltip="缩进 (Tab)">
+								<i class="fa fa-indent"> </i>
+							</a>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-default" data-edit="justifyleft"
+								tooltip="左对齐 (Ctrl/Cmd+L)"> <i class="fa fa-align-left">
+							</i>
+							</a> <a class="btn btn-default" data-edit="justifycenter"
+								tooltip="居中 (Ctrl/Cmd+E)"> <i class="fa fa-align-center">
+							</i>
+							</a> <a class="btn btn-default" data-edit="justifyright"
+								tooltip="右对齐 (Ctrl/Cmd+R)"> <i class="fa fa-align-right">
+							</i>
+							</a> <a class="btn btn-default" data-edit="justifyfull"
+								tooltip="两端对其 (Ctrl/Cmd+J)"> <i class="fa fa-align-justify">
+							</i>
+							</a>
+						</div>
+			 
+						<div class="btn-group">
+							<a class="btn btn-default" tooltip="插入图片" id="pictureBtn"> <i
+								class="fa fa-picture-o"> </i>
+							</a> <input type="file" data-edit="insertImage"
+								style="position: absolute; opacity: 0; width: 41px; height: 34px" />
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-default" data-edit="undo"
+								tooltip="复原 (Ctrl/Cmd+Z)"> <i class="fa fa-undo"> </i>
+							</a> <a class="btn btn-default" data-edit="redo" 
+								tooltip="取消复原 (Ctrl/Cmd+Y)"> <i class="fa fa-repeat"> </i>
+							</a>
+						</div>
+					</div>
+					<div ui-jq="wysiwyg" id="resumeInfo" class="form-control"
+						style="overflow: scroll; height: 200px; max-height: 200px">
+						 </div>
+				</div>-->
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.ldhtxxopen"> <accordion-heading>
+			{{7-marknum}}.劳动合同信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.ldhtxxopen, 'fa-angle-right': !status.ldhtxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 劳动合同编号： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control"
+						ng-model="insert.laborContractNum" maxLength=20>
+				</div>
+				<label class="col-xs-3 control-label"> 劳动合同类型： </label>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.laborContractType"
+						ng-options="zt.key as zt.text for zt in laborContractType">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 签订劳动合同起始时间： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd"
+							ng-model="insert.laborConrtactStartTm"
+							ng-init="rzrqks = '2015-01-01'" is-open="opened"
+							datepicker-options="dateOptions" readonly="readonly" /> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+				<label class="col-xs-3 control-label"> 劳动合同终止时间： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd"
+							ng-model="insert.laborContractEndTm" is-open="opened"
+							datepicker-options="dateOptions" readonly="readonly" /> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.sbxxopen"> <accordion-heading>
+			{{8-marknum}}.社保信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.sbxxopen, 'fa-angle-right': !status.sbxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 社保编号： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-model="insert.ssAcctNum"
+						maxLength=20>
+				</div>
+				<label class="col-xs-2 control-label"> 购买地： </label>
+				<div class="col-xs-2">
+					<select class="form-control" ng-model="insert.ssPruProv"
+						ng-change="selectgjj()"
+						ng-options="zt.key as zt.text for zt in ssPruProv">
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<select class="form-control" ng-model="insert.ssPruCity"
+						ng-options="zt.key as zt.text for zt in ssPruCity">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 购买日期： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.ssPruDt"
+							is-open="opened" datepicker-options="dateOptions"
+							readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+				<label class="col-xs-3 control-label"> 停止购买日期： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.stopSSDt"
+							ng-init="rzrqks = '2015-01-01'" is-open="opened"
+							datepicker-options="dateOptions" readonly="readonly" /> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 社保卡发放状态： </label>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.ssCardStat"
+						ng-options="zt.key as zt.text for zt in ssCardStat">
+					</select>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.gjjxxopen"> <accordion-heading>
+			{{9-marknum}}.公积金信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.gjjxxopen, 'fa-angle-right': !status.gjjxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 公积金编号： </label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control"
+						ng-model="insert.accumFundsNum" maxLength=20>
+				</div>
+				<label class="col-xs-2 control-label"> 购买地： </label>
+				<div class="col-xs-2">
+					<select class="form-control" ng-model="insert.accumFundProv"
+						ng-change="selectgmd()"
+						ng-options="zt.key as zt.text for zt in accumFundProv">
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<select class="form-control" ng-model="insert.accumFundCity"
+						ng-options="zt.key as zt.text for zt in accumFundCity">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 购买日期： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.accumFundDt"
+							is-open="opened" datepicker-options="dateOptions"
+							readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+				<label class="col-xs-3 control-label"> 停止购买日期： </label>
+				<div class="col-xs-3">
+					<div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+						style="width: 180px;">
+						<input type="text" class="form-control"
+							datepicker-popup="yyyy-MM-dd" ng-model="insert.stopBuyDt"
+							ng-init="rzrqks = '2015-01-01'" is-open="opened"
+							datepicker-options="dateOptions" readonly="readonly" /> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"> </i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 公积金卡发放状态： </label>
+				<div class="col-xs-3">
+					<select class="form-control" ng-model="insert.accumFundCardStat"
+						ng-options="zt.key as zt.text for zt in accumFundCardStat">
+					</select>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.zhxxopen"> <accordion-heading>
+			{{10-marknum}}.CRM账号信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.zhxxopen, 'fa-angle-right': !status.zhxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 是否开通WEB端权限：
+				</label>
+				<div class="col-xs-3">
+					<div class="col-xs-5">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input
+								name="crtAcctFlg" type="radio" ng-model="insert.crtAcctFlg"
+								value="1"> <i> </i> 是
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-5">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input
+								name="crtAcctFlg" type="radio" ng-model="insert.crtAcctFlg"
+								value="0"> <i> </i> 否
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<p class="form-control-static" style="color: #999999;">登录账号为员工工号</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> <span
+					style="color: red;"> * </span> 是否开通APP端权限：
+				</label>
+				<div class="col-xs-3">
+					<div class="col-xs-5">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input
+								name="crtAcctAppFlg" type="radio"
+								ng-model="insert.crtAcctAppFlg" value="1"> <i> </i> 是
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-5">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input
+								name="crtAcctAppFlg" type="radio"
+								ng-model="insert.crtAcctAppFlg" value="0"> <i> </i> 否
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-3">
+					<p class="form-control-static" style="color: #999999;">登录账号为员工工号</p>
+				</div>
+			</div>
+			<div class="form-group" ng-if="insert.crtAcctAppFlg!='0'||insert.crtAcctFlg!='0'">
+				<label class="col-xs-3 control-label">
+				<span style="color: red;">*</span>设置密码：
+				</label>
+				<div class="col-xs-3">
+					<input type="text" class="form-control" ng-model="insert.sysPw"
+						required name="sysPw" maxLength=32>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+
+			<button class="btn btn-info  mr_10" ng-click="inserter()"
+				ng-disabled="formTwo.$invalid || submit.flag" user-power="WSTF01001003">提交保存
+			</button>
+			<button class="btn btn-default  mr_10" ng-click="Back()">
+				上一步</button>
+		</form>
+	</div>
+</div>

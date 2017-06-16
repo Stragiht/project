@@ -1,0 +1,40 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">APP意见反馈</h4>
+</div>
+<div class="panel-heading">
+    <div ng-table="tableParams">
+        <table class="table table-bordered table-condensed table-striped table-hover" ng-controller="appfbkInfoSelectController" >
+            <tr ng-repeat="fbkInfo in data">
+             <!--    <td title="'日期'" style=" min-width:115px;">
+                    {{fbkInfo.crtdTm|date:'yyyy-MM-dd'}}
+                </td> -->
+                <td title="'提交人'" style=" min-width:110px;">
+                    {{fbkInfo.crtdUsr}}
+                </td>
+                <td title="'问题详情'" style=" min-width:190px;">
+                    {{fbkInfo.fbkInfo}}                    
+                </td>
+                <td title="'问题严重程度'" style=" min-width:90px;">
+                    {{fbkInfo.level|dicNameFilter:"C043"}}
+                </td>
+                <td title="'问题分类'" style=" min-width:90px;">
+                    {{fbkInfo.type|dicNameFilter:"C044"}}
+                </td>
+                <td title="'音频文件'" style="width:90px;">
+                <audio controls="controls">  
+                    <source src="{{fbkInfo.audio}}"/> 
+                </audio> 
+                </td>
+                <td title="'提交时间'" style=" min-width:195px;">
+                    {{fbkInfo.crtdTm|date:'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+                <td title="'处理状态'" style=" min-width:90px;" class="text-red">
+                    {{fbkInfo.actionFlg|dicNameFilter:"C046"}}
+                </td>
+                <td title="'操作'" style=" min-width: 100px;" class="mr_22">
+                    <a class="mr_9" ng-click="fbkInfoUpdate(fbkInfo.oId)">处理</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

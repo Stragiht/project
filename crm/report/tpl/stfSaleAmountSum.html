@@ -1,0 +1,129 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        人员销售业绩汇总
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="ctrl.checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+<div ng-controller="stfSaleAmountSumController as ctrl">
+    <!-- 查询面板开始 -->
+    <div class="panel-heading" style="padding-bottom:0px">
+        <accordion close-others="oneAtATime">
+            <accordion-group
+                    is-open="status.open">
+                <accordion-heading>
+                    查询<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+                <form name="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">人员姓名：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" ng-model="cond.stfNm"
+                                   maxLength="20">
+                        </div>
+                        <label class="col-xs-2 control-label">人员编号：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" ng-model="cond.stfNum"
+                                   maxLength="20">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label"><span class="text-red">*</span>职位 ：</label>
+                        <div class="col-xs-2">
+		                    <select id="jobPosList" ng-model="cond.posNum" class="form-control" ng-options="jobPos.key as jobPos.text for jobPos in posList">
+		                    </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label"><span class="text-red">*</span>销售日期：</label>
+                        <div class="col-xs-4">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control" name="saleStartDate"
+                                       datepicker-popup="yyyy-MM-dd" ng-model="cond.saleStartDate"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions" ng-required="true" readonly="readonly"/>
+                                <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+		                                <i class="glyphicon glyphicon-calendar"></i>
+		                            </button>
+								</span>
+                            </div>
+                            <div ng-messages="form.saleStartDate.$error" ng-if="(form.saleStartDate.$dirty && form.saleStartDate.$invalid)">
+                                <span ng-message="required" class="error">销售日期开始时间不能为空</span>
+                            </div>
+                        </div>
+                        <label class="col-xs-1 control-label" style="text-align: left;">至</label>
+                        <div class="col-xs-4">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control" name="saleEndDate"
+                                       datepicker-popup="yyyy-MM-dd" ng-model="cond.saleEndDate"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions" ng-required="true" readonly="readonly"/>
+                                <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+		                                <i class="glyphicon glyphicon-calendar"></i>
+		                            </button>
+								</span>
+                            </div>
+                            <div ng-messages="form.saleEndDate.$error" ng-if="(form.saleEndDate.$dirty && form.saleEndDate.$invalid)">
+                                <span ng-message="required" class="error">销售日期结束时间不能为空</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-1 control-label" style="text-align: left;"></label>
+                        <div class="col-xs-offset-1 col-xs-1">
+                            <button class="btn btn-info btn-addon" ng-click="selectBaSaleReportDtl()" ng-disabled="form.$invalid" user-power="WREP01002001">搜索
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+    <!-- 导出系列按钮面板开始 -->
+    <div class="panel-heading">
+        <div class="input-group" style="width:100%">
+            <label class="col-xs-12 control-label">销售日期 ：{{saleDate}}</label>
+        </div>
+        <button class="btn btn-default btn-addon" ng-click="exportCsv()" user-power="WREP01002002">批量导出</button>
+        <button class="btn btn-default btn-addon mt_6" ng-csv="getArray" lazy-load="true" filename="{{exportFileNm}}" field-separator="," id="export" ng-show="false" add-bom="true"></button>
+        <label class="control-label mt_6">共有<span class="text-red">{{recordCount | number}}</span>条数据</label><label class="control-label mt_6" ng-if="recordCount == 0">（没有符合条件的数据）</label>
+    </div>
+    <!-- 导出系列按钮面板结束 -->
+    <!-- table列表开始 -->
+    <div class="panel-heading">
+        <div ng-table="ctrl.tableParams">
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                <tr ng-repeat="dataLine in $data">
+                    <td header="'headerCheckbox.html'" width="'50px'"
+                        style="font-weight: bold;">
+                        <input type="checkbox"
+                               ng-model="ctrl.checkboxes.items[dataLine.stfNum]"
+                               ng-click="checkItem()"/>
+                    </td>
+                    <td title="'人员编号'" width="'80px'">{{dataLine.stfNum}}</td>
+                    <td title="'姓名'" width="'80px'" style="word-break: break-all;">{{dataLine.stfNm}}</td>
+                    <td title="'职位'" width="'100px'" style="word-break: break-all;">{{dataLine.posNum | stfBasPosNum}}</td>
+                    <td title="'直属主管'" width="'80px'" style="word-break: break-all;">{{dataLine.supvrStfNm}}</td>
+                    <td title="'所在城市'" width="'160px'" style="word-break: break-all;">{{dataLine.cityNum | stfBasPCV}}</td>
+                    <td title="'实际销售额'" width="'120px'" style="text-align: right;">{{dataLine.saleAmt | currency : "￥"}}</td>
+                    <td title="'排名'" width="'80px'" style="text-align: right;"><span class="text-red">{{dataLine.ranking}}</span></td>
+                    <td title="'其下人数'" width="'80px'" style="text-align: right;">{{dataLine.stfUnderQty | number}}</td>
+                    <td title="'人均单产'" width="'120px'" style="text-align: right;">{{dataLine.avgAmt | currency : "￥"}}</td>
+                    <td title="'操作'" width="'50px'" class="mr_22">
+                        <a class="mr_9" ng-click="view(dataLine)" user-power="WREP01002001">查看</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

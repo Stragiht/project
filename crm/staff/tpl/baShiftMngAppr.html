@@ -1,0 +1,203 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        审批排班申请
+    <a class="btn btn-default btn-addon mr_8" ui-sref="app.staff.baShiftMng">返回审批排班申请管理</a>
+    </h4>
+</div>
+
+<div class="wrapper-md" ng-controller="baShiftMngApprController">
+    <form name="form" class="form-horizontal form-validation">
+        <tabset class="tab-container">
+            <tab>
+                <tab-heading> 申请信息 </tab-heading>
+                <div class="panel-heading">
+                    <!--1.基本信息-->
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="status.baseInfoOpen">
+                            <accordion-heading>
+                                1.基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.baseInfoOpen, 'fa-angle-right': !status.baseInfoOpen}"></i>
+                            </accordion-heading>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label">申请编号：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.schNum}}</div>
+                                <label class="col-xs-2 control-label">申请人：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.stfNm}}</div>
+                                <label class="col-xs-2 control-label">审批状态：</label>
+                                <div class="col-xs-2 control-label label-text-left text-red"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.apprRslt|dicNameFilter:"C018"}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label">提交时间：</label>
+                                <div class="col-xs-4 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.sbmtTm}}</div>
+                            </div>
+                        </accordion-group>
+                    </accordion>
+                </div>
+                <div class="panel-heading">
+                    <!--2.申请人信息-->
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="status.entBaseInfoOpen">
+                            <accordion-heading>
+                                2.申请人信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.entBaseInfoOpen, 'fa-angle-right': !status.entBaseInfoOpen}"></i>
+                            </accordion-heading>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label style="width:160px;">人员编号：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.bySchStf}}</div>
+                                <label class="col-xs-3 control-label style="width: 160px;" style="width: 160px;">姓名：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.stfNm}}</div>
+                                <label class="col-xs-2 control-label" style="width:110px;">所在城市：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.homeAddrProv}}>{{baShiftMngInfo.homeAddrCity}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label style="width:160px;">直属主管：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.supvrStfNm}}</div>
+                                <label class="col-xs-3 control-label style="width: 160px;" style="width: 160px;">所属区域经理：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.supvrStfNm1}}</div>
+                                <label class="col-xs-2 control-label" style="width: 130px;">所属大区总监：</label>
+                                <div class="col-xs-2 control-label label-text-left" style="width: 115px;padding-left:0px;text-align: left;">{{baShiftMngInfo.supvrStfNm2}}</div>
+                            </div>
+                            
+                             <div class="form-group">
+                                <label class="col-xs-2 control-label" style="width: 140px;">所属门店：</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label"></label>
+                                <div class="col-xs-10">
+                                    <table class="table table-bordered table-condensed table-striped table-hover">
+                                        <tr>
+                                            <th>门店编号</th>
+                                            <th>门店名称</th>
+                                            <th>所属渠道</th>
+                                            <th>所属销售大区</th>
+                                            <th>所属城市</th>
+                                            <th>所属城市分区</th>
+                                        </tr>
+                                        <tr ng-repeat="store in storeList ">
+                                            <td title="'门店编号'">{{store.strNum}}</td>
+                                            <td title="'门店名称'">{{store.strNm}}</td>
+                                            <td title="'所属渠道'">{{store.chnlNm}}</td>
+                                            <td title="'所属销售大区'">{{store.majRgnNm}}</td>
+                                            <td title="'所属城市'">{{store.cityNum}}</td>
+                                            <td title="'所属城市分区'">{{store.partiNm}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                              </div>
+                        </accordion-group>
+                    </accordion>
+                </div>
+                <div class="panel-heading">
+                    <!--3.申请人排班情况-->
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="status.entInfoOpen">
+                            <accordion-heading>
+                                3.申请人排班情况 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.entInfoOpen, 'fa-angle-right': !status.entInfoOpen}"></i>
+                            </accordion-heading>
+                           
+                             <div class="form-group">
+                                <label class="col-xs-2 control-label" style="width:180px;">排班表应出勤天数：</label>
+                                <div class="col-xs-2 control-label label-text-left"style="padding-left:0px;text-align: left;">{{baShiftMngInfo.reqAttendDays}}天</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label"></label>
+                                <div class="col-xs-10">
+                                    <table class="table table-bordered table-condensed table-striped table-hover">
+                                        <tr>
+                                            <th>日期</th>
+                                            <th>排班门店</th>
+                                            <th>审批对象排班情况</th>
+                                            <th>其他人员</th>
+                                            <th>其他人员排班情况</th>
+                                        </tr>
+                                        <tr ng-repeat="schedul in schedulList ">
+                                            <td title="'日期'">{{schedul.schDtNum}}</td>
+                                            <td title="'排班门店'">{{schedul.strNm}}</td>
+                                            <td title="'审批对象排班情况'" class="text-red">{{schedul.schSitu|dicNameFilter:"C041"}}</td>
+                                            <td title="'其他人员'">{{schedul.stfNm}}</td>
+                                            <td title="'其他人员排班情况'">{{schedul.schSitu1|dicNameFilter:"C041"}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                              </div>
+                        </accordion-group>
+                    </accordion>
+                 </div>
+                 <div class="panel-heading" ng-if="flag">
+                    <!--4.参考依据-->
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="status.judgmentBasisOpen">
+                            <accordion-heading>
+                                4.参考依据 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.judgmentBasisOpen, 'fa-angle-right': !status.judgmentBasisOpen}"></i>
+                            </accordion-heading>
+                             <div class="form-group">
+                                <label class="col-xs-2 control-label" style="width: 190px;">当前人员提交排班数量：</label>
+                                <div class="col-xs-2 control-label label-text-left" style="padding-left:0px;text-align: left;">{{baShiftMngInfo.stfNums}}</div>
+                                <label class="col-xs-2 control-label" style="width:180px;">需要提交总排班数量：</label>
+                                <div class="col-xs-2 control-label label-text-left" style="padding-left:0px;text-align: left;">{{baShiftMngInfo.allBaStfNum}}</div>
+                            </div>
+                        </accordion-group>
+                    </accordion>
+                 </div>
+                 <div class="panel-heading">
+                    <!--5.可操作-->
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="status.apprOperationOpen">
+                            <accordion-heading ng-if="flag">
+                                5.可操作 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.apprOperationOpen, 'fa-angle-right': !status.apprOperationOpen}"></i>
+                            </accordion-heading>
+                            <accordion-heading ng-if="!flag">
+                                4.可操作 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.apprOperationOpen, 'fa-angle-right': !status.apprOperationOpen}"></i>
+                            </accordion-heading>
+                            <div class="form-group">
+                                <span ng-if="(baShiftMngInfo.stfEntDt>baShiftMngInfo.phaStartTm)"> 
+                                <label class="col-xs-2 control-label" style="width: 170px;"><span class="text-red">*</span>本档期应出勤天数：</label>
+                                <div class="col-xs-3">
+		                            <input type="text" class="form-control" name="reqAttendDays" ng-model="baShiftMngInfo.reqAttendDays" ng-required="true" maxlength="11"/>
+		                            <div ng-messages="form.reqAttendDays.$error" ng-if="(form.reqAttendDays.$dirty && form.reqAttendDays.$invalid)">
+		                                <span ng-message="required" class="error">本档期应出勤天数不能为空</span>
+		                            </div>
+	                            </div>
+	                            </span>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label"><span style="color: red;">*</span>是否通过：</label>
+                                <div class="col-xs-1" ng-repeat="apprRstInfo in apprRstList">
+                                    <div class="radio">
+                                        <label class="i-checks i-checks-sm"><input name="apprRadio" type="radio" ng-model="baShiftMngInfo.apprRst" value="{{apprRstInfo.key}}" ng-required="true" /><i></i>{{apprRstInfo.text}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label"></label>
+                                <div class="col-xs-8">
+                                    <textarea class="form-control" rows="5" name="apprCommonts" ng-model="baShiftMngInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+                                    <div ng-messages="form.apprCommonts.$error" ng-if="(form.apprCommonts.$dirty && form.apprCommonts.$invalid)">
+                                        <span ng-message="maxlength" class="error">审批意见长度不能超过1000位！</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </accordion-group>
+                    </accordion>
+                </div>
+            </tab>
+            <tab ng-show="status.apprHisDisplay">
+                <tab-heading> 审批历史 </tab-heading>
+                <div class="panel-heading">
+                    <div ng-table="tableParams">
+                        <table class="table table-bordered table-condensed table-striped table-hover">
+                            <tr ng-repeat="apprHisInfo in $data">
+                                <td title="'操作时间'" style="text-align: center;width: 210px;">{{apprHisInfo.updtTm}}</td>
+                                <td title="'操作人'" style="text-align: center;width: 150px;">{{apprHisInfo.stfNm}}</td>
+                                <td title="'审批状态'" style="text-align: center;width: 90px;">{{apprHisInfo.status|dicNameFilter:"C019"}}</td>
+                                <td title="'备注'" style="text-align: left">{{apprHisInfo.apprComments}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+
+        <div class="panel-heading">
+            <button class="btn btn-info btn-addon mr_10" ng-click="apprBaShiftMngAppl()" ng-disabled="form.$invalid" user-power="WSTF01018002">提交保存</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,42 @@
+
+<div class="modal-header"><button class="close" type="button" ng-click="cancel()" >×</button>
+	<h3 class="modal-title">统一编辑</h3>
+</div>
+<div class="panel-heading">
+
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-xs-5 control-label text-left">请选择要统一编辑的字段：</label>
+		</div>
+		<div class="form-group">
+		 
+			<div class="col-xs-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.job"> <i></i> 职位
+					</label>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.posGrdNum"> <i></i>直属主管
+					</label>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.workStat"> <i></i> 在岗状态
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-info" ng-click="ok()">确定</button>
+	<button class="btn btn-default" ng-click="cancel()">取消</button>
+
+</div>

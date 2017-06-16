@@ -1,0 +1,45 @@
+<ion-header-bar align-title="center" class="header">
+	<a ui-sref="entryAppl" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">批量审批</h1>
+</ion-header-bar>
+<ion-content class="has-header" style="bottom:63px">
+<!-- entryApplApprList.html -->
+	<ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+	<div class="wrap">
+		<div class="xiaoxizhongxin_bj1" ng-show="entryInfo.entryApplList.length > 0">
+			<ion-list>
+				<ion-item class="bottom_line" ng-repeat="entryAppInfo in entryInfo.entryApplList" style="padding: 0px;margin: 0px;">
+					<div class="xuanzhong" style="left: -15px; top: 20px;">
+						<ion-checkbox ng-model="entryAppInfo.isCheck" style="border-color: #fff;padding-left: 20px;" ng-click="checkItem()"></ion-checkbox>
+					</div>
+					<a ui-sref="entryApplInfo({applNum:entryAppInfo.entApplNum,frontPage:'entryApplApprList'})">
+						<div class="xiaoxi_img2" style="margin-left: 23px !important;">{{entryAppInfo.stfNm|stfNmLast2}}</div>
+						<div class="xiaoxi_line" style="width: 78%">
+							<div class="xiaoxizhongxin_text2">
+								<h2>{{entryAppInfo.subStoreNm|characters:10}}</h2>
+								<p><span ng-if="entryAppInfo.sbmtTm != null">{{entryAppInfo.sbmtTm}}&nbsp;{{entryAppInfo.applSbmtNm}}申请</span></p> 
+							</div>
+							<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;margin-right: 15px;">
+							<span class="float_r line_height50" style="margin-right: 10px;">{{entryAppInfo.apprStatNm}}</span>
+						</div>
+					</a>
+				</ion-item>
+			</ion-list> 
+		</div>
+		<div class="wushuju" my-nodata-show="entryInfo.entryApplList.length == 0 && !moredata">
+			<img src="common/images/bear.gif" >
+			<p>没有符合条件的数据</p>
+		</div>
+	</div>
+	<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>
+<ion-footer-bar align-title="center" style="padding: 0px !important;">
+	<div class="xiaoxi_quanxuan2">
+		<div class="xuanzhong" style="top: 10px;left: -5px;padding: 5px 0;">
+			<ion-checkbox ng-model="checkStatus" style="border-color: #f8f8f8;background-color: #f8f8f8;padding: 3px 0px 10px 40px;" ng-click="checkAll()">全选</ion-checkbox>
+		</div>
+		<a class="btn_repoit2 btn_ww mt_10 mr10" style="margin-bottom: 10px;float: right;" ng-click="apprEntryAppl(1)" user-power="MSTF01002004">通过</a>
+		<a class="btn_repoit1 btn_ww mt_10 mr10" style="margin-bottom: 10px;float: right;" ng-click="apprEntryAppl(0)" user-power="MSTF01002004">不通过</a>
+		
+	</div>
+</ion-footer-bar>

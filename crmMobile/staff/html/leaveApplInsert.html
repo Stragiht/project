@@ -1,0 +1,64 @@
+<div ng-if="leaveFormShow">
+	<ion-header-bar align-title="center" class="header"> 
+		<a ng-click="fanhui()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1>新增请假</h1>
+		<a href="" class="head_right3" ng-click="submitLeaveAppl()" user-power="MSTF01008002"><div class="btn_line">提交 </div></a>
+		<a href="" class="head_right" ng-click="save()" user-power="MSTF01008002"><div class="btn_line">存为草稿</div></a>
+	</ion-header-bar>
+	<ion-content class="has-header ">
+	<!-- leaveApplInsert.html -->
+		<div class="wrap">
+			<div class="leave" style=" font-size:16px; padding:0px 15px; width:100%;  margin-left:0px;border-bottom: 0px;">请假明细 <a href="#" ng-click="add()">新增</a></div>
+			<ul class="listvrew clearfix mb_15" ng-repeat="leaveInfo in leaveApplInfoA track by $index">
+				<li style="position: relative;" ng-click="openSbmtTm($index)">
+					<span class="w140">请假时间</span>
+					<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 16px;visibility:hidden"></span>
+					<span class="f_10 float_r" style="margin-right: 15px;">{{leaveApplInfoA[$index].sbmtTm}}</span>
+				</li>
+				<li style="position: relative;" ng-click="stateSelect($index)">
+					<span class="w140">请假状态</span>
+					<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 16px;"></span>
+					<span class="f_10 float_r" style="margin-right: 15px;">{{leaveApplInfoA[$index].cancelFlg}}</span>
+				</li>
+				<li style="position: relative;" ng-click="reasonSelect($index)">
+					<span class="w140">请假事由</span>
+					<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 16px;"></span>
+					<span class="f_10 float_r" style="margin-right: 15px;">{{leaveApplInfoA[$index].reason}}</span>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+</div>
+<!-- 请假事由 -->
+<div ng-if="reasonSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">请假事由</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- leaveApplInsert.html -->
+	<div class="wrap">
+		<ion-list>
+		<input type="hidden" ng-model="leaveApplInfo.reasonNum" />
+			<ion-radio name="reason" ng-repeat="dic in dicList" ng-value="dic.key" ng-model="reason" ng-click="clickReason(dic)">{{dic.text}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+
+<!-- 请假状态 -->
+<div ng-if="stateSelectShow">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">请假状态</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+	<!-- leaveApplInsert.html -->
+    <div class="wrap">
+        <ion-list>
+        <input type="hidden" ng-model="leaveApplInfo.stateNum" />
+            <ion-radio name="state" ng-repeat="dic in dicStateList" ng-value="dic.key" ng-model="cancelFlg" ng-click="clickState(dic)">{{dic.text}}</ion-radio>
+        </ion-list>
+    </div>
+    </ion-content>
+</div>

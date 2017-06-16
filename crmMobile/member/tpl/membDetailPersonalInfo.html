@@ -1,0 +1,319 @@
+<div ng-show="pageShow.detailShow">
+
+    <ion-header-bar align-title="center"  class="header">
+            <a class="header_left" ui-sref="membDetailInfo({membNum:curMembNum})"></a>
+            <h1 style="font-size:1.4rem">详细资料</h1>
+    </ion-header-bar>
+
+
+    <ion-content  class="has-header stable">
+           <ion-list >
+               <ion-item style="padding:0;border: none;">
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">会员编号</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.membNum"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">会员姓名</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.membNm"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">加入时间</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.registTm | dateFormat"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">创建人员</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.crtdStfNm"></span></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">创建时间</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.crtdTm | dateFormat"></span> <span ng-bind="memInfo.crtdTm | date:'HH:mm:ss'" ng-if="(memInfo.crtdTm | date:'HH:mm:ss') != '00:00:00'"></span></span>
+                       </div>
+                   </div>
+                   <div style="line-height: 45px;border: none;" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l p-Left">来源渠道</span>
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.provChnl | chnlInfoFilter"></span></span>
+                       </div>
+                   </div>
+               </ion-item >
+
+               <ion-item class="item item-divider" style="border: none;">
+               </ion-item>
+
+               <ion-item class="item_padding" style="padding:0;border: none;" >
+                   <div class="p-Left top_line" >
+
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">联系电话</span>
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.phone"></span>
+                       </div>
+                   </div>
+                   <div style="line-height: 45px;border: none;" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l p-Left">微信账号</span>
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.bindWctAcct"></span>
+                       </div>
+                   </div>
+               </ion-item>
+
+               <ion-item class="item item-divider" style="border: none;">
+               </ion-item>
+
+               <ion-item class="item_padding" style="padding:0;border: none;" >
+                   <div class="p-Left top_line"  >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">性别</span>
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.sex | dicNameFilter:'C003'"></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">出生日期</span>
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.birtyday | date:'yyyy-MM-dd'"></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">年龄</span>
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.birtyday | CalculatingAge"></span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">电子邮件</span>
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.email"></span>
+                       </div>
+                   </div>
+                   <div  ng-if="localArea.length > 6">
+                        <!--<a ui-sref="membLocalAreaView({membNum:curMembNum})">-->
+                        <a class="item touch-item-0-m" ng-click="singlePageShow(false, true, false, false, false)">
+                           <div class="memInfoItem_line">
+                               <span class=" float_l p-Left">所在地区</span>
+                               <div class="go_right_img2"></div>
+                               <span class=" memInfoItem2 float_r" style="padding-right:0;"><span ng-bind="localArea | textAbbr:6"></span></span>
+                           </div>
+                       </a>
+
+                   </div>
+
+                   <div  ng-if="localArea.length <= 6">
+                       <a class="item touch-item-0-m">
+                           <div class="memInfoItem_line">
+                               <span class=" float_l p-Left">所在地区</span>
+                               <!--<div class="go_right_img2"></div>-->
+                               <!--
+                                                          <span class=" memInfoItem float_r"><span ng-bind="memInfo.locProv | addressFilter"></span><span ng-bind="memInfo.locCity | addressFilter"></span><span>...</span></span>
+                               -->
+                               <span class=" memInfoItem2 float_r" ><span ng-bind="localArea"></span></span>
+
+                           </div>
+                       </a>
+
+                   </div>
+               </ion-item >
+
+               <ion-item class="item item-divider" style="border: none;" >
+               </ion-item>
+
+               <ion-item class="item_padding" style="padding:0;border: none;"  >
+                   <div class="p-Left top_line" >
+                       <div class="memInfoItem_line">
+                           <span class=" float_l">肌肤类型</span>
+                           <!--<span class=" memInfoItem2 float_r">混合型偏油</span>-->
+                           <span class=" memInfoItem2 float_r" ng-bind="memInfo.membSkinCareNeed.C025 | dicNameFilter:'C025'"></span>
+                       </div>
+                   </div>
+
+                   <a class="item touch-item-0-m" ng-click="singlePageShow(false, false, true, false, false)" ng-if="memInfo.membSkinCareNeed.C026[0] != '' && memInfo.membSkinCareNeed.C026[0] != null && memInfo.membSkinCareNeed.C026[0] != undefined && memInfo.membSkinCareNeed.C026.length > 1">
+                       <div class="p-Left">
+                           <div class="memInfoItem_line">
+                               <span class=" float_l">肌肤现状</span>
+                               <div class="go_right_img2"></div>
+                               <!--<span class=" memInfoItem float_r">痘痘...</span>-->
+                               <span class=" memInfoItem float_r"><span ng-bind="memInfo.membSkinCareNeed.C026[0] | dicNameFilter:'C026'"></span><span>...</span></span>
+                               <!--
+                                                          <span class=" memInfoItem2 float_r" ng-if="memInfo.membSkinCareNeed.C026[0] == '' || memInfo.membSkinCareNeed.C026[0] == null || memInfo.membSkinCareNeed.C026[0] == undefined"></span>
+                               -->
+                           </div>
+                       </div>
+                   </a>
+
+                   <a class="item touch-item-0-m" ng-if="memInfo.membSkinCareNeed.C026[0] == '' || memInfo.membSkinCareNeed.C026[0] == null || memInfo.membSkinCareNeed.C026[0] == undefined || memInfo.membSkinCareNeed.C026.length == 1">
+                       <div class="p-Left">
+                           <div class="memInfoItem_line">
+                               <span class=" float_l">肌肤现状</span>
+                               <div></div>
+                               <!--<span class=" memInfoItem float_r">痘痘...</span>-->
+                               <span class=" memInfoItem2 float_r" ><span ng-bind="memInfo.membSkinCareNeed.C026[0] | dicNameFilter:'C026'"></span></span>
+                           </div>
+                       </div>
+                   </a>
+
+
+
+
+                   <a class="item touch-item-0-m" ng-click="singlePageShow(false, false, false, true, false)" ng-if="memInfo.membSkinCareNeed.C027[0] != '' && memInfo.membSkinCareNeed.C027[0] != null && memInfo.membSkinCareNeed.C027[0] != undefined && memInfo.membSkinCareNeed.C027.length > 1">
+                       <div class="p-Left" >
+                           <div class="memInfoItem_line">
+                               <span class=" float_l">护肤品喜好</span>
+                               <div class="go_right_img2"></div>
+                               <!--<span class=" memInfoItem float_r">补水...</span>-->
+                               <span class=" memInfoItem float_r" ><span ng-bind="memInfo.membSkinCareNeed.C027[0] | dicNameFilter:'C027'"></span><span>...</span></span>
+    <!--
+                               <span class=" memInfoItem2 float_r" ></span>
+    -->
+                           </div>
+                       </div>
+                   </a>
+
+                   <a class="item touch-item-0-m" ng-if="memInfo.membSkinCareNeed.C027[0] == '' || memInfo.membSkinCareNeed.C027[0] == null || memInfo.membSkinCareNeed.C027[0] == undefined || memInfo.membSkinCareNeed.C027.length == 1">
+                       <div class="p-Left" >
+                           <div class="memInfoItem_line">
+                               <span class=" float_l">护肤品喜好</span>
+                               <div></div>
+                               <!--<span class=" memInfoItem float_r">补水...</span>-->
+                               <span class=" memInfoItem2 float_r" ><span ng-bind="memInfo.membSkinCareNeed.C027[0] | dicNameFilter:'C027'"></span></span>
+                           </div>
+                       </div>
+                   </a>
+
+
+
+                   <a class="item touch-item-0-m" ng-click="singlePageShow(false, false, false, false, true)"  ng-if="memInfo.membSkinCareNeed.C028[0] != '' && memInfo.membSkinCareNeed.C028[0] != null && memInfo.membSkinCareNeed.C028[0] != undefined && memInfo.membSkinCareNeed.C028.length > 1">
+                       <div class="memInfoItem_line">
+                           <span class=" float_l p-Left">肌肤护理需求</span>
+                           <div class="go_right_img2"></div>
+                           <!--<span class=" memInfoItem float_r">精华乳...</span>-->
+                           <span class=" memInfoItem float_r"><span ng-bind="memInfo.membSkinCareNeed.C028[0] | dicNameFilter:'C028'" ></span><span>...</span></span>
+                       </div>
+                   </a>
+
+                   <a class="item touch-item-0-m" ng-if="memInfo.membSkinCareNeed.C028[0] == '' || memInfo.membSkinCareNeed.C028[0] == null || memInfo.membSkinCareNeed.C028[0] == undefined || memInfo.membSkinCareNeed.C028.length == 1">
+                       <div class="memInfoItem_line">
+                           <span class=" float_l p-Left">肌肤护理需求</span>
+                           <div></div>
+                           <!--<span class=" memInfoItem float_r">精华乳...</span>-->
+                           <span class=" memInfoItem2 float_r"><span ng-bind="memInfo.membSkinCareNeed.C028[0] | dicNameFilter:'C028'" ></span></span>
+                       </div>
+                   </a>
+
+
+               </ion-item >
+               <ion-item class="item item-divider bottom_line" style="padding: 0 0 1px 0;">
+                   <div class="bottom_line memInfoItem" style="height: 27px;padding-left: 5%;line-height: 27px;">备注</div>
+               </ion-item>
+
+               <ion-item class="item"  style="padding:5% ;border: none;background: #fff; white-space:normal;">
+                   <!--<textarea placeholder="备注" rows="3" maxlength="1000" style="height: 150px;width:100%;outline:none;border: 0;-->
+                   <!--border: solid 1px #ddd;border-style:hidden;padding-left: 10px;padding-top: 10px;" ng-model="memInfo.remark"></textarea>-->
+                   <div class="stable-bg memb_text">
+                       <span style="font-size: 16px;color:#b1b1b1;"  ng-if="memInfo.remark=='' || memInfo.remark == null">没有相关数据</span>
+                       <span style="font-size: 16px;line-height:0;" ng-bind="memInfo.remark" ng-if="memInfo.remark != '' || memInfo.remark!=null"></span>
+                   </div>
+               </ion-item>
+           </ion-list>
+    </ion-content>
+</div>
+
+<!--所在地区-->
+<div ng-show="pageShow.areaShow">
+    <ion-header-bar align-title="center" class="header">
+        <div ng-click="singlePageShow(true, false, false, false, false)">
+            <a class="header_left" >
+            </a>
+        </div>
+        <h1 style="font-size:1.4rem">所在地区</h1>
+    </ion-header-bar>
+    <ion-content class="has-header mem LocalArea"  overflow-scroll="false">
+        <ion-list>
+
+            <!--<ion-item>
+                <div style="width:300px; height: 500px; word-break:break-all;!important;">广东省广州市天河区体育西路城建大厦7C6757575675675哈斯理发师傅了沙发上</div>
+               &lt;!&ndash; <span class="w140"><span ng-bind="addressDet.locProv | addressFilter"></span><span
+                        ng-bind="addressDet.locCity | addressFilter"></span><span
+                        ng-bind="addressDet.locPref | addressFilter"></span><span ng-bind="addressDet.addrDtl"></span></span>&ndash;&gt;-->
+
+            <ion-item  class="bottom_line" style="min-height:55px !important;line-height: 25px;">
+                <!--<span class="w140">广东省广州市天河区体育西路城建大厦7C</span>-->
+                <!--
+                                <span ng-bind="addressDet.locProv | addressFilter"></span><span ng-bind="addressDet.locCity | addressFilter"></span><span ng-bind="addressDet.locPref | addressFilter"></span><span ng-bind="addressDet.addrDtl"></span>
+                -->
+                <span ng-bind="memInfo.locProvNm"></span><span ng-bind="memInfo.locCityNm"></span><span ng-bind="memInfo.locPrefNm"></span><span ng-bind="memInfo.addrDtl"></span>
+
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</div>
+
+<!--肌肤现状-->
+<div ng-show="pageShow.skinStatusShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div  ng-click="singlePageShow(true, false, false, false, false)">
+            <a class="header_left"  ></a>
+        </div>
+        <h1 style="font-size:1.4rem">肌肤现状</h1>
+    </ion-header-bar>
+    <ion-content  class="has-header mem_radio"  >
+        <ion-list>
+            <ion-item  class="view_line p-Left"  ng-repeat="mssl in memInfo.membSkinCareNeed.C026">
+                <span  ng-bind="mssl | dicNameFilter:'C026'"></span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</div>
+
+<!--护肤品喜好-->
+<div ng-show="pageShow.skinCareShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div   ng-click="singlePageShow(true, false, false, false, false)">
+            <a class="header_left" ></a>
+        </div>
+        <h1 style="font-size:1.4rem">护肤品喜好</h1>
+    </ion-header-bar>
+    <ion-content  class="has-header mem_radio"  >
+        <ion-list>
+            <ion-item   class="view_line" ng-repeat="msppl in memInfo.membSkinCareNeed.C027">
+                <span ng-bind="msppl | dicNameFilter:'C027'"></span>
+            </ion-item>
+            <!-- <ion-item  class="view_line">
+                 <span class="w140">美好</span>
+             </ion-item >-->
+        </ion-list>
+    </ion-content>
+
+</div>
+
+<!--肌肤护理需求-->
+<div ng-show="pageShow.skinCareDmndShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div  ng-click="singlePageShow(true, false, false, false, false)">
+            <a class="header_left"  ></a>
+        </div>
+        <h1 style="font-size:1.4rem">肌肤护理需求</h1>
+    </ion-header-bar>
+    <ion-content  class="has-header memb_checkbox mem_radio"   >
+        <ion-list>
+            <ion-item class="view_line" ng-repeat="msdl in memInfo.membSkinCareNeed.C028">
+                <span ng-bind="msdl | dicNameFilter:'C028'"></span>
+            </ion-item>
+            <!-- <ion-item class="view_line">
+                 <span class="w140">爽肤水</span>
+             </ion-item >-->
+        </ion-list>
+    </ion-content>
+
+</div>

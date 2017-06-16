@@ -1,0 +1,17 @@
+
+<div class="modal-body" style="text-align: center;">
+
+    <br/>
+    <p ng-if="flag == 0">删除的内容将不可恢复，是否继续删除该内容？</p>
+    <p ng-if="flag != 0">您确定要把该数据放入回收站吗？</p>
+    </ng-if>
+    <br/>
+    <div>
+        <button class="btn btn-info" type="button" ng-click="ok()" style="width: 85px;margin-right: 40px;">删除</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()" style="width: 85px;">取消</button>
+    </div>
+    <br/>
+
+</div>
+
+

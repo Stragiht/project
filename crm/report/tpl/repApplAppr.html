@@ -1,0 +1,174 @@
+<html>
+<head><meta charset="UTF-8"></head>
+
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+   <h4 class="m-n font-thin h4">
+	审批<a class="btn btn-default  btn-addon mt_7"
+			ui-sref="app.report.repApplSelect" style="float: right; margin-right: 10px;">返回审批销售报表管理</a>
+	</h4>
+</div>
+<!-- 标题信息结束 -->
+<style>
+    .tab-container.ng-isolate-scope {
+        margin: 10px 10px 0px 10px;
+        overflow: hidden;
+    }
+    .panel-body{
+        padding: 15px;
+    }
+</style>
+<div ng-controller="repApplApprController">
+<tabset class="tab-container"> 
+<tab style="padding-left: 30px;" ng-click="selecttabs1()"> 
+<tab-heading>申请信息 </tab-heading>
+
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.repAppInfoBaseInfoOpen">
+					<accordion-heading>
+						1.基本信息<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.repAppInfoBaseInfoOpen, 'fa-angle-right': !status.repAppInfoBaseInfoOpen}"></i>
+					</accordion-heading>
+					      <div class="col-xs-4">申请编号：{{repApplNum}}</div>
+						  <div class="col-xs-4">提交人：{{commitStfNm}}</div>
+						  <div class="col-xs-4">审批状态：<span style="color:red">{{apprStat|dicNameFilter:"C018"}}</span></div>
+						  <div class="col-xs-4" style="padding-top: 10px;">提交时间：{{sbmtTm|date:'yyyy-MM-dd HH:mm'}}</div>
+				</accordion-group>
+			</accordion>
+
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.repAppInfoStoreInfoOpen">
+					<accordion-heading>
+						2.门店信息<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.repAppInfoStoreInfoOpen, 'fa-angle-right': !status.repAppInfoStoreInfoOpen}"></i>
+					</accordion-heading>
+					   <div class="col-xs-4">门店编号：{{strNum}}</div>
+					   <div class="col-xs-4">门店名称：{{strNm}}</div>
+				</accordion-group>
+			</accordion>
+
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.repAppInfoSaleInfoOpen">
+					<accordion-heading>
+						3.销售业绩比对<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.repAppInfoSaleInfoOpen, 'fa-angle-right': !status.repAppInfoSaleInfoOpen}"></i>
+					</accordion-heading>
+				    <div class="col-xs-6">报表审核时间段：{{repApprStartDt|date:'yyyy-MM-dd'}} ~ {{repApprEndDt|date:'yyyy-MM-dd'}}</div>
+					<div class="col-xs-10" style="padding-top: 10px;">
+							<table class="table table-bordered table-condensed table-striped table-hover">
+								<tr>
+									<th>修改前人员提交总销售业绩</th>
+									<th>修改之后人员提交总销售业绩</th>
+									<th>财务导入销售业绩</th>
+									<th>比对结果</th>
+								</tr>
+								<tr>
+									<td title="'修改前人员提交总销售业绩'" style="text-align:right;">{{ApplStroeDataOne.stfRepSaleAmtSum| customCurrency : "￥"}}</td>
+									<td title="'修改之后人员提交总销售业绩'" style="text-align:right;"><span style="color:red">{{ApplStroeDataOne.stfRepSaleAmtSum+ApplStroeDataOne.countUpdateRepAppSaleAmt| customCurrency : "￥"}}</span></td>
+									<td title="'财务导入销售业绩'" style="text-align:right;">{{ApplStroeDataOne.fcImpSaleAmt| customCurrency : "￥"}}</td>
+									<td title="'比对结果'">
+                                        <span ng-if="ApplStroeDataOne.compRslt != '2'">{{ApplStroeDataOne.compRslt | dicNameFilter : "C017"}}</span>
+                                        <span style="color:red;" ng-if="ApplStroeDataOne.compRslt == '2'">{{ApplStroeDataOne.compRslt | dicNameFilter : "C017"}}</span>
+									</td>
+								</tr>
+							</table>
+					</div>
+					<div class="col-xs-4">相关人员销售业绩：</div>
+					<div class="col-xs-10" style="padding-top: 10px;">
+							<table class="table table-bordered table-condensed table-striped table-hover">
+								<tr>
+									<th>人员编号</th>
+									<th>姓名</th>
+									<th>修改前销售业绩</th>
+									<th>修改后销售业绩</th>
+								</tr>
+								<tr ng-repeat="PersonInfoOne in PersonInfo">
+									<td title="'人员编号'">{{PersonInfoOne.apprStfNum}}</td>
+									<td title="'姓名'">{{PersonInfoOne.yuangongName}}</td>
+									<td title="'修改前销售业绩'" style="text-align:right;">{{PersonInfoOne.stfRepSaleAmt| customCurrency : "￥"}}</td>
+									<td title="'修改后销售业绩'" style="text-align:right;"><span style="color:red">{{PersonInfoOne.stfRepSaleAmt+PersonInfoOne.countUpdateStfRepSaleAmt| customCurrency : "￥"}}</span></td>
+								</tr>
+							</table>
+					</div>
+				</accordion-group>
+			</accordion>
+			
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.repAppInfoStoreSaleInfoOpen">
+					<accordion-heading>
+						4.门店人员销售明细<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.repAppInfoStoreSaleInfoOpen, 'fa-angle-right': !status.repAppInfoStoreSaleInfoOpen}"></i>
+					</accordion-heading>
+					
+					<tabset class="tab-container"> 
+					
+                    <tab style="padding-left: 10px;" ng-repeat="stroeInPerson in stroeInPersonList" heading="{{stroeInPerson.stfNm}}" ng-click="baTabClick('{{stroeInPerson.stfNum}}')">
+					<table class="table table-bordered table-condensed table-striped table-hover">
+					<tr>
+						<th style="width: 250px">日期</th>
+						<th style="width: 250px">门店</th>
+						<th style="width: 250px">提交金额</th>
+					</tr>
+					<tr ng-repeat="stroeInPersonOne in stroeInPersonOneList">
+						<td title="'日期'">{{stroeInPersonOne.billOfLandTm|date:'yyyy-MM-dd'}}</td>
+						<td title="'门店'">{{stroeInPersonOne.strNm}}</td>
+						<td title="'提交金额'" style="text-align:right;">{{stroeInPersonOne.saleAmt| customCurrency : "￥"}}</td>
+					</tr>
+					</table>
+                    </tab>
+                    </tabset>
+				</accordion-group>
+			</accordion>
+			
+			<accordion close-others="oneAtATime">
+				<accordion-group is-open="status.repAppOperationOpen">
+					<accordion-heading>
+						5.可操作<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.repAppOperationOpen, 'fa-angle-right': !status.repAppOperationOpen}"></i>
+					</accordion-heading>
+						<div class="form-group col-xs-12">
+                            <label class="col-xs-2 control-label"><span style="color: red;">*</span>是否通过：</label>
+                            <div class="col-xs-5">
+                                <div class="radio"
+                                     style="float:left !important;margin-top: 0px !important;margin-right: 10px;"
+                                     ng-repeat="apprRstInfo in apprRstList">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="radio" name="apprRadio" ng-model="deit.apprRst"
+                                               value="{{apprRstInfo.key}}">
+                                        <i></i>
+                                        {{apprRstInfo.text}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label class="col-xs-2 control-label"></label>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" rows="5" name="apprCommonts"
+                                          ng-model="deit.apprCommonts"
+                                          maxLength="1000"></textarea>
+                            </div>
+                        </div>
+				</accordion-group>
+			</accordion>
+</tab> 
+<tab style="padding-left: 10px;" ng-click="selecttabs2()"> 
+<tab-heading>审批历史</tab-heading>
+<table class="table table-bordered table-condensed table-striped table-hover" ng-table="tableParams">
+		<tr>
+		<th>操作时间</th>
+		<th>操作人</th>
+		<th>审批状态</th>
+		<th>备注</th>
+        </tr>
+		<tr ng-repeat="HistoryOne in History">
+
+		<td title="'操作时间'" style="font-weight:bold;min-width:130px;">{{HistoryOne.updtTm}}</td>
+			
+		<td title="'操作人'" style="min-width:130px;">{{HistoryOne.stfNm}}</td>
+			
+		<td title="'审批状态'" style="min-width:130px;">{{HistoryOne.status|dicNameFilter:"C019"}}</td>
+		
+        <td title="'备注'" style="min-width:130px;">{{HistoryOne.apprComments}}</td>
+	    </tr>
+</table>
+</tab>
+</tabset>
+       <button class="btn btn-info" style="width: 80px;margin-top: 15px;margin-left: 10px" ng-click="apprManagement()" user-power="WREP01007003">提交保存</button>
+</div>
+</html>

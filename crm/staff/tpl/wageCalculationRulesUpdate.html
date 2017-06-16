@@ -1,0 +1,70 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        编辑
+        <button class="btn btn-default  btn-addon mr_8" style="float: right; margin-right: 10px;"
+            ui-sref="app.staff.wageCalculationRules">返回工资计算规则管理</button>
+    </h4>
+</div>
+<div class="wrapper-md" ng-controller="bjjsgzCtrl">
+    <div class="panel-heading">
+        <form name="form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span style="color: red;">*</span>规则名称：
+                </label>
+                <div class="col-sm-3">
+					<input type="text" class="form-control" style="display:inherit;" ng-model="gzname" name="gzname" maxLength=50 required>
+					<div ng-messages="form.gzname.$error" ng-if="(form.gzname.$dirty && form.gzname.$invalid)">
+						<span ng-message="required" class="error">规则名称不能为空！ </span>
+					</div>
+				</div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span style="color: red;">*</span>应用于：
+                </label>
+                <div class="col-sm-2">
+                    <select name="position" ng-model="zwdj.position" class="form-control" ng-change="positiongrade()">
+                        <option ng-repeat="zw in position" value = {{zw.key}} required>
+                        {{zw.text}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" name="grade" ng-model="zwdj.grade" ng-options="dj.key as (dj.text) for dj in Grade"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <button style="margin-right: 10px;" ng-click="tjgzlylb()">添加工资来源类别</button>
+                </div>
+            </div>
+            <div ng-repeat="userinfo in gzlylbdata track by $index">
+                <div style="display: none">{{$index+1}}</div>
+                <div class="panel panel-default" ng-if="userinfo.delflg != '1'">
+                    <div class="panel-heading">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">工资来源类别：</label>
+                            <div class="col-sm-6">
+                                <select required name=userinfo.gzlylb ng-model=userinfo.gzlylb class="form-control" ng-options="o.key as ('0007'+o.text) for o in gongzilaiyuan" ng-change="xzgzlylb(this,$index)"></select>
+                            </div>
+                            <button style="margin-right: 10px;" ng-click="scgzlylb($index)">删除</button>
+                        </div>
+                        <div data-ng-include=userinfo.ycy></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">状态：</label> 
+                <input type="radio" name="zt" class="input-icon input-icon-right" value="D001" ng-model="zt">启用</input> 
+                <input type="radio" name="zt" class="input-icon input-icon-right" value="D002" ng-model="zt">禁用</input>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-2">
+                    <button ng-disabled="form.$invalid||isSubmit" class="btn btn-info  mr_10" style="margin-right: 10px;" ng-click="tjbc(this)">提交保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

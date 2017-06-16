@@ -1,0 +1,114 @@
+﻿<!--<div>-->
+    <!--&lt;!&ndash; 标题 &ndash;&gt;-->
+    <!--<div class="bg-light lter b-b wrapper-md">-->
+        <!--<h4 class="m-n font-thin h4" style="color:#000"> 销售档期信息-->
+        <!--</h4>-->
+    <!--</div>-->
+
+    <!--<div class="wrapper-md" >-->
+        <!--&lt;!&ndash; 表格 &ndash;&gt;-->
+        <!--<div class="table-responsive" style="padding-left:10px;padding-right:10px; " >-->
+            <!--<div style="padding:15px;">-->
+                <!--<lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ; border:none;outline:medium;color: #f05050" ng-model="" readonly="readonly"> 条数据</lable>-->
+                <!--<lable ng-if=""><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>-->
+            <!--</div>-->
+            <!--<div ng-table="tableParams">-->
+                <!--<table  class="table table-bordered table-condensed table-striped table-hover"  >-->
+                    <!--<tr >-->
+                        <!--<td title="'档期组名称'" style="text-align:center;">-->
+                            <!--<span ng-bind=""></span>-->
+                        <!--</td>-->
+                        <!--<td title="'备注'"  style="text-align:center;min-width:120px;">-->
+                            <!--<span ng-bind=""></span>-->
+                        <!--</td>-->
+                        <!--<td title="'操作'" style="text-align:center;min-width:120px;" >-->
+                            <!--<a style=" text-decoration:underline;color: #05b5ff;"  ng-click="" >还原</a>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+<!--</div>-->
+
+<div ng-controller="rccSalesScheduleController">
+    <!-- 标题 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4" style="color:#000"> 销售档期信息
+        </h4>
+    </div>
+
+    <div class="wrapper-md" >
+
+        <tabset class="tab-container">
+            <tab>
+                <tab-heading ng-click="searchPhaGrpList()">
+                    档期组还原
+                </tab-heading>
+                <!-- 表格 -->
+                <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+                    <div style="padding:15px;">
+                        <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll; border:none;outline:medium;color: #f05050" ng-model="gydstPhaGrp" readonly="readonly"> 条数据</lable>
+                        <lable ng-if="gydstPhaGrp < 1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+                    </div>
+                    <div ng-table="tableParams1">
+                        <table  class="table table-bordered table-condensed table-striped table-hover"  >
+                            <tr ng-repeat="rccPhaGrp in $data">
+                                <td title="'档期组名称'" style="text-align:center;">
+                                    <span ng-bind="rccPhaGrp.phaGrpNm"></span>
+                                </td>
+                                <td title="'备注'"  style="text-align:center;min-width:120px;">
+                                    <span ng-bind="rccPhaGrp.remark"></span>
+                                </td>
+                                <td title="'操作'" style="text-align:center;min-width:120px;" >
+                                    <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="restorePhaGrp(rccPhaGrp.oId)" user-power="WRCC01006002">还原</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+
+            <tab>
+                <tab-heading ng-click="searchPhaseMngList()">
+                    具体档期还原
+                </tab-heading>
+
+                <!-- 表格 -->
+                <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+                    <div style="padding:15px;">
+                        <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll; border:none;outline:medium;color: #f05050" ng-model="gydstPhaseMng" readonly="readonly"> 条数据</lable>
+                        <lable ng-if="gydstPhaseMng < 1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+                    </div>
+                    <div ng-table="tableParams2">
+                        <table  class="table table-bordered table-condensed table-striped table-hover"  >
+                            <tr ng-repeat="rccPhaseMng in $data">
+                                <td title="'档期名称'" style="text-align:center;">
+                                    <span ng-bind="rccPhaseMng.phaNm"></span>
+                                </td>
+                                <td title="'档期开始时间'"  style="text-align:center;min-width:120px;">
+                                    <span ng-bind="rccPhaseMng.phaStartTm | date:'yyyy-MM-dd'"></span>
+                                </td>
+                                <td title="'档期结束时间'"  style="text-align:center;min-width:120px;">
+                                    <span ng-bind="rccPhaseMng.phaEndTm | date:'yyyy-MM-dd'"></span>
+                                </td>
+                                <td title="'对应档期组名称'"  style="text-align:center;min-width:120px;">
+                                    <span ng-bind="rccPhaseMng.phaGrpNm"></span>
+                                </td>
+                                <td title="'操作'" style="text-align:center;min-width:120px;" >
+                                    <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="restorePhaseMng(rccPhaseMng.oId)" user-power="WRCC01006002">还原</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </tab>
+        </tabset>
+
+
+    </div>
+
+</div>

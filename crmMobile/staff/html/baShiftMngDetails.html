@@ -1,0 +1,36 @@
+<ion-header-bar align-title="center"  class="header">
+        <a href="#/baShiftMng"  ui-sref="baShiftMng({phaNum:phaNum})" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">详情</h1>
+</ion-header-bar>
+<ion-content class="has-header" overflow-scroll='false'>
+<!-- baShiftMngDetails.html -->
+ <ion-list>
+           <ion-item >
+               	<span class="w140">排班时间</span>
+               	<span style="color: #b1b1b1;">{{time}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">门店</span>
+               	<span style="color: #b1b1b1;">{{strNm}}</span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">所在城市</span>
+               	<span style="color: #b1b1b1;" >{{rgnNm}}</span>
+           </ion-item>
+           <ion-item ng-repeat="bAShiftMngPersonInfo in bAShiftMngPerson">
+           	    <span class="w140">{{bAShiftMngPersonInfo.sequnce}}</span>
+               	<span style="color: #b1b1b1;">{{bAShiftMngPersonInfo.person}}</span>
+           </ion-item>
+           <div class="index_work_bt">今日上班</div>
+           <ion-item ng-repeat="bAShiftMngPersonInfo in bAShiftMngPersonToday">
+           	    <span class="w140">{{bAShiftMngPersonInfo.detileperson}}</span>
+               	<span class="color05">{{bAShiftMngPersonInfo.schSitu}}</span>
+           </ion-item>
+           <div class="index_work_bt">排班明细</div>
+           <ion-item ng-repeat="bAShiftMngPersonInfo in bAShiftMngPersonDetile">
+           	    <span class="w140">{{bAShiftMngPersonInfo.riqi}}</span>
+               	<span style="color: #b1b1b1;">{{bAShiftMngPersonInfo.detileperson}}&nbsp;{{bAShiftMngPersonInfo.schSitu}}</span>
+           </ion-item>
+ </ion-list>
+ <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>

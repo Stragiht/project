@@ -1,0 +1,78 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<div ng-controller="repApplSelectController">
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+                            审批销售报表
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+              全选
+</script>
+<script type="text/ng-template" id="batchapproval.html">
+    <div ng-include="'common/tpl/batchapproval.html'"></div>
+</script>
+
+<!-- 查询面板开始 -->
+<div class="panel-heading">
+		<accordion close-others="oneAtATime">
+			<accordion-group is-open="status.open">
+				<accordion-heading>
+					查询<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+				</accordion-heading>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" style="padding-top:7px;">审批状态：</label>
+					<div class="btn-group">
+						<button ng-repeat="apprStat in apprStatList" class="btn btn-default" ng-class="{'active':apprStat.key == selectedApprStat}"
+							ng-model="apprStatModel" ng-click="selectRepApplInfolList('{{apprStat.key}}')">{{apprStat.text}}</button>
+					</div>
+				</div>
+			</accordion-group>
+		</accordion>
+	</div>
+<!-- 查询面板结束 -->
+
+<!-- 总件数显示开始 -->
+<div class="panel-heading">
+	<button class="btn btn-default btn-addon" ng-click="openAppl('sm')" user-power="WREP01007003">批量审核</button> 
+	<label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据</label>
+	<label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+</div>
+<!-- 总件数显示结束 -->
+
+<!-- table列表开始 -->
+<div class="panel-heading">
+	<div ng-table="tableParams">
+		<table class="table table-bordered table-condensed table-striped table-hover">
+			<tr ng-repeat="repApplListInfo in $data">
+                <td header="'headerCheckbox.html'" style="font-weight: bold;" width="'90px'">
+                    <input type="checkbox" ng-model="checkboxes.items[repApplListInfo.repApplNum]" ng-click="checkItem()"/>
+                </td>
+                <td title="'申请编号'" width="'130px'">{{repApplListInfo.repApplNum}}</td>
+                <td title="'门店编号'" width="'120px'">{{repApplListInfo.strNum}}</td>
+                <td title="'门店名称'" width="'120px'">{{repApplListInfo.strNm}}</td>
+                <td title="'相关人员'" width="'120px'">{{repApplListInfo.stfNm}}</td>
+                <td title="'人员提交总销售业绩'" style="text-align:right;" width="'200px'">{{repApplListInfo.stfRepSaleAmtSum|currency : "￥"}}</td>
+                <td title="'财务导入销售业绩'" style="text-align:right;" width="'200px'">{{repApplListInfo.fcImpSaleAmt|currency : "￥"}}</td>
+                <td title="'报表审核时间段'" style="min-width: 200px;" width="'200px'">{{repApplListInfo.repApprStartDt|date:'yyyy-MM-dd'}}～{{repApplListInfo.repApprEndDt|date:'yyyy-MM-dd'}}</td>
+                <td title="'比对结果'" width="'120px'">
+                    <span ng-show="{{repApplListInfo.compRslt}}==1">{{repApplListInfo.compRslt|dicNameFilter:"C017"}}</span>
+					<span style="color:red;" ng-show="{{repApplListInfo.compRslt}}==2">{{repApplListInfo.compRslt|dicNameFilter:"C017"}}</span>
+				</td>
+                <td title="'状态'" style="color:red;" width="'120px'">{{repApplListInfo.apprStat|dicNameFilter:"C018"}}</td>
+	            <td title="'操作'" class="mr_22" width="'200px'">
+					<a class="mr_9" ng-click="infoEntryAppl(repApplListInfo.repApplNum)" user-power="WREP01007001">查看</a>
+					<a class="mr_9" ng-if="repApplListInfo.editFlag == 1" ng-click="updateEntryAppl(repApplListInfo.repApplNum)" user-power="WREP01007002">编辑</a>
+					<a class="mr_9" ng-if="repApplListInfo.apprFlag == 1" ng-click="apprEntryAppl(repApplListInfo.repApplNum)" user-power="WREP01007003">审批</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<!-- table列表结束 -->
+</div>
+</html>

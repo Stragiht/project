@@ -1,0 +1,81 @@
+<style>
+    .saixuan_box2 {padding-left:4%; padding-right:4%; background:#fff;}
+    .saixuan_box2 .item {padding-left: 0px;padding-right: 0px;border-top:solid 1px #ccc; border-left:0px; border-right:0px; border-bottom:solid 1px #fff;}
+    .saixuan_box2 .radio-content .item-content {padding-left: 0px;}
+    .saixuan_box2 .radio-content .radio-icon {padding-right: 0px;}
+</style>
+<ion-header-bar align-title="center" class="header"> 
+	<a href="" ui-sref="attendanceAdmin" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">查看门店排班</h1>
+	<a href="" ng-click="screen()"; class="head_right">
+    	<div class="head_right_box" ng-if="!flag">
+            <img src="common/images/saixuan.png" width="22" height="22">
+            <p>筛选</p>
+        </div>
+    </a>
+</ion-header-bar>
+<ion-content class="has-header" delegate-handle="contentScroll">
+<!-- baShiftMng.html -->
+    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+	<div class="wrap" ng-if="!flag">
+		<div ng-repeat="list in bAShiftMngList">
+	        <div class="xiaoxizhongxin_bj1" ng-show="bAShiftMngList.length > 0">
+			<div class="index_work_bt">{{list.time}}</div>
+			<ion-list>
+	        	<ion-item class="bottom_line" style="padding-top: 0px;padding-bottom: 0px;margin: 0px 0px;" ng-repeat="bAShiftMngInfo in list.list">
+	           	  <a href="" ui-sref="baShiftMngDetails({phaNum:bAShiftMngInfo.phaNum,strNum:bAShiftMngInfo.strNum})" ><!--  user-power="MSTF01007002" -->
+	               	<div class="xiaoxi_img2">{{bAShiftMngInfo.rgnNmAbbr}}</div>
+	                <div class="xiaoxi_line">
+	                	<div class="xiaoxizhongxin_text2">
+	                		<h2>{{bAShiftMngInfo.strNm}}</h2>
+	                    	<p>{{bAShiftMngInfo.stfNm}}</p> 
+	                	</div>
+	               		<span class="float_r line_height50"><img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 16px;"></span>
+	                </div>
+	                </a>
+	           </ion-item>
+	       	</ion-list> 
+       	</div>
+       	</div>
+		<div my-nodata-show="bAShiftMngList.length == 0 && !moredata" class="wushuju">
+	        <img src="common/images/bear.gif" >
+	        <p>没有符合条件的数据</p>
+	    </div>
+	</div>
+<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>
+<!-- 筛选页面 -->
+<div ng-show="flag">
+    <ion-header-bar align-title="center"  class="header">
+        <a ng-click="screen()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">查看门店排班</h1>
+        <a ng-click="screen()" class="head_right">
+            <div class="head_right_box">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+        </a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+        <div class="wrap">
+		    <div class="saixuan_box" style="height:{{shaixuanBoxHeight}}">
+		        <ul class="listvrew clearfix" style="border-top: solid 0px;">
+		        	<li class="acirve" style="line-height:54px">
+		        		<a>
+		        			<span class="">档期</span>
+	        			</a>
+	        			<span class="float_r">
+		           			<i class="fa fa-angle-right"></i>
+	          			</span>
+        			</li>
+		        </ul>
+		     </div>
+		     <div class="saixuan_box2">
+		        <ion-list>
+		        	<ion-radio style="border-top: 0px;" ng-value="screen.phaNum" ng-model="phaNum" ng-click="screenSelect('0000')">全部</ion-radio>
+				    <ion-radio ng-repeat="screen in screens" ng-value="screen.phaNum" ng-model="phaNum" ng-click="screenSelect(screen.phaNum)">{{screen.schend}}</ion-radio>
+			    </ion-list>
+		     </div>
+         </div> 
+    </ion-content>
+</div>

@@ -1,0 +1,120 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<div ng-controller="jobPosUpdateController">
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+		编辑 <a class="btn btn-default  btn-addon mt_7"
+			ng-click="fanhui()" style="float: right; margin-right: 10px;">返回职位管理</a>
+	</h4>
+</div>
+<!-- 标题信息结束 -->
+<div class="col-xs-12 ">
+    <form name="myForm" class="form-horizontal form-validation" style="margin-top: 30px" novalidate>
+        <div class="form-group">
+            <div class="col-sm-5">
+               <label for="posNum"class="col-xs-5 control-label"><span style="color:red;">*</span> 职位编号:</label>
+               <label class="col-xs-6 control-label" style="text-align: left;" id="posNum" ng-bind="posNum" readOnly></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5">
+               <label for="posNm"class="col-xs-5 control-label"><span style="color:red;">*</span> 职位名称:</label>
+                <div class="col-xs-6">
+                    <input type="text" class="form-control" id="posNm" ng-model="posNm" name="posNm" required maxlength="20">
+                    <div ng-messages="myForm.posNm.$error" ng-if="(myForm.posNm.$dirty && myForm.posNm.$invalid)">
+	                   <span ng-message="required" class="error">职位名称不能为空</span>
+	                </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5">
+               <label for="poiSetFlg"class="col-xs-5 control-label">是否设置职位等级:</label>
+                	<div class="col-xs-3">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input value=1 name="a" ng-model="poiSetFlg" ng-click="showorhide(1)"
+								type="radio"> <i></i> 是
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="radio">
+							<label class="i-checks i-checks-sm"> <input value=0 name="a" ng-model="poiSetFlg" ng-click="showorhide(0)"
+								type="radio"> <i></i> 否
+							</label>
+						</div>
+					</div>
+            </div>
+             <label class="col-xs-3 control-label" style="color:#999999;margin-left: -35px;" ng-show="fontStyle">填写的等级数值越高则等级越高</label>
+        </div>
+        <div class="form-group" id="PosGrid">
+            <div class="col-sm-5">
+                <label for="SET"class="col-xs-5 control-label"><span style="color:red;">*</span> 设置具体信息:</label>
+                <div class="col-xs-6">
+                    <button class="btn btn-default btn-addon" id = "SET" style="float:left; " ng-click="addPosGrid()"> 新增职位等级</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="PosGridGroup">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div style="padding-left:10px;padding-right:10px; ">
+                    <table class="table table-bordered table-condensed table-striped" style="width:592px; margin-bottom:20px;margin-top:20px;"  >
+						<tr><th style="width: 196px"><span style="color:red;">*</span> 职位等级名称</th><th style="width: 196px"><span style="color:red;">*</span> 等级</th><th style="width:200px;">操作</th></tr>
+                        <tr ng-repeat="datainfoOne in datas" ng-if="datainfoOne.flag != '0'" >
+                            <td title="'职位等级名称'" sortable="'name'" >
+                                <input type="text" class="form-control"  style="width: 165px" ng-model="datainfoOne.posGrdNm" required maxLength="20"/>
+                            </td>
+                            <td title="'等级'" sortable="'start'" style="text-align:center; ">
+                                <input type="text" class="form-control"  style="width: 165px" ng-model="datainfoOne.posGrd" required maxLength="2" name="posGrd"/>
+                            </td>
+                            <td title="'操作'" style=" min-width: 200px;" class="mr_22">
+                                <a class="mr_9" ng-click="del($index)">删除</a>
+                            </td>  
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-5">
+                <label  class="col-sm-5 control-label">是否与门店关联:</label>
+                <div class="col-xs-3">
+                    <div class="radio">
+                        <label class="i-checks i-checks-sm"> <input value=0 name="b" ng-model="refStr"
+                                                                    type="radio"> <i></i> 否
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="radio">
+                        <label class="i-checks i-checks-sm"> <input value=1 name="b" ng-model="refStr"
+                                                                    type="radio"> <i></i> 是
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <label class="col-sm-6 control-label" style="color:#999999;margin-left: -35px;" ng-show="fontStyle">请谨慎填写该字段，设置【是】的话该职位人员必须填写【所属门店】
+            </label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="jobResponse"class="col-xs-2 control-label">岗位职责:</label>
+                <div class="col-xs-7">
+                    <textarea class="form-control" rows="3" id = "jobResponse"  style="width:100%;" ng-model = "jobResponse" maxLength="1000"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+                <div class="col-xs-6">
+                   <button class="btn btn-info btn-addon" style="float:left;" user-power="WSTF01004004" ng-click="savePosGrid(myForm.$valid)" ng-disabled="myForm.posNm.$error.required">提交保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</html>

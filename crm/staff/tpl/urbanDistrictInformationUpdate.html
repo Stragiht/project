@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<div ng-controller="urbanDistrictInformationUpdateController">
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+		编辑 
+	</h4>
+</div>
+    <div class="panel panel-default">
+    <div class="panel-body">
+    <form class="bs-example form-horizontal" name="myForm" novalidate>
+            <div class="form-group">
+                <label class="col-xs-2 control-label"><span style="color:red;">*</span> 分区编号：</label>
+                <label class="col-xs-3 control-label" style="text-align: left;" id="partiNum" ng-bind="add.partiNum" readOnly></label>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label"><span style="color:red;">*</span> 分区名称：</label>
+                <div class="col-xs-3">
+                    <input type="text" class="form-control" id="partiNm" name="partiNm" ng-model="add.partiNm" required ng-maxlength="50">
+                     <div ng-messages="myForm.partiNm.$error" ng-if="(myForm.partiNm.$dirty && myForm.partiNm.$invalid)">
+	                   <span ng-message="required" class="error">分区名称不能为空</span>
+	                   <span ng-message="maxlength" class="error">分区名称最多不超过50位</span>
+	                </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label"><span style="color:red;">*</span> 所属城市：</label>
+                <div class="col-xs-3" style="width:150px;">
+                     <select name="account1" style="width:140px;" ng-change="changeMajRegInfo(add.subChnl)" class="form-control m-b" ng-model="add.subChnl" ng-options="ChnlInfo.key as ChnlInfo.text for ChnlInfo in ChnlInfoList" required/>                   
+                </div>
+                <div class="col-xs-3" style="width:150px;">
+                    <select name="account2" style="width:140px;" ng-change="changeproVinceInfo(add.subChnl,add.majRgnNum)" class="form-control m-b" ng-model="add.majRgnNum" ng-options="MajRegInfo.key as MajRegInfo.text for MajRegInfo in MajRegInfoList" required/>                   
+                </div>
+                <div class="col-xs-3" style="width:150px;">
+                   <select name="account3" style="width:140px;" ng-change="changecityInfo(add.subChnl,add.majRgnNum,add.rgnNum)" class="form-control m-b" ng-model="add.rgnNum" ng-options="proVinceInfo.key as proVinceInfo.text for proVinceInfo in proVinceInfoList" required/> 
+                </div>
+                <div class="col-xs-3" style="width:150px;">
+                   <select name="account4" style="width:140px;" class="form-control m-b"  ng-model="add.city" ng-options="cityInfo.key as cityInfo.text for cityInfo in cityInfoList" required/>          
+                </div>
+            </div>
+            <div class="form-group">      
+                <label class="col-xs-2 control-label"></label>          
+                <div class="col-xs-3">
+                    <button class="btn btn-info btn-addon" user-power="WSTF01006004" ng-click="submit(myForm.$valid)" ng-disabled="myForm.$invalid">提交保存</button>
+                    <button class="btn btn-default" ng-click="fanhui()">返回</button>
+                </div>
+            </div>
+   </form>
+   </div>
+   </div>
+</div>
+</html>

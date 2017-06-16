@@ -1,0 +1,160 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4" style="color:#000">编辑<a class="btn btn-info    btn-addon" ui-sref="app.goods.gdsProp({isBack:true})"
+                                                         style="float:right;margin:-8px 10px 0 0;">返回商品属性管理</a></h4>
+</div>
+
+<div class="wrapper-md" ng-controller="gdsPropUpdCtrl">
+    <ng-form class="bs-example form-horizontal" name="formAttr">
+
+        <!-- 第一行 -->
+        <form class="form-horizontal" style="margin-left: -13px;">
+
+            <div class="form-group" style="margin:15px 0 10px 12px; ">
+                <label class="col-sm-2 control-label"><span style="color:red;">*</span>属性组名称：</label>
+
+                <div class="col-xs-3">
+                    <input type="text" class="form-control" ng-model="gdsPropUpd.gdsPropGrpNm" name="gdsPropGrpNm"
+                           required maxlength="20">
+
+                    <div ng-messages="formAttr.gdsPropGrpNm.$error"
+                         ng-if="(formAttr.gdsPropGrpNm.$dirty && formAttr.gdsPropGrpNm.$invalid)">
+                        <span ng-message="required" class="error"> 属性组名称必须输入！ </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="margin:15px 0 0 12px; ">
+                <label class="col-sm-2 control-label"></label>
+                <button class="col-sm-1 btn btn-info  btn-addon" ng-click="add()" style="left: 15px;width: 110px;">
+                    添加属性
+                </button>
+            </div>
+
+
+        </form>
+
+        <div class="panel-heading">
+
+
+            <form class="form-horizontal" style="background: #fff;margin-bottom:15px;"
+                  ng-repeat="gdsProp in gdsPropList">
+                <hr/>
+                <!-- 第二行 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color:red;">*</span>属性名称：</label>
+
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" ng-model="gdsProp.gdsPropNm" name="gdsPropNm" required
+                               maxlength="20">
+
+                        <div ng-messages="formAttr.gdsPropNm.$error"
+                             ng-if="(formAttr.gdsPropNm.$dirty && formAttr.gdsPropNm.$invalid)">
+                            <span ng-message="required" class="error"> 属性名称必须输入！ </span>
+                        </div>
+                    </div>
+                    <button class="col-sm-1 btn btn-info  btn-danger " ng-click="del($index)"
+                            style="color:red;float:right;margin-right: 30px;">删除属性
+                    </button>
+                </div>
+                <!-- 第三行 -->
+                <!--<div class="list">-->
+                <!--<label class="i-checks i-checks-sm">-->
+                <!--<input name="b" type="radio" value="1" ng-model="gdsProp.valFlg" checked="checked">-->
+                <!--<i></i>-->
+                <!--列表选择-->
+                <!--</label>-->
+                <!--</div>-->
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color:red;">*</span>是否必选：</label>
+
+                    <div class="col-lg-1">
+                        <div class="radio">
+                            <label class="i-checks i-checks-sm">
+                                <input name="a" type="radio" value="1" ng-model="gdsProp.mustFlg" checked="checked">
+                                <i></i>
+                                {{1 | dicNameFilter:"C002"}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="radio">
+                            <label class="i-checks i-checks-sm">
+                                <input name="a" type="radio" value="0" ng-model="gdsProp.mustFlg">
+                                <i></i>
+                                {{0 | dicNameFilter:"C002"}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    /*$(function () {
+                     $(".list").click(function () {
+                     $("#add_text").css("visibility", "visible");
+                     $("#add").css("visibility", "visible");
+                     if($("input[name='b']:checked").val() == 'sglr') {
+
+                     }
+
+                     });
+                     $(".hand_add").click(function () {
+                     $("#add_text").css("visibility", "hidden");
+                     $("#add").css("visibility", "hidden")
+                     });
+                     });*/
+
+                </script>
+                <!-- 第四行 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color:red;">*</span>属性内容：</label>
+
+                    <div class="col-lg-1 " style="width:115px;line-height: 30px;">
+                        <div class="list">
+                            <label class="i-checks i-checks-sm">
+                                <input name="b" type="radio" value="1" ng-model="gdsProp.valFlg" checked="checked">
+                                <i></i>
+                                列表选择
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 " style="width:115px;line-height: 30px;">
+                        <div class="hand_add">
+                            <label class="i-checks i-checks-sm">
+                                <input name="b" type="radio" value="0" ng-model="gdsProp.valFlg">
+                                <i></i>
+                                手工录入
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="col-sm-1 btn btn-info  btn-addon" id="add" ng-click="add2(gdsProp.gdsPropValList)"
+                            ng-if="gdsProp.valFlg=='1'"> 添加文本
+                    </button>
+                </div>
+                <!-- 第五行 -->
+                <div class="form-group add_text" id="add_text" ng-if="gdsProp.valFlg=='1'">
+
+                    <label class="col-sm-2 control-label" style="margin-right: 15px;"> </label>
+                    <table class="table table-bordered table-condensed   table-striped"
+                           style="width: 350px;text-align: center;">
+                        <tr>
+                            <td style="min-width: 250px; ">属性内容</td>
+                            <td style="width:100px;">操作</td>
+                        </tr>
+                        <tr ng-repeat="gdsPropVal in gdsProp.gdsPropValList">
+                            <td><input type="text" class="form-control" maxlength="20"  ng-model="gdsPropVal.gdsPropValNm"/></td>
+                            <td><a style=" text-decoration:underline;color: #05b5ff;"
+                                   ng-click="dell2(gdsProp.gdsPropValList,$index)">删除</a></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </form>
+        </div>
+        <div>
+            <label class="col-sm-2 control-label"> </label>
+            <button class="btn btn-success" style="margin-left:15px" ng-click="updateGdsProp()"
+                    ng-disabled="formAttr.$invalid"  user-power="WGDS01007003"> 提交保存
+            </button>
+        </div>
+    </ng-form>
+</div>

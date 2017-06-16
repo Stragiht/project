@@ -1,0 +1,58 @@
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4" style="color:#000">商品批量导入</h4>
+</div>
+
+<!-- 内容 -->
+<div class="wrapper-md" ng-controller="gdsBatImportCtrl" >
+
+    <div class="panel-heading"   >
+
+              <form name="form" class="form-horizontal">
+
+                  <!--<h5><strong>温馨提示：</strong></h5>-->
+                  <!--<p>1、为提高商品上传效率，可以使用商品批量导入功能，可先“下载规范格式文件”进行编辑完成后再上传；</p>-->
+                  <!--<p>2、excel文件中一次上传商品数量最好不要超过1000，excel文件大小最好不要超过500K；</p></p>-->
+                  <!--<p>3、碰到“是否上架”之类的商品字段，填写数字0或者1，0代表“否”，1代表“是”；</p>-->
+                  <!--<p>4、商品图片路径为不可上传，可先上传商品基本信息后再到“商品批量修改”栏目修改商品缩略图、商品展示图、商品详细描述。</p>-->
+                  <p>马上下载规范格式文件:<a href="../import/规格商品批量导入模板.xlsx"><img src="common/img/import.jpg" width="100"></a></p>
+              </form>
+              <div class="form-group">
+                    <!--<label class="col-sm-1 control-label" style="width: 100px;"> 上传文件：</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" >
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-info btn-addon">本地上传</button>
+                    </div>-->
+                  <label class="col-sm-1 control-label" style="width: 120px;"> <span
+                          style="color: red;">*</span>上传文件：</label>
+                  <div class="col-xs-4"  >
+                      <input class="form-control" ng-model="gdsBatFileName"  readonly/>
+
+                  </div>
+                  <div class="col-xs-2  btn btn-default fileUpload">
+                      <span>本地上传</span>
+                      <input id="fileInputGdsBat" type="file" ngf-pattern="'.xlsx'" accept=".xlsx"
+                                               class="upload" style="height: 100%" />
+                  </div>
+              </div>
+
+    </div><!-- panel -->
+    <div style="margin-left: 45px;margin-top: 30px;">
+        <button class="btn btn-success " ng-click="importFile()"  user-power="WGDS01003001"> 提交保存</button><!--ui-sref="app.member.memBas"-->
+        <button class="btn btn-success " style="display: none;" id="outGdsExcelImportErrorMsg" ng-csv="csvData" add-bom="true" lazy-load="true" filename="{{csvFileName}}" field-separator="," >提交保存</button>
+        <!--<button class=" btn btn-info btn-addon " ui-sref="app.member.memBas" style="width: 85px;margin-left: 35px;">返回</button>-->
+    </div>
+</div><!-- wrapper-md-->
+
+         <!-- <div style="margin-left: 35px;margin-top: 30px;">
+              <button class="btn btn-success " style="margin:20px 0 20px 5px"> 提交保存</button>
+          </div>-->
+
+
+
+
+
+
+

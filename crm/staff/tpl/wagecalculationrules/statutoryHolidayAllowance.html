@@ -1,0 +1,10 @@
+<div class="form-group">
+	<label class="col-sm-3 control-label">计算规则：</label>
+    <label class="col-xs-4 control-label text-left">'档期底薪'÷'档期应出勤天数'X</label> 
+   	<input class="form-control col-sm-1" style="width: 80px" type="text"  ng-model="fdjrgzbzbs" name="fdjrgzbzbs" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=4  required>
+	<label class="col-xs-1 control-label text-left">倍</label>
+	<div ng-messages="form.fdjrgzbzbs.$error" ng-if="(form.fdjrgzbzbs.$dirty && form.fdjrgzbzbs.$invalid)">
+		<span ng-message="required" class="error">倍数不能为空！ </span>
+		<span ng-message="pattern" class="error">*请输入有效的倍数！</span>
+	</div>
+</div>

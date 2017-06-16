@@ -1,0 +1,71 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">新增人员升降级规则
+        <a class="btn btn-default btn-addon mr_8" ui-sref="app.staff.prmnDemnRuleManage"> 返回人员升降级规则</a>
+    </h4>
+</div>
+<div class="panel-heading" ng-controller="prmnDemnRuleInsert">
+    <form name="form" class="bs-example form-horizontal form-validation" style="margin-top: 30px" novalidate>
+    <div class="form-group">
+            <label class="col-xs-2 control-label"><span style="color:red;">*</span>规则名称：</label>
+            <div class="col-xs-3">
+                <input type="text" class="form-control" name="ruleNm" ng-model="ruleNm" ng-maxlength="100" required>
+                <div ng-messages="form.ruleNm.$error" ng-if="(form.ruleNm.$dirty && form.ruleNm.$invalid)">
+				    <span ng-message="required" class="error">规则名称不能为空！</span>
+				    <span ng-message="maxlength" class="error">规则名称长度不能超过100位</span>
+				</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"><span style="color:red;">*</span>判断根据：</label>
+            <div class="col-xs-3">
+                <select class="form-control" ng-model="reason.jgmBas" name="account" ng-options="yj.key as yj.text for yj in jgmBas" ng-required="true">  
+				</select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"><span style="color:red;">*</span>应用于职位等级：</label>
+            <div class="col-xs-3">
+				<select class="form-control" ng-model="posNum" ng-options="assPosInfo.posNum as assPosInfo.posNm for assPosInfo in assPos" ng-change="clear()" ng-required="true"/>   
+            </div>
+            <div class="col-xs-4" style="padding-left: 0px;">
+                <button class="btn btn-default btn-addon" style="float:left;"ng-click="selectPos()" user-power = "WSTF01014002">列出等级</button>
+        	</div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"></label>
+			 <div class="col-xs-10" >
+			  <div ng-table="tableParams">
+				<table class="table table-bordered table-condensed table-striped table-hover">
+					<tr>
+						<th><span style="color:red;">*</span>等级名称</th>
+						<th><span style="color:red;">*</span>等级</th>
+						<th><span style="color:red;">*</span>判断规则1</th>
+						<th><span style="color:red;">*</span>判断规则2</th>
+					</tr>			
+					<tr ng-repeat="ruleinfo in datas">
+						<td style="min-width: 100px;">{{ruleinfo.posGrdNm}}</td>
+						<td style="min-width: 100px;">{{ruleinfo.posGrd}}</td>
+						<td style="min-width: 300px;"><lable calss="control-label" >上一档期销售业绩≥</lable><input style="width:130px;" ng-model="ruleinfo.lstPhaSaleAmt" ng-maxlength="12" ng-required="true"/><lable calss="control-label" >元</lable></td>
+						<td style="min-width: 350px;"><lable calss="control-label" >过去三个档期业绩平均值≥</lable><input style="width:130px;" ng-model="ruleinfo.avgOfLst3PhaSaleAmt" ng-maxlength="12" ng-required="true"/><lable calss="control-label" >元</lable></td>
+					</tr>					
+				 </table>	
+				</div>						
+		     </div>
+        </div>
+        <div class="form-group">
+               <label class="col-xs-2 control-label"><span style="color:red;">*</span>是否启用：</label>
+				<div class="col-lg-3" style="padding-top: 6.5px;">
+					<input type="radio" ng-required="true" name="optionsRadios" ng-model="isFlag" value="D001" ng-click="shows(1)">是
+					<label style="width: 6%;"></label>
+					<input type="radio" ng-required="true" name="optionsRadios" ng-model="isFlag" value="D002" ng-click="shows(2)">否
+				</div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label"></label>
+            <div class="col-lg-6">
+                 <button class="btn btn-info btn-addon" style="float:left;" ng-click="saveRule(form.$valid)" ng-disabled="form.$invalid"  user-power = "WSTF01014002">提交保存</button>
+            </div>
+        </div>
+    </form>    
+</div>
+

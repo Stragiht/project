@@ -1,0 +1,41 @@
+
+<div ng-controller="majRegController">
+
+	<div class="bg-light lter b-b wrapper-md">
+		<h4 class="m-n font-thin h4">
+			销售大区信息 <a class="btn btn-success btn-addon mr_8"
+				ui-sref="app.staff.majRgnInsert">新增销售大区</a>
+		</h4>
+	</div>
+	<!--主页框架-->
+	<div class="panel-heading">
+	    <label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据 </label>
+		<label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+	</div>
+	<div class="panel-heading">
+		<div ng-table="tableParams">
+			<table
+				class="table table-bordered table-condensed   table-striped table-hover">
+				<tr ng-repeat="xsdq in xsdqInfo">
+					<td title="'大区名称'" style="text-align: center;min-width: 130px;"
+						ng-bind="xsdq.majRgnNm"></td>
+					<td title="'所属销售渠道'" style="min-width: 120px;text-align: center"
+						ng-bind="xsdq.chnlNm"></td>
+					<td title="'大区总监'" style="text-align: center;min-width: 130px;"
+						ng-bind="xsdq.majRgnMgrNm"></td>
+					<td title="'区域包含城市'" style="text-align: center;min-width: 100px; "
+						ng-bind="xsdq.rgnNm"></td>
+					<td title="'操作'" style="text-align: center; min-width: 120px;">
+						<a class="mr_9" ng-click="goUpdate(xsdq.subChnl,xsdq.majRgnNum)">编辑</a>
+						<a class="mr_9" ng-click="majRgnDelete(xsdq.majRgnNum,xsdq.subChnl)">删除</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<div>	
+	<script type="text/ng-template" id="delete.html">
+		<div ng-include="'common/tpl/delete.html'"></div>  
+ 	</script>
+</div>

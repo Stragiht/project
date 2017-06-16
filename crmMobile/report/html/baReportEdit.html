@@ -1,0 +1,180 @@
+<!-- 编辑销售报表画面 -->
+<div ng-show="pageShow.submit">
+	<ion-header-bar align-title="center"  class="header">
+	        <a ng-click="gotoFtontPage()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	        <h1 style="font-size:1.4rem">编辑</h1>
+		    <a class="head_right3" ng-click="submitReport(1)" user-power="MREP01004003"><div class="btn_line" ng-show="editShow">提交 </div></a>
+		    <a class="head_right" ng-click="submitReport(0)" user-power="MREP01004003"><div class="btn_line" ng-show="editShow">存为草稿</div></a>
+	</ion-header-bar>
+	<ion-content class="has-header" delegate-handle="contentScroll">
+	<!-- baReportEdit.html -->
+		<div class="wrap">
+		    <div class="listvrew clearfix mb_15">
+		        <ion-list>
+	                <ion-item>
+		                <span>销售日期</span>
+		                <span class="float_r">{{submitInfo.saleDate | dateEditFilter}}</span>    
+	                </ion-item>
+	                <ion-item>
+	                    <span>销售门店</span>
+	                    <span class="float_r">{{submitInfo.strNm}}</span>
+	                </ion-item>
+	                <ion-item>
+	                    <span>销售金额</span>
+			            <input type="number" ng-model="submitInfo.saleAmt" ng-required="true" style="text-align: right;float: right;font-size: 14px;color: #b1b1b1;height:22px;"
+			                    maxlength="13"/>
+	                </ion-item>
+	                <ion-item>
+	                    <span>成交单数</span>
+	                    <input type="number" ng-model="submitInfo.dealQty" ng-required="true" style="text-align: right;float: right;font-size: 14px;color: #b1b1b1;height:22px;"
+                                maxlength="11"/>
+	                </ion-item>
+	            </ion-list>
+	         </div>
+	         <div class="index_work_bt" ng-if="submitInfo.gdsSpecList.length > 0"></div>
+	         <div class="listvrew clearfix" ng-if="submitInfo.gdsSpecList.length > 0">
+	            <ion-list>
+	                <ion-item ng-repeat="specInfo in submitInfo.gdsSpecList" ng-click="gdsSpecSelect($index)">
+                        <span>{{specInfo.gdsSpecDtlNm | characters : 20}}</span>
+                        <span class="float_r mr20">{{specInfo.gdsQty | number}} <img src="common/images/you_btn.png" style="position: absolute;top: 16px;right: 15px;"></span>  
+	                </ion-item>
+	            </ion-list>
+	         </div>
+	     </div>
+	     <ion-infinite-scroll ng-if="moredata.gdsSpecDtl" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+	</ion-content>
+</div>
+<!-- 商品购买者画面 -->
+<div ng-show="pageShow.buyer">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="buyerBackToSubmit()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">商品购买者</h1>
+        <a class="head_right" ng-click="changeDeleteCancel(!buyerDelete)" ng-if="!buyerDelete">
+            <div class="head_right_box">
+                <img src="common/images/sc_btn.png" width="22" height="22">
+                <p>删除</p>
+            </div>
+        </a>
+        <a class="head_right" ng-click="changeDeleteCancel(!buyerDelete)" ng-if="buyerDelete">
+            <div class="head_right_box">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+        </a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+	<!-- baReportEdit.html -->
+        <div class="wrap">
+            <div ng-repeat="buyerInfo in submitInfo.gdsSpecList[gdsSpecIndex].buyerInfoList">
+                <div class="leave100">购买者{{$index + 1}} 
+                    <a ng-if="$index == 0 && !buyerDelete" ng-click="addBuyerInfo()" ng-disabled="buyerDelete">新增</a>
+                    <a class="back_none" ng-if="$index == 0 && buyerDelete" ng-click="addBuyerInfo()" ng-disabled="buyerDelete">新增</a>
+                </div>
+                <div ng-if="buyerDelete">
+	                <div class="tingzhi" style="height:147px">
+	                    <a ng-click="deleteBuyerInfo($index)">
+	                       <img src="common/images/tingzhi.png" width="30" height="30"> 
+	                    </a>
+	                </div>
+	                <ul class="listtwo clearfix">
+	                    <li style="width:93.5%;margin-left:0px">
+	                       <span class="w140" style="margin-left:16px">购买金额</span>
+	                       <span class="float_r gmz_left" style="font-size: 14px;">{{buyerInfo.buyAmt}}</span>
+	                    </li>
+	                    <li style="width:93.5%;margin-left:0px">
+	                       <span class="w140" style="margin-left:16px">购买数量</span>
+	                       <span class="float_r gmz_left" style="font-size: 14px;">{{buyerInfo.buyQty}}</span>
+                        </li>
+	                    <li style="width:93.5%;margin-left:0px">
+                            <span class="w140" style="margin-left:16px">选择会员</span>
+                            <span class="float_r" style="position: absolute;right: 10%;">{{buyerInfo.membNm}}</span>
+                            <span class="float_r" style="position: absolute;right: 4%;margin-top: 3px;">
+                                <img src="common/images/you_btn.png">
+                            </span>
+	                    </li>
+	                </ul>
+                </div>
+                <div ng-if="!buyerDelete">
+                    <ul class="listtwo clearfix" style="width:100%">
+                        <li>
+                            <span class="w140">购买金额</span>
+                            <input type="number" class="float_r" ng-model="buyerInfo.buyAmt" ng-required="true" style="text-align:right;line-height:48px;padding: 0px;margin-right:-1px"
+                                maxlength="13"/>
+                        </li>
+                        <li>
+                            <span class="w140">购买数量</span>
+                            <input type="number" class="float_r" ng-model="buyerInfo.buyQty" ng-required="true" style="text-align:right;line-height:48px;padding: 0px;margin-right:-1px"
+                                maxlength="11"/>
+                        </li>
+                        <li ng-click="gotoMembSelect($index)"><span class="w140">选择会员</span> <span class="float_r" style="position: absolute;right: 10%;">{{buyerInfo.membNm}}</span><span class="float_r" style="position: absolute;right: 4%;margin-top: 3px;"><img src="common/images/you_btn.png"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</div>
+<!-- 会员选择画面 -->
+<div ng-show="pageShow.member">
+    <ion-header-bar align-title="center"  class="header">
+        <a  ng-click="backToBuyer()" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">选择会员</h1>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset" style="border-bottom: solid 1px #e0e0e0;">
+        <div class="item-input-wrapper">
+            <img src="common/images/sousuo.png" width="14px">
+            <input type="search" placeholder="请输入联系电话" ng-click="searchShow()" style="padding-left: 10px;"/>
+        </div>
+    </div>
+    <ion-content class="has-header has-subheader" delegate-handle="contentScrollMemb">
+	<!-- baReportEdit.html -->
+        <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefreshMemb()"></ion-refresher>
+        <div class="wrap">
+            <div class="listvrew clearfix" ng-if="membList.length > 0">
+               <ion-list>
+                   <ion-item  ng-repeat="info in membList" ng-if="$index == 0" style="border-top:0px" ng-click="membSelected(info.membNum, info.membNm, info.phone)">
+                       <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                   </ion-item>
+                   <ion-item  ng-repeat="info in membList" ng-if="$index > 0" ng-click="membSelected(info.membNum, info.membNm, info.phone)">
+                       <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                   </ion-item>
+               </ion-list>
+            </div>
+            <div my-nodata-show="membList.length == 0 && !moredata.memb" class="wushuju">
+                <img src="common/images/bear.gif" >
+                <p>没有符合条件的数据</p>
+            </div>
+         </div>
+         <ion-infinite-scroll ng-if="moredata.memb" on-infinite="loadMoreMemb()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</div>
+<!-- 搜索画面 -->
+<div ng-show="pageShow.search">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="backToMember()" class="angle_left" style="left:15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <div class="item-input-inset" style="left:12%;width:86%;">
+            <div class="item-input-wrapper" style="padding-right: 0px;">
+                <img src="common/images/sousuo.png" width="14px">
+                <input type="search" placeholder="请输入联系电话" ng-model="searchPhone" ng-change="searchMembByPhone(searchPhone)" maxlength="15" style="padding-left: 10px;width:86%"/>
+                <img src="common/images/search_delete.png" ng-show="searchPhone != null && searchPhone != ''" ng-click="deleteSearchPhone()">
+            </div>
+        </div>
+    </ion-header-bar>
+    <ion-content class="has-header" delegate-handle="contentScrollSearch">
+	<!-- baReportEdit.html -->
+	    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefreshSearch()"></ion-refresher>
+        <div class="wrap">
+            <div class="listvrew clearfix" ng-if="searchMembList.length > 0">
+               <ion-list>
+                   <ion-item  ng-repeat="info in searchMembList" ng-click="membSelected(info.membNum, info.membNm, info.phone)">
+                       <span>{{info.membNm}}&nbsp;{{info.phone}}</span>
+                   </ion-item>
+               </ion-list>
+            </div>
+            <div ng-if="searchMembList.length == 0 && !moredata.search" class="wushuju">
+                <img src="common/images/bear.gif" >
+                <p>没有符合条件的数据</p>
+            </div>
+         </div>
+         <ion-infinite-scroll ng-if="moredata.search" on-infinite="loadMoreSearch()" distance="1%"></ion-infinite-scroll>
+    </ion-content>
+</div>

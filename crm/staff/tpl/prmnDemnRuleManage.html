@@ -1,0 +1,29 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">人员升降级规则
+        <a class="btn btn-success btn-addon mr_8" ui-sref="app.staff.prmnDemnRuleInsert" user-power="WSTF01014002"> 新增人员升降级规则</a>
+    </h4>
+</div>
+ <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+ </script>
+<div class="panel-heading" ng-controller="prmnDemnRuleManage">
+<div class="panel-heading">
+    <label class="control-label mt_6">共有<span class="error">{{countNumber}}</span>条数据 </label>
+    <label class="control-label mt_6" ng-if="countNumber==0">（没有符合条件的数据）</label>
+</div>
+    <div ng-table="tableParams">
+        <table class="table table-bordered table-condensed table-striped table-hover">
+           <tr ng-repeat="ruleinfo in rules"    >
+               <td title="'规则名称'" style="text-align: center;width: 350px;word-break: break-all;" >{{ruleinfo.ruleNm}}</td>
+               <td title="'判断根据'" >{{ruleinfo.jgmBas}}</td>
+               <td title="'应用于职位'">{{ruleinfo.posNm}}</td>
+               <td title="'状态'">{{ruleinfo.enableFlg|dicNameFilter:"C013"}}</td>
+               <td title="'操作'" class="mr_22">
+                   <a class="mr_9"  ng-click="ruleUpdate(ruleinfo.oId)" user-power="WSTF01014003"> 编辑</a>
+                   <a class="mr_9" ng-click="ruleDelete(ruleinfo.oId)" user-power="WSTF01014004">删除</a>
+               </td>                                  
+           </tr>     
+        </table>    
+    </div>    
+</div>
+

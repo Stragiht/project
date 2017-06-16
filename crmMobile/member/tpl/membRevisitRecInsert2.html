@@ -1,0 +1,266 @@
+<div ng-show="pageShow.membInsertShow">
+    <ion-header-bar align-title="center" class="header">
+        <a class="header_left" ng-click="goFrontPage()"></a>
+        <h1 style="font-size:1.4rem">新增回访记录
+        </h1>
+        <a href="" class="header_right2" >
+
+            <div class="safe" ng-click="membRevRecInsert2()" user-power="MMEM01003004">
+                保存
+            </div>
+        </a>
+    </ion-header-bar>
+
+
+    <ion-content class="has-header stable phone_delete" overflow-scroll="false" style="bottom: 51px;" >
+        <ion-list >
+            <ion-item class="bottom_line" style="padding: 1px 0 1px 0;border: none;">
+
+                <a class="item touch-item-0-m " ng-click="membSelectShow(false, true)">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line" >
+                            <span class=" float_l"><span style="color:red;" >*</span>选择会员</span>
+                            <div class="go_right_img2"></div>
+
+                            <span style="color:#b1b1b1;float: right"><span ng-bind="insertMembRevRec.membNm"></span></span>
+
+                        </div>
+                    </div>
+                </a>
+
+
+                    <!--<a ui-sref="">-->
+                    <a >
+
+                        <div style="padding: 0 5% 0 0;line-height: 55px;">
+                            <div class="float_l p-Left" style="width: 30%;">回访时间</div>
+                          <!--  <span class="float_r" style="color:#b1b1b1;margin-right: 10px;">2016-3-23</span>-->
+    <!--
+                            <span class="float_r" style="color:#b1b1b1;margin-right: 10px;">2016-3-23</span>
+    -->
+    <!--
+                            <input type="text" style="padding-top:23px;color: #b1b1b1;float: right;text-align: right;padding-right: 10px;" ng-model="memInfo.birtyday" date-format readonly>
+    -->
+                            <div class="float_r" style="padding: 10px 0 0 0;width: 70%;">
+                                <input  type="text" style="width:100%;color: #b1b1b1;background-color:#fff;text-align: right;font-size: 14px;" ng-model="insertMembRevRec.revisitTm" date-format readonly ng-click="openDatePicker($event)">
+                            </div>
+                        </div>
+                    </a>
+
+            </ion-item >
+
+            <ion-item class="item item-divider" style="padding: 0 0 1px 0;border: none;">
+                <div class="bottom_line" style="height: 16px;"></div>
+            </ion-item>
+
+            <ion-item class="bottom_line" style="padding:0 5%;border: none;white-space: inherit;margin-bottom: 15px;">
+
+                <div  style="margin: 20px 0;border: solid 1px #ddd;border-radius: 5px;overflow: hidden;">
+                    <textarea class="stable-bg" rows="7" placeholder="请填写回访内容" style="box-shadow: none; border-style: none; font-size:16px;width:100%;outline:none;resize: none;
+            padding:10px;"  ng-model="insertMembRevRec.revisitCont" id="membRevRecInsert2TextArea"></textarea>
+                </div>
+                <ul style="">
+                    <li class="tjtp_img"  ng-repeat="im in imgss" ng-click="pictureShow(im.img, $index); ">
+                        <img  width="55" height="55" alt="" ng-src="{{im.imgCompress | imgpath}}"/>
+                    </li>
+                    <!--<li class="tjtp_img" style="padding: 8px;background:url(common/images/cv_tj.png)  no-repeat;background-size: cover;" ng-click="addImg()" >-->
+                    <li class="tjtp_img" style="padding: 8px;background:url(common/images/cv_tj.png)  no-repeat;background-size: cover;float: left;" ng-click="addImg()" >
+                        <div style="color: #b1b1b1;white-space:pre-wrap ;width: 39px;float: left;">添加照片</div>
+                    </li>
+
+                    </ul>
+
+            </ion-item>
+
+        </ion-list>
+
+        <div class="p-Left" ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice, voi)">
+
+                <div class="listen" ng-show="!voi.playAudio"><!--ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"-->
+                    <!-- <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />-->
+                    <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />
+                    <div style="color: #ccc;display: inline-block;width:20px;height:35px;line-height:35px;position: absolute;top:0;left: 108%;" ng-bind="voi.dura"></div>
+                </div>
+                <div class="listen" ng-show="voi.playAudio"  ><!--ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"-->
+                    <img ng-src="{{audioImg}}" width="11" style="top:8px;" />
+                    <div style="color: #ccc;display: inline-block;width:20px;height:35px;line-height:35px;position: absolute;top:0;left: 108%;" ng-bind="voi.dura"></div>
+                </div>
+
+        </div>
+
+
+
+        <!--<script type="text/javascript">-->
+            <!--$(function(){-->
+                <!--console.log("nload====");-->
+                <!--var timer;-->
+                <!--var num=0;-->
+
+                <!--function autoPlay(){-->
+                    <!--num++;-->
+                    <!--console.log(num+"===");-->
+
+                    <!--if(num>3){-->
+                        <!--num=0;-->
+                    <!--}-->
+                    <!--//  $('.listen').children('li').eq(num).fadeIn(1000);-->
+                    <!--$('.listen li:eq(num)').fadeIn(1000);-->
+                <!--}-->
+
+                <!--timer = setInterval(autoPlay,10000);-->
+
+                <!--$('.listen').click(function(){-->
+                    <!--alert(1);-->
+                    <!--clearInterval(timer);-->
+                    <!--timer = setInterval(autoPlay,1000);-->
+                <!--})-->
+            <!--})-->
+
+        <!--</script>-->
+    </ion-content>
+
+    <!--底部Tab栏-->
+    <!--<ion-footer-bar style="height: 71px;">
+        <div style="width: 100%;">
+            &lt;!&ndash;键盘&ndash;&gt;
+            <img src="common/images/nb_keyboard.png" width="40" height="40" style="width: 11%;margin: 10px 5px 0 5px;" ng-show="!switchKeyOrAudio" ng-click="swichInp()" ng-touchstart="function()" >
+            <label style="width: 84%;height:40px;border: solid 1px #ddd;border-radius: 5px;display: inline-block;margin-top: -32px;text-align: center; " ng-show="!switchKeyOrAudio" ng-mouseenter="startRecord()"  ng-mouseleave="stopRecord()">
+                <h2 style="line-height:40px;">按住开始语音</h2>&lt;!&ndash;ng-mousedown="startRecord()" ng-mouseup="stopRecord()" &ndash;&gt;
+            </label>
+
+            &lt;!&ndash;语音&ndash;&gt;
+            <img src="common/images/nb_voice.png" width="40" height="40" style="width: 11%;margin: 10px 5px 0 5px;" ng-show="switchKeyOrAudio" ng-click="swichInp()">
+            <label style="width: 84%;height:40px;border: solid 1px #ddd;border-radius: 5px;display: inline-block;margin-top: -32px;padding-left: 10px; " ng-show="switchKeyOrAudio">
+                &lt;!&ndash;<h2 style="line-height:40px;"></h2>&ndash;&gt;
+                <input type="text" style="width: 100%" />
+            </label>
+
+        </div>-->
+
+
+    <!--
+    <ion-footer-bar >
+        <ul class="footer top_line" ng-show="!switchKeyOrAudio" >
+            <li style="width:14%" >
+                <div class="keyboard" ng-click="swichInp()"></div>
+            </li>
+            <li style="width:85%;height:40px;line-height:40px;border: solid 1px #ddd;border-radius: 5px;text-align: center; ">
+                按住开始语音
+            </li>
+        </ul>
+        <ul class="footer top_line" ng-show="switchKeyOrAudio" >
+            <li style="width:15%" >
+                <div class="voice" ng-click="swichInp()"></div>
+            </li>
+            <li style="width:70%;height:40px;line-height:40px;border: solid 1px #ddd;border-radius: 5px;text-align: center;">
+               &lt;!&ndash; <input type="text" style="background: #f8f8f8;width: 100%;word-wrap: break-word; padding: 0 5px;"/>&ndash;&gt;
+                <textarea type="text" style="background: #f8f8f8;width: 100%;word-wrap: break-word; padding: 0 5px;resize:none;outline:none;border:0 none;" rows="4" ng-model="sendContent"></textarea>
+            </li>
+            <li style="width:15%;" >
+                <button class="button button-balanced" ng-click="sendRevContent()">发送</button>
+            </li>
+        </ul>
+    </ion-footer-bar>
+    -->
+
+
+    <ion-footer-bar >
+        <ul class="footer2 top_line">
+            <li style="width:14%" >
+                <div class="voice"></div>
+            </li>
+            <li class="press" on-hold="audioOnTouch()" on-release="audioOnRelease()" id="audioText">
+                按住开始语音
+            </li>
+            <!--<input type="hidden" id="audioPath">-->
+        </ul>
+        <!-- <ul class="footer top_line" ng-show="switchKeyOrAudio" >
+             <li style="width:15%" >
+                 <div class="voice" ng-click="swichInp()"></div>
+             </li>
+             <li style="width:70%;height:40px;line-height:40px;border: solid 1px #ddd;border-radius: 5px;text-align: center;">
+                 &lt;!&ndash; <input type="text" style="background: #f8f8f8;width: 100%;word-wrap: break-word; padding: 0 5px;"/>&ndash;&gt;
+                 <textarea type="text" style="background: #f8f8f8;width: 100%;word-wrap: break-word; padding: 0 5px;resize:none;outline:none;border:0 none;" rows="4" ng-model="sendContent"></textarea>
+             </li>
+             <li style="width:15%;" >
+                 <button class="button button-balanced" ng-click="sendRevContent()">发送</button>
+             </li>
+         </ul>-->
+    </ion-footer-bar>
+
+
+    <div ng-show="pictureShowDiv" class="phone_del" >
+        <img ng-src="{{showImgUrl}}" width="100%" alt=""/>
+        <ul>
+            <li ng-click="delImg(curIdx)"></li>
+            <li ng-click="cancelPicture()"></li>
+        </ul>
+    </div>
+</div>
+
+<div ng-show="pageShow.membSelectShow">
+    <ion-header-bar class="header bar bar-header item-input-inset" >
+
+        <a class="header_left" ng-click="membSelectShow(true, false)" ></a>
+
+        <div class="item-input-wrapper hide-on-keyboard-open" style="background-color:#fff;height: 32px;margin-left: 15%;margin-right: 5%;border-radius: 6px;line-height: 32px;padding: 0;position: relative;">
+            <span class="search_img"></span>
+            <input  type="text" placeholder="请输入联系电话" id="searchbox2" style="background-color:#fff;margin-top: 2px;width: 79%;color: #b1b1b1;" ng-model="MembBas4App.params.phone" ng-change="searchMembByPhone(1, false)">
+           <!-- <span class="delete_img" ng-click="clearInput()" ng-if="clickState"></span>-->
+            <span class="delete_img_2" ng-click="clearInput()" ng-if="clickState"></span>
+        </div>
+    </ion-header-bar>
+
+
+
+    <!--<ion-header-bar class="bar bar-subheader bar-stable item-input-inset " style="padding: 10.66667px;height: 48px;background-color:#fff;background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);" >-->
+    <!--<div class="item-input-wrapper " style="height: 32px;line-height:32px;border-radius: 6px;">-->
+    <!--<div class="search_img" style="position: absolute;left: 50%;margin-left:-86px;top: 50%;margin-top: -16px;"></div>-->
+    <!--<input  type="text" placeholder="请输入联系电话" style="position:relative;text-align: center;left:16px;font-size:16px;margin-top: 5px;width: 100%;" ng-model="MembBas4App.params.phone" ng-change="searchMembByPhone(1)">-->
+    <!--<span class="delete_img" ng-click="clearInput()"></span>-->
+    <!--</div>-->
+    <!--</ion-header-bar>-->
+
+
+    <!--<ion-content class="light-bg">
+        <ion-list>
+            <div class="sousuo_line padding-left">
+                <span>
+                    <h2 style="height:35px;line-height: 35px;margin-bottom: 0;"><span>罗容龙</span>：<span style="color:#b1b1b1;">15920463243</span></h2>
+                </span>
+            </div>
+        </ion-list>
+    </ion-content>-->
+
+    <ion-content class="light-bg Data"  delegate-handle="contentScrollSearch" style="bottom: 0;">
+        <ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefresh()"  refreshing-text="加载中..."></ion-refresher>
+        <div class="wrap data" style="height: 100%;" on-touch="hideKeyboard()">
+            <ion-list class="item touch-item-0-m " ng-repeat="mnp in membNameAndPhoneList" ng-click="selectMemb(mnp)">
+                <div class="bottom_line p-Left">
+                     <span>
+                        <h2 style="line-height: 55px;font-size:16px;margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>
+                     </span>
+                </div>
+            </ion-list>
+            <!--<ion-list>-->
+            <!--<div class="sousuo_line padding-left">-->
+            <!--<span>-->
+            <!--<h2 style="line-height: 35px;margin-bottom: 0;"><span ng-bind="MembBas4App.pageNum"></span>：<span style="line-height: 35px;margin-top2px;color:#b1b1b1;">15920463243</span></h2>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</ion-list>-->
+
+            <div class="no_data" ng-if="dataShow"> <!---->
+                <img src="common/images/bear.gif" width="80">
+                <p>没有符合条件的数据</p>
+            </div>
+
+            <!--<div style="position: absolute;width: 50px;height: 50px;background: #f4ca06;top:50%;left: 50%;"></div>-->
+
+        </div>
+
+        <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="hasNextPage"></ion-infinite-scroll>
+    </ion-content>
+</div>
+
+

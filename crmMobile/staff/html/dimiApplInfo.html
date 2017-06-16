@@ -1,0 +1,117 @@
+<div ng-show="dimiInfoShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ui-sref="dimiAppl" ng-if="frontPage != 'dimiApplApprList'" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<a ui-sref="dimiApplApprList" ng-if="frontPage == 'dimiApplApprList'" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">详情</h1>
+		<a class="head_right2" ng-if="dimiInfo.submitFlag == 1" ng-click="submitDimiAppl()" user-power="MSTF01003003">
+			<div class="head_right_box float_l">
+				<img src="common/images/zhengque.png" width="22" height="22">
+				<p>提交</p>
+			</div>
+			<div class="float_l ml10 color06">|</div>
+		</a>
+		<a class="head_right2" ng-if="dimiInfo.cancelFlag == 1" ng-click="cancelDimiAppl()" user-power="MSTF01003003">
+			<div class="head_right_box float_l">
+				<img src="common/images/xxx.png" width="22" height="22">
+				<p>取消</p>
+			</div>
+			<div class="float_l ml10 color06">|</div>
+		</a>
+		<a class="head_right" ng-if="dimiInfo.editFlag == 1" ui-sref="dimiApplUpdate({dimiApplNum:dimiInfo.dimiApplNum,updtTm:dimiInfo.updtTm})" user-power="MSTF01003003">
+			<div class="head_right_box">
+				<img src="common/images/qianbi.png" width="22" height="22">
+				<p>编辑</p>
+			</div>
+		</a>
+		<a class="head_right" ng-if="dimiInfo.apprFlag == 1" ng-click="apprOpen()" user-power="MSTF01003004">
+			<div class="head_right_box">
+				<img src="common/images/zhan.png" width="22" height="22">
+				<p>审批</p>
+			</div>
+		</a>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- dimiApplInfo.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix mb_15">
+				<li>
+					<span class="w140">申请编号</span>
+					<span class="f_10" style="color:#b1b1b1;">{{dimiInfo.dimiApplNum}}</span></li>
+				<li>
+					<span class="w140">提交人</span>
+					<span class="f_10" style="color:#b1b1b1;">{{dimiInfo.applSbmtNm}}</span>
+					<span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 1.5rem;" ng-click="callPhone()"></span>
+				</li>
+				<li><span class="w140">提交时间</span><span class="f_10" style="color:#b1b1b1;">{{dimiInfo.sbmtTmDis}}</span></li>
+				<li><span class="w140">审批状态</span><span class="color05 f_10">{{dimiInfo.apprStat}}</span></li>
+			</ul>
+			<div class="index_work_bt"></div>
+			<ul class="listvrew clearfix mb_15">
+				<li ng-repeat="leaver in leaverList">
+					<span class="w140">离职人{{$index + 1}}</span><span class="f_10" style="color:#b1b1b1;">{{leaver}}</span>
+				</li>
+			</ul>
+			<div class="index_work_bt"></div>
+			<ul class="listvrew clearfix">
+				<li><span class="w140">离职原因</span><span class="f_10" style="color:#b1b1b1;">{{dimiInfo.dimiReasonCate}}</span></li>
+				<li><span class="w140">离职时间</span><span class="f_10" style="color:#b1b1b1;">{{dimiInfo.dimiDt}}</span></li>
+				<li><span class="w140">离职描述</span><span class="f_10" style="color:#b1b1b1;width: 55%;float: left;line-height: 20px;margin-top: 15px;margin-bottom: 15px;">{{dimiInfo.dimiDesc}}</span></li>
+			</ul>
+			<div class="index_work_bt" ng-if="status.apprHisDisplay">审批历史</div>
+			<div class="shls clearfix" ng-if="status.apprHisDisplay">
+				<div class="shls_wen">
+					<div ng-repeat="apprHisInfo in approvalList">
+						<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</div>
+
+<!-- 审批 -->
+<div ng-if="apprShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">审批</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- dimiApplInfo.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix mb_15">
+				<li style="padding: 7px;width: 100%;margin:0;">
+					<textarea placeholder="请输入审批意见" style="width: 100%;" rows="12"
+						ng-model="dimiInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center">
+		<div class="xiaoxi_quanxuan2">
+			<a class="btn_repoit1 mt_10 ml10" style="margin-bottom: 10px;width: 44%;" ng-click="apprDimiAppl(0)" user-power="MSTF01003004">不通过</a>
+			<a class="btn_repoit2 mt_10 mr10" style="margin-bottom: 10px;width: 44%;" ng-click="apprDimiAppl(1)" user-power="MSTF01003004">通过</a>
+		</div>
+	</ion-footer-bar>
+</div>

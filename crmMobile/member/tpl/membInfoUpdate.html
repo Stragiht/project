@@ -1,0 +1,949 @@
+<div ng-show="pageShow.membInfoUpdShow">
+    <ion-header-bar align-title="center"  class="header">
+        <a class="header_left" ng-click="goFrontPageEdit();">
+        </a>
+            <h1 style="font-size:1.4rem">编辑</h1>
+            <a  class="header_right2">
+                <div  class="safe"  ng-click="saveMembInfoUpdate(memInfo)" user-power="MMEM01001002">保存</div>
+            </a>
+    </ion-header-bar>
+
+    <ion-content  class="has-header stable" >
+        <ion-list>
+            <ion-item  style="padding:0;border: none;">
+                <div class="p-Left" >
+                    <div class="memInfoItem_line row" style="padding: 0;">
+                        <div class="col-25" style="padding: 0;width: 25%;"><span style="color:red;" >*</span>会员姓名</div>
+                        <div class="col-75" style="padding: 10px 0 0 0;width: 75%;">
+                            <input type="text" style="width:100%;color: #b1b1b1;text-align: right;padding:0 7% 0 0;" ng-model="memInfo.membNm" maxlength="10"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-Left" >
+                    <div class="memInfoItem_line row" style="padding: 0;">
+                        <div class="col-25" style="padding: 0;width: 25%;"><span style="color:red;" >*</span>联系电话</div>
+                        <div class="col-75" style="padding: 10px 0 0 0;width: 75%;">
+                            <input type="text" style="width:100%;color: #b1b1b1;text-align: right;padding:0 7% 0 0;" ng-model="memInfo.phone" maxlength="11" />
+                        </div>
+                    </div>
+                </div>
+                <div class="p-Left " >
+                    <div class="memInfoItem_line row" style="padding: 0;">
+                        <div class="col-25" style="padding: 0;width: 25%;">&nbsp; 微信账号</div>
+                        <div class="col-75" style="padding: 10px 0 0 0;width: 75%;">
+                            <input type="text" style="width:100%;color: #b1b1b1;text-align: right;padding:0 7% 0 0;" ng-model="memInfo.bindWctAcct">
+                        </div>
+                    </div>
+                </div>
+
+                <a class="item touch-item-1-m"  ng-click="singlePageShow(false, true, false, false, false, false, false, false)">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line">
+                            <span class=" float_l"><span style="color:red;" >*</span>来源渠道</span>
+                            <div class="go_right_img2"></div>
+                            <span class=" memInfoItem1 float_r" ng-bind="memInfo.provChnl | chnlInfoFilter"></span>
+                        </div>
+                    </div>
+                </a>
+
+                <div ng-click="openDatePicker(1, $event)">
+                    <div class="memInfoItem_line row" style="padding: 0;"><!--datepicker-popup="yyyy-MM-dd"-->
+                        <div class="col-30" style="padding:0 0 0 5%;width: 30%;"><span style="color:red;" >*</span>加入时间</div>
+    <!--
+                        <input type="date"  style="padding-top:23px;color: #b1b1b1;float: right;text-align: right;padding-right: 10px;" ng-model="memInfo.registTm" date-format ng-hide="true">
+        -->             <div class="col-70" style="padding: 10px 0 0 0;width: 70%;">
+                            <input type="text"  style="width:100%;color: #b1b1b1;background-color:#fff;text-align: right;padding-right: 7%;" ng-model="memInfo.registTm" date-format readonly>
+                            <!--<input type="text" style="padding-top:23px;color: #b1b1b1;float: right;text-align: right;padding-right: 10px;" ng-model="memInfo.registTm | date:'yyyy-MM-dd'">-->
+                        </div>
+                    </div>
+                </div>
+            </ion-item >
+
+            <ion-item class="item item-divider" style="border: none;" >
+            </ion-item>
+
+            <ion-item style="padding:0;border: none;"  >
+
+                <a class="item touch-item-1-m top_line" ng-click="singlePageShow(false, false, true, false, false, false, false, false)">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line">
+                            <span class=" float_l"><span style="color:red;" >*</span>性别</span>
+                            <div class="go_right_img2"></div>
+                            <span class=" memInfoItem1 float_r" ng-bind="memInfo.sex | dicNameFilter:'C003'"></span>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="p-Left" >
+
+                    <div class="memInfoItem_line row" style="padding: 0;" ng-click="openDatePicker(2, $event)">
+                        <div class="col-25" style="padding: 0;width: 25%;">出生日期</div>
+                        <div class="col-75" style="padding: 10px 0 0 0;width: 75%;">
+                            <input type="text" style="width:100%;color: #b1b1b1;background-color:#fff;text-align: right;padding-right: 7%;" ng-model="memInfo.birtyday" date-format readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-Left" >
+
+                    <div class="memInfoItem_line row" style="padding: 0;">
+                        <div class="col-25" style="padding: 0;width: 25%;">电子邮件</div>
+                        <div class="col-75" style="padding: 10px 0 0 0;width: 75%;">
+                            <input type="text" style="width:100%;color: #b1b1b1;text-align: right;padding-right: 7%;" ng-model="memInfo.email">
+                        </div>
+                    </div>
+                </div>
+                <a class="item touch-item-0-m" ng-click="areaSingle()">
+                    <div class="memInfoItem_line">
+                        <span class=" float_l p-Left"><span style="color:red;" >*</span>所在地区</span>
+                        <div class="go_right_img2"></div>
+<!--
+                        <span class=" memInfoItem float_r"><span ng-bind="memInfo.locProv | addressFilter"></span><span ng-bind="memInfo.locCity | addressFilter"></span><span>...</span></span>
+-->
+                        <span class=" memInfoItem float_r"><span ng-bind="localArea | textAbbr:6"></span></span>
+                    </div>
+                </a>
+            </ion-item>
+
+            <ion-item class="item item-divider" style="border: none;">
+            </ion-item>
+
+
+            <!--<ion-item  style="padding: 0 0 1px 0;border: none;" >
+                <div class="padding-left memInfoItem_line5" >
+                    <a ui-sref="membSkinTypeUpdate({memIndex:curMemIndex})">
+                        <div class="memInfoItem_line">
+                            <span class="w140 float_l">肌肤类型</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="padding-left" >
+                    <a ui-sref="membSkinStatusUpdate({memIndex:curMemIndex})">
+                        <div class="memInfoItem_line">
+                            <span class="w140 float_l">肌肤现状</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="padding-left" >
+                    <a ui-sref="membSkincareProdPrefUpdate({memIndex:curMemIndex})">
+                        <div class="memInfoItem_line">
+                            <span class="w140 float_l">护肤品喜好</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </div>
+
+                <div  style="line-height: 45px;" >
+                    <a ui-sref="membSkincareDmndUpdate({memIndex:curMemIndex})">
+                        <div class="memInfoItem_line4">
+                            <span class="w140 float_l padding-left">肌肤护理需求</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </div>
+            </ion-item >-->
+
+            <ion-item class="item_padding" style="padding: 0;border: none;"  >
+
+
+                <a class="item touch-item-0-m top_line" ng-click="singlePageShow(false, false, false, false, true, false, false, false)">
+                    <div class="p-Left">
+                        <div class="memInfoItem_line">
+                            <span class=" float_l">肌肤类型</span>
+                            <div class="go_right_img2"></div>
+                            <span class=" memInfoItem1 float_r" ng-bind="memInfo.membSkinCareNeed.C025 | dicNameFilter:'C025'"></span>
+                        </div>
+                    </div>
+                </a>
+
+                <!--<div class="padding-left memInfoItem_line5" >
+                    <div class="memInfoItem_line">
+                        <span class="w140 float_l">肌肤类型</span>
+                        &lt;!&ndash;<span class=" memInfoItem2 float_r">混合型偏油</span>&ndash;&gt;
+                        <span class=" memInfoItem2 float_r" ng-bind="memInfo.membSkinCareNeed.C025 | dicNameFilter:'C025'"></span>
+                    </div>
+                </div>-->
+
+                <a class="item touch-item-0-m" ng-click="skinStatusSingle()" ng-if="memInfo.membSkinCareNeed.C026[0] != undefined && memInfo.membSkinCareNeed.C026[0] != null && memInfo.membSkinCareNeed.C026[0] != '' && memInfo.membSkinCareNeed.C026.length > 1">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line">
+                            <span class=" float_l">肌肤现状</span>
+                            <div class="go_right_img2"></div>
+                            <!--<span class=" memInfoItem float_r">痘痘...</span>-->
+                            <span class=" memInfoItem float_r"><span ng-bind="memInfo.membSkinCareNeed.C026[0] | dicNameFilter:'C026'"></span><span>...</span></span>
+
+                        </div>
+                    </div>
+                </a>
+
+                <a class="item touch-item-0-m" ng-click="skinStatusSingle()" ng-if="memInfo.membSkinCareNeed.C026[0] == undefined || memInfo.membSkinCareNeed.C026[0] == null || memInfo.membSkinCareNeed.C026[0] == '' || memInfo.membSkinCareNeed.C026.length == 1">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line">
+                            <span class=" float_l">肌肤现状</span>
+                            <div class="go_right_img2"></div>
+                            <!--<span class=" memInfoItem float_r">痘痘...</span>-->
+                            <span class=" memInfoItem1 float_r" ><span ng-bind="memInfo.membSkinCareNeed.C026[0] | dicNameFilter:'C026'"></span></span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+
+                <a class="item touch-item-0-m" ng-click="skinCareSingle()" ng-if="memInfo.membSkinCareNeed.C027[0] != '' && memInfo.membSkinCareNeed.C027[0] != null && memInfo.membSkinCareNeed.C027[0] != undefined && memInfo.membSkinCareNeed.C027.length > 1">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line">
+                            <span class=" float_l">护肤品喜好</span>
+                            <div class="go_right_img2"></div>
+                            <!--<span class=" memInfoItem float_r">补水...</span>-->
+                            <span class=" memInfoItem float_r" ><span ng-bind="memInfo.membSkinCareNeed.C027[0] | dicNameFilter:'C027'"></span><span>...</span></span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="item touch-item-0-m" ng-click="skinCareSingle()" ng-if="memInfo.membSkinCareNeed.C027[0] == undefined || memInfo.membSkinCareNeed.C027[0] == null || memInfo.membSkinCareNeed.C027[0] == '' || memInfo.membSkinCareNeed.C027.length == 1">
+                    <div class="p-Left" >
+                        <div class="memInfoItem_line">
+                            <span class=" float_l">护肤品喜好</span>
+                            <div class="go_right_img2"></div>
+                            <!--<span class=" memInfoItem float_r">补水...</span>-->
+                            <span class=" memInfoItem1 float_r" ><span ng-bind="memInfo.membSkinCareNeed.C027[0] | dicNameFilter:'C027'"></span></span>
+                        </div>
+                    </div>
+                </a>
+
+
+
+                <a class="item touch-item-0-m" ng-click="skinCareDmndSingle()"  ng-if="memInfo.membSkinCareNeed.C028[0] != '' && memInfo.membSkinCareNeed.C028[0] != null && memInfo.membSkinCareNeed.C028[0] != undefined && memInfo.membSkinCareNeed.C028.length > 1">
+                    <div class="memInfoItem_line">
+                        <span class=" float_l p-Left">肌肤护理需求</span>
+                        <div class="go_right_img2"></div>
+                        <!--<span class=" memInfoItem float_r">精华乳...</span>-->
+                        <span class=" memInfoItem float_r"><span ng-bind="memInfo.membSkinCareNeed.C028[0] | dicNameFilter:'C028'" ></span><span>...</span></span>
+                    </div>
+                </a>
+
+                <a class="item touch-item-0-m" ng-click="skinCareDmndSingle()" ng-if="memInfo.membSkinCareNeed.C028[0] == undefined || memInfo.membSkinCareNeed.C028[0] == null || memInfo.membSkinCareNeed.C028[0] == '' || memInfo.membSkinCareNeed.C028.length == 1">
+                    <div class="memInfoItem_line">
+                        <span class=" float_l p-Left">肌肤护理需求</span>
+                        <div class="go_right_img2"></div>
+                        <!--<span class=" memInfoItem float_r">精华乳...</span>-->
+                        <span class="memInfoItem float_r"><span ng-bind="memInfo.membSkinCareNeed.C028[0] | dicNameFilter:'C028'" ></span></span>
+                    </div>
+                </a>
+
+
+            </ion-item >
+
+
+            <ion-item class="item item-divider bottom_line" style="padding: 0 0 1px 0;">
+                <div class="bottom_line" style="height: 16px;"></div>
+            </ion-item>
+
+            <ion-item class="item"  style="padding:5% ;border: none;background: #fff;">
+                <!--<textarea placeholder="备注" rows="3" maxlength="1000" style="height: 150px;width:100%;outline:none;border: 0;-->
+                       <!--border: solid 1px #ddd;border-style:hidden;padding-left: 10px;padding-top: 10px;" ng-model="memInfo.remark"></textarea>-->
+                <textarea style="font-size: 16px;" placeholder="备注" class="stable-bg memb_text" rows="5" maxlength="1000" ng-model="memInfo.remark"></textarea>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+
+</div>
+
+<!--来源渠道-->
+<div ng-show="pageShow.chnlShow">
+    <ion-header-bar align-title="center"  class="header">
+        <div ng-click="singlePageShow(true, false, false, false, false, false, false, false)"><a class="header_left"  ></a></div>
+        <h1 style="font-size:1.4rem">来源渠道 </h1>
+    </ion-header-bar>
+    <ion-content  class="has-header memb_radio radio_line"  overflow-scroll="false" >
+        <!--<ion-radio  ng-model="choice1" value="A" style="height: 55px;font-size:14px;" >gsd</ion-radio>
+        <ion-radio  ng-model="choice2" value="A" style="height: 55px;font-size:14px;">C/S</ion-radio>
+        <ion-radio  ng-model="choice3" value="A" style="height: 55px;font-size:14px;">eysty</ion-radio>-->
+
+
+        <!--<ion-radio ng-repeat="item in serverSideList"
+                   ng-value="item.value"
+                   ng-model="data.serverSide"
+                   ng-change="serverSideChange(item)"
+                   name="server-side">-->
+        <!--<ion-radio ng-repeat="chan in allChannel" style="height: 56px;"
+                   ng-value="chan.key"
+                   ng-model="memInfo.provChnl" ng-click="chnlSelect(chan.key)">
+            <span ng-bind="chan.text"></span>
+        </ion-radio>-->
+
+        <ion-list>
+            <ion-radio name="chan" ng-repeat="chan in allChannel" style="height: 56px;" ng-value="chan.key" ng-model="memInfo.provChnl" ng-click="chnlSelect(chan.key)"><span ng-bind="chan.text"></span></ion-radio>
+        </ion-list>
+    </ion-content>
+</div>
+
+<!--性别-->
+<div ng-show="pageShow.sexShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div  ng-click="singlePageShow(true, false, false, false, false, false, false, false)">
+            <a class="header_left"   ></a>
+        </div>
+        <h1 style="font-size:1.4rem">性别</h1>
+    </ion-header-bar>
+    <ion-content  class="has-header memb_radio radio_line" overflow-scroll="false">
+        <!--<ion-radio  ng-model="choice1" value="A" style="height: 55px;font-size:14px;" >女</ion-radio>
+        <ion-radio  ng-model="choice2" value="A" style="height: 55px;font-size:14px;">男</ion-radio>-->
+       <!-- <ul>
+            <li><ion-radio ng-repeat="sex in sexList" style="height: 55px;"
+                       ng-value="sex.value"
+                       ng-model="memInfo.sex" ng-click="sexSelect(sex.value)">
+                <span ng-bind="sex.text"></span>
+            </ion-radio></li>
+        </ul>-->
+
+        <ion-list>
+            <ion-radio name="sex" ng-repeat="sex in sexList" ng-value="sex.value" ng-model="memInfo.sex" ng-click="sexSelect(sex.value)"><span ng-bind="sex.text"></span></ion-radio>
+        </ion-list>
+
+    </ion-content>
+
+</div>
+
+<!--所在地区-->
+<div ng-show="pageShow.areaShow">
+    <div ng-show="proCityPreShow.localAreaShow">
+        <ion-header-bar align-title="center"  class="header">
+            <div ng-click="goFrontPage()"><a class="header_left"  ></a></div>
+            <h1 style="font-size:1.4rem">所在地区</h1>
+        </ion-header-bar>
+
+        <ion-content  class="has-header mem" overflow-scroll="false" >
+            <!--<ionic-city-picker options='vm.CityPickData2'></ionic-city-picker>-->
+
+            <ion-list>
+                <!-- <ion-item class="item item-divider divider_line" style="height: 34px;line-height: 1px;color: #ddd;" ng-click="locationBegin()">-->
+                <!-- <ion-item class="item item-divider divider_line" style="height: 34px;line-height: 1px;color: #ddd;" ng-click="getCityCode()">-->
+                <ion-item class="item item-divider divider_line" style="height: 34px;line-height: 1px;color: #b1b1b1;" ng-click="locationBegin()">
+                    <span>定位到的位置</span>
+                </ion-item>
+                <!--<ion-item class="item-divider" style="height: 34px;line-height: 34px;"  >-->
+                <!--<span style="color: #ddd;">定位到的位置</span>-->
+                <!--</ion-item>-->
+                <ion-item class="view_line" ng-click="addAddress()" style="padding: 0;">
+                    <!-- <ion-item class="view_line" ng-click="consolePCP()">-->
+                   <!-- <span class="w140">广东 广州 天河区</span>-->
+                    <span class="p-Left" ng-bind="locationAddr"></span>
+                </ion-item>
+
+                <ion-item class="item item-divider divider_line" style="padding: 0;height: 16px !important;" >
+                </ion-item>
+                <ion-item class="view_line"  ng-click="searchPrev('provShow')" style="padding: 0;" >
+                    <a>
+                        <div  class="p-Left">
+                            <span class="w140 float_l">省、市、区</span>
+                            <div class="go_right_img2"></div>
+                            <span class="memInfoItem float_r" ng-bind="curAddress | textAbbr:11"></span>
+                            <span class="memInfoItem float_r"></span>
+                        </div>
+
+                    </a>
+                </ion-item >
+
+                <ion-item class="textarea_line" style="padding: 0 0 1px 0;">
+                    <textarea placeholder="详细地址"   ng-model="memInfo.addrDtl" rows="6"
+                      style="width:100%;outline:none;resize:none;
+	                    border-style:hidden;padding-left: 5%;padding-top: 10px;font-size:16px;;"></textarea>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </div>
+
+
+    <!--选择省份-->
+    <div ng-show="proCityPreShow.provShow">
+        <ion-header-bar align-title="center"  class="header">
+            <div ng-click="changeAreaShow('localAreaShow')">
+                <a class="header_left"   ></a>
+            </div>
+            <h1 style="font-size:1.4rem">选择省份</h1>
+        </ion-header-bar>
+
+        <ion-content  class="has-header" overflow-scroll="false" >
+            <ion-list>
+                <div ng-repeat="prov in findPrev">
+                    <ion-item class="item item-divider divider_line" ng-if="prov.rgnNum == '999999'">
+                        <span style="color: #ddd;" ng-bind="prov.rgnNmPinyinFirstChar"></span>
+                    </ion-item>
+
+                    <ion-item class="view_line" style="padding: 0 0 1px 0;border: none;" ng-if="prov.rgnNum != '999999'" ng-click="">
+                        <a class="item touch-item-0-m" ng-click="searchCity('cityShow', prov.rgnNm, prov.rgnNum)" ng-if="prov.rgnNm">
+                            <div class="memInfoItem_line p-Left">
+                                <span class="w140 float_l" ng-bind="prov.rgnNm"></span>
+                                <div class="go_right_img2"></div>
+                                <span class="memInfoItem float_r" ng-if="selectPrev == prov.rgnNm">已选地区</span>
+                            </div>
+                        </a>
+
+                        <!-- <a ng-click="searchPref('prefShow', city.rgnNm, city.rgnNum)" ng-if="prov.rgnNm">
+                             <div class="padding-left">
+                                 <span class=" float_l" ng-bind="prov.rgnNm"></span>
+                                 <div class="go_right_img2"></div>
+                                 <span class="memInfoItem float_r" ng-if="selectCtiy == prov.rgnNm">已选地区</span>
+                             </div>
+                         </a>-->
+                        <!--<a ui-sref="" >
+                            <div class="memInfoItem_line padding-left">
+                                <span class="w140 float_l">安庆省</span>
+                                <div class="go_right_img2"></div>
+                            </div>
+                        </a>-->
+                    </ion-item >
+                </div>
+                <!--<div>
+                    <ion-item class="item item-divider bottom_line">
+                        <span style="color: #ddd;">A</span>
+                    </ion-item>
+
+                    <ion-item style="padding: 0 0 1px 0;border: none;">
+                        <a ui-sref="" >
+                            <div class="memInfoItem_line padding-left">
+                                <span class="w140 float_l">安徽省</span>
+                                <div class="go_right_img2"></div>
+                                <span class="memInfoItem float_r">已选地区</span>
+                            </div>
+                        </a>
+                        <a ui-sref="" >
+                            <div class="memInfoItem_line padding-left">
+                                <span class="w140 float_l">安庆省</span>
+                                <div class="go_right_img2"></div>
+                            </div>
+                        </a>
+                    </ion-item >
+                </div>
+                <div>
+                    <ion-item class="item item-divider bottom_line">
+                        <span style="color: #ddd;">A</span>
+                    </ion-item>
+
+                    <ion-item style="padding: 0 0 1px 0;border: none;">
+                        <a ui-sref="" >
+                            <div class="memInfoItem_line padding-left">
+                                <span class="w140 float_l">安徽省</span>
+                                <div class="go_right_img2"></div>
+                                <span class="memInfoItem float_r">已选地区</span>
+                            </div>
+                        </a>
+                        <a ui-sref="" >
+                            <div class="memInfoItem_line padding-left">
+                                <span class="w140 float_l">安庆省</span>
+                                <div class="go_right_img2"></div>
+                            </div>
+                        </a>
+                    </ion-item >
+                </div>
+
+                <div>
+                    <ion-item class="item item-divider divider_line" >
+                        <span style="color: #ddd;">B</span>
+                    </ion-item>
+
+                    <ion-item style="padding: 0 0 1px 0;border: none;">
+                        <a ui-sref="" >
+                            <div class="memInfoItem_line padding-left">
+                                <span class="w140 float_l">北京市</span>
+                                <div class="go_right_img2"></div>
+                            </div>
+                        </a>
+                    </ion-item >
+                </div>-->
+
+
+                <!--<ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >
+                <ion-item class="item item-divider divider_line" >
+                    <span style="color: #ddd;">B</span>
+                </ion-item>
+
+                <ion-item style="padding: 0 0 1px 0;border: none;">
+                    <a ui-sref="" >
+                        <div class="memInfoItem_line padding-left">
+                            <span class="w140 float_l">北京市</span>
+                            <div class="go_right_img2"></div>
+                        </div>
+                    </a>
+                </ion-item >-->
+
+            </ion-list>
+        </ion-content>
+    </div>
+
+    <!--选择城市-->
+    <div ng-show="proCityPreShow.cityShow">
+        <ion-header-bar align-title="center"  class="header">
+            <div ng-click="changeAreaShow('provShow')">
+                <a class="header_left"   ></a>
+            </div>
+            <h1 style="font-size:1.4rem">选择城市</h1>
+        </ion-header-bar>
+
+        <ion-content  class="has-header" overflow-scroll="false" >
+            <ion-list>
+                <!--<ion-item class="memInfoItem_line " style="padding: 0 0 1px 0;border: none;" ng-repeat="city in findCity">
+                    <a ng-click="searchPref('prefShow', city.rgnNm, city.rgnNum)" >
+
+                        <div class="p-Left">
+                            <span class=" float_l" ng-bind="city.rgnNm"></span>
+                            <div class="go_right_img2"></div>
+                            &lt;!&ndash; <span class="memInfoItem float_r">已选地区</span>&ndash;&gt;
+                            <span class="memInfoItem float_r" ng-if="selectCtiy == city.rgnNm">已选地区</span>
+                        </div>-->
+
+
+                    <ion-item style="padding:0;border: none;" ng-repeat="city in findCity">
+                        <a class="item touch-item-1-m" ng-click="searchPref('prefShow', city.rgnNm, city.rgnNum)" ng-if="$index < findCity.length-1">
+                            <div class="memInfoItem_line p-Left">
+                                <span class="w140 float_l" ng-bind="city.rgnNm"></span>
+                                <div class="go_right_img2"></div>
+                                <!-- <span class="memInfoItem float_r">已选地区</span>-->
+                                <span class="memInfoItem float_r" ng-if="selectCtiy == city.rgnNm">已选地区</span>
+                            </div>
+                        </a>
+                        <a class="item touch-item-0-m" ng-click="searchPref('prefShow', city.rgnNm, city.rgnNum)" ng-if="$index == findCity.length-1">
+                            <div class="memInfoItem_line p-Left">
+                                <span class="w140 float_l" ng-bind="city.rgnNm"></span>
+                                <div class="go_right_img2"></div>
+                                <!-- <span class="memInfoItem float_r">已选地区</span>-->
+                                <span class="memInfoItem float_r" ng-if="selectCtiy == city.rgnNm">已选地区</span>
+                            </div>
+                        </a>
+                    </ion-item >
+
+            </ion-list>
+        </ion-content>
+    </div>
+
+
+    <!--选择区域-->
+    <div ng-show="proCityPreShow.prefShow">
+        <ion-header-bar align-title="center"  class="header">
+            <div ng-click="changeAreaShow('cityShow')">
+                <a class="header_left"   ></a>
+            </div>
+            <h1 style="font-size:1.4rem">选择区域</h1>
+        </ion-header-bar>
+
+        <ion-content  class="has-header" overflow-scroll="false" >
+            <ion-list>
+                <!--<ion-item class="memInfoItem_line" style="padding: 0 0 1px 0;border: none;" ng-repeat="pref in findPref">
+                    <a ng-click="selectPref('localAreaShow', pref.rgnNm, pref.rgnNum)" >
+
+                        <div class="p-Left">
+
+                            <span class=" float_l" ng-bind="pref.rgnNm"></span>
+                            <span class="memInfoItem float_r" ng-if="selectPref == pref.rgnNm">已选地区</span>
+                            &lt;!&ndash;<span class="memInfoItem float_r">已选地区</span>&ndash;&gt;
+                        </div>
+                    </a>-->
+
+                <ion-item style="padding:0;border: none;" ng-repeat="pref in findPref">
+                    <a class="item touch-item-1-m" ng-click="selectPrefFun('localAreaShow', pref.rgnNm, pref.rgnNum)" ng-if="$index < findPref.length-1">
+                        <div class="memInfoItem_line p-Left  p-Right">
+                            <span class="w140 float_l" ng-bind="pref.rgnNm"></span>
+                            <span class="memInfoItem float_r" ng-if="selectPref == pref.rgnNm">已选地区</span>
+                        </div>
+                    </a>
+                    <a class="item touch-item-0-m" ng-click="selectPrefFun('localAreaShow', pref.rgnNm, pref.rgnNum)" ng-if="$index == findPref.length-1">
+                        <div class="memInfoItem_line p-Left  p-Right">
+                            <span class="w140 float_l" ng-bind="pref.rgnNm"></span>
+                            <span class="memInfoItem float_r" ng-if="selectPref == pref.rgnNm">已选地区</span>
+                        </div>
+                    </a>
+                </ion-item >
+
+
+
+
+            </ion-list>
+        </ion-content>
+    </div>
+
+
+</div>
+
+<!--肌肤类型-->
+<div ng-show="pageShow.skinTypeShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div  ng-click="singlePageShow(true, false, false, false, false, false, false, false)" >
+            <a class="header_left"  ></a>
+        </div>
+        <h1 style="font-size:1.4rem">肌肤类型</h1>
+    </ion-header-bar>
+    <ion-content  class="has-header memb_radio radio_line" overflow-scroll="false">
+        <ul  class="list">
+            <!--<li><ion-radio  ng-model="choice1" value="A" style="height: 55px;font-size:14px;" >干性</ion-radio></li>
+            <li><ion-radio  ng-model="choice2" value="A" style="height: 55px;font-size:14px;">中性</ion-radio></li>
+            <li><ion-radio  ng-model="choice3" value="A" style="height: 55px;font-size:14px;">油性</ion-radio></li>
+            <li><ion-radio  ng-model="choice4" value="A" style="height: 55px;font-size:14px;">混合性偏油</ion-radio></li>
+            <li><ion-radio  ng-model="choice5" value="A" style="height: 55px;font-size:14px;">混合性偏干</ion-radio></li>
+            <li><ion-radio  ng-model="choice6" value="A" style="height: 55px;font-size:14px;">敏感性肌肤</ion-radio></li>-->
+            <!--<ion-radio ng-repeat="skin in skinTypes" style="height: 55px;"
+                           ng-value="skin.key"
+                           ng-model="memInfo.membSkinCareNeed.C025" ng-click="skinTypeSelect(skin.key)">
+                <span ng-bind="skin.text"></span>
+            </ion-radio>-->
+            <ion-list>
+                <ion-radio name="skin" ng-repeat="skin in skinTypes" style="height: 56px;" ng-value="skin.key" ng-model="memInfo.membSkinCareNeed.C025" ng-click="skinTypeSelect(skin.key)"><span ng-bind="skin.text"></span></ion-radio>
+            </ion-list>
+        </ul>
+    </ion-content>
+
+</div>
+
+<!--肌肤现状-->
+<div ng-show="pageShow.skinStatusShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div   ng-click="skinStatusSelect()">
+            <a class="header_left"  ></a>
+        </div>
+        <h1 style="font-size:1.4rem">肌肤现状</h1>
+    </ion-header-bar>
+    <!--<ion-content class="has-header">-->
+    <!--<ion-checkbox  ng-model="b" ng-value="B" style="height: 55px;font-size:14px;">-->
+    <!--<span>痘印</span>-->
+    <!--<p></p>-->
+    <!--</ion-checkbox>-->
+    <!--<ion-checkbox  ng-model="b" ng-value="B" style="height: 55px;font-size:14px;">痘印</ion-checkbox>-->
+    <!--</ion-content>-->
+    <ion-content class="scroll-content has-header memb_checkbox" overflow-scroll="false">
+        <ul class="list">
+            <!--<ion-item class="item item-divider divider_line" style="border: none;">-->
+            <!--<span style="color: #ddd;">可选择多个选项</span>-->
+            <!--</ion-item>-->
+            <div class="tishi" ng-show="skinStausInfoShow">
+                <div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个选项</div>
+            </div>
+            <!--<li class="item item-checkbox"  style="height: 55px;">
+                <label class="checkbox" style="
+        margin-top: -18px;">
+                    <input type="checkbox" ng-model="isChecked1" checked>
+                </label>
+                <h2>痘痘</h2>
+            </li>
+            <li class="item item-checkbox  item-button-right" style="height: 55px;">
+                <label class="checkbox"  style="
+        margin-top: -18px;">
+                    <input type="checkbox" ng-model="isChecked2" checked>
+                </label>
+                <h2>痘印</h2>
+            </li>-->
+            <ion-checkbox class="checkbox_line" ng-repeat="skinProb in skinProbs" ng-scroll
+                          ng-model="skinProb.checked"
+                          ng-checked="skinProb.checked"
+
+                    >
+                {{ skinProb.text }}
+            </ion-checkbox>
+
+        </ul>
+    </ion-content>
+
+</div>
+
+<!--护肤品喜好-->
+<div ng-show="pageShow.skinCareShow">
+
+    <ion-header-bar align-title="center"  class="header">
+        <div>
+            <a class="header_left"  ng-click="skinCareSelect()"></a>
+        </div>
+        <h1 style="font-size:1.4rem">护肤品喜好</h1>
+    </ion-header-bar>
+    <ion-content class="scroll-content has-header memb_checkbox" overflow-scroll="false">
+        <ul class="list">
+            <!--<ion-item class="item item-divider divider_line"style="border: none;">-->
+            <!--<span style="color: #ddd;">可选择多个选项</span>-->
+            <!--</ion-item>-->
+            <div class="tishi" ng-show="skinCareInfoShow">
+                <div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个选项</div>
+            </div>
+            <!--<li class="item item-checkbox"  style="height: 55px;">-->
+            <!--<label class="checkbox" style="-->
+            <!--margin-top: -18px;">-->
+            <!--<input type="checkbox" ng-model="isChecked1" checked>-->
+            <!--</label>-->
+            <!--<h2>补水</h2>-->
+            <!--</li>-->
+            <!--<li class="item item-checkbox  item-button-right" style="height: 55px;">-->
+            <!--<label class="checkbox"  style="-->
+            <!--margin-top: -18px;">-->
+            <!--<input type="checkbox" ng-model="isChecked2" checked>-->
+            <!--</label>-->
+            <!--<h2>美好</h2>-->
+            <!--</li>-->
+            <!--<ion-checkbox class="checkbox_line">
+                补水
+            </ion-checkbox>
+            <ion-checkbox class="checkbox_line">
+                美好
+            </ion-checkbox>-->
+            <ion-checkbox class="checkbox_line" ng-repeat="skinDemand in skinDemands" ng-scroll
+                          ng-model="skinDemand.checked"
+                          ng-checked="skinDemand.checked"
+
+                    >
+                {{ skinDemand.text }}
+            </ion-checkbox>
+        </ul>
+    </ion-content>
+
+</div>
+
+<!--肌肤护理需求-->
+<div ng-show="pageShow.skinCareDmndShow">
+    <ion-header-bar align-title="center"  class="header">
+        <div>
+            <a class="header_left" ng-click="skinCareDmndSelect()"></a>
+        </div>
+        <h1 style="font-size:1.4rem">肌肤护理需求</h1>
+    </ion-header-bar>
+    <!--<ion-content  class="has-header "  >-->
+    <!--<ion-list>-->
+    <!--<ion-item  >-->
+    <!--<span class="w140">痘痘</span>-->
+    <!--</ion-item>-->
+    <!--<ion-item >-->
+    <!--<span class="w140">痘印</span>-->
+    <!--</ion-item >-->
+    <!--</ion-list>-->
+    <!--</ion-content>-->
+    <ion-content class="scroll-content has-header memb_checkbox" overflow-scroll="false">
+        <ul class="list">
+            <!--<ion-item class="item item-divider divider_line"style="border: none;">-->
+            <!--<span style="color: #ddd;">可选择多个选项</span>-->
+            <!--</ion-item>-->
+            <div class="tishi" ng-show="skinCareDmndInfoShow">
+                <div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个选项</div>
+            </div>
+
+            <!--<ion-checkbox class="checkbox_line">
+                洁面乳
+            </ion-checkbox>
+            <ion-checkbox class="checkbox_line">
+                爽肤水
+            </ion-checkbox>-->
+            <ion-checkbox class="checkbox_line" ng-repeat="skinDailyDemand in skinDailyDemands" ng-scroll
+                          ng-model="skinDailyDemand.checked"
+                          ng-checked="skinDailyDemand.checked"
+
+                    >
+                {{ skinDailyDemand.text }}
+            </ion-checkbox>
+        </ul>
+    </ion-content>
+
+</div>
+

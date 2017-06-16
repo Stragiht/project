@@ -1,0 +1,120 @@
+<div ng-controller="memGrpCtrl" >
+
+
+<div>
+    <script type="text/ng-template" id="delete.html">
+        <div ng-include="'common/tpl/delete.html'"></div>
+    </script>
+</div>
+
+
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4" style="color:#000"> 会员组别</h4>
+</div>
+
+<div class="wrapper-md"   >
+
+
+    <button id="btn"  class="btn btn-info" style="position:relative;"ng-click="open()"  user-power="WMEM01002002">新增组别</button><!--ng-click="toggle()"-->
+    <div class="box" style="width:500px;position:absolute;margin:10px;display:none;">
+
+        <form class="form-horizontal" name="formAttr"><!--ng-show="visible"-->
+            <i style="width: 30px;height: 30px;border: 1px solid #ccc;display: block;transform: rotate(45deg);"></i>
+            <div class="form-group" style="border:1px solid #ccc;padding:20px;background:#fff;z-index: 999;margin-top: -15px;position:relative; ">
+                <label class="col-sm-4 control-label"><span style="color:red;">*</span>组别名称：</label>
+                <div class="col-sm-8">
+                    <!--<input type="text" class="form-control" ng-model="insertObj.grpNm">-->
+                    <input type="text" id="grpNm" name="grpNm" class="form-control"
+                           ng-model="insertObj.grpNm" required  maxlength="20"/>
+                    <div ng-messages="formAttr.grpNm.$error" ng-if="(formAttr.grpNm.$dirty && formAttr.grpNm.$invalid)">
+                        <span ng-message="required" class="error"> 组别名称必须输入！</span>
+                    </div>
+                </div>
+                <label class="col-sm-4 control-label" style="margin-top:20px;">组别描述：</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="grpDesc" rows="5" style="resize:none;width:300px;margin-top:20px;margin-bottom:20px;" ng-model="insertObj.grpDesc"  maxlength="1000"></textarea>
+                </div>
+                <input type="button" class="add btn btn-info col-sm-2 col-md-offset-5" ng-click="insertMemGrp()" ng-disabled="formAttr.$invalid"  user-power="WMEM01002002" value="确定">
+                <!--<button  class="del btn btn-danger col-sm-2 col-md-offset-1">取消</button>-->
+                <input type="button"  class="del btn btn-danger col-sm-2 col-md-offset-1" ng-click="cancleInsertMemGrp()" value="取消"/>
+                <!--ng-hide="visible"-->
+            </div>
+        </form>
+    </div>
+
+
+
+    <script type="text/javascript">
+        $(function(){
+            $("#btn").click(function(event) {
+                $(".box").show();
+                $("#grpNm").val("");
+                $("#grpDesc").val("");
+            });
+            $(".del").click(function(event) {
+                $(".box").hide();
+            });
+            $(".add").click(function(event) {
+                $(".box").hide();
+            });
+        })
+    </script>
+
+
+    <label class="control-label" style="margin:10px;">
+        共有<input type="text" style="width:30px; text-align:center;  border:none;outline:medium;color: red" ng-model="membGrpCount" readonly="readonly">条记录
+    </label>
+    <lable ng-if="membGrpCount<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+    <div ng-table="tableParams">
+        <table    class="table table-bordered table-striped"  style=" margin-bottom:20px;margin-top:20px;width: 800px;">
+            <!--<tr>
+                <td title="'组别名称'" style="text-align:center; width:180px; font-weight: bold;"></td>
+                <td title="'组别描述'" style="text-align:center; width:180px; font-weight: bold;"></td>
+                <td title="'操作'" style="text-align:center; width:180px;font-weight: bold; "></td>
+            </tr>
+
+            <tr ng-repeat="membGrp in $data">
+                <td>
+                    <span ng-if="membGrp.seFlg==0" ng-bind="membGrp.grpNm" style="text-align:center; width:180px; "></span>&lt;!&ndash;无框&ndash;&gt;
+                    <input type="text" ng-if="membGrp.seFlg!=0" ng-model="membGrp.updateGrpNm" style="text-align:center; width:140px; ">
+                </td>
+                <td >
+                    <span ng-if="membGrp.seFlg==0" ng-bind="membGrp.grpDesc" style="text-align:center; width:180px; word-break:break-all;"></span>  &lt;!&ndash;无框&ndash;&gt;
+                    <input type="text" ng-if="membGrp.seFlg!=0" ng-model="membGrp.updateGrpDesc" style="text-align:center; width:140px; word-break:break-all; ">
+                </td>
+                <td>
+                    <a ng-if="membGrp.seFlg==0" style="text-decoration:underline;color: #05b5ff;" ng-click="updateMemGrp(membGrp)"  user-power="WMEM01002003">编辑</a>
+                    <a ng-if="membGrp.seFlg!=0" style="text-decoration:underline;color: #05b5ff;" ng-click="saveMemGrp(membGrp)" user-power="WMEM01002003">保存</a>
+                    <a style="text-decoration:underline;color: #05b5ff;" ng-if="membGrp.dftFlg!='1' && membGrp.seFlg==0" ng-click="delMemGrp(membGrp.oId)" user-power="WMEM01002004">删除</a>
+                    <a style="text-decoration:underline;color: #05b5ff;" ng-if="membGrp.seFlg!=0" ng-click="cancelUpdateMemGrp(membGrp)" user-power="WMEM01002004">取消</a>
+                </td>
+            </tr>
+-->
+
+
+            <tr ng-repeat="membGrp in $data">
+                <td title="'组别名称'" style="text-align:center;min-width:120px; ">
+                    <span ng-if="membGrp.seFlg==0" ng-bind="membGrp.grpNm" style="text-align:center; width:180px; "></span><!--无框-->
+                    <input type="text" ng-if="membGrp.seFlg!=0" ng-model="membGrp.updateGrpNm" style="text-align:center; width:140px; ">
+                </td>
+                <td title="'组别描述'"  style="text-align:center;min-width:120px; ">
+                    <span ng-if="membGrp.seFlg==0" ng-bind="membGrp.grpDesc" style="text-align:center; width:180px; word-break:break-all;"></span>  <!--无框-->
+                    <input type="text" ng-if="membGrp.seFlg!=0" ng-model="membGrp.updateGrpDesc" style="text-align:center; width:140px; word-break:break-all; ">
+                </td>
+                <td title="'操作'"  style="text-align:center;min-width:120px; ">
+                    <a ng-if="membGrp.seFlg==0" style="text-decoration:underline;color: #05b5ff;" ng-click="updateMemGrp(membGrp)"  user-power="WMEM01002003">编辑</a>
+                    <a ng-if="membGrp.seFlg!=0" style="text-decoration:underline;color: #05b5ff;" ng-click="saveMemGrp(membGrp)" user-power="WMEM01002003">保存</a>
+                    <a style="text-decoration:underline;color: #05b5ff;" ng-if="membGrp.dftFlg!='1' && membGrp.seFlg==0" ng-click="delMemGrp(membGrp.oId)" user-power="WMEM01002004">删除</a>
+                    <a style="text-decoration:underline;color: #05b5ff;" ng-if="membGrp.seFlg!=0" ng-click="cancelUpdateMemGrp(membGrp)" user-power="WMEM01002004">取消</a>
+                </td>
+            </tr>
+
+
+
+
+        </table>
+    </div>
+
+</div>
+
+</div>  

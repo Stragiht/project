@@ -1,0 +1,163 @@
+<div ng-controller="setStfInfoMgmtController">
+    <script type="text/ng-template" id="multiselectstaff.html">
+        <div ng-include="'common/tpl/multiselectstaff.html'"></div>
+    </script>
+    <script type="text/ng-template" id="delete.html">
+        <div ng-include="'common/tpl/delete.html'"></div>
+    </script>
+    <!-- 标题信息开始 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4">
+            人员基础信息
+        </h4>
+    </div>
+    <!-- 标题信息开始 -->
+
+    <div class="wrapper-md">
+        <!-- 温馨提示开始 -->
+        <div class="row">
+            <div class="panel-heading">
+                <div class="col-md-12">
+                    <div class="list-group list-group-lg list-group-sp">
+                        <div herf="" class="list-group-item clearfix bg-light dker">
+                            <div class="clear">
+                                <p>温馨提示：</p>
+                                <p>此设置影响的数据权限为【人员基础信息】页面。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 温馨提示结束 -->
+
+        <!--<div class="wrapper-md form-horizontal" style="padding: 15px;">-->
+
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-3 control-label">-->
+                    <!--查看所有部门数据的人员：-->
+                <!--</label>-->
+                <!--<input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;"-->
+                       <!--ng-click="openStaff('lg')" value="添加">-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; 第四行 &ndash;&gt;-->
+            <!--<div class="form-group">-->
+
+                <!--<div class="col-sm-12">-->
+                    <!--<div ng-table="tableParams">-->
+                        <!--<table class="table table-bordered table-condensed   table-striped table-hover">-->
+                            <!--<tr ng-repeat="deptStfCnf in deptStfCnfs">-->
+                                <!--<td title="'人员编号'" style="text-align:center;min-width:120px;">-->
+                                    <!--<span ng-bind="deptStfCnf.stfNum"></span>-->
+                                <!--</td>-->
+                                <!--<td title="'姓名'" style="text-align:center;min-width:120px;">-->
+                                    <!--<span ng-bind="deptStfCnf.stfNm"></span>-->
+                                <!--</td>-->
+
+                                <!--<td title="'操1作'" style="text-align:center;min-width:180px;">-->
+                                    <!--<a ng-click="del($index)" style="text-decoration:underline;color: #05b5ff;"> 删除</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+
+            <!--<div class="form-group ">-->
+                <!--<button class=" btn btn-success" style="margin-left: 15px;" ng-click="saveSelectAllDeptStfCnf()">-->
+                    <!--提交保存-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="wrapper-md" style="padding: 15px;">
+
+            <tabset class="tab-container">
+                <tab ng-click="tabLocal(1)">
+                    <tab-heading>
+                        设置所有部门数据权限
+                    </tab-heading>
+                    <!-- 表格 -->
+                    <div class="wrapper-md form-horizontal" style="padding: 0;">
+
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;"
+                        ng-click="openStfs('lg', allDeptStfCnfs)" value="添加">
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <div ng-table="tableParams">
+                                    <table class="table table-bordered table-condensed   table-striped table-hover">
+                                        <tr ng-repeat="deptStfCnf in allDeptStfCnfs">
+                                            <td title="'人员编号'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="deptStfCnf.stfNum"></span>
+                                            </td>
+                                            <td title="'姓名'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="deptStfCnf.stfNm"></span>
+                                            </td>
+
+                                            <td title="'操作'" style="text-align:center;min-width:180px;">
+                                                <a ng-click="delAllDeptStfCnf($index)"
+                                                   style="text-decoration:underline;color: #05b5ff;"> 删除</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </tab>
+
+                <tab ng-click="tabLocal(2)">
+                    <tab-heading>
+                        设置自身部门数据权限
+                    </tab-heading>
+
+                    <!-- 表格 -->
+                    <div class="wrapper-md form-horizontal" style="padding: 0;">
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;"
+                                   ng-click="openStfs('lg', selfDeptStfCnfs)" value="添加">
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <div ng-table="tableParams">
+                                    <table class="table table-bordered table-condensed   table-striped table-hover">
+                                        <tr ng-repeat="deptStfCnf in selfDeptStfCnfs">
+                                            <td title="'人员编号'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="deptStfCnf.stfNum"></span>
+                                            </td>
+                                            <td title="'姓名'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="deptStfCnf.stfNm"></span>
+                                            </td>
+
+                                            <td title="'操作'" style="text-align:center;min-width:180px;">
+                                                <a ng-click="delSelfDeptStfCnf($index)"
+                                                   style="text-decoration:underline;color: #05b5ff;"> 删除</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </tab>
+
+            </tabset>
+        </div>
+        <div class="form-group ">
+            <button class=" btn btn-success" style="margin-left: 15px;" ng-click="save()" user-power="WSET01001002">
+                提交保存
+            </button>
+        </div>
+    </div>
+</div>

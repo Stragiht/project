@@ -1,0 +1,305 @@
+<div class="bg-light lter b-b wrapper-md"  >
+	<h4 class="m-n font-thin h4">
+		编辑
+		<a class="btn btn-info btn-addon mr_8" ui-sref="app.staff.stfSalaryAppl" >返回审批工资报表管理</a>
+	</h4>
+</div>
+<div class="wrapper-md"  ng-controller="salaryApplUpdateCtrl">
+	<form class="bs-example form-horizontal">
+		<tabset class="tab-container">
+			<tab>
+				<tab-heading> 申请信息 </tab-heading>
+					<accordion close-others="oneAtATime"> <accordion-group
+						is-open="status.baseopen">
+						<accordion-heading>
+							1.基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.baseopen, 'fa-angle-right': !status.baseopen}"></i>
+						</accordion-heading>
+							
+								<div class="form-group">
+									<label class="col-xs-3 control-label">申请编号：</label><label class="col-xs-3 control-label text-left">{{salarybykey.applNum}}</label>
+									<label class="col-xs-3 control-label">审批状态：</label><label class="col-xs-3 control-label text-left"><span style="color: red;">{{salarybykey.apprStat|dicNameFilter:"C018"}}</span></label>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-3 control-label">提交人：</label><label class="col-xs-3 control-label text-left">{{salarybykey.applicant}}</label>
+									<label class="col-xs-3 control-label">提交时间：</label><label class="col-xs-3 control-label text-left">{{salarybykey.applSbmtTm}}</label>
+								</div>
+					 </accordion-group> </accordion>
+				 	<accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.baseopen">
+					<accordion-heading>
+						2.人员基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.baseopen, 'fa-angle-right': !status.baseopen}"></i>
+					</accordion-heading>
+						
+							<div class="form-group">
+								<label class="col-xs-3 control-label">人员编号：</label><label class="col-xs-3 control-label text-left">{{salarybykey.stfNum}}</label>
+								<label class="col-xs-3 control-label">姓名：</label><label class="col-xs-3 control-label text-left">{{salarybykey.stfNm}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">部门：</label><label class="col-xs-3 control-label text-left">{{salarybykey.subDep | stfBasSubDep}}</label>
+								<label class="col-xs-3 control-label">职位等级：</label><label class="col-xs-3 control-label text-left">{{salarybykey.position | stfBasPosNum}} > {{salarybykey.position | stfBasPosGrdNum:salarybykey.posGrd}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">入职日期：</label><label class="col-xs-3 control-label text-left">{{salarybykey.stfEntDt}}</label>
+								<label class="col-xs-3 control-label">离职日期：</label><label class="col-xs-3 control-label text-left">{{salarybykey.dimiDt}}</label>
+							</div>
+							<div class="form-group">	
+								<label class="col-xs-3 control-label">所在地城市：</label><label class="col-xs-3 control-label text-left">{{salarybykey.locCity | stfBasPCV}}</label>
+								<label class="col-xs-3 control-label">所在城市底薪基数：</label><label class="col-xs-3 control-label text-left">￥{{salarybykey.basSalBase | fromMoney}}</label>
+							</div>
+						
+				
+				 </accordion-group> </accordion>
+				 <div ng-if="salarybykey.fixSalAmt != 0"><accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.netsalopen">
+					<accordion-heading>
+						3.实发工资（固定工资+应加项目-应扣项目） <i class="pull-right fa fa-angle-right"
+							ng-class="{'fa-angle-down': status.netsalopen, 'fa-angle-right': !status.netsalopen}"></i>
+					</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">实发工资： </label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{formatfloat(salarybykey.fixSalAmt) + formatfloat(salarybykey.overTmSal) + formatfloat(salarybykey.commBonus) + formatfloat(salarybykey.allowance) + formatfloat(salarybykey.retroactivePay) +formatfloat(salarybykey.otherSummation) - formatfloat(salarybykey.sclSecurity) - formatfloat(salarybykey.accumFunds) - formatfloat(salarybykey.persIncomeTax) -formatfloat(salarybykey.otherDedu)  | fromMoney }}</span></label>
+							</div>
+				</accordion-group> </accordion></div>
+				<div ng-if="salarybykey.fixSalAmt == 0"><accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.netsalopen">
+					<accordion-heading>
+						3.实发工资（考勤工资+应加项目-应扣项目） <i class="pull-right fa fa-angle-right"
+							ng-class="{'fa-angle-down': status.netsalopen, 'fa-angle-right': !status.netsalopen}"></i>
+					</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">实发工资： </label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{formatfloat(salarybykey.basSalPerPha) + formatfloat(salarybykey.fullAttend) + formatfloat(salarybykey.perfBonus) + formatfloat(salarybykey.overTmSal) + formatfloat(salarybykey.commBonus) + formatfloat(salarybykey.allowance) + formatfloat(salarybykey.retroactivePay) +formatfloat(salarybykey.otherSummation) - formatfloat(salarybykey.sclSecurity) - formatfloat(salarybykey.accumFunds) - formatfloat(salarybykey.persIncomeTax) - formatfloat(salarybykey.otherDedu)  | fromMoney}}</span></label>
+							</div>
+				</accordion-group> </accordion></div>
+				<div class="panel-heading">
+						<div class="form-group" style="text-align:center;background-color: #c6c6c6">
+							<label class="col-xs-12 control-label " style="text-align:center;background-color: #c6c6c6;height: 40px;line-height: 30px;">工资明细 </label>
+						</div>
+				</div>
+				<div ng-if="salarybykey.fixSalAmt != 0"><accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.fixsalopen">
+					<accordion-heading>
+						A.固定工资信息<i class="pull-right fa fa-angle-right"
+							ng-class="{'fa-angle-down':status.fixsalopen, 'fa-angle-right': !status.fixsalopen}"></i>
+					</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">固定工资：</label><label class="col-xs-3 control-label text-left"><span style="font-weight:700;color: red;">￥{{salarybykey.fixSalAmt | fromMoney}}</span></label>
+							</div>
+				</accordion-group> </accordion></div>
+				<div ng-if="salarybykey.fixSalAmt == 0"><accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.attendanceopen">
+					<accordion-heading>
+						A.考勤工资信息<i class="pull-right fa fa-angle-right"
+							ng-class="{'fa-angle-down':status.attendanceopen, 'fa-angle-right': !status.attendanceopen}"></i>
+					</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">考勤工资：</label><label class="col-xs-6 control-label text-left"><span style="font-weight:700;color: red;">￥{{formatfloat(salarybykey.basSalPerPha) + formatfloat(salarybykey.fullAttend) + formatfloat(salarybykey.perfBonus) | fromMoney}}</span> (档期底薪+全勤+绩效奖金)</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">应发工资天数：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.supAttdDays" name="supAttdDays" ng-pattern="/^[0-9]{0,2}$/" maxLength=2>
+									<div ng-messages="form.supAttdDays.$error" ng-if="form.supAttdDays.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的应发工资天数</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">天</label>
+								<label class="col-xs-3 control-label">实际出勤天数：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.actualAttnDays" name="actualAttnDays" ng-pattern="/^[0-9]{0,2}$/" maxLength=2>
+									<div ng-messages="form.actualAttnDays.$error" ng-if="form.actualAttnDays.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的实际出勤天数</span>
+									</div>		
+								</div>
+								<label class="col-xs-1 control-label text-left">天</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">试用期星级标准：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.probStarStd" name="probStarStd" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.probStarStd.$error" ng-if="form.probStarStd.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的试用期星级标准</span>
+									</div>		
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+								<label class="col-xs-3 control-label">转正星级标准：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.regularStarStd" name="regularStarStd" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.regularStarStd.$error" ng-if="form.regularStarStd.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的转正星级标准</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">档期底薪：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.basSalPerPha" name="basSalPerPha" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.basSalPerPha.$error" ng-if="form.basSalPerPha.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的档期底薪</span>
+									</div>		
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+								<label class="col-xs-3 control-label">绩效奖金：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.perfBonus" name="perfBonus" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.perfBonus.$error" ng-if="form.perfBonus.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的绩效奖金</span>
+									</div>
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+							<div class="form-group" ng-if="salarybykey.baFlag == 1">	
+								<label class="col-xs-3 control-label">全  勤：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.fullAttend" name="fullAttend" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.fullAttend.$error" ng-if="form.fullAttend.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的全勤</span>
+									</div>
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+				</accordion-group> </accordion></div>
+				<accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.summationopen">
+					<accordion-heading>
+						B.应加项目<i class="pull-right fa fa-angle-right"
+							ng-class="{'fa-angle-down':status.summationopen, 'fa-angle-right': !status.summationopen}"></i>
+					</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">应加合计：</label>
+								<div class="col-xs-3">
+									<p class="form-control-static"><span style="font-weight:700;color: red;">￥{{formatfloat(salarybykey.overTmSal) + formatfloat(salarybykey.commBonus) + formatfloat(salarybykey.allowance) + formatfloat(salarybykey.retroactivePay) +formatfloat(salarybykey.otherSummation)  | fromMoney}}</span></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">加班工资：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.overTmSal" name="overTmSal" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.overTmSal.$error" ng-if="form.overTmSal.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的加班工资</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+								<label class="col-xs-3 control-label">奖金及提成：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.commBonus" name="commBonus" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.commBonus.$error" ng-if="form.commBonus.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的奖金及提成</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>	
+							<div class="form-group">	
+								<label class="col-xs-3 control-label">职位补助：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.allowance" name="allowance" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.allowance.$error" ng-if="form.allowance.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的职位补助</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+								<label class="col-xs-3 control-label">补发工资：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.retroactivePay" name="retroactivePay" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.retroactivePay.$error" ng-if="form.retroactivePay.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的补发工资</span>
+									</div>
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">其它应加：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.otherSummation" name="otherSummation" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.otherSummation.$error" ng-if="form.otherSummation.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的其它应加</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+				</accordion-group> </accordion>
+				<accordion close-others="oneAtATime"> <accordion-group
+					is-open="status.totdeduopen">
+					<accordion-heading>
+						C.应扣项目<i class="pull-right fa fa-angle-right"
+							ng-class="{'fa-angle-down':status.totdeduopen, 'fa-angle-right': !status.totdeduopen}"></i>
+					</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">应扣项目：</label>
+								<div class="col-xs-3">
+									<p class="form-control-static"><span style="font-weight:700;color: red;">￥{{formatfloat(salarybykey.sclSecurity)+ formatfloat(salarybykey.accumFunds) + formatfloat(salarybykey.persIncomeTax) +formatfloat(salarybykey.otherDedu)  | fromMoney}}</span></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">社保：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.sclSecurity" name="sclSecurity" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.sclSecurity.$error" ng-if="form.sclSecurity.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的社保</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+								<label class="col-xs-3 control-label">公积金：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.accumFunds" name="accumFunds" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.accumFunds.$error" ng-if="form.accumFunds.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的公积金</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">应计税金额：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.supTaxAmt" name="supTaxAmt" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.supTaxAmt.$error" ng-if="form.supTaxAmt.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的应计税金额</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+								<label class="col-xs-3 control-label">个税：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.persIncomeTax" name="persIncomeTax" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.persIncomeTax.$error" ng-if="form.persIncomeTax.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的个税</span>
+									</div>			
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 control-label">其它应扣：</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" ng-model="salarybykey.otherDedu" name="otherDedu" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 >
+									<div ng-messages="form.otherDedu.$error" ng-if="form.otherDedu.$error.pattern">
+										<span ng-message="pattern" class="error">请输入有效的其它应扣</span>
+									</div>	
+								</div>
+								<label class="col-xs-1 control-label text-left">元</label>
+							</div>
+				</accordion-group> </accordion>
+				<div class="panel-heading">
+					<button ng-click="updateSalary()" class="btn btn-info btn-addon mr_10"  user-power="WSTF01021003" >提交保存</button>
+				</div>
+			</tab>
+			<tab ng-show="status.apprHisDisplay">
+			<tab-heading> 审批历史 </tab-heading>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form class="bs-example form-horizontal">
+						<div ng-table="tableParams">
+							<table class="table table-bordered table-condensed table-striped table-hover">
+								<tr ng-repeat="apprHisInfo in $data">
+									<td title="'操作时间'" style="text-align: center;width: 210px;">{{apprHisInfo.updtTm}}</td>
+									<td title="'操作人'" style="text-align: center;width: 150px;">{{apprHisInfo.stfNm}}</td>
+									<td title="'审批状态'" style="text-align: center;width: 90px;">{{apprHisInfo.status|dicNameFilter:"C019"}}</td>
+									<td title="'备注'" style="text-align: left">{{apprHisInfo.apprComments}}</td>
+								</tr>
+							</table>
+						</div>
+					</form>
+				</div>
+			</div>
+		</tab>
+		</tabset>
+		
+	</form>
+</div>

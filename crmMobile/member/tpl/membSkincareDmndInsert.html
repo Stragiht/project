@@ -1,0 +1,48 @@
+<ion-header-bar align-title="center"  class="header">
+    <div ui-sref="membBasInsert" >
+        <a class="header_left"   ng-click="saveMembSkinDmn()"></a>
+    </div>
+    <h1 style="font-size:1.4rem">肌肤护理需求</h1>
+</ion-header-bar>
+<!--<ion-content  class="has-header "  >-->
+    <!--<ion-list>-->
+        <!--<ion-item  >-->
+            <!--<span class="w140">痘痘</span>-->
+        <!--</ion-item>-->
+        <!--<ion-item >-->
+            <!--<span class="w140">痘印</span>-->
+        <!--</ion-item >-->
+    <!--</ion-list>-->
+<!--</ion-content>-->
+<ion-content class="scroll-content has-header memb_checkbox" overflow-scroll="false">
+    <ul class="list">
+        <!--<ion-item class="item item-divider divider_line"style="border: none;">-->
+            <!--<span style="color: #ddd;">可选择多个选项</span>-->
+        <!--</ion-item>-->
+        <div class="tishi" ng-show="infoShow">
+            <div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个选项</div>
+        </div>
+        <!--<li class="item item-checkbox"  style="height: 55px;">
+            <label class="checkbox" style="
+    margin-top: -18px;">
+                <input type="checkbox" ng-model="isChecked1" checked>
+            </label>
+            <h2>洁面乳</h2>
+        </li>
+        <li class="item item-checkbox  item-button-right" style="height: 55px;">
+            <label class="checkbox"  style="
+    margin-top: -18px;">
+                <input type="checkbox" ng-model="isChecked2" checked>
+            </label>
+            <h2>爽肤水</h2>
+        </li>-->
+        <ion-checkbox class="checkbox_line" ng-repeat="skinDailyDemand in skinDailyDemands" ng-scroll
+                      ng-model="skinDailyDemand.checked"
+                      ng-checked="skinDailyDemand.checked"
+
+                >
+            {{ skinDailyDemand.text }}
+        </ion-checkbox>
+    </ul>
+</ion-content>
+

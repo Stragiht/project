@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 75%">
+<head>
+    <meta charset="UTF-8">
+    <!--不加这个.html5mode不好用-->
+    <!--<base href="/ >-->
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name='apple-touch-fullscreen' content='yes'>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="common/lib/css/ionic.css">
+    <link rel="stylesheet" href="common/css/content.css"/>
+    <link href="common/css/demo.css" rel="stylesheet" type="text/css">
+    <link href="common/css/font-awesome.css" rel='stylesheet' type='text/css'/>
+    <link href="common/css/myStyle.css" rel='stylesheet' type='text/css'/>
+    <link href="common/css/mycss.css" rel='stylesheet' type='text/css'/>
+    <link href="common/lib/js/ionic-citypicker-master/src/style/ionic-citypicker.css" rel='stylesheet' type='text/css'/>
+	<link rel="stylesheet" href="common/lib/js/ionic-calendar/calendar.min.css"/>
+
+</head>
+<body ng-app="app">
+<script>
+    document.body.addEventListener('touchstart', function () {});
+</script>
+<div id="div-table" ng-controller="indexCtrl">
+    <div id="content">
+        <!--<ion-header-bar align-title="center" >-->
+        <!--</ion-header-bar>-->
+
+        <ion-nav-view>
+
+    </div>
+
+    <div style="display: none" id="indexPage">
+
+        <ion-footer-bar align-title="center" ng-if="mainShow">
+            <ul class="nav">
+                <li><a href="#"  ui-sref="home" ng-class="{active: 1 == vm.mainMenu}" ng-click="toggleMain(1)" ><div class="icos icos_work"></div><p>工作</p></a></li>
+                <li menu-verify="MMENU004">
+                    <a href="#" ui-sref="msgList" ng-click="toggleMain(2)" id="msgMenu" ng-class="{active: 2== vm.mainMenu}">
+                        <div class="icos icos_invest"></div><p>消息</p>
+                        <div class="xiaoxi" ng-if="msgInfo.unreadMessageAmt" >{{msgInfo.unreadMessageAmt}}</div>
+                    </a>
+                </li>
+                <li menu-verify="MMENU005"><a href="#" ui-sref="personalCenter" ng-click="toggleMain(3)"id="personalMenu" ng-class="{active: 3 == vm.mainMenu}"><div class="icos icos_user"></div><p>个人中心</p></a>
+                    <div class="xiaoxi1" style="border-radius: 8px;" ng-if="msgInfo.isHaveCard != 1"></div>
+                </li>
+            </ul>
+        </ion-footer-bar>
+        <ion-footer-bar align-title="center" ng-if="stfShow">
+            <ul class="nav">
+                <li style="width:25%" menu-verify="MMENU001001">
+                    <a href="#" ng-class="{active: 1 == vm.stfMenu}"  ui-sref="stfList" ng-click="toggleStf(1)" >
+                        <div class="icos ryxx"></div><p>人员信息</p>
+                    </a>
+                </li>
+                <li style="width:25%" menu-verify="MMENU001002">
+                    <a href="#" ui-sref="stfChangeIndex" ng-class="{active: 2 == vm.stfMenu}" ng-click="toggleStf(2)">
+                        <div class="icos rybd"></div><p>人员变动</p>
+                    </a>
+                </li>
+                <li style="width:25%" menu-verify="MMENU001003">
+                    <a href="#/attendanceAdmin" ng-class="{active: 3 == vm.stfMenu}" ng-click="toggleStf(3)">
+                        <div class="icos kqgl"></div><p>考勤管理</p>
+                    </a>
+                </li>
+                <li style="width:25%" menu-verify="MMENU001004">
+                    <a href="#/salaryReport" ui-sref="salaryReport" ng-class="{active: 4 == vm.stfMenu}" ng-click="toggleStf(4)">
+                        <div class="icos gzbb"></div><p>工资报表</p>
+                    </a>
+                </li>
+            </ul>
+        </ion-footer-bar>
+        <ion-footer-bar align-title="center" ng-if="reportShow">
+            <ul class="nav">
+                <li style="width:25%" menu-verify="MMENU003001">
+                    <a ui-sref="saleSummary" ng-class="{active: 1 == vm.reportMenu}" ng-click="toggleReport(1)">
+                        <div class="icos xsgk_bt"></div><p>销售概况</p>
+                    </a>
+                </li>
+                <li style="width:25%" menu-verify="MMENU003002">
+                    <a ui-sref="saleData" ng-class="{active: 2 == vm.reportMenu}" ng-click="toggleReport(2)">
+                        <div class="icos xssj_bt"></div><p>销售数据</p>
+                    </a>
+                </li>
+                <li style="width:25%" menu-verify="MMENU003003">
+                    <a ui-sref="baReportList" ng-class="{active: 3 == vm.reportMenu}" ng-click="toggleReport(3)">
+                        <div class="icos tjbb_bt"></div><p>提交报表</p>
+                    </a>
+                </li>
+                <li style="width:25%" menu-verify="MMENU003004">
+                    <a ui-sref="reportApproval" ng-class="{active: 4 == vm.reportMenu}" ng-click="toggleReport(4)">
+                        <div class="icos bbsp_bt"></div><p>报表审批</p>
+                    </a>
+                </li>
+            </ul>
+        </ion-footer-bar>
+
+
+        <!--会员信息-->
+        <ion-footer-bar align-title="center" ng-if="membShow" style="width: auto;" >
+            <!--
+            <ion-modal-view></ion-modal-view>
+            -->
+            <ul class="nav top_line">
+                <li style="width:33%"  menu-verify="MMENU002001">
+                    <a href="#" ui-sref="membInfo" ng-class="{active: 1 == vm.membMenu}" ng-click="toggleMemb(1)">
+                        <div class="icos hyxx"></div>
+                        <p>会员信息</p>
+                    </a>
+                </li>
+                <li style="width:33%" menu-verify="MMENU002002">
+                    <a href="" ui-sref="membOperateMenu" ui-calendar="true" ng-class="{active: 2 == vm.membMenu}" ng-click="toggleMemb(2)">
+                        <div class="icos hycz"></div>
+                        <p>会员操作</p>
+                    </a>
+                </li>
+                <li style="width:33%" menu-verify="MMENU002003">
+                    <a href="" ui-sref="membRevisitMenu" ng-class="{active: 3 == vm.membMenu}" ng-click="toggleMemb(3)">
+                        <div class="icos bahf"></div>
+                        <p>BA回访</p>
+                    </a>
+                </li>
+            </ul>
+        </ion-footer-bar>
+
+    </div>
+
+
+</div>
+
+<script src="common/lib/js/ionic.bundle.min.js"></script>
+<script src="common/lib/js/ng/ngStorage.js"></script>
+<script src="common/lib/js/oclazyload/ocLazyLoad.js"></script>
+<script src="common/lib/js/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
+<!--<script src="common/lib/js/ionic-citypicker-master/src/js/ionic-citypicker.js"></script>
+<script src="common/lib/js/ionic-citypicker-master/src/js/ionic-citypicker-directive.js"></script>
+<script src="common/lib/js/ionic-citypicker-master/src/js/ionic-citypicker-service.js"></script>-->
+<script src="common/lib/js/ionic-citypicker-master/dist/ionic-citypicker.min.js"></script>
+
+<script src="common/js/app.js"></script>
+<script src="common/js/controllers/index.js"></script>
+<script src="common/js/filters.js"></script>
+<script src="common/js/directives.js"></script>
+<script src="common/js/powerFactory.js"></script>
+<script src="common/js/factoryFilters.js"></script>
+<script src="common/services/comService.js"></script>
+<script src="common/lib/js/ionic-calendar/calendar-tpls.js"></script>
+<script src="common/js/ui-bootstrap-tpls.js"></script>
+<script src="common/filters/comFilter.js"></script>
+<script src="common/directive/comDirective.js"></script>
+<script src="common/js/jsMap.js"></script>
+<script src="common/lib/js/angular/angular-animate.min.js"></script>
+
+</body>
+</html>

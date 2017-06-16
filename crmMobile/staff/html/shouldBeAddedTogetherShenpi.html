@@ -1,0 +1,29 @@
+<ion-header-bar align-title="center" class="header"> 
+	<a href="" ui-sref="approvalDetails({applNum:stfList.applNum})" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">应加合计</h1>
+</ion-header-bar>
+<ion-content  class="has-header ">
+<!-- shouldBeAddedTogetherShenpi.html -->
+	<ion-list>
+ 		<ion-item  >
+           	<span class="w140">加班工资</span>
+           	<span class=" stfInfoItem">{{stfList.overTmSal | currency : ""}}<span>元</span></span>
+        </ion-item>
+        <ion-item >
+           	<span class="w140">奖金及提成</span>
+           	<span class=" stfInfoItem">{{stfList.commBonus | currency : ""}}<span>元</span></span>
+        </ion-item >
+        <ion-item >
+          	<span class="w140">补助</span>
+          	<span class=" stfInfoItem">{{stfList.allowance | currency : ""}}<span>元</span></span>
+        </ion-item>
+        <ion-item >
+          	<span class="w140">补发工资</span>
+          	<span class=" stfInfoItem">{{stfList.retroactivePay | currency : ""}}<span>元</span></span>
+        </ion-item>
+        <ion-item >
+           	<span class="w140">其它</span>
+           	<span class=" stfInfoItem">{{stfList.otherSummation | currency : ""}}<span>元</span></span>
+    	</ion-item>
+	</ion-list> 
+</ion-content>

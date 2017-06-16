@@ -1,0 +1,129 @@
+<style>
+.qdys{
+border-right: 0px;
+}
+.xsys{
+border-right: 1px solid #ccc;
+}
+.scroll-view.scroll-x {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+</style>
+<div ng-show="scheds">
+	<ion-header-bar align-title="center" class="header"> <a
+		class="angle_left" style="left: 15px;" ng-click="goFrontPage()"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size: 1.4rem">新增排班</h1>
+	<a class="head_right3" ng-click="saveSubmitSchendule()" user-power="MSTF01006007"><div
+			class="btn_line">提交</div></a> <a class="head_right"
+		ng-click="saveSchendule()"><div class="btn_line" user-power="MSTF01006007">存为草稿</div></a> </ion-header-bar>
+	<div class="bar bar-subheader" style="padding: 0;">
+        <div class="rzlc_bt" style="border-bottom: 0px;">
+            <ion-scroll direction="x" scrollbar-x="false" scrollbar-y="false"
+                zooming="false" paging="false" style="overflow-x: hidden;">
+            <div class="rzlc_bt_nei"
+                style="overflow: auto;   margin: 0px;" id="kd">
+                <a ng-repeat="apprStat in schedstore" class="yybx"
+                    style="width: auto; margin: 0 5px; height:44px;padding-right: 10px;"
+                    ng-class="{'active':apprStat.subStrNum == apprStatCnd,'qdys':schedstore.length-1==$index,'xsys':schedstore.length-1<$index}"
+                    ng-click="selectEntryAppl('{{apprStat.subStrNum}}')"    >{{apprStat.strNm}}</a>
+            </div>
+            </ion-scroll>
+        </div>
+    </div>
+    <ion-content class="has-header has-subheader" >
+    <!-- insertSchedule.html -->
+    <div class="wrap">
+
+        <ul class="listvrew clearfix" style="border-bottom:0px;">
+
+            <li ng-click="subTimeShows(schedtimes)"><span class="w140" style="width:85px;">排班时间</span> <span
+                class="f_10 tr" style="font-size:16px;"> {{schedtime}}</span> <span class="float_r"><img ng-if="ifopen != 1" src="common/images/you_btn.png" style="position: absolute;top: 19px;right: 16px;"></span></li>
+        </ul>
+        <ul class="listvrew clearfix" style="margin-bottom: -1px;">
+            <li ng-click="subSched()"><span class="w140">排班情况</span><span class="float_r"><img src="common/images/you_btn.png" style="position: absolute;top: 71px;right: 16px;"></span> <span
+                class=" f_10 tr" style="font-size:16px;text-align: right;float: right;margin-right: 32px;" > {{sched.text}}</span> </li>
+        </ul>
+        <ul class="listvrew clearfix mb_15">
+            <li ng-click="subSchedtime(sched.daytimes)"><span class="w140">到结束时间实行</span>
+               <span class="float_r"><img src="common/images/you_btn.png" style="position: absolute;top: 124px;right: 16px;"></span><span class=" f_10 tr" style="font-size:16px;text-align: right;float: right;margin-right: 32px;" >{{sched.daytime}}</span></li>
+        </ul>
+        <ul class="listvrew clearfix" style="border-bottom:0px;">
+            <li ng-click="subStoreSelect()">
+                <span class="w140">{{viewTitle}}</span>
+                <div class=" f_10" style="float: right;width: 100px;display: inline-block;">
+                    <button
+                        style="border-radius: 4px; background-color: white; border: 1px #DCDCDC solid;"
+                        ng-click="yestmonday()">&lt;</button>
+                    <button
+                        style="color: black; background-color: white; border-radius: 4px; border: 1px #DCDCDC solid;"
+                        ng-disabled="isToday()" ng-click="today()">当月</button>
+                    <button
+                            style="border-radius: 4px; background-color: white; border: 1px #DCDCDC solid;"
+                            ng-click="monday()">&gt;</button>
+
+                </div>
+                <span class="float_r"><i
+                    class="fa"></i>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div style="position: relative;" ng-if="flag">
+        <calendar ng-model="calendar.currentDate"
+            calendar-mode="calendar.mode" event-source="calendar.eventSource"
+            range-changed="reloadSource(startTime, endTime)"
+            event-selected="onEventSelected(event)"
+            title-changed="onViewTitleChanged(title)"
+            time-selected="onTimeSelected(selectedTime)" step="30"></calendar>
+    </div>
+    
+    </ion-content>
+
+</div>
+<!-- 排班情况 -->
+<div ng-show="subTimeShow">
+    <ion-header-bar align-title="center" class="header"> 
+    <a class="angle_left" style="left: 15px;" ng-click="goBack()"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size: 1.4rem">排班时间</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- insertSchedule.html -->
+    <div class="wrap">
+        <ion-list> 
+        	<ion-radio name="time" ng-repeat="dic in dicTimeList" ng-value="dic.oId" ng-model="sched.daystime" ng-click="clickDays(dic)">{{dic.phaStartTm+'~'+dic.phaEndTm}}</ion-radio>
+        </ion-list>
+    </div>
+    </ion-content>
+</div>
+<!-- 排班情况 -->
+<div ng-show="subSchedShow">
+    <ion-header-bar align-title="center" class="header"> 
+    <a class="angle_left" style="left: 15px;" ng-click="goBack()"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size: 1.4rem">排班情况</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- insertSchedule.html -->
+    <div class="wrap">
+        <ion-list> <ion-radio name="sex" ng-repeat="dic in dicList"
+            ng-value="dic.key" ng-model="sched.days" ng-click="clickDay(dic)">{{dic.text}}</ion-radio>
+        </ion-list>
+    </div>
+    </ion-content>
+</div>
+<!-- 排班情况 -->
+<div ng-show="subSchedTimeShow">
+    <ion-header-bar align-title="center" class="header"> 
+	<a class="angle_left" style="left: 15px;" ng-click="goBack()"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size: 1.4rem">到结束时间实行</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- insertSchedule.html -->
+    <div class="wrap">
+        <ion-list> <ion-radio name="status"
+            ng-repeat="dic in dicListTime" ng-value="dic.key"
+            ng-model="sched.status" ng-click="clickDayTime(dic)">{{dic.text}}</ion-radio>
+        </ion-list>
+    </div>
+    </ion-content>
+</div>

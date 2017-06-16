@@ -1,0 +1,200 @@
+<div ng-show="scheduleInfoShow">
+<ion-header-bar align-title="center" class="header"> 
+    <a ui-sref="schedulingForApproval" class="angle_left" style="left: 15px;"ng-if="flag"><img src="common/images/back_btn.png" width="18"></a>
+    <a ui-sref="baShiftMngAppList" class="angle_left" style="left: 15px;"ng-if="!flag"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size:1.4rem">详情</h1>
+    <a class="head_right2" ng-if="scheduleInfo.submitFlag == 1">
+            <div class="head_right_box float_l" ng-click="saveSubmitSchendule()" user-power="MSTF01006008">
+                <img src="common/images/zhengque.png" width="22" height="22" >
+                <p>提交</p>
+            </div>
+            <div class="float_l ml10 color06">|</div>
+        </a>
+        <a class="head_right2" ng-if="scheduleInfo.cancelFlag == 1" ng-click="cancelAppl()" user-power="MSTF01006008">
+            <div class="head_right_box float_l">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+            <div class="float_l ml10 color06">|</div>
+        </a>
+        <a class="head_right" ng-if="scheduleInfo.editFlag == 1" ui-sref="updateSchedule({schNum:scheduleInfo.schNum})" user-power="MSTF01006008">
+            <div class="head_right_box">
+                <img src="common/images/qianbi.png" width="22" height="22">
+                <p>编辑</p>
+            </div>
+        </a>
+        <a class="head_right" ng-if="scheduleInfo.apprFlag == 1" ng-click="apprOpen()" user-power="MSTF01006002">
+            <div class="head_right_box">
+                <img src="common/images/zhan.png" width="22" height="22">
+                <p>审批</p>
+            </div>
+        </a>
+</ion-header-bar>
+<ion-content class="has-header " style="bottom:0px;" overflow-scroll='false'>
+<!-- baShiftMngApplInfo.html -->
+    <ion-list>
+            <ion-item  >
+            <span class="w140" style="display:none" >{{scheduleInfo.schUpTm}}</span>
+            <span class="w140" style="display:none" >{{scheduleInfo.bySchStf}}</span>
+                <span class="w140">申请编号</span>
+                <span class="f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.schNum}}</span>
+           </ion-item>
+           <ion-item >
+           <a href = "">
+                <span class="w140">提交人</span>
+                <span class="f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.applSbmtNm}}</span>
+                <span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 0rem;" ng-click="callPhone()"></span>
+           </a>
+           </ion-item >
+           <ion-item >
+                <span class="w140">提交时间</span>
+                <span class="f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.sbmtTmDis}}</span>
+           </ion-item>
+           <ion-item>
+                <span class="w140">审批状态</span>
+                <span class="color05 f_10 scheduleInfoItem">{{scheduleInfo.apprStat}}</span>
+           </ion-item>
+       </ion-list> 
+       <div class="index_work_bt">&nbsp</div>
+       <ion-list>
+           <ion-item>
+                <span class="w140"  >所在城市</span>
+                <span class="f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.rgnNm}}</span>
+           </ion-item>
+           <ion-item>
+                <span class="w140"  >直属主管</span>
+                <span class="f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.supvrStfNum}}</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt">&nbsp</div>
+       <ion-list>
+           <ion-item>
+                <span class="w140">排班时间</span>
+                <span class="f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.baShiftMngStartTime}} ~ {{scheduleInfo.baShiftMngEndTime}}</span>
+           </ion-item>
+           <ion-item >
+                <span class="w140">应出勤天数</span>
+                <span class="color05 f_10 scheduleInfoItem" style="color:#b1b1b1;">{{scheduleInfo.reqAttendDays}}天</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt" ng-if="countList!=1">排班明细</div>
+       <ion-list ng-if="countList!=1">
+           <ion-item  ng-if="countList!=1" ng-repeat = "scheduleitem  in scheduleItems" ng-click="strInfo($index)">
+                <span class="w140"  >{{scheduleitem.schDt}}</span>
+                <span class="w140" style="display:none" >{{scheduleitem.schDtY}}</span>
+                <span class="w140" style="display:none" >{{scheduleitem.updtTm}}</span>
+                <span class="f_10 scheduleInfoItem">{{scheduleitem.strNm}} {{scheduleitem.schSitu}}</span>
+                <span class="float_r" ng-click="strInfo($index)"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;"></span>
+           </ion-item>
+           <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%" style="height: 0;"></ion-infinite-scroll>
+       </ion-list>
+        <div class="index_work_bt" ng-if="status.apprHisDisplay">审批历史</div>
+         <div class="shls clearfix" ng-if="status.apprHisDisplay">
+				<div class="shls_wen">
+					<div ng-repeat="apprHisInfo in approvalList">
+						<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+</ion-content>
+</div>
+<!-- 当天门店排班情况 -->
+<div ng-show="strShow">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">当天门店排班情况</h1>
+    </ion-header-bar>
+    <ion-content class="has-header"  style="bottom: 0px;">
+    <!-- baShiftMngApplInfo.html -->
+        <div class="wrap">
+           <div class="index_work_bt" style="line-height: 30px;"><p style="margin: 5px 0 0px;">{{strNm}}</p></div>
+           <ion-list>
+               <ion-item  ng-repeat = "strInfoitem  in strInfoItems">
+                <span class="w140"  >{{strInfoitem.schDt}}</span>
+                <span class="f_10 scheduleInfoItem">{{strInfoitem.stfNm}} {{strInfoitem.dicNm}}</span>
+           </ion-item>
+            </ion-list> 
+        </div>
+    </ion-content>
+</div>
+
+<!-- 长期在职审批 -->
+<div ng-show="apprShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack1()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">审批</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+    <!-- baShiftMngApplInfo.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix mb_15">
+				<li style="padding: 7px;width: 100%;margin:0;">
+					<textarea placeholder="请输入审批意见" style="width: 100%;" rows="12"
+						ng-model="scheduleInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center">
+		<div class="xiaoxi_quanxuan2">
+			<a class="btn_repoit1 btn_ww mt_10 ml10" style="margin-bottom: 10px;" ng-click="apprEntryAppl(0)" user-power="MSTF01006002">不通过</a>
+			<a class="btn_repoit2 btn_ww mt_10 mr10" style="margin-bottom: 10px;" ng-click="apprEntryAppl(1)" user-power="MSTF01006002">通过</a>
+		</div>
+	</ion-footer-bar>
+</div>
+
+<!-- 长期在职审批 -->
+<div ng-show="apprShow1">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack1()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">审批</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+    <!-- baShiftMngApplInfo.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix mb_15">
+				<li style="padding: 7px;width: 100%;margin:0;">
+					<input placeholder="本档期应出勤天数" style="width: 100%;"
+						ng-model="scheduleInfo.dataTime" maxLength="2" />
+				</li>
+				<li style="padding: 7px;width: 100%;margin:0;">
+					<textarea placeholder="请输入审批意见" style="width: 100%;" rows="12"
+						ng-model="scheduleInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center">
+		<div class="xiaoxi_quanxuan2">
+			<a class="btn_repoit1 btn_ww mt_10 ml10" style="margin-bottom: 10px;" ng-click="apprEntryAppl(0)" user-power="MSTF01006002">不通过</a>
+			<a class="btn_repoit2 btn_ww mt_10 mr10" style="margin-bottom: 10px;" ng-click="apprEntryAppl(1)" user-power="MSTF01006002">通过</a>
+		</div>
+	</ion-footer-bar>
+</div>
+<div>
+	<script type="text/ng-template" id="showImg.html">
+		<div ng-include="'common/html/showImg.html'"></div>
+	</script>
+</div>

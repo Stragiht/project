@@ -1,0 +1,58 @@
+<ion-header-bar class="header bar bar-header item-input-inset" >
+    <a class="header_left"  ui-sref="membRevisitRecInsert2"></a>
+    <div class="item-input-wrapper hide-on-keyboard-open" style="background-color:#fff;height: 32px;margin-left: 15%;margin-right: 5%;border-radius: 6px;line-height: 32px;padding: 0;">
+        <span class="search_img"></span>
+        <input  type="text" placeholder="请输入联系电话" id="searchbox2" style="background-color:#fff;margin-top: 2px;width: 79%;color: #b1b1b1;" ng-model="MembBas4App.params.phone" ng-change="searchMembByPhone(1)">
+        <span class="delete_img" ng-click="clearInput()" ng-if="clickState == false"></span>
+        <span class="delete_img_2" ng-click="clearInput()" ng-if="clickState"></span>
+    </div>
+</ion-header-bar>
+
+<!--<ion-header-bar class="bar bar-subheader bar-stable item-input-inset " style="padding: 10.66667px;height: 48px;background-color:#fff;background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);" >-->
+    <!--<div class="item-input-wrapper " style="height: 32px;line-height:32px;border-radius: 6px;">-->
+        <!--<div class="search_img" style="position: absolute;left: 50%;margin-left:-86px;top: 50%;margin-top: -16px;"></div>-->
+        <!--<input  type="text" placeholder="请输入联系电话" style="position:relative;text-align: center;left:16px;font-size:16px;margin-top: 5px;width: 100%;" ng-model="MembBas4App.params.phone" ng-change="searchMembByPhone(1)">-->
+        <!--<span class="delete_img" ng-click="clearInput()"></span>-->
+    <!--</div>-->
+<!--</ion-header-bar>-->
+
+
+<!--<ion-content class="light-bg">
+    <ion-list>
+        <div class="sousuo_line padding-left">
+            <span>
+                <h2 style="height:35px;line-height: 35px;margin-bottom: 0;"><span>罗容龙</span>：<span style="color:#b1b1b1;">15920463243</span></h2>
+            </span>
+        </div>
+    </ion-list>
+</ion-content>-->
+
+<ion-content class="light-bg Data" style="height: 100%;" delegate-handle="contentScrollSearch">
+    <ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefresh()"  refreshing-text="加载中..."></ion-refresher>
+    <div class="wrap data" style="height: 100%;" on-touch="hideKeyboard()">
+        <ion-list ng-repeat="mnp in membNameAndPhoneList" ng-click="selectMemb(mnp)">
+            <div class="bottom_line p-Left">
+                     <span>
+                        <h2 style="line-height: 35px;margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>
+                     </span>
+            </div>
+        </ion-list>
+        <!--<ion-list>-->
+            <!--<div class="sousuo_line padding-left">-->
+                <!--<span>-->
+                    <!--<h2 style="line-height: 35px;margin-bottom: 0;"><span ng-bind="MembBas4App.pageNum"></span>：<span style="line-height: 35px;margin-top2px;color:#b1b1b1;">15920463243</span></h2>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</ion-list>-->
+
+        <div class="no_data" ng-if="dataShow"> <!---->
+            <img src="common/images/bear.gif" width="100">
+            <p>没有符合条件的数据</p>
+        </div>
+
+        <!--<div style="position: absolute;width: 50px;height: 50px;background: #f4ca06;top:50%;left: 50%;"></div>-->
+
+    </div>
+
+    <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="hasNextPage"></ion-infinite-scroll>
+</ion-content>

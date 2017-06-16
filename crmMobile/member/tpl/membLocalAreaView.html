@@ -1,0 +1,27 @@
+<ion-header-bar align-title="center" class="header">
+    <div ui-sref="membDetailPersonalInfo({membNum:curMembNum})" class="p-Left">
+        <a class="header_left" >
+        <img src="common/images/fanhui_icon.png" width="14" height="20" class="back_left"></a>
+    </div>
+    <h1 style="font-size:1.4rem">所在地区</h1>
+</ion-header-bar>
+<ion-content class="has-header mem LocalArea"  overflow-scroll="false">
+    <ion-list>
+
+        <!--<ion-item>
+            <div style="width:300px; height: 500px; word-break:break-all;!important;">广东省广州市天河区体育西路城建大厦7C6757575675675哈斯理发师傅了沙发上</div>
+           &lt;!&ndash; <span class="w140"><span ng-bind="addressDet.locProv | addressFilter"></span><span
+                    ng-bind="addressDet.locCity | addressFilter"></span><span
+                    ng-bind="addressDet.locPref | addressFilter"></span><span ng-bind="addressDet.addrDtl"></span></span>&ndash;&gt;-->
+
+        <ion-item  class="bottom_line" style="min-height:55px !important;line-height: 25px;">
+            <!--<span class="w140">广东省广州市天河区体育西路城建大厦7C</span>-->
+<!--
+                <span ng-bind="addressDet.locProv | addressFilter"></span><span ng-bind="addressDet.locCity | addressFilter"></span><span ng-bind="addressDet.locPref | addressFilter"></span><span ng-bind="addressDet.addrDtl"></span>
+-->
+                <span ng-bind="addressDet.locProvNm"></span><span ng-bind="addressDet.locCityNm"></span><span ng-bind="addressDet.locPrefNm"></span><span ng-bind="addressDet.addrDtl"></span>
+
+        </ion-item>
+    </ion-list>
+</ion-content>
+

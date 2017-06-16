@@ -1,0 +1,293 @@
+<ion-header-bar align-title="center" class="header" style="position: relative;">
+    <a class="header_left" ui-sref="membRevisitTsk"></a>
+    <h1 style="font-size:1.4rem">详情</h1>
+    <a ui-sref="membRevisitRecInsert({curMembIndex:curIndex})" class="head_right" style="margin-right: 8%;" ng-if="membRevTskDeatil.rtnStat == 'D002'" user-power="MMEM01003002">
+        <div class="head_right_box2 float_l" style="padding: 5px 10px 0 10px;">
+            <img src="common/images/xzjl.png" width="22" height="22" >
+            <p>新增记录</p>
+        </div>
+        <div style="height: 20px;width: 1px;vertical-align:middle;background-color: rgb(50, 38, 204);;margin-top: 14px;float: left;"></div>
+    </a>
+    <!--<div class="float_l  color06"  style="padding-right: 8%;" ng-if="membRevTskDeatil.rtnStat != 'D001'">|</div>-->
+    <a class="header_right"  ng-click="openPopover($event)" >
+
+        <div class="head_right_box2" style="width: 3.8rem;float: left; padding-top: 14px;">
+            <img src="common/images/sandian.png" width="3" height="22">
+        </div>
+    </a>
+</ion-header-bar>
+
+
+
+<!--<ion-header-bar align-title="center"  class="header" style="padding-right: 5%">-->
+        <!--<a class="header_left" ui-sref="membRevisitTsk" ><img src="common/images/fanhui_icon.png" width="14" height="20" class="back_left"></a>-->
+        <!--<h1 style="font-size:1.4rem">详情</h1>-->
+        <!--<a ui-sref="membRevisitRecInsert({curMembIndex:curIndex})" class="head_right"-->
+           <!--style="width: 30px;height: 30px;float:right;display: inline-block;text-align: center;" user-power="MMEM01003002" ng-if="membRevTskDeatil.rtnStat != 'D001'">-->
+            <!--<div class="insert_img">新增记录</div>-->
+        <!--</a>-->
+
+        <!--&lt;!&ndash;<div class="menu_img"></div>&ndash;&gt;-->
+    <!--<div class="menu_img">新增记录</div>-->
+
+        <!--&lt;!&ndash;<img src="common/images/sandian.png" height="30" style="margin-right: 5%;margin-top: 5px;" ng-click="openPopover($event)"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<div style="padding: 15px;width: 30px;height: 38px;left: 85%" class="menu_img" ng-click="openPopover($event)" >&ndash;&gt;-->
+
+        <!--</div>-->
+
+<!--</ion-header-bar>-->
+<script id="ez-popover.html" type="text/ng-template">
+    <ion-popover-view class="light-bg" style="height: auto;width: 128px;top: 40px;left: 240px;margin-top: 12px !important;" user-power="MMEM01003001">
+        <ion-list class="popup" >
+            <div style="background-color: #fff;border-radius: 5px;">
+                <a ng-click="searchMemRevFbk()" class="item touch-item-0-m"  style="background-color:transparent;">
+                    <div class="padding-left"  user-power="MMEM01003003" >
+                        <div class="bottom_line" style="height:55px;line-height: 45px;" >
+                            <div class="hfzd_img"></div>
+                            <h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0; font-size:16px;">回访指导</h2>
+                        </div>
+                    </div>
+                </a>
+                <a ng-click="searchRevRec()" class="item touch-item-0-m"  style="background-color:transparent;">
+                    <div class="padding-left" user-power="MMEM01004001" style="width: 94%;">
+                        <div class="bottom_line" style="height:55px;line-height: 45px;background-size: 100% 0;">
+                            <div class="hfjl_img"></div>
+                            <h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;font-size:16px;">回访记录</h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </ion-list>
+    </ion-popover-view>
+</script>
+
+<ion-content  class="has-header stable">
+	   <ion-list >
+           <ion-item style="padding:0;border: none;">
+               <div class="p-Left" >
+                       <div class="memInfoItem_line">
+                           <span class="float_l">回访人员</span>
+                           <!--<div class="go_right_img2"></div>-->
+                           <span class="memInfoItem2 float_r"><span ng-bind="membRevTskDeatil.stfNm"></span></span>
+                       </div>
+               </div>
+               <!--<div class="p-Left" >-->
+                   <!--<div class="info_line row" style="padding: 0;">-->
+                       <!--<span class="col-25 h-lh" style="padding: 0;width: 25%;" >回访人员</span>-->
+                       <!--<span class="col-75 memInfoItem2 h-lh" style="padding: 0;width: 75%;">-->
+                           <!--<span class="float_r" ng-bind="membRevTskDeatil.stfNm"></span>-->
+                       <!--</span>-->
+                   <!--</div>-->
+               <!--</div>-->
+               <div class="p-Left" >
+                   <div class="memInfoItem_line" style="padding: 0;">
+                       <span class="float_l" >受访会员</span>
+                       <span class="memInfoItem2 float_r" ng-bind="membRevTskDeatil.membNm"></span>
+                   </div>
+               </div>
+               <div class="p-Left" >
+                   <div class="memInfoItem_line" style="padding: 0;" ng-click="callPhone()">
+                       <span class="float_l">联系电话</span>
+                       <span class="memInfoItem2 float_r">
+                           <div class="float_r phone_img"></div>
+                           <span class="float_r" ng-bind="membRevTskDeatil.phone"></span>
+                       </span>
+                   </div>
+               </div>
+               <div class="p-Left" >
+                   <div class="memInfoItem_line" style="padding: 0;" ng-click="callWx()">
+                       <span class="float_l" >微信账号</span>
+                       <span class="memInfoItem2 float_r">
+                           <div class="float_r weixin_img"></div>
+                           <span class="float_r" ng-bind="membRevTskDeatil.bindWctAcct"></span>
+
+                       </span>
+                   </div>
+               </div>
+               <div class="p-Left" >
+                   <div class="memInfoItem_line" style="padding: 0;">
+                       <span class="float_l">应回访时间</span>
+                       <span class="memInfoItem2 float_r">
+                           <span class="float_r" ng-bind="membRevTskDeatil.rtnTm | date:'MM-dd'"></span>
+                       </span>
+                   </div>
+               </div>
+               <div style="border: none;" >
+                   <div class="memInfoItem_line" style="padding: 0;">
+                       <span class="float_l p-Left" >回访状态</span>
+                       <span class="memInfoItem2 float_r">
+                           <span class="float_r" style="color: red;" ng-bind="membRevTskDeatil.rtnStat | dicNameFilter:'C024'"></span>
+                       </span>
+                   </div>
+               </div>
+               <!--<div style="line-height: 45px;border: none;" >-->
+                   <!--<div class="memInfoItem_line4">-->
+                       <!--<span class="w140 float_l padding-left">回访状态</span>-->
+                       <!--<span class=" memInfoItem2 float_r">屈臣氏</span>-->
+                   <!--</div>-->
+               <!--</div>-->
+           </ion-item >
+
+           <ion-item class="item item-divider divider-Left" style="border: none;" ng-if="membRevFbkList.length > 0">
+               <span>回访指导</span>
+           </ion-item>
+
+           <ion-item class="top_line" style="padding: 0;border: none;background-color:none;" >
+               <div ng-repeat="mrfl in membRevFbkList">
+                   <div  ng-if="$index==0 && membRevFbkList.length > 1">
+                       <a class="item touch-item-1" style="margin: 1px 0 0 0"  ui-sref="membRevisitFbkDetail({curMembIndex:curIndex,curIndex:$index})" >
+                           <div class="p-Left ">
+                               <div class="memInfoItem_line">
+                                   <span class="float_l" ng-bind="mrfl.fbkTm | date:'MM-dd HH:mm'"></span>
+                                   <span class="memInfoItem2 float_r" >
+                                       <div class="float_r go_right_img" ></div>
+                                       <span class="float_r" ng-bind="mrfl.fbkCont | textAbbr:'8'"></span>
+                                   </span>
+                               </div>
+                           </div>
+                       </a>
+                   </div>
+
+                   <div  ng-if="$index!=0 && $index!=membRevFbkList.length-1">
+                       <a class="item touch-item-1" ui-sref="membRevisitFbkDetail({curMembIndex:curIndex,curIndex:$index})" >
+                           <div  class="p-Left">
+                               <div class="memInfoItem_line" style="padding: 0;">
+                                   <span class="float_l" ng-bind="mrfl.fbkTm | date:'MM-dd HH:mm'"></span>
+                               <span class="memInfoItem2 float_r" >
+                                   <div class="float_r go_right_img" ></div>
+                                   <span class="float_r" ng-bind="mrfl.fbkCont | textAbbr:'8'"></span>
+                               </span>
+                               </div>
+                           </div>
+                       </a>
+                   </div>
+
+                   <div  ng-if="$index==membRevFbkList.length-1 || membRevFbkList.length == 1">
+                       <div class=" " style="margin: 1px 0 0 0;">
+                       <a class="item touch-item-0 memInfoItem_line" ui-sref="membRevisitFbkDetail({curMembIndex:curIndex,curIndex:$index})" >
+                            <div class="p-Left ">
+                                <span class="float_l" ng-bind="mrfl.fbkTm | date:'MM-dd HH:mm'"></span>
+                                   <span class="memInfoItem2 float_r " >
+                                       <div class="float_r go_right_img" ></div>
+                                       <span class="float_r" ng-bind="mrfl.fbkCont | textAbbr:'8'"></span>
+                                   </span>
+                            </div>
+
+
+
+                       </a>
+                       </div>
+                   </div>
+
+
+               </div>
+
+
+           </ion-item>
+
+           <div ng-repeat="mrtd in membRevTskDtlList">
+
+               <ion-item class="item item-divider divider-Left" style="border: none;" >
+                   <span>相关商品<span ng-bind="$index+1"></span></span>
+               </ion-item>
+
+               <ion-item style="padding:0;border: none;" >
+                   <div class="p-Left top_line" >
+                       <div class="memInfoItem_line" style="padding: 0;">
+                           <span class="float_l" >购买商品</span>
+                       <span class="memInfoItem2 float_r">
+                           <span class="float_r" ng-bind="mrtd.gdsSpecDtlNm"></span>
+                       </span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line" style="padding: 0;">
+                           <span class="float_l" >购买时间</span>
+                       <span class="memInfoItem2 float_r" >
+                           <span class="float_r" ng-bind="mrtd.buyTm | date:'yyyy-MM-dd'"></span>
+                       </span>
+                       </div>
+                   </div>
+
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line" style="padding: 0;">
+                           <span class="float_l" >回访次数</span>
+                       <span class="memInfoItem2 float_r" >
+                           <span class="float_r">第<span ng-bind="mrtd.fbkTimes"></span>次</span>
+                       </span>
+                       </div>
+                   </div>
+                   <div class="p-Left" >
+                       <div class="memInfoItem_line" style="padding: 0;">
+                           <span class="float_l" >回访时间</span>
+                       <span class="memInfoItem2 float_r" >
+                           <span class="float_r">第<span ng-bind="mrtd.fbkInterval"></span>天</span>
+                       </span>
+                       </div>
+                   </div>
+                   <div  style="border: none;">
+                       <div class="memInfoItem_line " style="padding: 0;">
+                           <span class="float_l p-Left" style="width: 25%;" >回访事项</span>
+                           <span class="memInfoItem2 float_r"  style="width: 75%;white-space:normal;line-height: 20px;margin: 18px 0;  ">
+                                <span class="float_r" ng-bind="mrtd.rtnItem"></span>
+                           </span>
+                       </div>
+                   </div>
+
+               </ion-item >
+
+           </div>
+
+
+
+           <!--<ion-item class="item item-divider" style="border: none;" >
+               <span style="margin-left: -5px;">相关商品2</span>
+           </ion-item>
+
+           <ion-item class="item_padding" style="padding: 0 0 1px 0;border: none;"  >
+               <div class="padding-left top_line" >
+                   <div class="info_line row" style="padding: 0;">
+                       <span class="col float_l w140" style="padding:18px 0 0 0;">购买商品</span>
+                       <span class="col-75 memInfoItem2 float_l" style="padding:18px 0 0 25px;">
+                           <span class="float_l">比度克拔毒膏</span>
+                       </span>
+                   </div>
+               </div>
+               <div class="padding-left" >
+                   <div class="info_line row" style="padding: 0;">
+                       <span class="col float_l w140" style="padding:18px 0 0 0;">购买时间</span>
+                       <span class="col-75 memInfoItem2 float_l" style="padding:18px 0 0 25px;">
+                           <span class="float_l">2015-08-30</span>
+                       </span>
+                   </div>
+               </div>
+               <div class="padding-left" >
+                   <div class="info_line row" style="padding: 0;">
+                       <span class="col float_l w140" style="padding:18px 0 0 0;">回访时间</span>
+                       <span class="col-75 memInfoItem2 float_l" style="padding:18px 0 0 25px;">
+                           <span class="float_l">第1天</span>
+                       </span>
+                   </div>
+               </div>
+               <div class="padding-left" >
+                   <div class="info_line row" style="padding: 0;">
+                       <span class="col float_l w140" style="padding:18px 0 0 0;">回访时间</span>
+                       <span class="col-75 memInfoItem2 float_l" style="padding:18px 0 0 25px;">
+                           <span class="float_l">第1天</span>
+                       </span>
+                   </div>
+               </div>
+               <div style="border: none;" >
+                   <div class="info_line row " style="padding: 0;">
+                       <span class="col float_l w140 " style="padding:18px 0 0 10px;">回访事项</span>
+                       <span class="col-75 memInfoItem2 float_l" style="padding:18px 0 0 33px;">
+                           <span class="float_l">信息提醒-提醒顾客使用方法</span>
+                       </span>
+                   </div>
+               </div>
+
+           </ion-item >-->
+       </ion-list> 
+</ion-content>

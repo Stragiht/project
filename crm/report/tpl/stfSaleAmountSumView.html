@@ -1,0 +1,95 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        查看
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+
+<div ng-controller="stfSaleAmountSumViewController as ctrl">
+    <form name="form" class="form-horizontal">
+        <div class="panel-heading">
+            <!--1.人员基本信息-->
+            <accordion close-others="oneAtATime">
+                <accordion-group is-open="status.baseInfoOpen">
+                    <accordion-heading>
+                        1.人员基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.baseInfoOpen, 'fa-angle-right': !status.baseInfoOpen}"></i>
+                    </accordion-heading>
+                    <div class="form-group">
+                        <div class="mt_6" style="margin-left: 32px;">
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">人员编号：{{param.stfNum}}</label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">姓名：{{param.stfNm}}</label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">职位：{{param.posNum | stfBasPosNum}}</label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">直属主管：{{param.supvrStfNm}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mt_6" style="margin-left: 32px;">
+                            <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">所在城市：{{param.cityNum | stfBasPCV}}</label>
+                        </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="panel-heading">
+            <!--2.销售概况-->
+            <accordion close-others="oneAtATime">
+                <accordion-group is-open="status.summaryOpen">
+                    <accordion-heading>
+                        2.销售概况 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.summaryOpen, 'fa-angle-right': !status.summaryOpen}"></i>
+                    </accordion-heading>
+                   <div class="form-group">
+                        <div class="mt_6" style="margin-left: 32px;">
+                            <label class="col-xs-6 control-label label-text-left" style="text-align: left;padding-left: 0px;">销售日期：{{param.saleDate}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+	                    <div class="mt_6" style="margin-left: 32px;">
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">实际销售额：<span class="text-red">{{totalAmt | currency : "￥"}}</span></label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">排名：<span class="text-red">{{param.ranking}}</span></label>
+	                    </div>
+                    </div>
+                    <div class="form-group">
+	                    <div class="mt_6" style="margin-left: 32px;">
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">其下人数：<span class="text-red">{{param.stfUnderQty | number}}</span></label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">人均单产：<span class="text-red">{{personAvgAmt | currency : "￥"}}</span></label>
+	                    </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="panel-heading">
+            <!--3.销售明细-->
+            <accordion close-others="oneAtATime">
+                <accordion-group is-open="status.detailOpen">
+                    <accordion-heading>
+                        3.销售明细 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.detailOpen, 'fa-angle-right': !status.detailOpen}"></i>
+                    </accordion-heading>
+                    <div class="form-group">
+                        <div class="mt_6" style="margin-left: 32px;">
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">每日平均：<span class="text-red">{{avgAmt | currency : "￥"}}</span></label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">单日最大值：<span class="text-red">{{maxAmt | currency : "￥"}}</span></label>
+	                        <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">单日最小值：<span class="text-red">{{minAmt | currency : "￥"}}</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-8" style="margin-left: 16px;">
+					        <div ng-table="ctrl.tableParams">
+					            <table class="table table-bordered table-condensed   table-striped table-hover">
+					                <tr ng-repeat="dataLine in saleReportDtlList">
+					                    <td title="'日期'" width="'80px'">{{dataLine.saleDate | date:"yyyy-MM-dd"}}</td>
+					                    <td title="'门店'" width="'281px'" style="word-break: break-all;">{{dataLine.strNm}}</td>
+					                    <td title="'提交金额'" width="'120px'" style="text-align: right;">{{dataLine.saleAmt | currency : "￥"}}</td>
+					                </tr>
+					            </table>
+					        </div>
+				        </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="panel-heading">
+            <a class="btn btn-default" ng-click="back()">返回</a>
+        </div>
+    </form>
+</div>

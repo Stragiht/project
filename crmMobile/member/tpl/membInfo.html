@@ -1,0 +1,495 @@
+<style>
+    .user-defined .item-complex .item-content {
+        padding: 0;
+    }
+    .scroll-content{/*background: #f5f5f9;*/background:#fff;
+    }
+
+    /*.item-right-editable .item-content {*/
+        /*-webkit-transition-property: -webkit-transform;*/
+        /*-moz-transition-property: -moz-transform;*/
+        /*transition-property: transform;*/
+        /*transform: translate3d(-116px, 0px, 0px);*/
+    /*}*/
+</style>
+<div ng-if="membInfoSearchShow.info">
+    <ion-header-bar align-title="center" class="header">
+        <a class="header_left" ui-sref="home"></a>
+        <h1 style="font-size:1.4rem">会员信息</h1>
+        <a ng-click="showFilter(true, 'creator')"  style="color: #fff;right: 0;top: 0;font-size: 1rem;line-height: 3rem;
+        width:15%;height:38px;display:block;text-align: center;z-index: 999;position: absolute;" user-power="MMEM01001001" >
+            <div class="choose_img">筛选</div><!--ng-click="openPopover($event);"-->
+        </a>
+    </ion-header-bar>
+
+<div user-power="MMEM01001001">
+
+
+<ion-header-bar class="bar bar-subheader bar-stable item-input-inset"
+                style="padding: 10.66667px 1.4rem;height: 48px;background-color:#fff;background-image:none;border-style: none;border-bottom: none;
+                /*background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+                background-position: bottom ;
+	            background-size: 100% 0px;background-repeat: no-repeat;
+                background-image:-webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);*/"
+        >
+
+<!--
+        <label class="item-input-wrapper " ui-sref="membSelect" style="height: 32px;border-radius: 6px;position:relative;" user-power="MMEM01001001">
+-->
+        <label class="item-input-wrapper " ng-click="enterMembSearch()" style="height: 32px;border-radius: 6px;position:relative;" user-power="MMEM01001001">
+                <span class="search_img" style="position: absolute;left: 50%;margin-left: -80px;"></span>
+                <!--<input  type="text" placeholder="请输入联系电话2" readonly="readonly"  style="left:-5%;font-size:16px;margin-top: 5px;width: 100%;" >-->
+                <div style="height: 32px;width: 100%;background: #eee;text-align: center;color: #b1b1b1;padding-top:6px;font-size:15px;">请输入联系电话</div>
+        </label>
+</ion-header-bar>
+
+<ion-content  class="Data"  style="margin-top: 47px;bottom: 48px;background: #f5f5f9;" delegate-handle="contentScroll" overflow-scroll="false">
+
+  <!--  <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>-->
+    <ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefresh()"  refreshing-text="加载中..."></ion-refresher>
+
+    <div class="wrap data" style="height: 100%;">
+        <div class="user-defined" ng-if="membList != undefined && membList != '' && membList.length > 0" >
+            <ion-list>
+                <div   ng-repeat="memb in membList">
+                    <a class="item  item-complex item-right-editable" style="border-width: 0;margin:0;" ng-click="checkMembDetailInfo(memb.membNum)" ng-if="$index < membList.length-1">
+                            <ion-item class="touch-item-0-m " >
+                                <div class="bottom_line"  >
+                                    <span class="w240 float_l p-Left" >
+                                        <div class="hycz_img"><span ng-bind="memb.membNm | limitTo:-2"></span></div>
+                                        <h2 class="f_H2"><span ng-bind="memb.phone"></span></h2>
+                                        <p class="f_p"><span ng-bind="memb.crtdTm | dateFormat"></span> &nbsp;&nbsp;<span ng-bind="memb.crtdStfNm"></span>创建</p>
+                                    </span>
+                                    <div class="go_right_img3"></div>
+
+                                    <ion-option-button class="button-assertive"  style="font-size:26px;padding: 0 17px;" ng-click="callPhone(memb.phone)"><i class="fa fa-phone"></i></ion-option-button>
+                                    <ion-option-button class="button-balanced" style="font-size:26px;" ng-click="callWx()"><i class="fa fa-weixin"></i>
+                                    </ion-option-button>
+                                </div>
+                            </ion-item>
+                    </a>
+                    <a class="item touch-item-0-m item-complex item-right-editable" ng-click="checkMembDetailInfo(memb.membNum)" ng-if="$index == membList.length-1">
+                        <ion-item class="touch-item-0-m ">
+                            <div class="bottom_line" >
+                                    <span class="w240 float_l p-Left" >
+                                        <div class="hycz_img"><span ng-bind="memb.membNm | limitTo:-2"></span></div>
+                                        <h2 class="f_H2"><span ng-bind="memb.phone"></span></h2>
+                                        <p class="f_p"><span ng-bind="memb.crtdTm | dateFormat"></span> &nbsp;&nbsp;<span ng-bind="memb.crtdStfNm"></span>创建</p>
+                                    </span>
+                                <div class="go_right_img3"></div>
+
+                                <ion-option-button class="button-assertive"  style="font-size:26px;" ng-click="callPhone(memb.phone)"><i class="fa fa-phone"></i></ion-option-button>
+                                <ion-option-button class="button-balanced" style="font-size:26px;" ng-click="callWx()"><i class="fa fa-weixin"></i>
+                                </ion-option-button>
+                            </div>
+                        </ion-item>
+                    </a>
+                </div>
+
+                <!--</a>-->
+                <!--wjptest-->
+
+
+
+                    <!--<ion-item class="p-Left" style="border-width: 0;" ng-repeat="memb in membList" ng-if="membList.length > 0">-->
+                        <!--&lt;!&ndash;<a ui-sref="membDetailInfo({memIndex:$index})">&ndash;&gt;-->
+                        <!--<div class="bottom_line" >-->
+                            <!--<a ui-sref="membDetailInfo({membNum:memb.membNum})">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img"><span ng-bind="memb.membNm | limitTo:-2"></span></div>-->
+                                <!--<h2 class="f_H2"><span ng-bind="memb.phone"></span></h2>-->
+                                <!--<p class="f_p"><span ng-bind="memb.crtdTm | dateFormat"></span> &nbsp;&nbsp;<span ng-bind="memb.crtdStfNm"></span>创建</p>-->
+                            <!--</span>-->
+                                <!--<div class="go_right_img3"></div>-->
+                            <!--</a>-->
+                            <!--<ion-option-button class="button-assertive"  style="font-size:26px;" ng-click="callPhone(memb.phone)"><i class="fa fa-phone"></i></ion-option-button>-->
+                            <!--<ion-option-button class="button-balanced" style="font-size:26px;" ng-click="callWx()"><i class="fa fa-weixin"></i>-->
+                            <!--</ion-option-button>-->
+                        <!--</div>-->
+                    <!--</ion-item>-->
+
+                    <!--<ion-item  style="border-width: 0;padding: 0;" ng-repeat="memb in membList" ng-if="membList.length == last">-->
+                        <!--&lt;!&ndash;<a ui-sref="membDetailInfo({memIndex:$index})">&ndash;&gt;-->
+                        <!--<div class="bottom_line p-Left" >-->
+                            <!--<a ui-sref="membDetailInfo({membNum:memb.membNum})">-->
+                                <!--<span class="w240 float_l">-->
+                                    <!--<div class="hycz_img"><span ng-bind="memb.membNm | limitTo:-2"></span></div>-->
+                                    <!--<h2 class="f_H2"><span ng-bind="memb.phone"></span></h2>-->
+                                    <!--<p class="f_p"><span ng-bind="memb.crtdTm | dateFormat"></span> &nbsp;&nbsp;<span ng-bind="memb.crtdStfNm"></span>创建</p>-->
+                                <!--</span>-->
+                                <!--<div class="go_right_img3"></div>-->
+                            <!--</a>-->
+                            <!--<ion-option-button class="button-assertive"  style="font-size:26px;" ng-click="callPhone(memb.phone)"><i class="fa fa-phone"></i></ion-option-button>-->
+                            <!--<ion-option-button class="button-balanced" style="font-size:26px;" ng-click="callWx()"><i class="fa fa-weixin"></i>-->
+                            <!--</ion-option-button>-->
+                        <!--</div>-->
+
+                    <!--</ion-item>-->
+                    <!--<ion-item style="text-align: center;border-width: 0px;height: 80px;background-color: inherit;">-->
+                        <!--没有更多了-->
+                    <!--</ion-item>-->
+
+            </ion-list>
+        </div>
+
+        <!--<div class="xiaoxizhongxin_bj1">
+            <ion-list>
+                <ion-item style="border-style:hidden; border-bottom: 1px solid #ddd; " class="stfItem" ng-repeat="stfItem in stfList">
+                    <a href="" ui-sref="stfInfo({stfNum:stfItem.stfNum})">
+                        <div class="xiaoxi_img2">{{stfItem.stfNm | stfNmLast2}}</div>
+                        <div class="xiaoxi_line">
+                            <div class="xiaoxizhongxin_text4">
+                                <h2 style=" line-height: 25px;">{{stfItem.phone}}</h2>
+                                <p  style=" line-height: 20px;">{{stfItem.strNm | characters : 12}}</p>
+                            </div>
+                            <span class="float_r  span_l" style="margin-right:30px;">{{stfItem.posNm}} </span>
+                            <span class="float_r line_height50"><img src="common/images/you_btn.png" style="position: absolute;top: 29px;right: 16px;"></span>
+                        </div>
+                    </a>
+                    <ion-option-button class="button-assertive"  style="font-size:26px;" ng-click="callPhone(stfItem.phone)"><i class="fa fa-phone"></i></ion-option-button>
+                    <ion-option-button class="button-balanced" style="font-size:26px;" ng-click="callWeixin()"><i class="fa fa-weixin"></i></ion-option-button>
+                </ion-item>
+            </ion-list>
+        </div>-->
+           <!--&lt;!&ndash; <ion-list>-->
+                <!--<ion-item class="padding-left"style="border: none;" >-->
+                    <!--<a ui-sref="memInfo">-->
+                        <!--<div class="hycz_line">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img">小龙</div>-->
+                                <!--<h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">18688955647</h2>-->
+                                <!--<p style="line-height: 28px;color:#b1b1b1;">今天 小明创建 </p>-->
+                            <!--</span>-->
+                            <!--<div class="go_right_img3"></div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--<ion-option-button class="button-assertive"  style="font-size:26px;"><i class="fa fa-phone"></i></ion-option-button>-->
+                    <!--<ion-option-button class="button-balanced" style="font-size:26px;"><i class="fa fa-weixin"></i>-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+            <!--<ion-list>-->
+                <!--<ion-item class="padding-left"style="border: none;" >-->
+                    <!--<a ui-sref="memInfo">-->
+                        <!--<div class="hycz_line">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img">小龙</div>-->
+                                <!--<h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">18688955647</h2>-->
+                                <!--<p style="line-height: 28px;color:#b1b1b1;">今天 小明创建 </p>-->
+                            <!--</span>-->
+                            <!--<div class="go_right_img3"></div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--<ion-option-button class="button-assertive"  style="font-size:26px;"><i class="fa fa-phone"></i></ion-option-button>-->
+                    <!--<ion-option-button class="button-balanced" style="font-size:26px;"><i class="fa fa-weixin"></i>-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+            <!--<ion-list>-->
+                <!--<ion-item class="padding-left"style="border: none;" >-->
+                    <!--<a ui-sref="memInfo">-->
+                        <!--<div class="hycz_line">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img">小龙</div>-->
+                                <!--<h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">18688955647</h2>-->
+                                <!--<p style="line-height: 28px;color:#b1b1b1;">今天 小明创建 </p>-->
+                            <!--</span>-->
+                            <!--<div class="go_right_img3"></div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--<ion-option-button class="button-assertive"  style="font-size:26px;"><i class="fa fa-phone"></i></ion-option-button>-->
+                    <!--<ion-option-button class="button-balanced" style="font-size:26px;"><i class="fa fa-weixin"></i>-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+            <!--<ion-list>-->
+                <!--<ion-item class="padding-left"style="border: none;" >-->
+                    <!--<a ui-sref="memInfo">-->
+                        <!--<div class="hycz_line">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img">小龙</div>-->
+                                <!--<h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">18688955647</h2>-->
+                                <!--<p style="line-height: 28px;color:#b1b1b1;">今天 小明创建 </p>-->
+                            <!--</span>-->
+                            <!--<div class="go_right_img3"></div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--<ion-option-button class="button-assertive"  style="font-size:26px;"><i class="fa fa-phone"></i></ion-option-button>-->
+                    <!--<ion-option-button class="button-balanced" style="font-size:26px;"><i class="fa fa-weixin"></i>-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+            <!--<ion-list>-->
+                <!--<ion-item class="padding-left"style="border: none;" >-->
+                    <!--<a ui-sref="memInfo">-->
+                        <!--<div class="hycz_line">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img">小龙</div>-->
+                                <!--<h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">18688955647</h2>-->
+                                <!--<p style="line-height: 28px;color:#b1b1b1;">今天 小明创建 </p>-->
+                            <!--</span>-->
+                            <!--<div class="go_right_img3"></div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--<ion-option-button class="button-assertive"  style="font-size:26px;"><i class="fa fa-phone"></i></ion-option-button>-->
+                    <!--<ion-option-button class="button-balanced" style="font-size:26px;"><i class="fa fa-weixin"></i>-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+            <!--</ion-list>-->
+            <!--<ion-list>-->
+                <!--<ion-item class="padding-left"style="border: none;" >-->
+                    <!--<a ui-sref="memInfo">-->
+                        <!--<div class="hycz_line">-->
+                            <!--<span class="w240 float_l">-->
+                                <!--<div class="hycz_img">小龙</div>-->
+                                <!--<h2 style="line-height: 28px;margin-top: 13px;margin-bottom: 0;">18688955647</h2>-->
+                                <!--<p style="line-height: 28px;color:#b1b1b1;">今天 小明创建 </p>-->
+                            <!--</span>-->
+                            <!--<div class="go_right_img3"></div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--<ion-option-button class="button-assertive"  style="font-size:26px;"><i class="fa fa-phone"></i></ion-option-button>-->
+                    <!--<ion-option-button class="button-balanced" style="font-size:26px;"><i class="fa fa-weixin"></i>-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+            <!--</ion-list>&ndash;&gt;-->
+        <!--</div>-->
+        <div class="no_data" ng-if="dataShow">
+            <img src="common/images/bear.gif" width="80">
+            <p>没有符合条件的数据</p>
+        </div>
+    </div>
+    <!--<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>-->
+    <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="hasNextPage"></ion-infinite-scroll>
+</ion-content>
+
+
+<!--筛选界面-->
+<!--<script id="sx-popover.html" type="text/ng-template">-->
+    <!--<ion-popover-view style="width: 100%;height: 100%;margin-left: 0;padding:0;left: 0!important; position: absolute; border-radius: 0;">-->
+        <!--<div class="scroll-content  stable-bg" style="margin: 0;">-->
+            <!--<div class="row" style="padding: 0;margin: 0;" >-->
+                <!--<ul class="col col-50 show_nav" style="height:1000px;border-right:solid 1px #ddd;padding: 0;text-indent: 1rem;">-->
+                        <!--<li class="memInfoItem_line3 stable-bg" >-->
+                            <!--<span>创建人员</span>-->
+                        <!--</li>-->
+
+                        <!--<li class="memInfoItem_line3 light-bg">-->
+                           <!--<span>创建时间</span>-->
+                        <!--</li>-->
+                <!--</ul>-->
+
+                <!--<ul class="col col-50 show_con" style="height:1000px;padding: 0;" >-->
+                    <!--<li><ion-radio ng-model="choice" ng-value="A" style="height: 48px;font-size:14px;">全部</ion-radio></li>-->
+                    <!--<li><ion-radio ng-model="choice" ng-value="B" style="height: 48px;font-size:14px;">小明</ion-radio></li>-->
+                    <!--<li><ion-radio ng-model="choice" ng-value="C" style="height: 48px;font-size:14px;">小龙</ion-radio></li>-->
+                    <!--<li><ion-radio ng-model="choice" ng-value="D" style="height: 48px;font-size:14px;">小可</ion-radio></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</ion-popover-view>-->
+
+<!--</script>-->
+
+
+<!--<script>-->
+<!--$(document).ready(function(){-->
+    <!--$('.show_nav li').click(function(event) {-->
+        <!--$(this).addClass('active').siblings().removeClass('active');-->
+        <!--$('.show_con>li').eq($(this).index()).show().siblings().hide();-->
+    <!--});-->
+<!--});-->
+ <!--</script>-->
+</div>
+
+
+
+<!--底部Tab栏-->
+<!--<ion-footer-bar align-title="center" ng-show="showFlg" style="width: auto;" >
+    &lt;!&ndash;
+    <ion-modal-view></ion-modal-view>
+    &ndash;&gt;
+    <ul class="nav top_line">
+        <li style="width:33%" >
+            <a href="#" class="active">
+                <div class="icos hyxx"></div>
+                <p>会员信息</p>
+            </a>
+        </li>
+        <li style="width:33%">
+            <a href="" ui-sref="membOperateMenu" ui-calendar="true">
+                <div class="icos hycz"></div>
+                <p>会员操作</p>
+            </a>
+        </li>
+        <li style="width:33%">
+            <a href="" ui-sref="membRevisitMenu">
+                <div class="icos bahf"></div>
+                <p>BA回访</p>
+            </a>
+        </li>
+    </ul>
+</ion-footer-bar>-->
+
+
+<!-- 筛选画面 -->
+<div ng-show="pageShow.filter" class="membInfo" user-power="MMEM01001001">
+    <ion-header-bar align-title="center"  class="header">
+        <a class="header_left" ng-click="cancelFilter()"></a>
+        <h1 style="font-size:1.4rem">会员信息</h1>
+        <a ng-click="cancelFilter()" class="head_right" style="color: #fff;right: 0;top: 0;font-size: 1rem;line-height: 3rem;
+    width:15%;height:38px;display:block;text-align: center;z-index: 999;position: absolute;">
+                <!--<img src="common/images/xxx.png" width="22" height="22">-->
+                <div class="del_img">取消</div>
+        </a>
+    </ion-header-bar>
+
+    <ion-content class="has-header shaixuan" style="position: absolute;z-index: 99999;bottom: 42px;    top: 49px;" delegate-handle="contentScrollFilter">
+        <div class="wrap" >
+            <!--<div class="saixuan_box right_line" style="height:{{shaixuanBoxHeight}}">-->
+            <div class="saixuan_box thinner-border"  id="sxTitle" style="background: #f5f5f9;">
+                <ul class="rules clearfix">
+                    <li class="bottom_line" ng-class="{'acirve':pageShow.staff}" style="line-height:54px;"><a ng-click="showFilter(true, 'creator')" style="height: 53px;"><span >创建人员</span></a></li>
+                    <li class="bottom_line" ng-class="{'acirve':pageShow.date}" style="line-height:55px;"><a ng-click="showFilter(false, 'creatTime')" style="height: 54px;"><span >创建时间</span></a></li>
+                </ul>
+            </div>
+            <!--<div class="saixuan_box2" style="height:{{shaixuanBoxHeight}}">-->
+            <div class="saixuan_box2" style="height:auto;overflow: hidden;" id="sxContent">
+                <div class="rules clearfix" ng-show="pageShow.date" style="border-bottom: 0;">
+                    <ion-radio class="memInfoItem_line2" name="condDate" ng-value="initValue.all" ng-model="initValue.selectedDate" ng-click="dateClick(initValue.all, '', 'ALL')" style="border-top:0">
+                        全部
+                    </ion-radio>
+                    <ion-radio name="condDate" ng-value="initValue.today" ng-model="initValue.selectedDate" ng-click="dateClick(initValue.today, initValue.today, 'TODAY')">
+                        今日
+                    </ion-radio>
+                    <ion-radio name="condDate" ng-value="initValue.week" ng-model="initValue.selectedDate" ng-click="dateClick(initValue.week, initValue.today, 'THISWEEK')">
+                        本周
+                    </ion-radio>
+                    <ion-radio name="condDate" ng-value="initValue.month" ng-model="initValue.selectedDate" ng-click="dateClick(initValue.month, initValue.today, 'THISMONTH')">
+                        本月
+                    </ion-radio>
+                    <ion-toggle ng-model="toggleStatus.dateChecked"ng-model="initValue.selectedDate" ng-checked="toggleStatus.dateChecked" ng-change="dateClick('', '', 'CUSTOM')" style="">
+                        自定义
+                    </ion-toggle>
+                    <div class="item" ng-if="toggleStatus.dateChecked" style="border-top:0;top: -6px;padding-top: 0;border-color: #fff;    height: 130px;">
+                        <p>
+                            <!--<input type="date" class="zdy_time" ng-model="inputStartDate">
+                            <span class="float_l" style="line-height:30px;">&nbsp;~</span>
+                            <input type="date" class="zdy_time" ng-model="inputEndDate">-->
+                            <input type="text" class="zdy_time" ng-model="initValue.inputStartDate" readonly="readonly" ng-click="openDatePicker(1)" style="text-align: center;line-height: 30px;">
+                            <span class="float_l" style="line-height:30px;">&nbsp;~</span>
+                            <input type="text" class="zdy_time" ng-model="initValue.inputEndDate" readonly="readonly" ng-click="openDatePicker(2)" style="text-align: center;line-height: 30px;">
+                        </p>
+                        <a style="display: block;width: 60px;height: 30px;border-radius:5px; float:left; background:#6245ff; text-align:center; color:#fff !important; padding-top: 5px;"  ng-click="dateClick(memBas.params.startCrtdTm, memBas.params.endCrtdTm, 'BTN')">确定</a>
+                    </div>
+                </div>
+                <div class="rules clearfix" ng-show="pageShow.staff" style="border-bottom: 0;">
+                   <!-- <ion-radio style="border-top:0px">
+                        全部
+                    </ion-radio>
+                    <ion-radio>
+                        我
+                    </ion-radio>-->
+                    <ion-radio name="staff" ng-value="0000" ng-model="initValue.selectedStfNum" ng-click="staffClick('')" style="border-top:0px">
+                        全部
+                    </ion-radio>
+                    <ion-radio name="staff" ng-value="entryStfNum" ng-model="initValue.selectedStfNum" ng-click="staffClick(entryStfNum)">
+                        我
+                    </ion-radio>
+                    <ion-radio  name="staff" ng-value="person.stfNum" ng-model="initValue.selectedStfNum" ng-click="staffClick(person.stfNum)" ng-repeat="person in createPersonnel" >
+                        <span ng-bind="person.stfNm"></span>
+
+                    </ion-radio>
+                    <!--<ion-radio>
+                        小明
+                    </ion-radio>
+                    <ion-radio>
+                        小可
+                    </ion-radio>-->
+                    <!--<ion-toggle ng-model="toggleStatus.staffChecked" ng-checked="toggleStatus.staffChecked">
+                        指定人员
+                    </ion-toggle>-->
+                    <!--<div class="item" ng-if="toggleStatus.staffChecked" style="border-top:0px;top: -6px;padding-top: 0px;">
+                        <input type="text" class="zdy_time" ng-model="inputStfNm" maxLength="10" placeholder="请输入姓名">
+                        <a class="btn_queding" ng-click="btnStaffClick(inputStfNm)">确定</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</div>
+</div>
+
+
+<div ng-if="membInfoSearchShow.search">
+    <ion-header-bar  class="header bar bar-header item-input-inset" >
+        <a class="header_left" ng-click="backMembInfo()" ></a>
+        <div class="item-input-wrapper" style="background-color:#fff;height: 32px;margin-left: 15%;margin-right: 5%;border-radius: 6px;line-height: 32px;padding: 0;position: relative;">
+            <span class="search_img"></span>
+            <input on-finish-tab-with-index type="text" placeholder="请输入联系电话" id="searchbox" style="background-color:#fff;margin-top: 3px;width: 79%;color: #b1b1b1;padding-left: 0;" ng-model="MembBas4App.params.phone" ng-change="searchMembByPhone(1, false)">
+           <!-- <span class="delete_img" ng-click="clearInput()" ng-if="clickState"></span>-->
+            <span class="delete_img_2" ng-click="clearInput()" ng-if="clickState"></span>
+        </div>
+        <!--<button ng-mousedown="searchMembByPhone()">搜索</button>-->
+    </ion-header-bar>
+    <ion-content  ></ion-content>
+
+
+    <!--<ion-content class="light-bg" overflow-scroll="false">
+        <ion-list ng-repeat="mnp in membNameAndPhoneList">
+            <div class="sousuo_line padding-left">
+                     <span>
+                        <h2 style="line-height: 55px!important;font-size:16px; margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>
+                     </span>
+            </div>
+        </ion-list>
+        &lt;!&ndash;<ion-list>
+            <div class="sousuo_line padding-left">
+                <span>
+                    <h2 style="line-height: 55px!important;font-size:16px;"><span ng-bind="MembBas4App.pageNum"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;">15920463243</span></h2>
+                </span>
+            </div>
+        </ion-list>&ndash;&gt;
+    </ion-content>-->
+
+    <ion-content class="light-bg Data"   delegate-handle="contentScrollSearch" style="bottom: 0;background: #f5f5f9;">
+        <ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefreshSearch()"  refreshing-text="加载中..."></ion-refresher>
+        <div class="wrap data" style="height: 100%;" on-touch="hideKeyboard()">
+            <ion-list class="item touch-item-0-m" ng-repeat="mnp in membNameAndPhoneList" ng-click="checkMembDetailInfo(mnp.membNum)">
+                <div class="bottom_line p-Left ">
+                     <span>
+                        <h2 style="line-height: 55px;font-size:16px;margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>
+                     </span>
+                </div>
+            </ion-list>
+
+    <!--<ion-content class="light-bg Data"   delegate-handle="contentScrollSearch" style="bottom: 0;">-->
+        <!--<ion-refresher spinner="ios"  pulling-text="下拉刷新" on-refresh="doRefreshSearch()"  refreshing-text="加载中..."></ion-refresher>-->
+        <!--<div class="wrap data" style="height: 100%;" on-touch="hideKeyboard()">-->
+            <!--<ion-list class="item touch-item-0-m" ng-repeat="mnp in membNameAndPhoneList" ui-sref="membDetailInfo({membNum:mnp.membNum})">-->
+                <!--<div class="bottom_line p-Left ">-->
+                     <!--<span>-->
+                        <!--<h2 style="line-height: 55px;font-size:16px;margin-bottom: 0;"><span ng-bind="mnp.membNm"></span>&nbsp;&nbsp;<span style="line-height: 35px;margin-top:2px;" ng-bind="mnp.phone"></span></h2>-->
+                     <!--</span>-->
+                <!--</div>-->
+            <!--</ion-list>-->
+            <!--<ion-list>
+                <div class="sousuo_line padding-left">
+                    <span>
+                        <h2 style="line-height: 35px;margin-bottom: 0;"><span ng-bind="MembBas4App.pageNum"></span>：<span style="line-height: 35px;margin-top2px;color:#b1b1b1;">15920463243</span></h2>
+                    </span>
+                </div>
+            </ion-list>-->
+
+            <div class="no_data" ng-if="dataShowSearch">
+                <img src="common/images/bear.gif" width="80">
+                <p>没有符合条件的数据</p>
+            </div>
+        </div>
+
+        <ion-infinite-scroll on-infinite="loadMoreSearch()" distance="1%" ng-if="hasNextPageSearch"></ion-infinite-scroll>
+    </ion-content>
+
+</div>
+
+

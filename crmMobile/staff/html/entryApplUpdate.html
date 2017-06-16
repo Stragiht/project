@@ -1,0 +1,234 @@
+<style>
+	.item-checkbox .checkbox .checkbox-icon{ float:right;}
+	.item .float_r { color:#ccc;}
+	.list{background-color: #fff;}
+
+	.fadeInfo.ng-enter{opacity:0;}
+	.fadeInfo{transition:0.7s linear all;}
+	.fadeInfo.ng-enter.ng-enter-active{opacity:1;}
+	.fadeInfo.ng-leave{opacity:1;}
+	.fadeInfo.ng-leave.ng-leave-active{opacity:0;}
+</style>
+<div ng-show="entFormShow">
+	<ion-header-bar align-title="center" class="header">
+		<a class="angle_left" ng-click="goFrontPage()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">编辑</h1>
+		<a class="head_right3" ng-click="submitEntryAppl()" user-power="MSTF01002003"><div class="btn_line">提交 </div></a>
+		<a class="head_right" ng-click="saveEntryAppl()" user-power="MSTF01002003"><div class="btn_line">存为草稿</div></a>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplUpdate.html -->
+	<div class="wrap">
+		<ion-list>
+			<ion-item style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</span>
+				<span class="f_10 float_r" style="margin-right:25px;padding-right: 0px;">
+					<input class="float_r" style="text-align: right;margin-top:16px;float:right;border: 0px;font-size: 1.0rem;" ng-model="entryInfo.stfNm" maxlength="20" />
+				</span>
+			</ion-item>
+			<ion-item ng-click="sexSelect()" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="f_10 float_r" style="margin-right: 15px;">{{entryInfo.sexDis}}</span>
+			</ion-item>
+			<ion-item style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">联系电话</span>
+				<span class="f_10 float_r" style="margin-right:25px;padding-right: 0px;">
+					<input class="float_r" style="text-align: right;margin-top:16px;float:right;border: 0px;font-size: 1.0rem;" ng-model="entryInfo.stfMobPhNum" maxlength="15" />
+				</span>
+			</ion-item>
+			<ion-item style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">身份证号码</span>
+				<span class="f_10 float_r" style="margin-right:25px;padding-right: 0px;">
+					<input class="float_r" style="text-align: right;margin-top:16px;float:right;border: 0px;font-size: 1.0rem;" ng-model="entryInfo.stfIdNum" maxlength="18" />
+				</span>
+			</ion-item>
+			<ion-item ng-click="uploadPicture(1)" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span>身份证正面图片</span>
+				<span class="float_r">
+					<img src="common/images/sfz_zm.png" height="30" style="margin-right: 15px;" class="mt_10 float_l" id="idCardPosPicSrc">
+					<img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;">
+					<input type="hidden" id="idCardPosPic" />
+				</span>
+			</ion-item>
+			<ion-item ng-click="uploadPicture(2)" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span>身份证反面图片</span>
+				<span class="float_r">
+					<img src="common/images/sfz_fm.png" height="30" style="margin-right: 15px;" class="mt_10 float_l" id="idCardOppPicSrc">
+					<img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;">
+					<input type="hidden" id="idCardOppPic" />
+				</span>
+			</ion-item>
+			<ion-item ng-click="locationSelect()" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">所在城市</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="f_10 float_r" style="margin-right: 15px;">{{entryInfo.locationDis}}</span>
+			</ion-item>
+		</ion-list>
+		<div class="index_work_bt mt_15"></div>
+		<ion-list>
+			<ion-item ng-click="openDatePicker()" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">入职时间</span>
+				<span class="f_10 float_r" style="margin-right: 30px;">{{entryInfo.stfEntDt}}</span>
+			</ion-item>
+			<ion-item ng-click="positionSelect()" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">职位等级</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="f_10 float_r" style="margin-right: 15px;">{{entryInfo.positionDis}}</span>
+			</ion-item>
+			<ion-item ng-click="supvrStfSelect()" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">直属主管</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="f_10 float_r" style="margin-right: 15px;">{{entryInfo.supvrStfDis}}</span>
+			</ion-item>
+			<ion-item ng-click="subStoreSelect()" style="padding:0px 15px 0px 0px; height: 53px; line-height: 53px; margin-left:15px; border-left:none; color:#000;">
+				<span class="">所属门店</span>
+				<input type="hidden" ng-model="entryInfo.subStore" />
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="f_10 float_r" style="margin-right: 15px;">{{entryInfo.subStoreDisplay}}</span>
+			</ion-item>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+
+<!-- 性别选择 -->
+<div ng-show="sexSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">性别</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplUpdate.html -->
+	<div class="wrap">
+		<ion-list>
+			<ion-radio name="sex" ng-repeat="dic in dicList" ng-value="dic.key" ng-model="entryInfo.sex" ng-click="clickSex(dic)">{{dic.text}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+
+<!-- 所在城市选择 -->
+<div ng-show="proListShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack1(cit)" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">所在城市</h1>
+	</ion-header-bar>
+	<ion-content class="has-header" delegate-handle="locationScrollPro">
+	<!-- entryApplInsert.html -->
+	<div class="wrap">
+		<div>
+			<div class="index_work_bt">定位到的位置</div>
+			<ul class="listvrew clearfix">
+				<li ng-click="clickLocation()">
+					<span ng-model="locationPlace" id="locationPlace">
+						<img src="common/images/weizhi.png" style="vertical-align: middle;margin-right: 10px;width: 12px;">定位中...
+					</span>
+				</li>
+				<input type="hidden" id="locationSuccess" />
+				<input type="hidden" id="locationProvince" />
+				<input type="hidden" id="locationCity" />
+			</ul>
+			<div class="index_work_bt">全部</div>
+			<div class="shls clearfix">
+				<ion-list>
+					<ion-radio name="province" ng-repeat="pro in provinceList" ng-value="pro.key" ng-model="selectedPro.key" ng-click="clickProvince(pro)">
+						{{pro.text}}
+						<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+					</ion-radio>
+				</ion-list>
+			</div>
+		</div>
+		
+	</div>
+	</ion-content>
+</div>
+<div ng-show="citListShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack2()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">所在城市</h1>
+	</ion-header-bar>
+	<ion-content class="has-header" delegate-handle="locationScroll">
+	<!-- entryApplInsert.html -->
+	<div class="wrap">
+		<ion-list>
+			<ion-radio name="city" ng-repeat="cit in cityList" ng-value="cit.key" ng-model="entryInfo.stfFrCity" ng-click="clickCity(cit)">{{cit.text}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+<!-- 职位等级选择 -->
+<div ng-show="positionSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack4()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">职位等级</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplInsert.html -->
+	<div class="wrap">
+		<ion-list>
+			<ion-radio name="position" ng-repeat="pos in positionList" ng-value="pos.posNum" ng-model="entryInfo.stfPos" ng-click="clickPosition(pos)">
+				{{pos.posNm}}
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+			</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+<div ng-show="posLvlListShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack3()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">职位等级</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplInsert.html -->
+	<div class="wrap">
+		<ion-list>
+			<ion-radio name="positionLvl" ng-repeat="posLvl in positionLvlList" ng-value="posLvl.posGrdNum" ng-model="entryInfo.posGrdNum" ng-click="clickPositionLvl(posLvl)">{{posLvl.posGrdNm}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+
+<!-- 直属主管选择 -->
+<div ng-show="supvrStfSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">直属主管</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplUpdate.html -->
+	<div class="wrap">
+		<input type="hidden" ng-model="entryInfo.supvrStfNum" />
+			<ion-radio name="supvrStf" ng-repeat="undStf in undStfList" ng-value="undStf.key" ng-model="entryInfo.supvrStfNum" ng-click="clickSupvrStf(undStf)">
+				<span ng-if="undStf.myself == 0">无</span>
+				<span ng-if="undStf.myself == 2">自己</span>
+				<span ng-if="undStf.myself == 1">{{undStf.text}}</span>
+			</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+
+<!-- 所属门店选择 -->
+<div ng-show="subStoreSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">所属门店</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplUpdate.html -->
+		<div class="tishi fadeInfo" ng-if="infoShow">
+			<div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个门店</div>
+		</div>
+		<div class="wrap">
+			<div class="xzk_a" style="margin-top: 10px;margin-bottom: 10px;">
+				<a ng-repeat="chnl in chnlList" ng-click="clickChnl(chnl.chnlNum)"
+						ng-class="{'xuanzong_a':chnl.chnlNum==selectedChnl,'weixuanzong_a':chnl.chnlNum!=selectedChnl}"style="width:{{chnlWidth}}">{{chnl.chnlNm}}</a>
+			</div>
+			<ion-list ng-repeat="chnl in chnlList" ng-show="chnl.chnlNum==selectedChnl">
+				<ion-checkbox style="padding-left: 15px;" ng-repeat="subStore in chnl.subStoreList" ng-model="subStore.isCheck" ng-click="clickSubStore(subStore)">{{subStore.strNm}}</ion-checkbox>
+			</ion-list>
+		</div>
+	</ion-content>
+</div>

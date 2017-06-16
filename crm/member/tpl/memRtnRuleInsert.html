@@ -1,0 +1,238 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4"> 新增规则<a class="btn btn-info    btn-addon" ui-sref="app.member.memRtnRule({isBack:true})"
+                                           style="float:right;margin:-8px 10px 0 0;">返回回访规则设置</a></h4>
+</div>
+
+
+<div class="wrapper-md" ng-controller="memRtnRuleInsertCtrl">
+
+    <div>
+        <script type="text/ng-template" id="memRadioSelect.html">
+            <div ng-include="'common/tpl/memRadioSelect.html'"></div>
+        </script>
+        <script type="text/ng-template" id="gdsMultiSelect.html">
+            <div ng-include="'common/tpl/gdsMultiSelect.html'"></div>
+        </script>
+        <script type="text/ng-template" id="gdsRadioSelect.html">
+            <div ng-include="'common/tpl/gdsRadioSelect.html'"></div>
+        </script>
+        <script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+        <script type="text/ng-template" id="radiostore.html">
+            <div ng-include="'common/tpl/radiostore.html'"></div>
+        </script>
+    </div>
+
+    <form class="form-horizontal" name="formAttr">
+
+        <!-- 第一行 -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color:red;">*</span>规则名称：</label>
+
+            <div class="col-sm-3">
+                <input type="text" class="form-control" ng-model="memRtnRuleInsert.rntRuleNm"
+                       name="rntRuleNm" required maxlength="20">
+
+                <div ng-messages="formAttr.rntRuleNm.$error" ng-if="(formAttr.rntRuleNm.$dirty && formAttr.rntRuleNm.$invalid)">
+                    <span ng-message="required" class="error"> 规则名称必须输入！ </span>
+                </div>
+            </div>
+        </div>
+        <!-- 第二行 -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">触发条件：</label>
+            <label style="line-height:35px;margin-left: 15px;">成功提交销售数据</label>
+        </div>
+        <!-- 第三行 -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color:red;">*</span>应用于：</label>
+            <input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;" ng-click="add1()" value="添加">
+        </div>
+
+        <!-- 第四行 -->
+        <div class="form-group">
+
+            <label class="col-sm-2 control-label"></label>
+
+            <div class="col-sm-8">
+                <table class="table table-bordered text-center table-condensed table-striped"
+                       style="margin-bottom: 0px;">
+                    <tr>
+                        <td style="text-align:center;min-width:60px; ">
+                            职位名称
+                        </td>
+                        <td style="text-align:center;min-width:60px; ">
+                            操作
+                        </td>
+                    </tr>
+                    <tr ng-repeat="posNum in posNumListCopy">
+                        <td>
+                            <select for="Select" select="select"
+                                    ng-model="posNum.a"
+                                    ng-options="zt.key as zt.text for zt in jobPosAll">
+                            </select>
+                        </td>
+                        <td>
+                            <a style="text-decoration:underline;color: #05b5ff;" ng-show="$index!=-1"
+                               ng-click="del1($index)">删除</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <!-- 第五行 -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">具体规则详情：</label>
+            <input type="button" class="btn btn-success col-sm-1" style="margin-left: 15px;margin-bottom: 15px;"
+                    ng-click="add()" value="新增"/>
+        </div>
+
+        <!-- 增加的内容 -->
+        <div ng-repeat="gdsAndTsks in memRtnRuleInsert.gdsAndTskTmList">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span style="color:red;">*</span>相关商品：</label>
+                <button class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;"
+                        ng-click="openGdsMultiSelec('lg',gdsAndTsks.gdsSpecList)">添加
+                </button>
+            </div>
+
+            <div style="height: 45px;line-height: 45px;margin-top: -60px;margin-bottom: 15px;">
+                <!--<button class="btn btn-danger btn-addon" style="margin:0 15px;float: right;" ng-show="$index!=0"
+                        ng-click="del($index)">删除
+                </button>-->
+                <button class="btn btn-danger btn-addon" style="margin:0 15px;float: right;"
+                        ng-click="del($index)">删除
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-8">
+                    <table class="table table-bordered text-center table-condensed table-striped "
+                           style="margin-bottom: 0px;">
+                        <tr>
+                            <td style="text-align:center;min-width:80px; ">
+                                规格编号
+                            </td>
+                            <td style="text-align:center;min-width:80px; ">
+                                规格名称
+                            </td>
+                            <!--<td style="text-align:center;min-width:80px; ">
+                                销售渠道
+                            </td>-->
+                            <td style="text-align:center;min-width:80px; ">
+                                操作
+                            </td>
+                        </tr>
+                        <tr ng-repeat="gdsSpec in gdsAndTsks.gdsSpecList">
+                            <td>
+                                <span ng-bind="gdsSpec.gdsSpecDtlNum"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="gdsSpec.gdsSpecDtlNm"></span>
+                            </td>
+                            <!--<td>
+                                {{rows.c}}
+                            </td>-->
+                            <td>
+                                <a style="text-decoration:underline;color: #05b5ff;" ng-show="$index!=-1"
+                                   ng-click="dell2(gdsAndTsks.gdsSpecList,$index)">删除</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span style="color:red;">*</span>回访详情：</label>
+                <input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;" ng-click="add3(gdsAndTsks.rtnTskTmList)" value="添加"/>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-8" style="overflow:auto">
+                    <table class="table table-bordered text-center table-condensed table-striped">
+                        <tr>
+                            <td style="text-align:center;min-width:180px; ">
+                                回访次数
+                            </td>
+                            <td style="text-align:center;min-width:180px; ">
+                                回访间隔
+                            </td>
+                            <td style="text-align:center;min-width:120px; ">
+                                回访事项
+                            </td>
+                            <td style="text-align:center;min-width:120px; ">  <!--$scope.membRtnRuleUpd-->
+                                操作
+                            </td>
+                        </tr>
+
+                        <tr ng-repeat="rtnTsk in gdsAndTsks.rtnTskTmList">
+                            <td>
+                                <span>第</span><input type="text" style="max-width: 45px;margin: 0 15px;" ng-model="rtnTsk.fbkTimes" required><span>次</span>
+                            </td>
+                            <td>
+                                <span>第</span><input type="text" style="max-width: 45px;margin: 0 15px;" ng-model="rtnTsk.rtnInterval" required maxlength="3"><span>天</span>
+                            </td>
+                            <td>
+                                <select for="Select" select="select"
+                                        ng-model="rtnTsk.rtnItem"
+                                        ng-options="mrrr.text as mrrr.text for mrrr in allMembRtnRuleRtn" required>
+                                </select>
+                            </td>
+                            <td>
+                                <a style="text-decoration:underline;color: #05b5ff;" ng-show="$index!=-1"
+                                   ng-click="dell(gdsAndTsks.rtnTskTmList,$index)">删除</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <!--<div style="height: 45px;line-height: 45px;margin-top: -20px;">
+                <button class="btn btn-danger btn-addon" style="margin:0 15px;float: right;" ng-show="$index!=0"
+                        ng-click="del($index)">删除
+                </button>
+            </div>-->
+            <hr/>
+        </div>
+
+
+        <!-- 第八行 -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">状态：</label>
+
+            <div class="col-sm-8">
+                <div class="col-lg-2">
+                    <div class="radio">
+                        <label class="i-checks i-checks-sm">
+                            <input name="a" type="radio" checked="checked" value="D001" ng-model="memRtnRuleInsert.ruleEnableFlg">
+                            <i></i>
+                            启用
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="radio">
+                        <label class="i-checks i-checks-sm">
+                            <input name="a" type="radio" value="D002" ng-model="memRtnRuleInsert.ruleEnableFlg">
+                            <i></i>
+                            禁用
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-success " style="margin:20px 0 20px 35px" ng-disabled="formAttr.$invalid" ng-click="memRtnRuleInsertSub()" user-power="WMEM01008002"> 提交保存</button>
+
+    </form>
+</div>

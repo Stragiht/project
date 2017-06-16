@@ -1,0 +1,131 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">新增销售门店</h4>
+</div>
+<div class="panel panel-default" ng-controller="storesInsert">
+    <div class="panel-body">
+    	<form name="myForm" class="form-horizontal form-validation" novalidate>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>门店编号：</label>
+                        <div class="col-sm-2">
+                            <input type="text" name="strNum" class="form-control" ng-model="xsmdxx.strNum"  required/>
+		                    <div ng-messages="myForm.strNum.$error" ng-if="(myForm.strNum.$dirty && myForm.strNum.$invalid)">
+			                   <span ng-message="required" class="error">门店编号不能为空</span>
+			                </div>
+		                </div>
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>门店名称：</label>
+                        <div class="col-sm-2">
+                            <input type="text" name="strNm" class="form-control" ng-model="xsmdxx.strNm"  required/>
+			                <div ng-messages="myForm.strNm.$error" ng-if="(myForm.strNm.$dirty && myForm.strNm.$invalid)">
+			                   <span ng-message="required" class="error">门店名称不能为空</span>
+			                </div>
+                        </div>
+                        <label class="col-sm-2 control-label">渠道划分区域：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" ng-model="xsmdxx.chnlDividArea"  />
+                        </div>
+                    </div>
+					<!-- 所属城市分区：联动 BEGIN -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>所属城市分区：</label>
+                        <div class="col-sm-2">
+                            <select name="xsqd" class="form-control" ng-model="xsmdxx.xsqd" ng-options="chnl.key as chnl.text for chnl in chnlList" ng-selected="chnl.key==xsmdxx.xsqd" ng-change="changeChnl(xsmdxx.xsqd)" required>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select name="xsdq" class="form-control" ng-model="xsmdxx.xsdq" ng-options="majRgn.key as majRgn.text for majRgn in majRgnList" ng-selected="majRgn.key==xsmdxx.xsdq" ng-change="changeMajRgn(xsmdxx.xsqd, xsmdxx.xsdq)" >
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select name="sf" class="form-control" ng-model="xsmdxx.sf" ng-options="pro.key as pro.text for pro in proList" ng-selected="pro.key==xsmdxx.sf" ng-change="changePro(xsmdxx.xsqd, xsmdxx.xsdq, xsmdxx.sf)" >
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select name="cs" class="form-control" ng-model="xsmdxx.cs" ng-options="city.key as city.text for city in cityList" ng-selected="city.key==xsmdxx.cs" ng-change="changeCity(xsmdxx.xsqd, xsmdxx.cs)" >
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select name="subPartiNum" class="form-control" ng-model="xsmdxx.subPartiNum" ng-options="parti.key as parti.text for parti in partList" ng-selected="parti.key==xsmdxx.csfq" >
+                            </select>
+                        </div>
+                    </div>
+					<!-- 所属城市分区：联动 END -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:red;">*</span>联系地址：</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="strAddrDtl" class="form-control" ng-model="xsmdxx.strAddrDtl"  required/>
+			                <div ng-messages="myForm.strAddrDtl.$error" ng-if="(myForm.strAddrDtl.$dirty && myForm.strAddrDtl.$invalid)">
+			                   <span ng-message="required" class="error">联系地址不能为空</span>
+			                </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">店铺类型：</label>
+                        <div class="col-sm-2">
+                            <select name="strType" class="form-control" ng-model="xsmdxx.strType" ng-options="strType.key as strType.text for strType in strTypeList" ng-selected="strType.key==xsmdxx.strType" >
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">店经理：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" ng-model="xsmdxx.strMgr"  />
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                        <label class="col-sm-2 control-label">电话/传真：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" ng-model="xsmdxx.phoneAndFax"   />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">店铺开始日期：</label>
+                        <div class="col-sm-4" style="z-index:1200">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control"
+                                       datepicker-popup="yyyy-MM-dd" ng-model="xsmdxx.strStartDt"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions" 
+                                       readOnly="true" /> 
+                                <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+		                                <i class="glyphicon glyphicon-calendar"></i>
+		                            </button>
+								</span>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label" >店铺结束日期:</label>
+                        <div class="col-sm-4" style="z-index:1200">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control"
+                                       datepicker-popup="yyyy-MM-dd" ng-model="xsmdxx.strEndDt"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions" 
+                                       readOnly="true" /> 
+                                <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+		                                <i class="glyphicon glyphicon-calendar"></i>
+		                            </button>
+								</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+		            <div class="form-group">
+		                <label class="col-sm-2 control-label"></label>
+		                <div class="col-sm-4">
+					        <button ng-click="addBook(myForm.$valid)" class="btn btn-info btn-addon" ng-disabled="myForm.$invalid">提交保存</button>
+<!--
+					        <a href="#/app/staff/storesSelect/{{myPara.page.url.strType}}/{{myPara.page.url.pageSize}}/{{myPara.page.url.pageNum}}">
+-->
+					        <a ui-sref="app.staff.storesSelect({isBack:true})">
+					        	<button  class="btn btn-default btn-addon">返回</button>
+					        </a>
+		                </div>
+		            </div>
+    	</form>
+    	
+    </div>
+</div>   

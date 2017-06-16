@@ -1,0 +1,21 @@
+
+<div class="modal-header">
+	<h4 class="modal-title">批量审核</h4>
+</div>
+<div>
+	<br> <br>
+</div>
+<div style="text-align: center;">
+	是否通过：<label style="width: 5%;"></label><input type="radio"
+		name="optionsRadios" ng-model="qfFlag" value="1" ng-click="clickRad(qfFlag)"
+		ng-checked="true">是 <label style="width: 8%;"></label><input
+		type="radio" name="optionsRadios" ng-model="qfFlag" value="0"
+		ng-click="clickRad(qfFlag)"> 否
+</div>
+<div>
+	<br> <br> <br>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">确定</button>
+	<button class="btn btn-default" ng-click="cancel()">取消</button>
+</div>

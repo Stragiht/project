@@ -1,0 +1,658 @@
+<div ng-controller="memInsertCtrl">
+    <div>
+        <script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+    </div>
+
+    <!-- 标题 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4" style="color:#000;">新增会员
+           <a class="btn btn-info    btn-addon" ui-sref="app.member.memBas({isBack:true})" style="float:right;margin:-8px 10px 0 0;">返回会员信息管理</a>
+        </h4>
+    </div>
+
+    <div class="wrapper-md">
+        <form class="bs-example form-horizontal" name="formAttr">
+            <!--<form class="panel-heading" >-->
+            <!--1.基本信息-->
+            <accordion close-others="oneAtATime">
+
+                <accordion-group is-open="status.jbxxopen">
+
+                    <accordion-heading>
+                        <div class="font-bold">1.基本信息 <i class="pull-right fa fa-angle-right"
+                                                         ng-class="{'fa-angle-down': status.jbxxopen, 'fa-angle-right': !status.jbxxopen}"></i>
+                        </div>
+                    </accordion-heading>
+                    <form class="bs-example form-horizontal">
+                        <div class="form-group">
+
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>姓名：</label>
+
+                            <div class="col-xs-2">
+                                <input type="text" class="form-control" ng-model="membInsert.membNm"
+                                       name="membNm" required maxLength=10 ng-pattern="/^.{1,10}$/"/>
+
+                                <div ng-messages="formAttr.membNm.$error"
+                                     ng-if="(formAttr.membNm.$dirty && formAttr.membNm.$invalid)">
+                                    <span ng-message="required" class="error"> 姓名必须输入！ </span>
+                                    <span ng-message="pattern" class="error"> 格式不正确！ </span>
+                                </div>
+                            </div>
+
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>联系电话：</label>
+
+                            <div class="col-lg-2">
+
+                                <input type="text" name="phone" class="form-control"
+                                       ng-model="membInsert.phone" required maxLength="11"
+                                       ng-pattern="/^0\d{2,3}-?\d{7,8}$|^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/"/>
+
+                                <div ng-messages="formAttr.phone.$error"
+                                     ng-if="(formAttr.phone.$dirty && formAttr.phone.$invalid)">
+                                    <span ng-message="required" class="error"> 联系电话必须输入！</span>
+                                    <span ng-message="pattern" class="error"> 无效号码！ </span>
+                                </div>
+
+                            </div>
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>性别：</label>
+
+                            <div class="col-lg-1">
+                                <div class="radio">
+                                    <label class="i-checks i-checks-sm">
+                                        <input name="a" type="radio" checked="checked" value="2"
+                                               ng-model="membInsert.sex"> <i></i>
+                                        女
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="radio">
+                                    <label class="i-checks i-checks-sm">
+                                        <input name="a" type="radio" value="1" ng-model="membInsert.sex"> <i></i>
+                                        男
+                                    </label>
+                                </div>
+                            </div>
+                            <label class="col-lg-2 control-label"></label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>来源渠道：</label>
+
+                            <div class="col-lg-2">
+                                <!--<select name="account" class="form-control m-b">
+                                    <option>屈臣氏</option>
+                                    <option>OTC</option>
+                                    <option>CS</option>
+                                    <option>官网</option>
+                                </select>-->
+                                <select class="form-control" ng-model="membInsert.provChnl"
+                                        required name="subDep"
+                                        ng-options="ly.key as ly.text for ly in channels">
+                                </select>
+
+                            </div>
+
+                            <!--membGrps-->
+
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>会员组别：</label>
+
+                            <div class="col-lg-2">
+                                <!--<select name="account" class="form-control m-b">
+                                    <option>默认组别</option>
+                                    <option>特别关心</option>
+                                    <option>黑名单</option>
+                                </select>-->
+                                <select name="subDep" required style="height:34px;line-height: 34px;border-radius: 3px;border: solid 1px #CFDADD;padding-left: 15px;"
+                                        ng-model="membInsert.grpId"
+                                        ng-options="zb.key as zb.text for zb in membGrps">
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>加入时间：</label>
+
+                            <div class="col-sm-3">
+                                <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                    <input type="text" class="form-control"
+                                           datepicker-popup="yyyy-MM-dd" ng-model="membInsert.registTm"
+                                           ng-init="rzrqks = ''" is-open="opened"
+                                           datepicker-options="dateOptions" required readonly="readonly"/>
+                                    <span class="input-group-btn">
+							            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+						            </span>
+                                    <!--<div ng-messages="formAttr.registTm.$error" ng-if="(formAttr.registTm.$dirty && formAttr.registTm.$invalid)">
+                                        <span ng-message="required" class="error"> 加入时间必须输入！ </span>
+                                    </div>-->
+                                </div>
+                            </div>
+
+                           <label class="col-lg-2 control-label">创建人员：</label>
+
+                            <div class="col-lg-3">
+
+                                <input type="text" class="form-control" readonly="readonly" ng-model="membInsert.crtdStfNumNm">
+                                <!-- <div ng-messages="formAttr.crtdStfNum.$error"
+                                      ng-if="(formAttr.crtdStfNum.$dirty && formAttr.crtdStfNum.$invalid)">
+                                     <span ng-message="required" class="error"> 创建人员必须输入！！ </span>
+                                 </div>
+ -->
+                            </div>
+
+                            <input class="btn m-b-xs w-xs btn-default" ng-click="openStaff('lg')" value="浏览">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">出生日期：</label>
+
+                            <div class="col-sm-3">
+                                <div class="input-group w-md" ng-controller="DatepickerDemoCtrl"
+                                        >
+                                    <input type="text" class="form-control"
+                                           datepicker-popup="yyyy-MM-dd" ng-model="membInsert.birtyday"
+                                           is-open="opened"
+                                           datepicker-options="dateOptions"
+                                           readonly="readonly"/> <span
+                                        class="input-group-btn">
+							<button type="button" class="btn btn-default"
+                                    ng-click="open($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+						</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">电子邮件：</label>
+
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control"
+                                       ng-pattern=" /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/"
+                                       ng-model="membInsert.email"
+                                       name="mailbox" maxLength="30">
+
+                                <div ng-messages="formAttr.mailbox.$error"
+                                     ng-if="(formAttr.mailbox.$dirty && formAttr.mailbox.$invalid)">
+                                    <span ng-message="pattern" class="error"> 邮箱格式不正确！ </span>
+                                </div>
+                            </div>
+
+                            <label class="col-lg-2 control-label">微信账号：</label>
+
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="membInsert.bindWctAcct"
+                                       name="wxNum" maxLength="20">
+
+                                <div ng-messages="formAttr.wxNum.$error"
+                                     ng-if="(formAttr.wxNum.$dirty && formAttr.wxNum.$invalid)">
+                                    <span ng-message="required" class="error"> 必须输入账号！ </span> <span
+                                        ng-message="pattern" class="error"> 格式不正确！ </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><span style="color:red;">*</span>所在地区：</label>
+
+                            <!--<div class="col-lg-2">
+                                <select name="account" class="form-control m-b">
+                                    <option>广东省</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                <select name="account" class="form-control m-b">
+                                    <option>广州市</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+                                <select name="account" class="form-control m-b">
+                                    <option>天河区</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" placeholder="详细地址">
+                            </div>-->
+
+                            <div class="col-xs-10">
+                                <div style="position:relative;display: inline-block;">
+                                    <select required ng-model="membInsert.locProv" name="locProv"
+                                            ng-change="selectAddrCity()"
+                                            ng-options="zt.key as zt.text for zt in locProv"
+                                            style="height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;text-align: center;">
+                                    </select>
+                                    <div style="position: absolute;top: 35px;left: 0;" ng-messages="formAttr.locProv.$error" ng-if="(formAttr.locProv.$dirty && formAttr.locProv.$invalid)">
+                                        <span ng-message="required" class="error"> 请选择省份！ </span>
+                                    </div>
+                                </div>
+
+                                <div style="position:relative;display: inline-block;">
+                                    <select required ng-model="membInsert.locCity" name="locCity"
+                                            ng-change="selectAddrPref()"
+                                            ng-options="zt.key as zt.text for zt in locCity"
+                                            style="height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;">
+                                    </select>
+                                    <div style="position: absolute;top: 35px;left: 0;" ng-messages="formAttr.locCity.$error" ng-if="(formAttr.locCity.$dirty && formAttr.locCity.$invalid)">
+                                        <span ng-message="required" class="error"> 请选择城市！ </span>
+                                    </div>
+                                </div>
+
+
+
+                                <select ng-model="membInsert.locPref"
+                                        ng-options="zt.key as zt.text for zt in locPref"
+                                        style="height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;">
+                                </select>
+
+                                <input type="text"
+                                       ng-model="membInsert.addrDtl"
+                                       style="width:220px;height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;" maxLength="30">
+                                       
+
+
+                                       
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" style="width: 160px;"> 上传用户头像图片：</label>
+
+                            <div class="col-lg-4">
+                                <p class="form-control-static">图片支持JPG、PNG，大小不超过2M</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"></label>
+
+                            <div class="wrapper-md col-lg-10" ng-controller="ImgMemCtrl">
+                                <div style="margin-left: -15px;margin-top: -15px;">
+                                    <!--<input type="file" id="fileInput" style="margin-top: -15px;"/>-->
+                                    <a href="javascript:;" class="a-upload mt_6"> <input
+                                            type="file" id="fileInput" ng-click="selectImg($event, membInsert.membFigure)" accept=".png,.jpg"/> 选择头像图片
+                                    </a> <input type="text" style="display: none"
+                                                ng-model="membInsert.membFigure"/>
+                                    <input type="button" value="上传"
+                                           ng-click="uploadImg(membInsert.membFigure)" class="btn btn-default btn-addon mt_5"  user-power="WMEM01001003"/>
+                                    <!--<label class="control-label mt_5"> <span style="color: red;">-->
+									<!--{{figuredMemb}} </span> <span style="color: green;"> {{figuresMemb}} </span>-->
+                                    <!--</label>-->
+                                </div>
+                                <div class="hbox hbox-auto-xs">
+                                    <div class="col">
+                                        <div class="wrapper-sm b-a bg-white m-r-xs m-b-xs"
+                                             style="height:240px;width:240px;">
+                                            <div class="bg-light" style="height:220px;width:220px;">
+                                                <img-crop
+                                                        image="myImage"
+                                                        result-image="myCroppedImage"
+                                                        result-image-size="160"
+                                                        area-type="{{cropType}}"
+                                                        ></img-crop>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col" >
+                                        <div style="position: relative;width: 140px;height: 140px;">
+                                            <div class="inline bg-white wrapper-sm b-a" style="position: relative;width: 140px;height: 140px;border-radius: 50%;overflow: hidden;">
+                                                <div class="bg-light" style="width: 120px;height: 120px; margin: 0 auto;border-radius: 50%;overflow: hidden;">
+                                                    <img ng-src="{{myCroppedImage}}" />
+                                                </div>
+
+                                                <div ng-if="membInsert.membFigure.fileArray[0].flag == uploadFlag.UPLOAD_SUCC" style="width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 0px;">已上传</div>
+                                                <div ng-if="membInsert.membFigure.fileArray[0].flag == uploadFlag.UN_UPLOAD" style="width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 0px;">未上传</div>
+                                                <div ng-if="membInsert.membFigure.fileArray[0].flag == uploadFlag.UN_SEL" style="width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 0px;">未选择</div>
+                                                <div ng-if="membInsert.membFigure.fileArray[0].flag == uploadFlag.UPLOAD_FAILED" style="width: 120px;height: 30px;line-height:30px;background-color:rgba(0,0,0,0.5);color:#f0f3f4;text-align: center; position: absolute;left: 10px;bottom: 0px;">上传失败</div>
+                                            </div>
+                                            <div class="finger" ng-if="membInsert.membFigure.fileArray[0].flag != uploadFlag.UN_SEL"
+                                                 style="position: absolute;right: 5px;top: 5px;width: 30px;height: 30px;background:url(common/img/x_alt.png) no-repeat;background-size: 100%;border-radius: 50%;cursor: pointer;"
+                                                 ng-click="delImgItem(membInsert.membFigure, membInsert.membFigure.fileArray[0])">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="btn-group m-t">
+                                    <label class="btn btn-default" ng-model="cropType"
+                                           btn-radio="'circle'">圆形</label>
+                                    <!--<label class="btn btn-default" ng-model="cropType"-->
+                                           <!--btn-radio="'square'">方形</label>-->
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- 第七行 -->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">备注：</label>
+
+                            <div class="col-sm-2">
+                                <textarea class="form-control" rows="6" style="resize:none;width:500px;"
+                                          ng-model="membInsert.remark" maxLength="1000"></textarea>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </accordion-group>
+            </accordion>
+            <!--2.银行卡信息-->
+            <!--<accordion close-others="oneAtATime">-->
+            <!--<accordion-group is-open="status.bankopen" >-->
+            <!--<accordion-heading>-->
+            <!--<div class="font-bold">2.银行卡信息<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.bankopen, 'fa-angle-right': !status.bankopen}"></i></div>-->
+            <!--</accordion-heading>-->
+
+            <!--<form class="bs-example form-horizontal">-->
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-2 control-label">银行卡名称：</label>-->
+
+            <!--<div class="col-lg-2">-->
+            <!--<select name="account" class="form-control m-b">-->
+            <!--<option>中国银行</option>-->
+            <!--<option>建设银行</option>-->
+            <!--<option>工商银行</option>-->
+            <!--<option>农业银行</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--<label class="col-lg-2 control-label">银行卡姓名：</label>-->
+
+            <!--<div class="col-lg-2">-->
+            <!--<input type="text" class="form-control" >-->
+            <!--</div>-->
+            <!--<label class="col-lg-2 control-label">银行卡号：</label>-->
+
+            <!--<div class="col-lg-2">-->
+            <!--<input type="text" class="form-control" >-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-2 control-label"> 银行正面图片：</label>-->
+
+            <!--<div class="col-lg-3">-->
+            <!--<p class="form-control-static">图片支持JPG、PNG，大小不超过2M</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+            <!--<label class="col-lg-1 control-label"> </label>-->
+            <!--<div class="col-lg-8">-->
+            <!--<div class="wrapper-md" ng-controller="ImgoneCtrl" style="margin:-30px 0 -10px 85px;">-->
+            <!--<div class="m-b">-->
+            <!--<input type="file" id="fileInput1"/>-->
+            <!--</div>-->
+            <!--<div class="hbox hbox-auto-xs">-->
+            <!--<div class="col">-->
+            <!--<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs"-->
+            <!--style="height:170px;width:340px;">-->
+            <!--<div class="bg-light" style="height:150px;width:320px;">-->
+            <!--<img ng-src="{{myImageo}}" style="height:150px;width:320px;"   />-->
+            <!-- -->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!-- -->
+            <!--</div>-->
+            <!-- -->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</form>-->
+
+
+            <!--</accordion-group>-->
+            <!--</accordion>-->
+            <!--2.会员肌肤信息-->
+            <accordion close-others="oneAtATime">
+                <accordion-group is-open="status.skinopen">
+
+                    <accordion-heading>
+                        <div class="font-bold">2.会员肌肤信息<i class="pull-right fa fa-angle-right"
+                                                          ng-class="{'fa-angle-down': status.skinopen, 'fa-angle-right': !status.skinopen}"></i>
+                        </div>
+                    </accordion-heading>
+
+                    <form class="bs-example form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">肌肤类型：</label>
+
+                            <div class="col-lg-2"><!--skinTypes-->
+                                <!-- <select name="account" class="form-control m-b">
+                                     <option>混合型偏油</option>
+                                     <option>混合型偏干</option>
+                                     <option>干性</option>
+                                     <option>中性</option>
+                                     <option>油性</option>
+                                     <option>敏感性</option>
+                                 </select>-->
+                                <select name="subDep" class="form-control"
+                                        ng-model="membInsert.membSkinCareNeed.C025"
+                                        ng-options="jflx.key as jflx.text for jflx in skinTypes">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">肌肤现状：</label>
+
+                            <div class="col-lg-10">
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm" style="width:150px;"
+                                           ng-repeat="skinProb in skinProbs">
+                                        <input type="checkbox" id="{{skinProb.key}}" name="{{skinProb.text}}"
+                                               ng-checked="isSelected(skinProb.key,selectedSkinProb)"
+                                               ng-click="updateSelection($event,skinProb.key,selectedSkinProb)">
+                                        <i></i>
+                                        {{skinProb.text}}
+                                    </label>
+
+                                    <!--<input type="checkbox" id={{tag.id}} name="{{tag.name}}" ng-checked="isSelected(tag.id)" ng-click="updateSelection($event,tag.id)"> -->
+                                    <!-- <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       痘印
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       痘疤
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       干燥
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       油光
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       黑头
+                                     </label>
+
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       毛孔粗大
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       闭合性粉刺
+                                     </label>
+                                &lt;!&ndash;</div>&ndash;&gt;
+                                &lt;!&ndash;<div class="checkbox">&ndash;&gt;
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       皱纹
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       眼纹
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       眼袋
+                                     </label>
+                                     
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       松弛
+                                     </label>
+                                &lt;!&ndash;</div>&ndash;&gt;
+                                &lt;!&ndash;<div class="checkbox">&ndash;&gt;
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       黑眼圈
+                                     </label>
+
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       色素色斑
+                                     </label>
+
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       肤色不均
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       干纹细纹
+                                     </label>
+
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       法令纹
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       川字纹
+                                     </label>-->
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">护肤品喜好：</label>
+
+                            <div class="col-lg-9">
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm" style="width:150px;"
+                                           ng-repeat="skinDem in skinDemands">
+                                        <!--<input type="checkbox">-->
+                                        <input type="checkbox" id="{{skinDem.key}}" name="{{skinDem.text}}"
+                                               ng-checked="isSelected(skinDem.key,selectedSkinDem)"
+                                               ng-click="updateSelection($event,skinDem.key, selectedSkinDem)">
+                                        <i></i>
+                                        {{skinDem.text}}
+                                    </label>
+                                    <!-- <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       美白
+                                     </label>
+                                     <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       抗皱
+                                     </label> -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">肌肤护理需求：</label>
+
+                            <div class="col-lg-9">
+                                <div class="checkbox">
+                                    <label class="i-checks i-checks-sm" style="width:150px;"
+                                           ng-repeat="skinDaily in skinDailyDemands">
+                                        <!--<input type="checkbox">-->
+                                        <input type="checkbox" id="{{skinDaily.key}}" name="{{skinDaily.text}}"
+                                               ng-checked="isSelected(skinDaily.key,selectedSkinDaily)"
+                                               ng-click="updateSelection($event,skinDaily.key, selectedSkinDaily)">
+                                        <i></i>
+                                        {{skinDaily.text}}
+                                    </label>
+                                    <!--<label class="i-checks i-checks-sm" style="width:150px;">
+                                      <input type="checkbox">
+                                      <i></i>
+                                      爽肤水
+                                    </label>
+                                    <label class="i-checks i-checks-sm" style="width:150px;">
+                                      <input type="checkbox">
+                                      <i></i>
+                                      精华乳
+                                    </label>
+                                    <label class="i-checks i-checks-sm" style="width:150px;">
+                                      <input type="checkbox">
+                                      <i></i>
+                                      乳液/面霜
+                                    </label>
+                                    <label class="i-checks i-checks-sm" style="width:150px;">
+                                      <input type="checkbox">
+                                      <i></i>
+                                      防晒
+                                    </label>
+                                    <label class="i-checks i-checks-sm" style="width:150px;">
+                                      <input type="checkbox">
+                                      <i></i>
+                                      加法面膜
+                                    </label>
+                               &lt;!&ndash;</div>&ndash;&gt;
+                               &lt;!&ndash;<div class="checkbox">&ndash;&gt;
+                                   <label class="i-checks i-checks-sm" style="width:150px;">
+                                       <input type="checkbox">
+                                       <i></i>
+                                       减法面膜
+                                   </label>
+
+                                    <label class="i-checks i-checks-sm" style="width:150px;">
+                                      <input type="checkbox">
+                                      <i></i>
+                                      祛痘品
+                                    </label>-->
+                                    <!--<label class="i-checks i-checks-sm" style="width:100px;">-->
+                                    <!--<input type="checkbox">-->
+                                    <!--<i></i>-->
+                                    <!--其它-->
+
+                                    <!--</label>-->
+                                    <!--<label style="width:350px;margin-left:-55px;" >-->
+                                    <!--<input type="text" >-->
+                                    <!--</label>-->
+                                    <!-- <div class="col-lg-2">
+                                      <input type="email" class="form-control" >
+                                   </div>  -->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </accordion-group>
+            </accordion>
+
+            <div style="margin-top: 30px;">
+                <button class="btn   btn-success" ng-click="insertMem()" ng-disabled="formAttr.$invalid"  user-power="WMEM01001003"> 提交保存</button>
+            </div>
+
+        </form>
+    </div>
+</div>

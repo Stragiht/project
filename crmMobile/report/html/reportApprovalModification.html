@@ -1,0 +1,86 @@
+<!-- flag
+	"1" : 编辑页面 
+	"2" ： 选择增加/减少业绩类型页面 
+	"3" : 选择具体日期页面 
+	"4" : 增加/减少业绩页面 -->
+<div >
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goFrontPage()" class="angle_left" style="left:15px" ng-if="flag == '1'"><img src="common/images/back_btn.png" width="18"></a>
+		<a ng-click="zengjia('','')" class="angle_left" style="left:15px" ng-if="flag == '2'"><img src="common/images/back_btn.png" width="18"></a>
+		<a ng-click="riqi('','')" class="angle_left" style="left:15px" ng-if="flag == '3'"><img src="common/images/back_btn.png" width="18"></a>
+		<a ng-click="show('','')" class="angle_left" style="left:15px" ng-if="flag == '4'"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem" ng-if="flag == '1'">编辑</h1>
+		<h1 style="font-size:1.4rem" ng-if="flag == '2'">增加/减少</h1>
+		<h1 style="font-size:1.4rem" ng-if="flag == '3'">到具体日期</h1>
+		<h1 style="font-size:1.4rem" ng-if="flag == '4'">增加/减少业绩</h1>
+		<a class="head_right3" ng-click="preservation('Submit')" ng-if="flag == '1'"><div class="btn_line" user-power="MREP01005003">提交 </div></a>
+		<a class="head_right" ng-click="preservation('preservation')" ng-if="flag == '1'"><div class="btn_line" user-power="MREP01005003">保存</div></a>
+		<a class="head_right" ng-click="shows(key,keys)" ng-if="flag == '4'"><div class="btn_line">确定</div></a>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- reportApprovalModification.html -->
+		<div ng-if="flag == '1'">
+	        <div class="index_work_bt">{{stfList.strNm}}业绩</div>
+	        <div class="wrap">
+				<ul class="listvrew clearfix mb_15">
+					<li><span class="w140">销售业绩时间</span><span class="f_10">{{stfList.repApprStartDt}} ~ {{stfList.repApprEndDt}}</span></li>
+					<li><span class="w140">财务导入销售业绩</span><span class="f_10"> {{stfList.fcImpSaleAmt | currency : "￥"}}</span></li>
+					<li><span class="w140">人员提交销售业绩</span><span class="f_10">{{stfList.stfRepSaleAmtSum | currency : "￥"}}</span></li>
+					<li><span class="w140">比对结果</span><span ng-class="{true:'f_10',false:'color05 f_10'}[stfList.compRslt == '正确']">{{stfList.compRslt}}</span></li>
+				</ul>
+				<ul class="listvrew clearfix mb_15" ng-repeat="achievement in achievements">
+					<div ng-if="flase">{{$index}}</div>
+					<li><span class="w140">{{achievement.stfNm}}本店业绩</span><span class="f_10">{{achievement.stfRepSaleAmt | currency : "￥"}}</span></li>
+					<li ng-repeat="yeji in achievement.yejis" ng-click="show($parent.$index+'',$index+'',yeji,achievement.apprStfNum)">
+						<span class="w140">增加/减少业绩</span><span class="f_10">{{yeji.adjustAmt | customCurrency  : "￥"}}</span>
+						<span class="float_r"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</ion-content>
+</div>
+<div ng-if="flag == 4">
+	<ion-content class="has-header">
+	<!-- reportApprovalModification.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix">
+				<li ng-click="add($index)">
+					<span class="w140">增加/减少</span>
+					<span class="f_10">{{zengjiajianshao}}</span>
+					<span ng-if="flase">{{zengjiajianshaoKey}}</span>
+					<span class="float_r"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;"></span>
+				</li>
+				<li>
+					<span class="w140">具体金额</span>
+					<input type="text" class="f_10" style="display:inline" ng-model="a.jutijine" maxlength="10" />
+				</li>
+				<li ng-click="jutishijian($index,apprStfNum)">
+					<span class="w140">到具体日期</span>
+					<span class="f_10">{{jutiriqi}}</span>
+					<span class="float_r"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;"></span>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+</div>
+<div ng-if="flag == '2'" >
+	<ion-content class="has-header">
+	<!-- reportApprovalModification.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix " ng-repeat="leixing in leixings">
+				<li ng-click="zengjia(index,leixing.dicNm,leixing.dtlNum)"><span class="w140">{{leixing.dicNm}}</span></li>
+			</ul>
+		</div>
+	</ion-content>
+</div>
+<div ng-if="flag == '3'">
+	<ion-content class="has-header">
+	<!-- reportApprovalModification.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix " ng-repeat="listdate in datelist">
+				<li ng-click="riqi(time,listdate.billOfLandTm)"><span>{{listdate.billOfLandTm}}</span></li>
+			</ul>
+		</div>
+	</ion-content>
+</div>

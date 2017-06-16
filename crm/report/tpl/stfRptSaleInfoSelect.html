@@ -1,0 +1,106 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+                   比对销售报表
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+              全选
+</script>
+<div ng-controller="stfRptSaleInfoSelectController">
+<!--比对销售报表查询面板开始 -->
+<div class="panel-heading">
+    <accordion close-others="oneAtATime">
+    <accordion-group is-open="status.open">
+    <accordion-heading>查询<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+    </accordion-heading>
+    <form name="form" class="form-horizontal">
+         <div class="form-group">
+         
+                  <label class="col-sm-3 control-label">选择比对销售报表时间：</label>
+                  <div class="col-sm-4">
+                      <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                          <input readOnly type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="comparison.comparisonstart" is-open="opened"
+                                 datepicker-options="dateOptions" name="comparisonstart" ng-required="true"/> <span class="input-group-btn">
+	                      <button type="button" class="btn btn-default" ng-click="open($event)">
+                                 <i class="glyphicon glyphicon-calendar"></i>
+                          </button></span>
+                      </div>
+                      <div ng-messages="form.comparisonstart.$error" ng-if="(form.comparisonstart.$dirty && form.comparisonstart.$invalid)">
+                          <span ng-message="required" class="error">销售报表开始时间不能为空</span>
+                      </div>
+                  </div>
+                  
+                  <label class="col-sm-1 control-label" style="text-align: left;">至</label>
+                  <div class="col-sm-4">
+                      <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                          <input readOnly type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="comparison.comparisonend" is-open="opened"
+                                 datepicker-options="dateOptions" name="comparisonend" ng-required="true"/> <span class="input-group-btn">
+	                      <button type="button" class="btn btn-default" ng-click="open($event)">
+                                 <i class="glyphicon glyphicon-calendar"></i>
+                          </button></span>
+                      </div>
+                      <div ng-messages="form.comparisonend.$error" ng-if="(form.comparisonend.$dirty && form.comparisonend.$invalid)">
+                          <span ng-message="required" class="error">销售报表结束时间不能为空</span>
+                      </div>
+                  </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-3">
+                         <button class="btn btn-info btn-addon" ng-click="comparisonLook('1000')" ng-disabled="form.$invalid">比对查看</button>
+                </div>
+          </div>
+          <div class="form-group">
+                <label class="col-sm-3 control-label">比对结果：</label>
+                <div class="col-sm-3">
+				<div class="btn-group">
+					<label class="btn btn-default" ng-model="radioModel" btn-radio="'all'" ng-click="comparisonResult('all')">全部</label>
+					<label class="btn btn-default" ng-model="radioModel" btn-radio="'trueResult'" ng-click="comparisonResult('1')">正确</label>
+					<label class="btn btn-default" ng-model="radioModel" btn-radio="'errorResult'" ng-click="comparisonResult('2')">有错</label>
+				</div>
+				</div>
+          </div>
+     </form>
+     </accordion-group>
+     </accordion>
+</div>
+<!-- 比对销售报表查询面板结束-->
+<div class="panel-heading">
+        <button class="btn btn-default btn-addon" ng-click="openAudit()" user-power="WREP01006002" ng-disabled="saleReportStatus">开启审核流程</button>
+        <label class="control-label mt_6">共有<span class="text-red">{{listcount}}</span>条数据 </label>
+        <label class="control-label mt_6" ng-if="listcount==0">（没有符合条件的数据）</label>
+</div>
+<!-- table列表开始 -->
+    <div class="panel-heading">
+        <div ng-table="tableParams">
+            <table
+                    class="table table-bordered table-condensed   table-striped table-hover">
+                <tr ng-repeat="comparisonListinfo in $data">
+                	<td header="'headerCheckbox.html'" style="font-weight: bold;" width="'90px'">
+                        <input type="checkbox" ng-model="checkboxes.items[comparisonListinfo.strNum]" ng-click="checkItem()"/>
+                    </td>
+                    <td title="'门店编号'" width="'120px'">{{comparisonListinfo.strNum}}</td>
+					<td title="'门店名称'" width="'120px'">{{comparisonListinfo.strNm}}</td>
+					<td title="'相关人员'" width="'120px'">{{comparisonListinfo.stfNm}}</td>
+					<td title="'人员提交总销售业绩'" width="'200px'" style="text-align:right;">{{comparisonListinfo.totalsaleAmt|currency : "￥"}}</td>
+					<td title="'财务导入销售业绩'" width="'200px'"  style="text-align:right;">{{comparisonListinfo.totalgdsAmt|currency : "￥"}}</td>
+					<td title="'比对结果'" width="'120px'">
+					<span ng-show="{{comparisonListinfo.compRslt}}==1">{{comparisonListinfo.compRslt|dicNameFilter:"C017"}}</span>
+					<span style="color:red;" ng-show="{{comparisonListinfo.compRslt}}==2">{{comparisonListinfo.compRslt|dicNameFilter:"C017"}}</span>
+					</td>
+					<td title="'是否已开启审核'" width="'200px'">
+					{{comparisonListinfo.openAudit|dicNameFilter:"C002"}}
+					</td>
+					<td title="'现审核状态'" width="'120px'"><span style="color:red;">{{comparisonListinfo.apprStat|dicNameFilter:"C018"}}</span></td>              
+                </tr>
+            </table>
+        </div>
+    </div>
+<!-- table列表结束 -->
+</div>
+</html>

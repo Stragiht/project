@@ -1,0 +1,53 @@
+<style>
+.scroll-view.scroll-x {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+</style>
+<ion-header-bar align-title="center" class="header">
+	<a ui-sref="stfChangeIndex" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">BA晋升督导流程</h1>
+	<a href="" class="head_right" ui-sref="persActInsert" user-power="MSTF01005002">
+    	<div class="head_right_box">
+            <img src="common/images/xzqj.png" width="22" height="22">
+            <p>晋升申请</p>
+        </div>
+    </a>
+</ion-header-bar>
+<div class="bar bar-subheader">
+	<div class="rzlc_bt">
+		<ion-scroll direction="x" scrollbar-x="false" scrollbar-y="false" zooming="false" paging="false">
+			<div class="rzlc_bt_nei" style="overflow: auto; width: 560px;margin:0px;">
+				<a ng-repeat="apprStat in apprRsltList" style="width: 60px; margin:0px 5px;" ng-class="{'active':apprStat.key == apprStatCnd}" ng-click="selectPersAct('{{apprStat.key}}')">{{apprStat.text}}</a>
+			</div>
+		</ion-scroll>
+	</div>
+</div>
+<ion-content class="has-header has-subheader" delegate-handle="contentScroll">
+<!-- persActSelect.html -->
+    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+	<div class="wrap">
+		<div class="xiaoxizhongxin_bj1" ng-show="persActList.length > 0">
+			<ion-list user-power="MSTF01005001">
+				<ion-item class="bottom_line" ng-repeat="persActInfo in persActList" style=" border:none;padding-top: 0px;padding-bottom: 0px;margin-left:0px;padding:0px;margin: 0px 0px;">
+					<a ng-if="persActInfo != null" ui-sref="persActInfo({applNum:persActInfo.applNum})" user-power="MSTF01005001"> 
+						<div class="xiaoxi_img2" style="margin-left: 15px;">{{persActInfo.posChgStf}}</div>
+						<div class="xiaoxi_line" style="width: 80%;">
+							<div class="xiaoxizhongxin_text2">
+								<h2>晋升为{{persActInfo.newPos}}</h2>
+								<p><span>{{persActInfo.applSbmtTm}} {{persActInfo.applicant}} 申请</span></p> 
+							</div>
+							<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;margin-right: 15px;">
+							<span class="float_r line_height50" style="margin-right: 15px;">{{persActInfo.apprStat}}</span>
+						</div>
+					</a>
+				</ion-item>
+			</ion-list> 
+		</div>
+		<div class="wushuju" my-nodata-show="persActList.length == 0&& !moredata">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+	</div>
+	<ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>

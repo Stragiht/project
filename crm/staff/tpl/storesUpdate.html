@@ -1,0 +1,126 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">编辑 </h4>
+</div>
+<div class="panel panel-default" ng-controller="storesUpdate">
+    <div class="panel-body">
+    	<form name="form" class="form-horizontal form-validation" novalidate>
+	        <div class="form-group">
+	            <label class="col-sm-2 control-label"><span style="color:red;">*</span>门店编号：</label>
+	            <label class="col-sm-2 control-label" style="text-align: left;" name="strNum" ng-bind="xsmdxx.strNum" readOnly></label>
+	            
+	            <label class="col-sm-2 control-label"><span style="color:red;">*</span>门店名称：</label>
+	            <div class="col-sm-2">
+	                <input type="text" name="strNm" class="form-control" ng-model="xsmdxx.strNm"   required/>
+	                <div ng-messages="form.strNm.$error" ng-if="(form.strNm.$dirty && form.strNm.$invalid)">
+	          			<span ng-message="required" class="error">门店名称不能为空</span>
+	       			</div>
+	            </div>
+	            <label class="col-sm-2 control-label">渠道划分区域：</label>
+	            <div class="col-sm-2">
+	                <input type="text" class="form-control" ng-model="xsmdxx.chnlDividArea"   />
+	            </div>
+	        </div>
+            <!-- 所属城市分区：联动 BEGIN -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span style="color:red;">*</span>所属城市分区：</label>
+                <div class="col-sm-2">
+                    <select name="subPartiNum" class="form-control" ng-model="xsmdxx.subPartiNum" ng-options="chnl.key as chnl.text for chnl in chnlList" ng-selected="chnl.key==xsmdxx.subPartiNum" ng-change="changeChnl(xsmdxx.subPartiNum)" >
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select name="majRgnNum" class="form-control" ng-model="xsmdxx.majRgnNum" ng-options="majRgn.key as majRgn.text for majRgn in majRgnList" ng-selected="majRgn.key==xsmdxx.majRgnNum" ng-change="changeMajRgn(xsmdxx.subPartiNum, xsmdxx.majRgnNum)" >
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select name="rgnNum_sheng" class="form-control" ng-model="xsmdxx.rgnNum_sheng" ng-options="pro.key as pro.text for pro in proList" ng-selected="pro.key==xsmdxx.rgnNum_sheng" ng-change="changePro(xsmdxx.subPartiNum, xsmdxx.majRgnNum, xsmdxx.rgnNum_sheng)" >
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select name="rgnNum_shi" class="form-control" ng-model="xsmdxx.rgnNum_shi" ng-options="city.key as city.text for city in cityList" ng-selected="city.key==xsmdxx.rgnNum_shi" ng-change="changeCity(xsmdxx.subPartiNum, xsmdxx.rgnNum_shi)" >
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select name="partiNum" class="form-control" ng-model="xsmdxx.partiNum" ng-options="parti.key as parti.text for parti in myPartList" ng-selected="parti.key==xsmdxx.partiNum" >
+                    </select>
+                </div>
+            </div>
+   			<!-- 所属城市分区：联动 END -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span style="color:red;">*</span>联系地址：</label>
+                <div class="col-sm-8">
+                    <input type="text" name="strAddrDtl" class="form-control" ng-model="xsmdxx.strAddrDtl"  required/>
+                    <div ng-messages="form.strAddrDtl.$error" ng-if="(form.strAddrDtl.$dirty && form.strAddrDtl.$invalid)">
+              			<span ng-message="required" class="error">联系地址不能为空</span>
+           			</div>
+                </div>
+            </div>
+                  
+            <div class="form-group">
+                <label class="col-sm-2 control-label">店铺类型：</label>
+                <div class="col-sm-2">
+                    <select name="account" class="form-control" ng-model="xsmdxx.strType" ng-options="strType.key as strType.text for strType in strTypeList" ng-selected="strType.key==xsmdxx.strType" >
+                    </select>
+                </div>
+            </div>
+                  
+            <div class="form-group">
+                <label class="col-sm-2 control-label">店经理：</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" ng-model="xsmdxx.strMgr"  />
+                </div>
+                <div class="col-sm-2">
+                </div>
+                <label class="col-sm-2 control-label">电话/传真：</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" ng-model="xsmdxx.phoneAndFax"  />
+                </div>
+            </div>
+                  
+            <div class="form-group">
+                <label class="col-sm-2 control-label">店铺开始日期：</label>
+                <div class="col-sm-4" style="z-index:1200">
+                    <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                        <input type="text" class="form-control"
+                               datepicker-popup="yyyy-MM-dd" ng-model="xsmdxx.strStartDt"
+                               is-open="opened"
+                               datepicker-options="dateOptions" 
+                               readOnly="true" /> 
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open($event)">
+	                           <i class="glyphicon glyphicon-calendar"></i>
+	                        </button>
+						</span>
+                    </div>
+                </div>
+                <label class="col-sm-2 control-label" >店铺结束日期:</label>
+                <div class="col-sm-4" style="z-index:1200">
+                    <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                        <input type="text" class="form-control"
+                               datepicker-popup="yyyy-MM-dd" ng-model="xsmdxx.strEndDt"
+                               is-open="opened"
+                               datepicker-options="dateOptions" 
+                               readOnly="true" /> 
+                        <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open($event)">
+                          	<i class="glyphicon glyphicon-calendar"></i>
+                      		</button>
+						</span>
+                    </div>
+                </div>
+            </div>
+                  
+            <div class="form-group">
+               <label class="col-sm-2 control-label"></label>
+               <div class="col-sm-4">
+		        	<button ng-click="addBook(form.$valid)" class="btn btn-info btn-addon" ng-disabled="form.$invalid">提交保存</button>
+		        	<!--<a href="#/app/staff/storesSelect/{{myPara.page.url.strType}}/{{myPara.page.url.pageSize}}/{{myPara.page.url.pageNum}}">-->
+		        	<a ui-sref="app.staff.storesSelect({isBack:true})">
+			        	<button  class="btn btn-default btn-addon">返回</button>
+			    	</a>
+               </div>
+           </div>
+           
+    	</form>
+    	
+    </div>
+</div>   

@@ -1,0 +1,53 @@
+﻿<div ng-controller="GdsBrdCtrl">
+
+<div>
+    <script type="text/ng-template" id="delete.html">
+        <div ng-include="'common/tpl/delete.html'"></div>
+    </script>
+</div>
+
+
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4" style="color:#000"> 商品品牌
+  <button class="btn btn-success btn-addon" style="float:right;margin:-8px 10px 0 0;" ui-sref="app.goods.gdsBrdIndsert "  user-power="WGDS01006002"> 新增品牌</button></h4>
+</div>
+
+<div class="wrapper-md"  >
+
+    <!-- 表格 -->
+    <div class="table-responsive" >
+        <div style="padding:15px;">
+            <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ＃EEEEEE; border:none;outline:medium;color: #f05050"ng-model="gydst" readonly="readonly"> 条商品品牌数据</lable>
+            <lable ng-if="gydst<1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+        </div>
+        <div ng-table="tableParams">
+
+          <table  class="table table-bordered table-condensed table-striped table-hover table-layout:fixed"  >
+
+                <tr ng-repeat="gdsBrd in $data">
+                  <td title="'商品品牌名称'" style="text-align:center;min-width:120px; word-break:break-all">
+                      <span ng-bind="gdsBrd.brdNm"></span>
+                  </td>
+                  <td title="'品牌网址'"  style="text-align:center;min-width:120px;word-break:break-all">
+                      <span ng-bind="gdsBrd.brdWebsite"></span>
+                  </td>
+                  <td title="'品牌描述'"  style="text-align:center;min-width:120px;word-break:break-all">
+                      <span ng-bind="gdsBrd.brdDesc"></span>
+                  </td>
+                  <td title="'LOGO'"   style="text-align:center;min-width:120px;word-break:break-all">
+                      <img ng-src="{{gdsBrd.brdLogo}}" ng-if="gdsBrd.brdLogo && gdsBrd.brdLogo!=null && gdsBrd.brdLogo!=''" style="width:60px; height: 60px;">
+                  </td>
+                  <td title="'操作'"   style="text-align:center;min-width:120px;word-break:break-all">
+                      <a style=" text-decoration:underline;color: #05b5ff;" ui-sref="app.goods.gdsBrdUpdate({oId:gdsBrd.oId}) " user-power="WGDS01006003">编辑</a>
+                      <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="delGdsBrd(gdsBrd.oId)" user-power="WGDS01006004">删除</a>
+                  </td>
+              </tr>
+
+
+          </table>
+        </div>
+  </div>
+  </div>
+
+</div>

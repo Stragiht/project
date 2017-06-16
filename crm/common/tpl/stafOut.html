@@ -1,0 +1,46 @@
+
+<div class="modal-header"><button class="close" type="button" ng-click="cancel()" >×</button>
+	<h3 class="modal-title">批量导出人员电子证件</h3>
+</div>
+<div class="panel-heading">
+
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-xs-5 control-label">选择要导出的电子证件字段：</label>
+		</div>
+
+		<div class="form-group">
+		<label class="col-xs-2 control-label"></label>
+			<div class="col-xs-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.bnk"> <i></i> 银行卡正面
+					</label>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.idcard"> <i></i> 身份证正反面
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+		<label class="col-xs-2 control-label"></label>
+			<div class="col-xs-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.health"> <i></i> 健康证
+					</label>
+				</div>
+			</div>
+ 
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-default" ng-click="cancel()">取消</button>
+	<button class="btn btn-primary" ng-click="ok()">确定</button>
+</div>

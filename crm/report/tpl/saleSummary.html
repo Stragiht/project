@@ -1,0 +1,108 @@
+﻿<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">销售概况
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+<!-- 查询面板开始 -->
+<div ng-controller="saleSummaryController" user-power="WREP01001001">
+    <div class="panel-heading">
+		<accordion close-others="oneAtATime">
+		    <accordion-group
+		            is-open="status.openBA">
+		        <accordion-heading>
+		            BA提交销售报表概况<i class="pull-right fa fa-angle-right"
+		                 ng-class="{'fa-angle-down': status.openBA, 'fa-angle-right': !status.openBA}"></i>
+		        </accordion-heading>
+		        <tabset>
+		            <tab ng-repeat="chnl in chnlList" heading="{{chnl.text}}" ng-click="baTabClick('{{chnl.key}}')">
+		                <footer class="col-xs-12 panel-footer bg-primary text-center no-padder">
+		                    <div class="row no-gutter">
+		                        <div class="col-xs-4">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryBAVo.yesterdayGdsQtyBA | number}}件</span>
+		                                <small class="text-muted">昨日商品数</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-4 dk">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryBAVo.weekGdsQtyBA | number}}件</span>
+		                                <small class="text-muted">本周商品数</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-4">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryBAVo.monthGdsQtyBA | number}}件</span>
+		                                <small class="text-muted">本月商品数</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-4 dk">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryBAVo.yesterdaySaleAmtBA | currency : "￥"}}</span>
+		                                <small class="text-muted">昨日成交金额</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-4">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryBAVo.weekSaleAmtBA | currency : "￥"}}</span>
+		                                <small class="text-muted">本周成交金额</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-4 dk">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryBAVo.monthSaleAmtBA | currency : "￥"}}</span>
+		                                <small class="text-muted">本月成交金额</small>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </footer>
+		            </tab>
+		        </tabset>
+		    </accordion-group>
+		</accordion>
+	</div>
+	<div class="panel-heading">
+		<accordion close-others="oneAtATime">
+		    <accordion-group
+		            is-open="status.openFC">
+		        <accordion-heading>
+		            财务导入销售报表概况<i class="pull-right fa fa-angle-right"
+		                 ng-class="{'fa-angle-down': status.openFC, 'fa-angle-right': !status.openFC}"></i>
+		        </accordion-heading>
+		        <tabset>
+		            <tab ng-repeat="chnl in chnlList" heading="{{chnl.text}}" ng-click="fcTabClick('{{chnl.key}}')">
+		                <footer class="col-xs-12 panel-footer bg-primary text-center no-padder">
+		                    <div class="row no-gutter">
+		                        <div class="col-xs-6">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryFCVo.lastWeekGdsQtyFC | number}}件</span>
+		                                <small class="text-muted">上周商品数</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-6 dk">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryFCVo.monthGdsQtyFC | number}}件</span>
+		                                <small class="text-muted">本月商品数</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-6 dk">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryFCVo.lastWeekSaleAmtFC | currency : "￥"}}</span>
+		                                <small class="text-muted">上周成交金额</small>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-6">
+		                            <div class="wrapper">
+		                                <span class="m-b-xs h3 block text-white">{{data.saleSummaryFCVo.monthSaleAmtFC | currency : "￥"}}</span>
+		                                <small class="text-muted">本月成交金额</small>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </footer>
+		            </tab>
+		        </tabset>
+		    </accordion-group>
+		</accordion>
+	</div>
+</div>
+<!-- 查询面板结束 -->

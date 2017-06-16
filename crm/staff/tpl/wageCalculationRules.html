@@ -1,0 +1,38 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4"> 工资计算规则
+        <button class="btn btn-success btn-addon mr_8" style="float:right;margin-right:10px;" ui-sref="app.staff.wageCalculationRulesInsert" user-power="WSTF01028002"> 新增工资计算规则</button>
+    </h4>
+</div>
+<div class="panel-heading">
+	<div ng-controller="GzjsgzCtrl">
+	   <div ng-table="tableParams">
+		    <table class="table table-bordered table-condensed   table-striped table-hover" user-power="WSTF01028001">
+		        <tr ng-repeat="userinfo in gzjsgzyl"    >
+		            <td ng-if=flase>{{userinfo.oid}}</td>
+		            <td ng-if=flase>{{$index+1}}</td>
+		            <td title="'规则名称'" style="text-align:center;min-width:120px; ">
+		                {{userinfo.ruleNm}}
+		            </td>
+		            <td title="'应用于哪个职位等级'" style="text-align:center;min-width:120px; ">
+		                {{userinfo |stfbas_posNum}}
+		            </td>
+		            <td title="'工资来源类别'" style="text-align:center;min-width:120px; ">
+		                {{userinfo| stfbas_salSrc}}
+		            </td>
+		            <td title="'状态'" style="text-align:center;min-width:120px; ">
+		                {{userinfo.enableFlg |dicNameFilter:'C013'}}
+		            </td>
+		            <td title="'操作'" style="text-align:center;min-width:210px; ">
+		                <a class="mr_9" href="#/app/staff/wageCalculationRulesUpdate/{{userinfo.oId}}" user-power="WSTF01028003">编辑</a>
+		                <a class="mr_9" ng-click="tsalruleDelete(userinfo.oId,$index)" user-power="WSTF01028004">删除</a>
+		            </td>
+		        </tr>
+		    </table>
+	   </div>
+	</div>
+</div>
+<div>
+ <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+ </script>
+</div>

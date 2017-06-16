@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<div ng-controller="urbanDistrictInformationSelectController">
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+                             城市分区信息
+        <a class="btn btn-success btn-addon mr_8" ui-sref="app.staff.urbandistrictinformationInsert" user-power="WSTF01006003">新增城市分区</a>
+    </h4>
+</div>
+<div>
+ <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+ </script>
+</div>
+
+
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    查询
+                    <i class="pull-right fa fa-angle-right"ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+                <form name="form" class="form-horizontal">
+                    <!--<div class="form-group">-->
+                    <!--<label class="col-sm-3 control-label">所属销售渠道：</label>-->
+                    <!--<div class="col-sm-3">-->
+                    <!--<select ng-model="xsmdxx.ssxsqd" class="form-control" ng-options="chnl.key as chnl.text for chnl in chnlList" ng-selected="chnl.key==xsmdxx.ssxsqd" >-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">分区编号：</label>
+
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" ng-model="urbanDistrict.params.partiNum">
+                        </div>
+
+                        <label class="col-lg-2 control-label">分区名称：</label>
+
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" ng-model="urbanDistrict.params.partiNm">
+                        </div>
+                    </div>
+
+                   <!-- <div class="form-group">
+                        <label class="col-lg-2 control-label"><span style="color:red;">*</span>所属城市：</label>
+
+                        <div class="col-xs-10">
+                            <div style="position:relative;display: inline-block;margin-bottom: 15px;">
+                                <select style="height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;text-align: center;">
+                                    <option>全部</option>
+                                </select>
+                            </div>
+                            <div style="position:relative;display: inline-block;margin-bottom: 15px;">
+                                <select style="height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 5px;text-align: center;">
+                                    <option>全部</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+-->
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label"><span style="color:red;">*</span> 所属城市：</label>
+                        <div class="col-xs-3" style="width:150px;">
+                            <select name="account1" style="width:140px;" ng-change="changeMajRegInfo(urbanDistrict.params.subChnl)" class="form-control m-b" ng-model="urbanDistrict.params.subChnl" ng-options="ChnlInfo.key as ChnlInfo.text for ChnlInfo in ChnlInfoList" required/>
+                        </div>
+                        <div class="col-xs-3" style="width:150px;">
+                            <select name="account2" style="width:140px;" ng-change="changeproVinceInfo(urbanDistrict.params.subChnl,urbanDistrict.params.majRgnNum,1)" class="form-control m-b" ng-model="urbanDistrict.params.majRgnNum" ng-options="MajRegInfo.key as MajRegInfo.text for MajRegInfo in MajRegInfoList" required/>
+                        </div>
+                        <div class="col-xs-3" style="width:150px;">
+                            <select name="account3" style="width:140px;" ng-change="changecityInfo(urbanDistrict.params.subChnl,urbanDistrict.params.majRgnNum,urbanDistrict.params.rgnNum,1)" class="form-control m-b" ng-model="urbanDistrict.params.rgnNum" ng-options="proVinceInfo.key as proVinceInfo.text for proVinceInfo in proVinceInfoList" required/>
+                        </div>
+                        <div class="col-xs-3" style="width:150px;">
+                            <select name="account4" style="width:140px;" class="form-control m-b"  ng-model="urbanDistrict.params.city" ng-options="cityInfo.key as cityInfo.text for cityInfo in cityInfoList" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" style="text-align: left;"></label>
+                        <div class="col-sm-offset-1 col-sm-1">
+                            <button class="btn btn-info btn-addon" user-power="WSTF01007001" ng-click="searchUrbanDistrict()">搜索</button>
+                        </div>
+                        <div class="col-lg-offset-2 col-lg-4"></div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+
+
+<!-- 导出系列按钮面板开始 -->
+<div class="panel-heading">
+    <label class="control-label mt_6">共有<span class="text-red">{{gydst}}</span>条数据 </label>
+    <label class="control-label mt_6" ng-if="gydst==0">（没有符合条件的数据）</label>
+</div>
+<!-- 导出系列按钮面板结束 -->
+<!-- 标题信息结束 -->
+<!-- table列表开始 -->
+<div class="panel-heading">
+   <div ng-table="tableParams">
+       <table class="table table-bordered table-condensed   table-striped table-hover">
+       <tr ng-repeat="csinfo in $data">
+           <td title="'分区编号'" style="min-width: 120px;">
+           {{csinfo.partiNum}}
+           </td>
+           <td title="'分区名称'" style="min-width: 120px;">
+           {{csinfo.partiNm}}
+           </td>
+           <td title="'所属城市'" style="min-width: 120px;">
+           {{csinfo.chnlNm}}>{{csinfo.majRgnNm}}>{{csinfo.rgnNm}}>{{csinfo.cityrgnNm}}
+           </td>
+           <td title="'操作'" style=" min-width: 200px;" class="mr_22">
+            <a class="mr_9"  ng-click="update(csinfo.partiNum)" user-power="WSTF01006004"> 编辑</a>
+            <a class="mr_9"  ng-click="del(csinfo.partiNum)" user-power="WSTF01006002"> 删除</a>
+            <div ng-show="false"> {{csinfo.updtTm}}</div>
+           </td>
+           </tr>
+       </table>
+   </div>
+</div>
+<!-- table列表结束 -->
+</div>
+</html>

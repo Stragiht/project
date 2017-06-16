@@ -1,0 +1,129 @@
+<div ng-controller="setOperatorInfoMgmtController">
+    <script type="text/ng-template" id="multiselectstaff.html">
+        <div ng-include="'common/tpl/multiselectstaff.html'"></div>
+    </script>
+    <!-- 标题信息开始 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4">
+            操作人员信息
+        </h4>
+    </div>
+    <!-- 标题信息开始 -->
+
+    <div class="wrapper-md">
+        <!-- 温馨提示开始 -->
+        <div class="row">
+            <div class="panel-heading">
+                <div class="col-md-12">
+                    <div class="list-group list-group-lg list-group-sp">
+                        <div herf="" class="list-group-item clearfix bg-light dker">
+                            <div class="clear">
+                                <p>温馨提示：</p>
+
+                                <p>其它用户操作（新增、编辑、批量修改）人员信息系统会向设置的指定人员发送站内信。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 温馨提示结束 -->
+
+        <div class="wrapper-md" style="padding: 15px;">
+
+            <tabset class="tab-container">
+                <tab ng-click="tabLocal(1)">
+                    <tab-heading>
+                        新增
+                    </tab-heading>
+                    <!-- 表格 -->
+                    <div class="wrapper-md form-horizontal" style="padding: 0;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                设置接收站内信人员：
+                            </label>
+                            <input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;"
+                                   ng-click="openStfs('lg', stfRecvDbMsgCnfs)" value="添加">
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <div ng-table="tableParams">
+                                    <table class="table table-bordered table-condensed   table-striped table-hover">
+                                        <tr ng-repeat="stfRecvDbMsgCnf in stfRecvDbMsgCnfs">
+                                            <td title="'人员编号'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="stfRecvDbMsgCnf.stfNum"></span>
+                                            </td>
+                                            <td title="'姓名'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="stfRecvDbMsgCnf.stfNm"></span>
+                                            </td>
+
+                                            <td title="'操作'" style="text-align:center;min-width:180px;">
+                                                <a ng-click="delInsert($index)" style="text-decoration:underline;color: #05b5ff;">
+                                                    删除</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </tab>
+
+                <tab ng-click="tabLocal(2)">
+                    <tab-heading>
+                        编辑（批量修改）
+                    </tab-heading>
+
+                    <!-- 表格 -->
+                    <div class="wrapper-md form-horizontal" style="padding: 0;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                设置接收站内信人员：
+                            </label>
+                            <input type="button" class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;"
+                                   ng-click="openStfs('lg', updateStfRecvDbMsgCnfs)" value="添加">
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <div ng-table="tableParams">
+                                    <table class="table table-bordered table-condensed   table-striped table-hover">
+                                        <tr ng-repeat="updateStfRecvDbMsgCnf in updateStfRecvDbMsgCnfs">
+                                            <td title="'人员编号'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="updateStfRecvDbMsgCnf.stfNum"></span>
+                                            </td>
+                                            <td title="'姓名'" style="text-align:center;min-width:120px;">
+                                                <span ng-bind="updateStfRecvDbMsgCnf.stfNm"></span>
+                                            </td>
+
+                                            <td title="'操作'" style="text-align:center;min-width:180px;">
+                                                <a ng-click="delUpdate($index)" style="text-decoration:underline;color: #05b5ff;">
+                                                    删除</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </tab>
+
+            </tabset>
+        </div>
+
+        <div class="form-group ">
+            <button class=" btn btn-success" style="margin-left: 15px;" ng-click="save()" user-power="WSET01002002">
+                提交保存
+            </button>
+        </div>
+    </div>
+</div>
+
+

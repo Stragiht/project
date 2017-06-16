@@ -1,0 +1,192 @@
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">
+		审批
+		<a class="btn btn-default btn-addon mr_8" ui-sref="app.staff.entryAppl">返回入职流程管理</a>
+	</h4>
+</div>
+
+<div class="wrapper-md" ng-controller="entryApplApprController">
+	<form name="form" class="form-horizontal form-validation">
+		<tabset class="tab-container">
+			<tab>
+				<tab-heading> 申请信息 </tab-heading>
+				<div class="panel-heading">
+					<!--1.基本信息-->
+					<accordion close-others="oneAtATime">
+						<accordion-group is-open="status.baseInfoOpen">
+							<accordion-heading>
+								1.基本信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.baseInfoOpen, 'fa-angle-right': !status.baseInfoOpen}"></i>
+							</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">申请编号：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.entApplNum}}</label>
+								<label class="col-xs-2 control-label">提交人：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.applSbmtNm}}</label>
+								<label class="col-xs-2 control-label">审批状态：</label>
+								<label class="col-xs-2 control-label text-left text-red">{{entryInfo.apprStat|dicNameFilter:"C018"}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">提交时间：</label>
+								<label class="col-xs-4 control-label text-left">{{entryInfo.sbmtTmDis}}</label>
+							</div>
+						</accordion-group>
+					</accordion>
+				</div>
+				<div class="panel-heading">
+					<!--2.入职人基本资料-->
+					<accordion close-others="oneAtATime">
+						<accordion-group is-open="status.entBaseInfoOpen">
+							<accordion-heading>
+								2.入职人基本资料 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.entBaseInfoOpen, 'fa-angle-right': !status.entBaseInfoOpen}"></i>
+							</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">入职人姓名：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.stfNm}}</label>
+								<label class="col-xs-2 control-label">所属部门：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.entDep|stfBasSubDep}}</label>
+								<label class="col-xs-2 control-label">职位等级：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.stfPos|stfBasPosNum}}<span ng-if="entryInfo.posGrdNum != null &&  entryInfo.posGrdNum != ''"> > {{entryInfo.posGrdNm}}</span></label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">联系电话：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.stfMobPhNum}}</label>
+								<label class="col-xs-2 control-label">身份证号码：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.stfIdNum}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">身份证图片：</label>
+								<label class="col-xs-5 control-label text-left">
+									<img ng-src="{{entryInfo.idCardPosPic|imgpath}}" width="300px" height="200px"></img>
+								</label>
+								<label class="col-xs-5 control-label text-left">
+									<img ng-src="{{entryInfo.idCardOppPic|imgpath}}" width="300px" height="200px"></img>
+								</label>
+							</div>
+						</accordion-group>
+					</accordion>
+				</div>
+				<div class="panel-heading">
+					<!--3.入职信息-->
+					<accordion close-others="oneAtATime">
+						<accordion-group is-open="status.entInfoOpen">
+							<accordion-heading>
+								3.入职信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.entInfoOpen, 'fa-angle-right': !status.entInfoOpen}"></i>
+							</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">入职时间：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.stfEntDt}}</label>
+								<label class="col-xs-2 control-label">所在城市：</label>
+								<label class="col-xs-4 control-label text-left">{{entryInfo.stfFrProv|stfBasPCV}} > {{entryInfo.stfFrCity|stfBasPCV}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">直属主管：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.supvrStfNm}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label"></label>
+								<div class="col-xs-5 control-label text-left">
+									<table class="table table-bordered">
+										<tr><th colspan="2">直属主管相关信息</th></tr>
+										<tr>
+											<td style="text-align: right;width: 50%;">直属主管职位：</td>
+											<td>{{entryInfo.supvrStfPosNum|stfBasPosNum}}</td>
+										</tr>
+										<tr ng-repeat="supvrStfInfo in supvrStfList">
+											<td style="text-align: right;width: 50%;">所属{{supvrStfInfo.posNum|stfBasPosNum}}：</td>
+											<td>{{supvrStfInfo.stfnm}}</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">所属门店：</label>
+								<div class="col-xs-10 control-label">
+									<table class="table table-bordered table-condensed table-striped table-hover">
+										<tr>
+											<th style="width: 17%;">门店编号</th>
+											<th style="width: 17%;">门店名称</th>
+											<th style="width: 16%;">所属渠道</th>
+											<th style="width: 16%;">所属销售大区</th>
+											<th style="width: 17%;">所属城市</th>
+											<th style="width: 17%;">所属城市分区</th>
+										</tr>
+										<tr ng-repeat="store in storeList">
+											<td title="'门店编号'">{{store.strNum}}</td>
+											<td title="'门店名称'">{{store.strNm}}</td>
+											<td title="'所属渠道'">{{store.chnlNm}}</td>
+											<td title="'所属销售大区'">{{store.majRgnNm}}</td>
+											<td title="'所属城市'">{{store.cityNum}}</td>
+											<td title="'所属城市分区'">{{store.partiNm}}</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</accordion-group>
+					</accordion>
+				</div>
+				<div class="panel-heading">
+					<!--4.判断依据-->
+					<accordion close-others="oneAtATime">
+						<accordion-group is-open="status.judgmentBasisOpen">
+							<accordion-heading>
+								4.判断依据 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.judgmentBasisOpen, 'fa-angle-right': !status.judgmentBasisOpen}"></i>
+							</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-4 control-label">直属主管上一档期销售业绩：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.subRgnMgrLstPhaAmt | currency:'￥'}}</label>
+								<label class="col-xs-3 control-label">直属主管现有同职位人数：</label>
+								<label class="col-xs-2 control-label text-left">{{entryInfo.subRgnMgrSameStfQty}}人</label>
+							</div>
+						</accordion-group>
+					</accordion>
+				</div>
+				<div class="panel-heading">
+					<!--5.可操作-->
+					<accordion close-others="oneAtATime">
+						<accordion-group is-open="status.apprOperationOpen">
+							<accordion-heading>
+								5.可操作 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.apprOperationOpen, 'fa-angle-right': !status.apprOperationOpen}"></i>
+							</accordion-heading>
+							<div class="form-group">
+								<label class="col-xs-2 control-label"><span style="color: red;">*</span>是否通过：</label>
+								<div class="col-xs-1" ng-repeat="apprRstInfo in apprRstList" style="padding-left:0px;">
+									<div class="radio">
+										<label class="i-checks i-checks-sm"><input name="apprRadio" type="radio" ng-model="entryInfo.apprRst" value="{{apprRstInfo.key}}" ng-required="true" /><i></i>{{apprRstInfo.text}}</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label"></label>
+								<div class="col-xs-8" style="padding-left:0px;">
+									<textarea class="form-control" rows="5" name="apprCommonts" ng-model="entryInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+									<div ng-messages="form.apprCommonts.$error" ng-if="(form.apprCommonts.$dirty && form.apprCommonts.$invalid)">
+										<span ng-message="maxlength" class="error">审批意见长度不能超过1000位！</span>
+									</div>
+								</div>
+							</div>
+						</accordion-group>
+					</accordion>
+				</div>
+			</tab>
+			<tab ng-show="status.apprHisDisplay">
+				<tab-heading> 审批历史 </tab-heading>
+				<div class="panel-heading" style="margin-bottom: 20px;">
+					<div ng-table="tableParams">
+						<table class="table table-bordered table-condensed table-striped table-hover">
+							<tr ng-repeat="apprHisInfo in $data">
+								<td title="'操作时间'" style="text-align: center;width: 24%;">{{apprHisInfo.updtTm}}</td>
+								<td title="'操作人'" style="text-align: center;width: 19%;">{{apprHisInfo.stfNm}}</td>
+								<td title="'审批状态'" style="text-align: center;width: 12%;">{{apprHisInfo.status|dicNameFilter:"C019"}}</td>
+								<td title="'备注'" style="text-align: left;width: 45%;">{{apprHisInfo.apprComments}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</tab>
+		</tabset>
+
+		<div class="panel-heading">
+			<button class="btn btn-info btn-addon mr_10" ng-click="apprEntryAppl()" ng-disabled="form.$invalid" user-power="WSTF01009005">提交</button>
+		</div>
+	</form>
+</div>

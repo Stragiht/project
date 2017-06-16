@@ -1,0 +1,38 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">网站意见反馈</h4>
+</div>
+<div class="panel-heading">
+    <div ng-table="tableParams">
+        <table class="table table-bordered table-condensed table-striped table-hover" ng-controller="fbkInfoSelectController" >
+            <tr ng-repeat="fbkInfo in data">
+               <!--  <td title="'日期'" style=" min-width:115px;">
+                    <span ng-bind="fbkInfo.crtdTm|date:'yyyy-MM-dd'"></span>
+                </td> -->
+                <td title="'提交人'" style=" min-width:110px;">
+                    <span ng-bind="fbkInfo.crtdUsr"></span>
+                </td>
+                <td title="'标题'" style=" min-width:190px;">
+                    <span ng-bind="fbkInfo.title"></span>
+                </td>
+                <td title="'影响栏目'" style=" min-width:150px;">
+                    <span ng-bind="fbkInfo.scopeModule"></span><span ng-if="(fbkInfo.scopeModule | isNotNullFilter) && (fbkInfo.scopeGroup | isNotNullFilter)">></span><span ng-bind="fbkInfo.scopeGroup"></span><span ng-if="(fbkInfo.scopeGroup | isNotNullFilter) && (fbkInfo.scopeFunction | isNotNullFilter)">></span><span ng-bind="fbkInfo.scopeFunction"></span>
+                </td>
+                <td title="'问题严重程度'" style=" min-width:90px;">
+                    <span ng-bind="fbkInfo.level|dicNameFilter:'C043'"></span>
+                </td>
+                <td title="'问题分类'" style=" min-width:90px;">
+                    <span ng-bind="fbkInfo.type|dicNameFilter:'C044'"></span>
+                </td>
+                <td title="'提交时间'" style=" min-width:195px;">
+                    <span ng-bind="fbkInfo.crtdTm|date:'yyyy-MM-dd HH:mm:ss'"></span>
+                </td>
+                <td title="'处理状态'" style=" min-width:90px;" class="text-red">
+                    <span ng-bind="fbkInfo.actionFlg|dicNameFilter:'C046'"></span>
+                </td>
+                <td title="'操作'" style=" min-width: 100px;" class="mr_22">
+                    <a class="mr_9" ng-click="fbkInfoUpdate(fbkInfo.oId)">处理</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

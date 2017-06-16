@@ -1,0 +1,102 @@
+<div ng-controller="disSupSalePerfSelect as ctrl">
+	<!-- 标题信息开始 -->
+	<div class="bg-light lter b-b wrapper-md">
+	    <h4 class="m-n font-thin h4">
+        	分配督导销售业绩
+	    </h4>
+	</div>
+	<!-- 标题信息结束 -->
+	
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    查询
+					<i class="pull-right fa fa-angle-right"ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+                <form name="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label"><span class="text-red">*</span>销售日期：</label>
+                        <div class="col-xs-4">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control" name="saleStartDate"
+                                       datepicker-popup="yyyy-MM-dd" ng-model="myPara.select.phaStartTm1"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions" ng-required="true" readonly="readonly"/>
+                                <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+		                                <i class="glyphicon glyphicon-calendar"></i>
+		                            </button>
+								</span>
+                            </div>
+                            <div ng-messages="form.saleStartDate.$error" ng-if="(form.saleStartDate.$dirty && form.saleStartDate.$invalid)">
+                                <span ng-message="required" class="error">销售开始日期必须输入！</span>
+                            </div>
+                        </div>
+                        <label class="col-xs-1 control-label" style="text-align: left;">至</label>
+                        <div class="col-xs-4">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control" name="saleEndDate"
+                                       datepicker-popup="yyyy-MM-dd" ng-model="myPara.select.phaEndTm1"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions" ng-required="true" readonly="readonly"/>
+                                <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+		                                <i class="glyphicon glyphicon-calendar"></i>
+		                            </button>
+								</span>
+                            </div>
+                            <div ng-messages="form.saleEndDate.$error" ng-if="(form.saleEndDate.$dirty && form.saleEndDate.$invalid)">
+                                <span ng-message="required" class="error">销售结束日期必须输入！</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-1 control-label" style="text-align: left;"></label>
+                        <div class="col-xs-offset-1 col-xs-1">
+                            <button class="btn btn-info btn-addon" ng-click="selectBaSaleReportDtl()" ng-disabled="form.$invalid" user-power="WREP01008001">搜索
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+    <!-- 导出系列按钮面板开始 -->
+    <div class="panel-heading">
+        <label class="control-label mt_6">共有<span class="error">{{dataTempSize}}</span>条数据 </label><label ng-show="msgShowInfo == true">（没有符合条件的数据）</label>
+    </div>
+    <!-- 导出系列按钮面板结束 -->
+    <!-- table列表开始 -->
+    <div class="panel-heading">
+        <div ng-table="ctrl.tableParams">
+            <table class="table table-bordered table-condensed table-striped table-hover">
+              
+                <tr ng-repeat="userinfo in $data">
+                    <td title="'人员编号'" width="'80px'">{{userinfo.stfNum}}
+					</td>
+                    <td title="'姓名'" width="'80px'">{{userinfo.stfNm}}
+                    </td>
+                    <td title="'所属城市'" width="'160px'">{{userinfo.rgnNmAbbr}}
+                    </td>
+                    <td title="'职位'" width="'100px'">{{userinfo.posNm}}
+                    </td>
+                    <td title="'销售日期'" width="'100px'">{{userinfo.pageSelectTime}}  
+                    </td>
+                     <td title="'可分配销售业绩'" width="'120px'" style="text-align: right;">{{userinfo.sumSaleAmt | customCurrency : "￥" }} 
+                    </td>
+                    <td title="'已分配'" width="'120px'" style="text-align: right;">{{userinfo.sumAssnAmt | customCurrency : "￥" }}
+                    </td>
+                    <td title="'剩余业绩'" width="'120px'" style="text-align: right;">{{userinfo.leftAmt | customCurrency : "￥" }}
+                    </td>
+                    <td title="'操作'" width="'60px'" class="mr_22">  <!-- 分配业绩 -->
+                         <a class="mr_9" href="#/app/report/disSupShareSalePerf/{{userinfo.stfNum}}/{{pointFormatPhaStartRealTm1}}/{{pointFormatPhaEndRealTm11}}" user-power="WREP01008002">分配业绩</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

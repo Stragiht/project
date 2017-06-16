@@ -1,0 +1,98 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">人员信息批量修改</h4>
+</div>
+<!-- 标题信息结束 -->
+
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="demo.checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+
+<div ng-controller="stfBasOneOneEditUpdate">
+	<!-- 查询面板开始 -->
+	<div class="panel-heading">
+		<form name="form" class="form-horizontal">
+
+			<div class="form-group">
+
+				<div ng-table="tableParams" class="col-sm-12">
+					<table
+						class="table table-bordered table-hover table-condensed editable-table"
+						ng-form="tableForm" disable-filter="isAdding"
+						demo-tracked-table="tableTracker">
+
+						<tr ng-repeat="row in $data" ng-form="rowForm"
+							demo-tracked-table-row="row">
+							<td title="'人员编号'">{{row.stfNum}}</td>
+							<td title="'姓名'">
+								<div class="controls">
+									<!--<input type="text" name="stfNm" ng-model="row.stfNm"-->
+										<!--class="editable-input form-control input-sm" />-->
+									<input type="text" name="stfNm" ng-model="row.stfNm"
+										   class="editable-input form-control" />
+								</div>
+							</td>
+							<td title="'职位名称'">
+								<div class="controls">
+									<select name="account" style="padding:0 12px;height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 10px; margin-bottom: 5px;"
+										ng-model="row.posNum" ng-change="selectc()"
+										ng-options="zt.key as zt.text for zt in jobs">
+									</select>
+								</div>
+							</td>
+							<td title="'职位等级'">
+								<div class="controls">
+									<select name="account" style="padding:0 12px;height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 10px; margin-bottom: 5px;"
+										ng-model="row.posGrdNum"
+										ng-options="zt.key as zt.text for zt in posGrdNumSet.items[row.posNum]">
+									</select>
+								</div>
+							</td>
+							<td title="'直属主管'">
+								<!--<div class="controls">-->
+									<!--<input type="text"    value="{{(row.supvrStfNum.length>0)?row.supvrStfNum+'.'+row.supvrStfNm:''}}"-->
+										<!--class="editable-input form-control input-sm"  readonly="readonly"  ng-click="openStaff('lg',$index)"/>-->
+								<!--</div>-->
+								<div class="controls">
+									<input type="text"    value="{{(row.supvrStfNum.length>0)?row.supvrStfNum+'.'+row.supvrStfNm:''}}"
+										   class="editable-input form-control"  readonly="readonly"  ng-click="openStaff('lg',$index)"/>
+								</div>
+							</td>
+							<td title="'在岗状态'">
+								<div class="controls">
+									<select name="account" ng-model="row.workStat"
+											style="padding:0 12px;height: 35px;border: 1px solid #CFDADD;border-radius: 3px;margin-right: 10px; margin-bottom: 5px;"
+										ng-options="zt.key as zt.text for zt in zhuangtai">
+									</select>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4">
+						<div class="col-sm-5">
+							<button class="btn btn-info  mr_10" ng-click="inserter()"
+								ng-disabled="formTwo.$invalid||isSubmit"
+								user-power="WSTF01002002">提交保存</button>
+						</div>
+						<div class="col-sm-5">
+							<button class="btn btn-default  mr_10"
+								ui-sref="app.staff.stfBasAllUpdate">返回</button>
+						</div>
+					</div>
+				</div>
+		</form>
+	</div>
+	<div>
+		<script type="text/ng-template" id="stafAllUpdateWindow.html">
+            <div ng-include="'common/tpl/stafAllUpdateWindow.html'"></div>
+        </script>
+	</div>
+	<div>
+		<script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+	</div>
+</div>

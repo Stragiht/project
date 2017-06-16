@@ -1,0 +1,152 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        查看
+    </h4>
+</div>
+<!-- 标题信息开始 -->
+<style>
+    .tab-container.ng-isolate-scope {
+        margin: 10px 10px 0px 10px;
+        overflow: hidden;
+    }
+    .panel-body{
+        padding: 15px;
+    }
+</style>
+<div ng-controller="appAttendReportSelectController" style="padding-top: 20px">
+    <tabset  class="tab-container">
+        <tab style="padding-left: 30px;"><tab-heading>申请信息</tab-heading>
+            <div class="panel-heading">
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open1" >
+                        <accordion-heading>
+                            1.基本信息<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open1, 'fa-angle-right': !status.open1}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-4">
+                            申请编号：{{myDatas.applNum}}
+                        </div>
+                        <div class="col-xs-4">
+                            提交人：{{myDatas.applicant}}
+                        </div>
+                        <div class="col-xs-4" >
+                            审批状态：<span style="color:red;">{{myDatas.apprStat | dicNameFilter:"C018"}}</span>
+                        </div>
+                        <div class="col-xs-12" style="padding-top: 20px;">
+                            提交时间：{{myDatas.applSbmtTm}}
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open2" >
+                        <accordion-heading>
+                           2.申请内容<i class="pull-right fa fa-angle-right"
+                                       ng-class="{'fa-angle-down': status.open2, 'fa-angle-right': !status.open2}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-3">
+                            人员编号：{{myDatas.stfNum}}
+                        </div>
+                        <div class="col-xs-3">
+                            姓名：{{myDatas.stfNm}}
+                        </div>
+                        <div class="col-xs-3">
+                            部门：{{myDatas.depNm}}
+                        </div>
+                        <div class="col-xs-3">
+                            职位：{{myDatas.posNm}}
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 20px;">
+                            所属区域经理：{{myDatas.qyjl}}
+                        </div>
+                        <div class="col-xs-9" style="padding-top: 20px;">
+                            所属大区总监：{{myDatas.StfBasPos}}
+                        </div>
+                        <div class="col-xs-12" style="padding-top: 20px;">
+                            所属门店：<br/>
+                            <div ng-table="tableParamsStoresList" >
+                                <table class="table table-bordered table-condensed table-striped table-hover">
+                                    <tr ng-repeat="row in $data">
+                                        <td title="'门店编号'" style="min-width: 130px;">{{row.strNum}}</td>
+                                        <td title="'门店名称'" style="min-width: 130px;">{{row.strNm}}</td>
+                                        <td title="'所属渠道'" style="min-width: 130px;">{{row.chnlNm}}</td>
+                                        <td title="'所属销售大区'" style="min-width: 130px;">{{row.majRgnNm}}</td>
+                                        <td title="'所属城市'" style="min-width: 130px;">{{row.cityNum}}</td>
+                                        <td title="'所属城市分区'" style="min-width: 130px;">{{row.partiNm}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open3">
+                        <accordion-heading>
+                            3.考勤概况<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open3, 'fa-angle-right': !status.open3}"></i>
+                        </accordion-heading>
+                        <div class="col-xs-4">
+                            考勤档期：{{myDatas.phaGrpNm}}.{{myDatas.phaNm}}
+                        </div>
+                        <div class="col-xs-5">
+                            档期时间段：{{myDatas.phaStartTm}} ~ {{myDatas.phaEndTm}}
+                        </div>
+                        <div class="col-xs-3">
+                            是否全勤：<span style="color:red;">{{myDatas.fullAttnDays | dicNameFilter:"C002"}}</span>
+                        </div>
+                        <div class="col-xs-4" style="padding-top: 20px;">
+                            应出勤天数：{{myDatas.supAttdDays}} 天
+                        </div>
+                        <div class="col-xs-5" style="padding-top: 20px;">
+                            实际出勤天数：{{myDatas.actualAttnDays}} 天
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 20px;">
+                            应发工资天数：{{myDatas.supPayDays}} 天
+                        </div>
+                        <div class="col-xs-4" style="padding-top: 20px;">
+                            请假天数：{{myDatas.persLeaveDays}} 天
+                        </div>
+                        <div class="col-xs-5" style="padding-top: 20px;">
+                            借调天数：{{myDatas.secDays}} 天
+                        </div>
+                        <div class="col-xs-3" style="padding-top: 20px;">
+                            旷工天数：{{myDatas.absentDays}} 天
+                        </div>
+                    </accordion-group>
+                </accordion>
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="status.open4">
+                        <accordion-heading>
+                            4.考勤明细<i class="pull-right fa fa-angle-right"
+                                     ng-class="{'fa-angle-down': status.open4, 'fa-angle-right': !status.open4}"></i>
+                        </accordion-heading>
+                        <div ng-table="tableParams" style="width: 400px">
+                            <table class="table table-bordered table-condensed table-striped table-hover">
+                                <tr ng-repeat="row in $data">
+                                    <td title="'日期'" style="min-width: 130px;">{{row.attendDt}}</td>
+                                    <td title="'出勤情况'" style="min-width: 130px;" >
+                                        <span ng-if="row.attendSitu == '0'">{{row.attendSitu | dicNameFilter:"C040"}}</span>
+                                        <span style="color:red;" ng-if="row.attendSitu != '0'">{{row.attendSitu | dicNameFilter:"C040"}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </accordion-group>
+                </accordion>
+            </div>
+        </tab>
+        <tab style="padding-left: 10px;" select="selecttabs()"><tab-heading>审批历史</tab-heading>
+            <div ng-table="apptableParams" >
+                <table class="table table-bordered table-condensed table-striped table-hover">
+                    <tr ng-repeat="row in $data">
+                        <td title="'操作时间'" style="min-width: 130px;">{{row.updtTm}}</td>
+                        <td title="'操作人'" style="min-width: 130px;">{{row.stfNm}}</td>
+                        <td title="'审批状态'" style="min-width: 130px;">{{row.status | dicNameFilter:"C019"}}</td>
+                        <td title="'备注'" style="min-width: 130px;">{{row.apprComments}}</td>
+                    </tr>
+                </table>
+            </div>
+        </tab>
+    </tabset>
+    <button ng-click="returnUp()" class="btn btn-sm btn-icon btn-default" style="width: 80px;margin-top: 15px;margin-left: 10px">返回</button>
+</div>

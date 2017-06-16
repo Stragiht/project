@@ -1,0 +1,29 @@
+<div ng-controller="salesScheduleManageCol">
+	<div class="bg-light lter b-b wrapper-md">
+	    <h4 class="m-n font-thin h4">销售档期管理
+	        <a class="btn btn-success btn-addon mr_8" ui-sref="app.staff.salesScheduleInsert" user-power="WSTF01008002"> 新增档期</a>
+	    </h4>
+	</div>
+    <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+    </script>
+	<div class="panel-heading">
+	    <label class="control-label mt_6">共有<span class="error">{{countNumber}}</span>条数据 </label>
+	    <label class="control-label mt_6" ng-if="countNumber==0">（没有符合条件的数据）</label>
+	</div>
+	<div class="panel-heading">
+	    <div ng-table="tableParams">
+	        <table class="table table-bordered table-condensed  table-striped table-hover">
+	           <tr ng-repeat="dqinfo in xsdq">
+	               <td title="'档期组名称'"style="text-align: center;min-width: 200px;word-break: break-all;" ng-bind="dqinfo.groupname"></td>
+	               <td title="'档期名称'"  style="text-align: center;min-width: 300px;word-break: break-all;" ng-bind="dqinfo.name"></td>
+	               <td title="'操作'" style="text-align: center;min-width: 180px;">
+	                   <a class="mr_9"  ng-click="scheduleUpdate(dqinfo.oid)" user-power="WSTF01008003"> 编辑</a>
+	                   <a class="mr_9" ng-click="scheduleDelete(dqinfo.oid)" user-power="WSTF01008004">删除</a>
+	               </td>                                  
+	           </tr>     
+	        </table>    
+	    </div> 
+	</div>
+</div>
+

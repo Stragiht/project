@@ -1,0 +1,208 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">编辑角色权限
+        <a class="btn btn-default btn-addon mr_8" ui-sref="app.staff.configRolePermiss" style="float:right;margin-right:10px;">返回配置权限管理</a>
+    </h4>
+</div>
+<style>
+    .tab-content-box {width: 870px;overflow: hidden;position: relative;}
+    .tab-content-box .tab-content {
+        border-bottom: 0px !important;
+        border-left: 0px !important;
+        border-right: 0px !important;
+        padding: 0px;
+    }
+
+    .table-responsive{
+        width: calc(100% - 0px);
+        width: -moz-calc(100% - 0px);
+        width: -webkit-calc(100% - 0px);
+        width: calc(100% - 0px);
+        padding-left:15px;padding-right:15px;
+        border: 1px solid #dee5e7;
+        border-top: 0px;
+    }
+
+    .tab-content-box2 {width: 870px;overflow: hidden;position: relative;}
+    .tab-content-box2 .tab-content {
+        border-bottom: 0px !important;
+        border-left: 0px !important;
+        border-right: 0px !important;
+        padding: 0px;
+    }
+
+    .table_w{width: 100%;}
+    .data{width:30px; text-align:center; background:no-repeat 0 0 scroll ; border:none;outline:medium;color: #f05050;}
+    .ngViewport.ng-scope{
+        overflow-x: hidden;
+    }
+
+
+    .tab-container2 .nav.nav-tabs {width: 1900px;position: relative;}
+    .tab-container2 .myTab{ position: absolute !important; z-index: 999; left:789px;  background: #fff;}
+    .tab-container2 .myTab > a {cursor: inherit !important; }
+
+    .tab-container3 .nav.nav-tabs {width: 1900px;position: relative;}
+    .tab-container3 .myTab{ position: absolute !important; z-index: 999; left:789px;  background: #fff;}
+    .tab-container3 .myTab > a {cursor: inherit !important; }
+</style>
+
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="demo.checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+
+<script type="text/ng-template" id="headerCheckboxApp.html">
+    <input type="checkbox" ng-model="demo.checkboxesApp.checked" ng-click="checkAllApp()" class="select-all" value=""/>
+    全选
+</script>
+
+
+
+<div class="wrapper-md" ng-controller="roleUpdateController as demo">
+    <form name="formAttr" class="form-horizontal">
+        <!-- 第一行 -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span style="color:red;">*</span>角色名称：</label>
+
+            <div class="col-xs-3">
+                <input type="text" class="form-control" ng-model="roleUpdate.roleName"
+                       name="roleName" required >
+
+                <div ng-messages="formAttr.roleName.$error" ng-if="(formAttr.roleName.$dirty && formAttr.roleName.$invalid)">
+                    <span ng-message="required" class="error"> 角色名称必须输入！ </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">描述：</label>
+
+            <div class="col-sm-2">
+        <textarea class="form-control" rows="6" style="resize:none;width:500px;" ng-model="roleUpdate.roleDesc"
+                  maxlength="1000" ng-trim="false"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">配置权限：</label>
+        </div>
+
+        <tabset class="tab-container">
+            <tab active="tab.active">
+                <tab-heading>
+                    Web端权限
+                </tab-heading>
+                <div class="tab-content-box">
+                    <tabset class="tab-container2" >
+                        <tab class="myTab" index="0" disabled="true">
+                            <tab-heading>
+                                <i class="fa fa-chevron-left" ng-click='onmousedownRight()'
+                                   ng-mouseout='onmousedownLeftStop()'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-chevron-right" ng-click='onmousedownLeft()'
+                                   ng-mouseout='onmousedownRightStop()'></i>
+                            </tab-heading>
+                        </tab>
+                        <tab ng-repeat='funcPList in funcInWeb' active="funcPList.active" ng-click="webChangFuncValue(funcPList)">
+
+                            <tab-heading>
+                                <span ng-bind="funcPList.funcModuleName"></span>
+                                <!--<span ng-bind="funcPList.funcModuleName"></span>-->
+                            </tab-heading>
+
+                            <!--<div class="table-responsive" >-->
+                            <div class="table-responsive" ng-if="funcPList.funcModuShowFlg">
+
+                                <div class="table_w" ng-table="tableParamsWeb">
+                                    <table class="table table-bordered table-condensed table-striped table-hover" style="margin-bottom: 5px;">
+                                        <tr ng-repeat="funcPoint in funcPList.funcPointList">
+                                            <td header="'headerCheckbox.html'" style="text-align:center;width:10%;">
+                                                <input type="checkbox" ng-click="checkItem(funcPoint)" class="select-all-web" ng-model="demo.checkboxes.items[funcPoint.funcPointNum]"/>
+                                            </td>
+                                            <td title="'功能点'" style="text-align:center;width:20%;">
+                                                <span ng-bind="funcPoint.funcPointName"></span>
+                                            </td>
+                                            <td title="'功能点详细'" style="width:70%;text-align: left;padding-left: 3rem;">
+                                                <label class="checkbox" style="width:130px;display: inline-block;padding: 0;" ng-repeat="funcPDeti in funcPoint.funcPointDetailList">
+                                                    <input type="checkbox" ng-click="checkItemFuncPoint(funcPoint, funcPList)"  ng-model="demo.checkboxes.items[funcPDeti.funcPointDetailNum]">
+                                                    <i style="font-style:normal;" ng-bind="funcPDeti.funcPointDetailName | textAbbr:6"></i>
+
+                                                </label>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        </tab>
+
+                    </tabset>
+                </div>
+
+
+            </tab>
+            <tab>
+                <tab-heading>
+                    APP端权限
+                </tab-heading>
+
+                <div class="tab-content-box2">
+                    <tabset class="tab-container3" >
+                        <tab class="myTab" index="0" disabled="true">
+                            <tab-heading>
+                                <i class="fa fa-chevron-left" ng-click='onmousedownRightApp()'
+                                   ng-mouseout='onmousedownLeftStopApp()'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-chevron-right" ng-click='onmousedownLeftApp()'
+                                   ng-mouseout='onmousedownRightStopApp()'></i>
+                            </tab-heading>
+                        </tab>
+                        <tab ng-repeat='funcPList in funcInApp'  active="funcPList.active" ng-click="appChangFuncValue(funcPList)" style="margin-bottom: 5px;">
+
+                            <tab-heading>
+                                <span ng-bind="funcPList.funcModuleName"></span>
+                            </tab-heading>
+
+                            <!--<div class="table-responsive" ng-if="funcPList.funcModuShowFlg">-->
+                            <div class="table-responsive" ng-if="funcPList.funcModuShowFlg">
+
+                                <div class="table_w" ng-table="tableParamsApp">
+                                    <table class="table table-bordered table-condensed table-striped table-hover">
+                                        <tr ng-repeat="funcPoint in funcPList.funcPointList">
+                                            <td header="'headerCheckboxApp.html'" style="text-align:center;width:10%;">
+                                                <input type="checkbox" ng-click="checkItemApp(funcPoint)" class="select-all-app" ng-model="demo.checkboxesApp.items[funcPoint.funcPointNum]"/>
+                                            </td>
+                                            <td title="'功能点'" style="text-align:center;width:20%;">
+                                                <span ng-bind="funcPoint.funcPointName"></span>
+                                            </td>
+                                            <td title="'功能点详细'" style="width:70%;text-align: left;padding-left: 3rem;">
+                                                <label class="checkbox" style="width:130px;display: inline-block;padding: 0;" ng-repeat="funcPDeti in funcPoint.funcPointDetailList">
+                                                    <input type="checkbox" ng-click="checkItemFuncPointApp(funcPoint, funcPList)" ng-model="demo.checkboxesApp.items[funcPDeti.funcPointDetailNum]">
+                                                    <i style="font-style:normal;" ng-bind="funcPDeti.funcPointDetailName | textAbbr:6"></i>
+
+                                                </label>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                        </tab>
+
+                    </tabset>
+                </div>
+
+            </tab>
+
+        </tabset>
+        <div class="form-group ">
+            <button class=" btn btn-success" style="margin-left: 35px;" ng-click="updateRoleConfig()"
+                    ng-disabled="formAttr.$invalid||isSubmit" user-power="WSTF01031003"> 提交保存
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+
+

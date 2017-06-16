@@ -1,0 +1,60 @@
+<ion-header-bar align-title="center"  class="header">
+	<a ui-sref="personalCenter" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">意见反馈</h1>
+	<a class="head_right" ng-click="save()" style="margin-top:8px;font-size:1.2rem" user-power="MPER01002001"><i>保存</i></a>
+</ion-header-bar>
+<ion-content scroll="false">
+<!-- feedback.html -->
+    <ion-list >
+          <ion-item class="bottom_line" style="padding:0 5%;border: none;white-space: inherit;margin-bottom: 15px;">
+              <div  style="margin: 20px 0;border: solid 1px #ddd;border-radius: 5px;overflow: hidden;">
+                  <textarea class="stable-bg" rows="7" placeholder="请尽量详细描述你的问题，我们会第一时间帮你解决" style="box-shadow: none; border-style: none; font-size:16px;width:100%;outline:none;resize: none;
+          padding:10px;"  ng-model="fb.fbkInfo" id="fbkinfoTextarea"></textarea>
+              </div>
+          </ion-item>
+
+    </ion-list>
+    
+    <div class="p-Left" ng-if="voicdss.voice" on-hold="playAudioOnTouch()"  ng-click="audioPlay(voicdss)">
+        <div class="listen" ng-show="!voicdss.playAudio">
+            <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />
+            <div style="color: #ccc;display: inline-block;width:20px;height:35px;line-height:35px;position: absolute;top:0;left: 108%;" ng-bind="voicdss.dura"></div>
+        </div>
+        <div class="listen" ng-show="voicdss.playAudio"  >
+            <img ng-src="{{audioImg}}" width="11" style="top:8px;" />
+            <div style="color: #ccc;display: inline-block;width:20px;height:35px;line-height:35px;position: absolute;top:0;left: 108%;" ng-bind="voi.dura"></div>
+        </div>
+    </div>
+    
+<!--     <ion-list show-delete="voicdss.showDelete">
+	    <ion-item class="item-remove-animate">
+		    
+	        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete()"></ion-delete-button>
+	    </ion-item>
+    </ion-list> -->
+    
+<!-- 	<div class="wrap">
+		<div class="personal_textarea">
+			<textarea class="stable-bg" rows="7" placeholder="请尽量详细描述你的问题，我们会第一时间帮你解决" style="box-shadow: none; border-style: none; font-size:16px;width:100%;outline:none;resize: none;
+            padding:10px;"  ng-model="fb.fbkInfo"></textarea>
+		</div>
+	</div> -->
+</ion-content>
+<ion-footer-bar>
+    <ul class="footer2 top_line">
+            <li style="width:14%" >
+            <div class="voice"></div>
+        </li>
+        <li class="press" on-hold="audioOnTouch()" on-release="audioOnRelease()" id="audioText">
+            {{audioText}}
+        </li>
+        <!--<input type="hidden" id="audioPath">-->
+    </ul>
+
+
+
+<!-- 	<div class="personal_text">
+		<a on-hold="audioOnTouch()" on-release="audioOnRelease()">{{audioText}}</a>
+	</div>
+	<input type="hidden" ng-model="fb.audio"> -->
+</ion-footer-bar>

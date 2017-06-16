@@ -1,0 +1,103 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4"> 新增考勤规则</h4>
+</div>
+
+<div ng-controller="kqgzjsglInsertCtrl as demo">
+	<form name="myForm" class="form-horizontal form-validation" novalidate>
+		<div class="panel-heading">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span style="color:red;">*</span>档期：</label>
+				<div class="col-sm-3">
+               		<select name="phaGrpOid" class="form-control ng-pristine ng-untouched ng-valid" ng-model="phaGrpOid" ng-options="phaGrpOid.key as phaGrpOid.text for phaGrpOid in phaGrpOidList" 
+               			ng-selected="phaGrpOid.key==phaGrpOid" ng-change="changePhaGrpOid(phaGrpOid)" required></select>
+       			</div>
+				<div class="col-sm-3">
+                   	<select name="phaId" class="form-control ng-pristine ng-untouched ng-valid" ng-model="phaId" 
+						ng-options="data.key as data.text for data in phaIdList" ng-selected="data.key==phaId" ng-change="changePhaId()" required></select>
+             	</div>
+            </div>
+	       	<div class="form-group">
+            	<label class="col-sm-2 control-label"><span style="color:red;">*</span>规则名称：</label>
+            	<div class="col-sm-3">
+                	<input type="text" name="ruleNm" class="form-control" ng-model="ruleNm" maxLength="100" required>
+                	<div ng-messages="myForm.ruleNm.$error" ng-if="(myForm.ruleNm.$dirty && myForm.ruleNm.$invalid)">
+	                   <span ng-message="required" class="error">考勤规则不能为空</span>
+	                </div>
+            	</div>
+        	</div>
+	        <div class="form-group">
+	        	<label class="col-sm-2 control-label"><span style="color:red;">*</span>规则应用于：</label>
+		    	<div class="col-sm-3">
+		    		<button class="btn m-b-xs w-xs btn-default" ng-click="add()">新增</button>
+		    	</div>
+		    </div>
+		    
+			<div class="form-group">
+			    <!-- table列表开始 -->
+		   		<div class="panel-heading"  >
+		   			<div ng-table="demo.tableParams">
+					    <table class="table table-bordered table-condensed   table-striped table-hover" >
+					    	<tr>
+		                         <th style="text-align: center;width: 18%;"><span style="color:red;">*</span>职位名称</th>
+		                         <th style="text-align: center;width: 20%;"><span style="color:red;">*</span>考勤方式</th>
+		                         <th style="text-align: center;width: 17%;">需出勤天数(不包含法定节假日)</th>
+		                         <th style="text-align: center;width: 35%;">不需出勤具体日期</th>
+		                         <th style="text-align: center;width: 10%;">操作</th>
+		                   </tr>           
+		                   <tr ng-repeat="attendRuleData in kqgzjsdata">
+		                         <td>
+		                           	<select name="position" class="form-control ng-pristine ng-untouched ng-valid" ng-model="attendRuleData.position" ng-options="job.key as job.text for job in jobList" 
+		                				ng-selected="job.key==attendRuleData.position" ng-change="changePosition(attendRuleData.position)" required></select>
+		                		 </td>
+		                         <td>
+		                           	<select name="attMode" class="form-control" ng-model="attendRuleData.attMode" ng-change="changeAttMode(attendRuleData)">
+					                   	<option ng-repeat="kqfs in kqfss" value={{kqfs.key}}>{{kqfs.text}}</option>
+					                </select>
+								</td>
+		                    	<td>
+		                           	<span name="attDays" ng-model="attendRuleData.attDays">{{attendRuleData.attDays}}<span ng-if="attendRuleData.attMode==0">天</span></span>
+		                         </td>
+		                         <td>
+		                         	<div class="col-sm-4">
+		                         		<div ng-if="attendRuleData.attMode!=0">
+						              		<div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+							                     {{attendRuleData.exactDate}}
+											</div>
+										</div>
+										<div ng-if="attendRuleData.attMode==0">
+											<div class="input-group w-md" >
+												<input type="text"  class="form-control" ng-model="attendRuleData.exactDate"  
+													 datepicker-options="dateOptions"  readonly="readonly" onmouseover="this.title=this.value" style="display: none;"/>       
+											 
+												<input type="text"  class="form-control" readonly="readonly" onmouseover="this.title=this.value" value="{{attendRuleData.exactDate|attendRule}}" /> 
+												<span class="input-group-btn">
+													<button class="btn btn-default" ng-click="open5(attendRuleData)">设置</button>
+												</span>
+											</div>
+										<span name="weekend" ng-hide="true" ng-model="attendRuleData.weekend"></span>
+				                     </div>
+			                	 </div>
+		                      </td>
+		                       <td class="mr_22">
+		                           <a class="mr_9" ng-click="del($index)">删除</a>
+		                       </td>           
+		                   </tr>  
+			            </table>
+			            
+				   </div>
+		    	</div>
+		    	<!-- table列表结束 -->
+    		</div>
+	    	<div class="form-group">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-3">
+    				<button class="btn btn-info btn-addon" ng-click="insertKqgzjs(myForm.$valid)" ng-disabled="myForm.$invalid"> 提交保存</button>
+	            	<button class="btn btn-default btn-addon mt_6" ui-sref="app.staff.attendRule">返回</button>
+	            </div>
+		    </div>
+		</div>
+	</form>
+</div>
+</html>

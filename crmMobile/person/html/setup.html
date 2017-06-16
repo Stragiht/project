@@ -1,0 +1,25 @@
+<ion-header-bar align-title="center"  class="header">
+	<a href="#"  ui-sref="personalCenter" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">设置</h1>
+</ion-header-bar>
+<ion-content scroll="false" >
+<!-- setup.html -->
+	<div class="wrap">
+		<ul class="listvrew clearfix">
+			<li ng-click="cleanCaches()">
+				<a>
+					<span>清除缓存</span>
+					<span class="float_r f_10" id="cacheSize">计算中...</span>
+				</a>
+			</li>
+			<li ng-click="updateVersion()">
+				<a>
+					<span>版本更新</span>
+					<img src="common/images/new.png" height="16" style="margin-left:5px; margin-top:4px;" ng-if="hasNew">
+					<span class="float_r f_10">{{currentVersion}}</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</ion-content>
+

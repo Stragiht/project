@@ -1,0 +1,137 @@
+<div ng-show="apprShowNo">
+    <ion-header-bar class="header">
+    	<a ui-sref="appAttendReport" ng-if="flag" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+    	<a ui-sref="appAttendReportAppList" ng-if="!flag" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem;">详情</h1>
+        <a class="head_right2" ng-if="AttendDatas.submitFlag == '1'" ng-click="subSub()" user-power="MSTF01009003">
+            <div class="head_right_box float_l">
+                <img src="common/images/zhengque.png" width="22" height="22">
+                <p>提交</p>
+            </div>
+        </a>
+        <a class="head_right" ng-if="AttendDatas.editFlag == '1'"
+           ng-click="goEdit()" user-power="MSTF01009003">
+            <div class="head_right_box">
+                <img src="common/images/qianbi.png" width="22" height="22">
+                <p>编辑</p>
+            </div>
+        </a>
+        <a class="head_right" ng-if="AttendDatas.apprFlag == '1'" ng-click="goToPage()" user-power="MSTF01009002">
+            <div class="head_right_box">
+                <img src="common/images/zhan.png" width="22" height="22">
+                <p>审批</p>
+            </div>
+        </a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- appAttendReportInfo.html -->
+		<div class="wrap">
+	        <ul class="listvrew clearfix mb_15">
+	            <li>
+		            <span class="w140">审批编号</span>
+		            <span class="f_10">{{AttendDatas.applNum}}</span>
+	            <li>
+	                <span class="w140">相关人员</span>
+	                <span class="f_10">{{AttendDatas.stfNm}}</span>
+	                <span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 1.5rem;" ng-click="callPhone()"></span>
+	            </li>
+	            <li>
+	                <span class="w140">人员编号</span>
+	                <span class="f_10">{{AttendDatas.stfNum}}</span>
+	            </li>
+	            <li>
+	                <span class="w140">审批状态</span>
+	                <span class="color05 f_10">{{AttendDatas.apprStatNm}}</span>
+	            </li>
+	        </ul>
+	        <div class="index_work_bt"></div>
+	        <ul class="listvrew clearfix mb_15">
+	            <li>
+	                <span class="w140">考勤时间</span>
+	                <span class="f_10">{{AttendDatas.phaStartTm}} ～ {{AttendDatas.phaEndTm}}</span>
+	            </li>
+	            <li>
+	                <span class="w140">是否全勤</span>
+	                <span class="color05 f_10">{{AttendDatas.fullAttnDaysNm}}</span>
+	            </li>
+	            <li>
+	                <span class="w140">应出勤天数</span>
+	                <span class="f_10">{{AttendDatas.supAttdDays}}天</span>
+	            </li>
+	            <li>
+	                <span class="w140">应发工资天数</span>
+	                <span class="f_10">{{AttendDatas.supPayDays}}天</span>
+	            </li>
+	            <li>
+	                <span class="w140">请假天数</span>
+                    <span class="f_10">{{AttendDatas.persLeaveDays}}天</span>
+	            </li>
+	            <li>
+	                <span class="w140">旷工天数</span>
+	                <span class="f_10">{{AttendDatas.absentDays}}天</span>
+	            </li>
+	        </ul>
+	        <div class="index_work_bt">考勤明细</div>
+	        <ion-list>
+	            <ion-item ng-repeat="var in kqmxDatas">
+	                <span class="w140">{{var.attendDt | date :'MM-dd'}}</span>
+	                <span class="f_10">{{var.attendSituNm}}</span>
+	            </ion-item>
+	        </ion-list>
+	        <div class="index_work_bt" ng-if="apprHisDisplay">审批历史</div>
+	        <div class="shls clearfix" ng-if="apprHisDisplay">
+	            <div class="shls_wen">
+					<div ng-repeat="apprHisInfo in approvalList">
+						<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+	        </div>
+        </div>
+    </ion-content>
+</div>
+<!-- 审批 -->
+<div ng-if="!apprShowNo">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goToPage()" ng-if="!apprShowNo" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem" ng-if="!apprShowNo">审批</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+    <!-- appAttendReportInfo.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix mb_15">
+				<li style="padding: 7px;width: 100%;margin:0;">
+					<textarea placeholder="请输入审批意见" style="width: 100%;padding: 10px 20px;border-radius: 5px; margin:15px 0px;" rows="12"
+						ng-model="apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center">
+		<div class="xiaoxi_quanxuan2">
+			<a class="btn_repoit1  mt_10 ml10" style="margin-bottom: 10px;" ng-click="apprAppl('0')">不通过</a>
+            <a class="btn_repoit2  mt_10 mr10" style="margin-bottom: 10px;" ng-click="apprAppl('1')">通过</a>
+        </div>
+	</ion-footer-bar>
+</div>

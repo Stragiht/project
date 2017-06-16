@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+<meta charset="utf-8" />
+	<!--<base href="/CrmWeb/crm/" />-->
+<title>比度克CRM系统管理后台</title>
+<meta name="description"
+	content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+<meta name="viewport"
+	content="width=1000, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="common/css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="common/css/animate.css" type="text/css" />
+<link rel="stylesheet" href="common/css/font-awesome.min.css"
+	type="text/css" />
+<link rel="stylesheet" href="common/css/simple-line-icons.css"
+	type="text/css" />
+<link rel="stylesheet" href="common/css/font.css" type="text/css" />
+<link rel="stylesheet" href="common/css/app.css" type="text/css"
+	id="type" />
+<link rel="stylesheet" href="common/css/diyUpload.css" type="text/css">
+<link rel="stylesheet" href="common/css/webuploader.css" type="text/css">
+</head>
+<body ng-controller="AppCtrl">
+	<toaster-container
+		toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+	<div class="app" id="app"
+		ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}"
+		ui-view></div>
+
+<style>
+    .bgMack {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index: 99999;
+        -moz-opacity: 0.0;
+        opacity: .00;
+        filter: alpha(opacity=70);
+    }
+    .showMack {
+        position: fixed;
+        top: 40%;
+        left: 46%;
+        width: 120px;
+        height: 50px;
+        padding: 8px;
+        border: 8px solid #E8E9F7;
+        background-color: white;
+        z-index: 100000;
+        overflow: hidden;
+    }
+</style>
+<div class="bgMack" id="bgMack"></div>
+<div class="showMack" id="showMack"><i class="fa fa-refresh fa-spin"></i> Loading...</div>
+<input type="hidden" value="{{urlCom}}" id="urlCom" /> <!-- 为了解决ckeditor上传文件时，url相对路径有bug问题，在此获取api绝对路径 -->
+	<!-- jQuery -->
+	<script src="common/vendor/jquery/jquery.min.js"></script>
+
+	<!-- Angular -->
+	<script src="common/vendor/angular/angular.min.js"></script>
+
+	<script src="common/vendor/angular/angular-animate/angular-animate.js"></script>
+	<script src="common/vendor/angular/angular-cookies/angular-cookies.js"></script>
+	<script
+		src="common/vendor/angular/angular-resource/angular-resource.js"></script>
+	<script
+		src="common/vendor/angular/angular-sanitize/angular-sanitize.js"></script>
+	<script src="common/vendor/angular/angular-touch/angular-touch.js"></script>
+	<!-- Vendor -->
+	<script
+		src="common/vendor/angular/angular-ui-router/angular-ui-router.js"></script>
+	<script src="common/vendor/angular/ngstorage/ngStorage.js"></script>
+
+	<!-- bootstrap -->
+	<script
+		src="common/vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<!-- lazyload -->
+	<script src="common/vendor/angular/oclazyload/ocLazyLoad.js"></script>
+	<!-- translate -->
+	<script
+		src="common/vendor/angular/angular-translate/angular-translate.js"></script>
+	<script
+		src="common/vendor/angular/angular-translate/loader-static-files.js"></script>
+	<script src="common/vendor/angular/angular-translate/storage-cookie.js"></script>
+	<script src="common/vendor/angular/angular-translate/storage-local.js"></script>
+	<script
+		src="common/vendor/angular/angular-messages/angular-messages.min.js"></script>
+	<script src="common/vendor/jquery/nicescroll/jquery.nicescroll.min.js"></script>
+	<script src="common/vendor/modules/angularjs-toaster/toaster.js"></script>
+	<link rel="stylesheet"
+		href="common/vendor/modules/angularjs-toaster/toaster.css"
+		type="text/css" />
+	<!-- App -->
+	<script src="common/js/app.js"></script>
+	<script src="common/js/config.js"></script>
+	<script src="common/js/config.lazyload.js"></script>
+	<script src="common/js/config.router.js"></script>
+	<script src="common/js/main.js"></script>
+	<script src="common/js/services/ui-load.js"></script>
+    <script src="common/js/filters/comFilter.js"></script>
+	<script src="common/js/filters/fromNow.js"></script>
+	<script src="common/js/filters/factoryFilters.js"></script>
+    <script src="common/js/factory/powerFactory.js"></script>
+    <script src="common/vendor/libs/taffy-min.js"></script>
+    <script src="common/js/directives/powerDirectives.js"></script>
+	<script src="common/js/directives/setnganimate.js"></script>
+	<script src="common/js/directives/ui-butterbar.js"></script>
+	<script src="common/js/directives/ui-focus.js"></script>
+	<script src="common/js/directives/ui-fullscreen.js"></script>
+	<script src="common/js/directives/ui-jq.js"></script>
+	<script src="common/js/directives/ui-module.js"></script>
+	<script src="common/js/directives/ui-nav.js"></script>
+	<script src="common/js/directives/ui-scroll.js"></script>
+	<script src="common/js/directives/ui-shift.js"></script>
+	<script src="common/js/directives/ui-toggleclass.js"></script>
+	<script src="common/js/directives/ui-validate.js"></script>
+	<script src="common/js/controllers/bootstrap.js"></script>
+	<script src="common/js/services/comService.js"></script>
+	<script src="goods/js/service/gdsClsService.js"></script>
+	<script src="goods/js/service/gdsInfoService.js"></script>
+	<script src="member/js/service/memGrpService.js"></script>
+	<script src="common/js/diyUpload.js"></script>
+	<script src="common/js/webuploader.html5only.min.js"></script>	<!-- Lazy loading -->
+	<!-- 江风成添加封装的map类 -->
+	<script src="common/js/controllers/jsMap.js"></script>
+	<script type="text/javascript">
+		var ckeditorFileBrowserUploadUrl = "";
+		$(function(){
+			ckeditorFileBrowserUploadUrl = $("#urlCom").val() + "upload/upload";
+		});
+	</script>
+	<script type = "text/javascript" src = "common/vendor/ckeditor/ckeditor.js"></script>
+	<script type = "text/javascript" src = "common/vendor/ckeditor/MyEditor.js"></script>
+</body>
+</html>

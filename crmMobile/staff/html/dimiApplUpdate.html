@@ -1,0 +1,95 @@
+<style>
+	.item-checkbox .checkbox .checkbox-icon{ float:right;}
+	.fadeInfo.ng-enter{opacity:0;}
+	.fadeInfo{transition:0.7s linear all;}
+	.fadeInfo.ng-enter.ng-enter-active{opacity:1;}
+	.fadeInfo.ng-leave{opacity:1;}
+	.fadeInfo.ng-leave.ng-leave-active{opacity:0;}
+</style>
+<div ng-show="dimiFormShow">
+	<ion-header-bar align-title="center" class="header">
+		<a class="angle_left" ng-click="goFrontPage()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">编辑离职</h1>
+		<a class="head_right3" ng-click="submitDimiAppl()" user-power="MSTF01003003"><div class="btn_line">提交 </div></a>
+		<a class="head_right" ng-click="saveDimiAppl()" user-power="MSTF01003003"><div class="btn_line">存为草稿</div></a>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- dimiApplUpdate.html -->
+	<div class="wrap">
+		<ul class="listvrew clearfix mb_15">
+			<!--<li ng-click="jobLeaverSelect()">
+				<span class="w140">离职人员</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="float_r f_10" style="margin-right: 15px;">{{dimiInfo.jobLeaverNm|characters:10}}</span>
+			</li>-->
+			<li ng-click="jobLeaverSelect()" ng-if="jobLeaverNmArr.length > 1">
+				<span class="w140" >离职人员</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="float_r f_10" style="margin-right: 15px;" ng-bind="dimiInfo.jobLeaverNm|characters:10"></span>
+			</li>
+
+			<li ng-if="jobLeaverNmArr.length < 2">
+				<span class="w140" >离职人员</span>
+				<span class="float_r f_10" style="margin-right: 15px;" ng-bind="dimiInfo.jobLeaverNm|characters:10"></span>
+			</li>
+			<li ng-click="openDatePicker()">
+				<span class="w140">离职时间</span>
+				<span class="float_r f_10" style="margin-right: 30px;" ng-bind="dimiInfo.dimiDt"></span>
+			</li>
+			<li ng-click="dimiReasonSelect()">
+				<span class="w140">离职原因</span>
+				<span class="float_r"><img src="common/images/you_btn.png" style="vertical-align: middle;right: 15px;"></span>
+				<span class="float_r f_10" style="margin-right: 15px;" ng-bind="dimiInfo.dimiReasonDis"></span>
+			</li>
+		</ul>
+		<div class="index_work_bt"></div>
+		<ul class="listvrew clearfix">
+			<li>
+				<textarea placeholder="离职描述" style="width: 100%;margin: 15px 0px;padding: 7px;" rows="12" ng-model="dimiInfo.dimiDesc" ng-maxlength="1000" maxLength="1000"></textarea>
+			</li>
+		</ul>
+	</div>
+	</ion-content>
+</div>
+
+<!-- 离职人员选择 -->
+<div ng-show="jobLeaverSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">离职人</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- dimiApplUpdate.html -->
+		<!--<div class="tishi fadeInfo" ng-if="infoShow">
+			<div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个人员</div>
+		</div>-->
+		<div class="has-header mem_radio">
+			<ion-list>
+				<!--<ion-checkbox style="padding-left: 15px;" ng-repeat="undStf in undStfList" ng-model="undStf.isCheck" ng-click="clickJobLeaver()">
+					<span ng-if="undStf.myself == 2">自己</span>
+					<span ng-if="undStf.myself == 1" ng-bind="undStf.text"></span>
+				</ion-checkbox>-->
+
+				<ion-item  class="view_line p-Left"  ng-repeat="jobLevNm in jobLeaverNmArr">
+					<span  ng-bind="jobLevNm"></span>
+				</ion-item>
+			</ion-list>
+		</div>
+	</ion-content>
+</div>
+
+<!-- 离职原因选择 -->
+<div ng-show="dimiReasonSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">离职原因</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- dimiApplUpdate.html -->
+		<div class="wrap">
+			<ion-list>
+				<ion-radio name="dimiReason" ng-repeat="dic in dicList" ng-value="dic.key" ng-model="dimiInfo.dimiReasonCate" ng-click="clickDimiReason(dic)">{{dic.text}}</ion-radio>
+			</ion-list>
+		</div>
+	</ion-content>
+</div>

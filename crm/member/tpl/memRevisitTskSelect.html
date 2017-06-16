@@ -1,0 +1,189 @@
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4" style="color:#000;">查看
+
+    </h4>
+</div>
+
+<div class="wrapper-md" ng-controller="memRevisitTskSelectCtrl">
+
+    <!--1.回访人信息-->
+    <accordion close-others="oneAtATime" >
+
+        <accordion-group is-open="status.oneopen" >
+
+            <accordion-heading>
+                <div class="font-bold">1.回访人信息 <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.oneopen, 'fa-angle-right': !status.oneopen}"></i></div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">回访人员：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.stfNm}}</p>
+                    </div>
+                    <label class="col-lg-2 control-label">职位：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.posNm}}</p>
+                    </div>
+
+                    <label class="col-lg-2 control-label">联系电话：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.stfPhone}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">直属主管：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.supvrStfNm}}</p>
+                    </div>
+                </div>
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+    <!--2.受访会员信息-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.twoopen" >
+
+            <accordion-heading>
+                <div class="font-bold">2.受访会员信息<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.twoopen, 'fa-angle-right': !status.twoopen}"></i></div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">会员编号：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.membNum}}</p>
+                    </div>
+                    <label class="col-lg-2 control-label">姓名：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.membNm}}</p>
+                    </div>
+
+                    <label class="col-lg-2 control-label">联系电话：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevInfo.phone}}</p>
+                    </div>
+
+                </div>
+
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+
+    <!--3.任务详情-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.threeopen" >
+
+            <accordion-heading>
+                <div class="font-bold">3.任务详情<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.threeopen, 'fa-angle-right': !status.threeopen}"></i></div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">应回访时间:</label>
+
+                    <div class="col-lg-3">
+                        <p class="form-control-static"><span ng-bind="memRevInfo.rtnTm | date:'yyyy-MM-dd HH:mm:ss'"></span><!--{{memRevInfo.rtnTm | date:'yyyy-MM-dd HH:mm:ss'}}--></p>
+                    </div>
+                    <label class="col-lg-2 control-label">状态：</label>
+
+                    <div class="col-lg-2" style="color: red;">
+                        <p class="form-control-static"><span ng-bind="memRevInfo.rtnStat | dicNameFilter:'C024'"></span><!--{{memRevInfo.rtnStat | dicNameFilter:'C024'}}--></p>
+                    </div>
+                </div>
+                <!--<div ng-table="tableParams" >-->
+                <table class="table table-bordered table-condensed table-striped " >
+                    <tr >
+
+                        <td title="'规格商品名称'"  style="text-align:center;min-width:120px;font-weight: bold; ">
+                            规格商品名称
+                        </td>
+                        <td title="'购买时间'"  style="text-align:center;min-width:120px;font-weight: bold; ">
+                            购买时间
+                        </td>
+                        <td title="'回访次数'"   style="text-align:center;min-width:120px;font-weight: bold; ">
+                            回访次数
+                        </td>
+                        <td title="'回访间隔'"  style="text-align:center;min-width:120px;font-weight: bold;">
+                            回访间隔
+                        </td>
+                        <td title="'回访事项'"  style="text-align:center;min-width:120px;font-weight: bold; ">
+                            回访事项
+                        </td>
+                    </tr>
+                    <tr ng-repeat="membRevDtl in membRevDtls">
+
+                    <td >
+                    <!--{{membRevDtl.gdsSpecDtlNm}}-->
+                        <span ng-bind="membRevDtl.gdsSpecDtlNm"></span>
+                    </td>
+                    <td >
+                   <!-- {{membRevDtl.buyTm | date:'yyyy:MM:dd HH:mm:ss'}}-->
+                        <span ng-bind="membRevDtl.buyTm | date:'yyyy-MM-dd HH:mm:ss'"></span>
+                    </td>
+                    <td >
+                    <!--{{membRevDtl.fbkTimes}}-->
+                        <span ng-bind="membRevDtl.fbkTimes"></span>
+                    </td>
+                    <td >
+                    <!--{{membRevDtl.fbkInterval}}-->
+                        <span ng-bind="membRevDtl.fbkInterval"></span>
+                    </td>
+                    <td >
+                   <!-- {{membRevDtl.rtnItem}}-->
+                        <span ng-bind="membRevDtl.rtnItem"></span>
+                    </td>
+                    </tr>
+
+                </table>
+                <!--</div>-->
+            </form>
+        </accordion-group>
+    </accordion>
+
+    <!--4.回访指导-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.fouropen" >
+
+            <accordion-heading>
+                <div class="font-bold">4.回访指导<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.fouropen, 'fa-angle-right': !status.fouropen}"></i></div>
+            </accordion-heading>
+            <div >
+                <ul ng-repeat="membRevFbk in membRevFbks"><!--<tr ng-repeat="membRevDtl in membRevDtls">-->
+                    <li style="list-style: none;line-height: 35px;" ><span ng-bind="membRevFbk.fbkStfNm"></span> ：<span ng-bind="membRevFbk.fbkCont"></span>&nbsp;&nbsp;<span style="color: #A3B5CD;" ng-bind="membRevFbk.fbkTm | date:'yyyy-MM-dd HH:mm:ss'"></span></li>
+                    <li style="list-style: none;line-height: 35px;" ng-repeat="membAudio in membRevFbk.audioArr"><span ng-bind="membRevFbk.fbkStfNm"></span> ：
+                        <audio controls style="">
+                            <source ng-src="{{sce(membAudio)}}" type="audio/ogg">
+                            <source ng-src="{{sce(membAudio)}}" type="audio/mpeg">
+                            <!--<source ng-src="member/js/controllers/The Rose.mp3" type="audio/ogg">
+                            <source ng-src="member/js/controllers/The Rose.mp3" type="audio/mpeg">-->
+                        </audio>
+                        <span style="color: #A3B5CD;" ng-bind="membRevFbk.fbkTm | date:'yyyy-MM-dd HH:mm:ss'"></span>
+                    </li>
+
+                </ul>
+            </div>
+            <!--<div >
+                <ul>
+                    <li style="list-style: none;line-height: 35px;" >罗荣龙 ：</span><span>用微信尝试联系下。</span><span style="color: #A3B5CD;">2015-10-7 18:01</span></li>
+                    <li style="list-style: none;line-height: 35px;" >罗荣龙 ：<span>语音图标。</span><span style="color: #A3B5CD;">2015-10-7 18:01</span></li>
+
+                </ul>
+            </div>-->
+        </accordion-group>
+    </accordion>
+
+    <div style="margin-top: 30px;">
+        <button class="btn btn-info    btn-addon "  ui-sref="app.member.memRevisitTsk({isBack:true})" style="width: 85px;">返回</button>
+    </div>
+
+</div>

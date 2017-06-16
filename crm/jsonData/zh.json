@@ -1,0 +1,267 @@
+{
+  "CRM": {
+    "NAV": [
+      {
+        "TEXT": "首页",
+        "URL": "app.home",
+        "ICON" : "",
+        "VALUE": [
+          {
+            "TEXT": "快捷入口",
+            "URL": "",
+            "ICON" : "icon-layers chuti text-primary ",
+            "VALUE": [
+              {
+                "TEXT": "新增商品",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "新增会员",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "新增人员",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "TEXT": "商品管理",
+        "URL": "app.spgl",
+        "ICON" : "",
+        "VALUE": [
+          {
+            "TEXT": "商品信息",
+            "URL": "",
+            "ICON" : "fa fa-qrcode text-primary",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "新增商品",
+            "URL": "",
+            "ICON" : "fa fa-plus-square text-info ",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "商品批量导入",
+            "URL": "",
+            "ICON" : "glyphicon glyphicon-log-in text-success",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "商品批量修改",
+            "URL": "",
+            "ICON" : "fa fa-edit text-primary",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "商品品牌",
+            "URL": "app.spgl.sppp",
+            "ICON" : "fa fa-globe text-info",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "商品分类",
+            "URL": "app.spgl.spfl",
+            "ICON" : "fa fa-reorder text-success",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "商品属性",
+            "URL": "",
+            "ICON" : "fa fa-pencil-square text-primary ",
+            "VALUE": ""
+          }
+        ]
+      },
+      {
+        "TEXT": "会员管理",
+        "URL": "app.hygl",
+        "ICON" : "",
+        "VALUE": [
+          {
+            "TEXT": "会员信息",
+            "URL": "",
+            "ICON" : "fa fa-qrcode text-primary",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "会员组别",
+            "URL": "",
+            "ICON" : "fa fa-group text-info",
+            "VALUE": ""
+          },
+          {
+            "TEXT": "会员变动",
+            "URL": "",
+            "ICON" : "fa fa-exchange text-success",
+            "VALUE": [
+              {
+                "TEXT": "会员晋级申请",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "实名认证审核",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "会员提现申请",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "批量修改会员信息",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "补录会员购买记录",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "补录会员回访记录",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              }
+            ]
+          },
+          {
+            "TEXT": "BA回访",
+            "URL": "",
+            "ICON" : "fa fa-phone text-primary",
+            "VALUE": [
+              {
+                "TEXT": "BA回访任务",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "BA回访记录",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "回访规则设置",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              }
+            ]
+          },
+          {
+            "TEXT": "会员规则设置",
+            "URL": "",
+            "ICON" : "icon-settings text-info chuti",
+            "VALUE": [
+              {
+                "TEXT": "会员等级规则",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "会员积分获取规则",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              },
+              {
+                "TEXT": "会员微商返佣规则",
+                "URL": "",
+                "ICON" : "",
+                "VALUE": ""
+              }
+            ]
+          }
+        ]
+      },
+      {"TEXT":"人员管理","URL":"app.staff","ICON" : "","VALUE":[
+        {"TEXT":"人员信息","URL":"app.staff.stfBas","ICON" : "fa fa-qrcode text-primary","VALUE":[]},
+        {"TEXT":"人员信息批量修改","URL":"","ICON" : "fa fa-edit text-info","VALUE":[]},
+        {"TEXT":"基础架构信息","URL":"","ICON" : "fa fa-building-o text-success","VALUE":[
+          {"TEXT":"部门管理","URL":"app.staff.depMngSelect","ICON" : "","VALUE":[]},
+          {"TEXT":"职位管理","URL":"app.staff.jobposSelect","ICON" : "","VALUE":[]},
+          {"TEXT":"销售大区信息","URL":"app.staff.majRgn","ICON" : "","VALUE":[]},
+          {"TEXT":"城市分区信息","URL":"app.staff.urbandistrictinformationSelect","ICON" : "","VALUE":[]},
+          {"TEXT":"销售门店信息","URL":"app.staff.storesSelect","ICON" : "","VALUE":[]},
+          {"TEXT":"销售档期管理","URL":"app.staff.salesScheduleManage","ICON" : "","VALUE":[]}
+        ]},
+        {"TEXT":"人员变动","URL":"","ICON" : "fa fa-exchange text-primary","VALUE":[
+          {"TEXT":"入职流程","URL":"app.staff.entryAppl","ICON" : "","VALUE":[]},
+          {"TEXT":"离职流程","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"BA晋升督导流程","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"人员借调流程","URL":"app.staff.stfTempTransSelect","ICON" : "","VALUE":[]},
+          {"TEXT":"人员升降级报表","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"人员升降级规则","URL":"app.staff.prmnDemnRuleManage","ICON" : "","VALUE":[]}
+        ]},
+        {"TEXT":"考勤管理","URL":"","ICON" : " icon-eye chuti text-info","VALUE":[
+          {"TEXT":"考勤报表","URL":"app.staff.genAttendReport","ICON" : "","VALUE":[]},
+          {"TEXT":"排班管理","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"请假管理","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"考勤规则设置","URL":"app.staff.attendRuleInsert","ICON" : "","VALUE":[]}
+        ]},
+        {"TEXT":"工资管理","URL":"","ICON" : "fa fa-credit-card text-success","VALUE":[
+          {"TEXT":"工资报表","URL":"app.staff.stfSalary","ICON" : "fa fa-qrcode text-primary","VALUE":[]},
+          {"TEXT":"社保批量导入","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"城市底薪基数管理","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"职位补助标准管理","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"法定假日补助标准管理","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"工资计算规则","URL":"app.staff.wageCalculationRules","ICON" : "","VALUE":[]}
+        ]},
+        {"TEXT":"权限管理","URL":"","ICON" : "icon-lock-open chuti text-primary","VALUE":[]}
+      ]},
+      {"TEXT":"报表统计","URL":"app.report","ICON" : "","VALUE":[
+        {"TEXT":"销售数据","URL":"","ICON" : "fa fa-signal text-primary","VALUE":[
+          {"TEXT":"销售概况","URL":"app.report.saleSummary","ICON" : "","VALUE":[]},
+          {"TEXT":"人员销售业绩汇总","URL":"app.report.stfSaleAmountSum","ICON" : "","VALUE":[]},
+          {"TEXT":"日常销售报表提交明细","URL":"app.report.baSaleReportDtl","ICON" : "","VALUE":[]},
+          {"TEXT":"财务导入销售报表明细","URL":"app.report.fcSaleReportDtl","ICON" : "","VALUE":[]}
+        ]},
+        {"TEXT":"确定销售业绩","URL":"","ICON" : "fa fa-bar-chart-o text-success","VALUE":[
+          {"TEXT":"销售报表导入","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"比对销售报表","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"审批销售报表","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"分配督导销售业绩","URL":"","ICON" : "","VALUE":[]}
+        ]},
+        {"TEXT":"报表分析","URL":"","ICON" : "fa fa-tasks text-primary","VALUE":[
+          {"TEXT":"系统分析","URL":"","ICON" : "","VALUE":[]},
+          {"TEXT":"自定义分析","URL":"","ICON" : "","VALUE":[]}
+        ]}
+      ]},
+      {"TEXT":"消息中心","URL":"app.system","ICON" : "","VALUE":[
+        {"TEXT":"站内信","URL":"","ICON" : "fa fa-envelope-o text-primary chuti","VALUE":[
+          {"TEXT":"消息列表","URL":"app.system.msgListSelect","ICON" : "","VALUE":[]}
+        ]}
+      ]},
+      {"TEXT":"回收站","URL":"app.recycle","ICON" : "","VALUE":[
+        {"TEXT":"基础架构信息","URL":"","ICON" : "fa fa-envelope-o text-primary chuti","VALUE":[
+          {"TEXT":"部门管理","URL":"app.system.rccDepMng","ICON" : "","VALUE":[]},
+          {"TEXT":"职位管理","URL":"app.system.rccJobPosMng","ICON" : "","VALUE":[]},
+          {"TEXT":"销售大区信息","URL":"app.system.rccMajRgn","ICON" : "","VALUE":[]},
+          {"TEXT":"城市分区信息","URL":"app.system.rccUrbanDistrict","ICON" : "","VALUE":[]},
+          {"TEXT":"销售门店信息","URL":"app.system.rccStores","ICON" : "","VALUE":[]},
+          {"TEXT":"销售档期管理","URL":"app.system.rccSalesSchedule","ICON" : "","VALUE":[]}
+        ]}
+      ]}
+    ]
+  }
+}

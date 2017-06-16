@@ -1,0 +1,158 @@
+<style>
+	.item-checkbox .checkbox .checkbox-icon{ float:right;}
+	.fadeInfo.ng-enter{opacity:0;}
+	.fadeInfo{transition:0.7s linear all;}
+	.fadeInfo.ng-enter.ng-enter-active{opacity:1;}
+	.fadeInfo.ng-leave{opacity:1;}
+	.fadeInfo.ng-leave.ng-leave-active{opacity:0;}
+</style>
+<div ng-if="persActFormShow">
+    <ion-header-bar align-title="center" class="header"> 
+        <a ng-click="fanhui()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1>晋升申请</h1>
+        <a href="" class="head_right3" ng-click="submitPersAct()" user-power="MSTF01005002">
+           <div class="btn_line">提交 </div>
+        </a>
+        <a href="" class="head_right" ng-click="save()" user-power="MSTF01005002">
+               <div class="btn_line">存为草稿</div>
+        </a>
+    </ion-header-bar>
+    <ion-content class="has-header ">
+    <!-- persActInsert.html -->
+        <div class="wrap">
+         <ul class="listvrew clearfix">
+            <li ng-click="supvrStfSelect()">
+            	<span class="w140">晋升人员</span>
+            	<span>
+            		<img src="common/images/you_btn.png" style="top: 31px;right: 16px;float: right; margin-top: 16px;">
+            		<span class="f_10 float_r" style="margin-right: 16px;">{{persActInfo.supvrStfDis|characters:10}}</span>
+           		</span>
+            </li>
+            <li ng-click="posSelect()">
+            	<span class="w140">职位等级</span>
+            	<span class="float_r"><img src="common/images/you_btn.png"  style="top: 31px;right: 16px;float: right; margin-top: 16px;"></span>
+            <span class=" f_10 float_r" style="margin-right: 16px;white-space: nowrap;">督导<span ng-if="persActInfo.posNm != null &&  persActInfo.posNm != ''"> {{persActInfo.posNm}}</span></span>
+            </li>
+            <li ng-click="supvrStfNumSelect()"><span class="w140">晋升之后直属主管</span>
+	            <span class="float_r"><img src="common/images/you_btn.png"  style="top: 31px;right: 16px;float: right; margin-top: 16px;"></span>
+	            <span class=" f_10 float_r" style="margin-right: 16px;">{{persActInfo.supvrStfNm}}</span>
+            </li>
+            <li ng-click="supvrStfNmMSelect()"><span class="w140">晋升之后管理人员</span>
+	            <span class="float_r"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;float: right; margin-top: 16px;"></span>
+	            <span class=" f_10 float_r" style="margin-right: 16px;">{{persActInfo.supvrStfNmM|characters:3}}</span>
+            </li>
+            <li ng-click="subStoreSelect()"><span class="w140">晋升之后管理门店</span>
+               <input type="hidden" ng-model="persActInfo.mngStr" />
+               <span class="float_r"><img src="common/images/you_btn.png" style="top: 31px;right: 16px;float: right; margin-top: 16px;"></span>
+               <span class="f_10 float_r" style="margin-right: 16px;">{{persActInfo.subStoreDisplay|characters:10}}</span>
+            </li>
+         </ul>
+        </div>
+    </ion-content>
+</div>
+<!-- 晋升人员 -->
+<div ng-if="supvrStfSelectShow">
+    <ion-header-bar align-title="center" class="header">
+        <a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">晋升人员</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- persActInsert.html -->
+    <div class="wrap">
+        <ion-list>
+            <ion-radio name="supvrStf" ng-model="persActInfo.posChgStf" ng-repeat="undStf in undStfList" ng-value="undStf.key" ng-click="clickSupvrStf(undStf)">{{undStf.text}}</ion-radio>
+        </ion-list>
+    </div>
+    <div class="wushuju" my-nodata-show="undStfList.length == 0">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+    </ion-content>
+</div>
+<!-- 职位等级 -->
+<div ng-if="posSelectShow">
+    <ion-header-bar align-title="center" class="header">
+        <a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">职位等级</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- persActInsert.html -->
+    <div class="wrap">
+        <ion-list>
+            <ion-radio name="pos" ng-model="persActInfo.posNum" ng-repeat="undPos in posList" ng-value="undPos.key" ng-click="clickPos(undPos)">{{undPos.text}}</ion-radio>
+        </ion-list>
+    </div>
+    </ion-content>
+</div>
+<!-- 晋升之后直属主管-->
+<div ng-if="supvrStfNumShow">
+    <ion-header-bar align-title="center" class="header">
+        <a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">晋升之后直属主管</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- persActInsert.html -->
+    <div class="wrap">
+        <ion-list>
+            <ion-radio name="supvrStfNum" ng-model="persActInfo.supvrStfNum" ng-repeat="undSupvrStfNum in supvrStfNumList" ng-value="undSupvrStfNum.key" ng-click="clickSupvrStfNum(undSupvrStfNum)">
+	            <span ng-if="undSupvrStfNum.myself == 0">无</span>
+				<span ng-if="undSupvrStfNum.myself == 2">自己</span>
+				<span ng-if="undSupvrStfNum.myself == 1">{{undSupvrStfNum.text}}</span>
+            </ion-radio>
+        </ion-list>
+    </div>
+    <div class="wushuju" my-nodata-show="supvrStfNumList.length == 0">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+    </ion-content>
+</div>
+<!-- 晋升之后管理人员 -->
+<div ng-show="supvrStfNmMSelectShow">
+    <ion-header-bar align-title="center" class="header">
+        <a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">晋升之后管理人员</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- persActInsert.html -->
+    <div class="tishi fadeInfo" ng-if="infoShow">
+        <div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个人员</div>
+    </div>
+    <div class="wrap">
+        <ion-list>
+            <input type="hidden" ng-model="persActInfo.supvrStfNumM" />
+            <ion-checkbox style="padding-left: 15px;" name="supvrStfNmM" ng-model="supvrStfNmM.checked" ng-checked="supvrStfNmM.checked" ng-repeat="supvrStfNmM in supvrStfNmMList" ng-value="supvrStfNmM.key" ng-click="clickSupvrStfNmM()">{{supvrStfNmM.text}}</ion-checkbox>
+        </ion-list>
+    </div>
+    <div class="wushuju" my-nodata-show="supvrStfNmMList.length == 0">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+    </ion-content>
+</div>
+<!-- 晋升之后管理门店 -->
+<div ng-show="subStoreSelectShow">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">晋升之后管理门店</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- persActInsert.html -->
+        <div class="tishi fadeInfo" ng-if="infoShow">
+            <div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个门店</div>
+        </div>
+        <div class="wrap">
+            <div class="xzk_a" style="margin-top: 10px;margin-bottom: 10px;">
+                <a ng-repeat="chnl in chnlList" ng-click="clickChnl(chnl.chnlNum)"
+                        ng-class="{'xuanzong_a':chnl.chnlNum==selectedChnl,'weixuanzong_a':chnl.chnlNum!=selectedChnl}" style="width:{{chnlWidth}}">{{chnl.chnlNm}}</a>
+            </div>
+            <ion-list ng-repeat="chnl in chnlList" ng-show="chnl.chnlNum==selectedChnl">
+                <ion-checkbox style="padding-left: 15px;" ng-repeat="subStore in chnl.subStoreList" ng-model="subStore.isCheck" ng-click="clickSubStore(subStore)">{{subStore.strNm}}</ion-checkbox>
+            </ion-list>
+        </div>
+        <div class="wushuju" my-nodata-show="chnl.subStoreList.length == 0">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+    </ion-content>
+</div>

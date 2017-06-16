@@ -1,0 +1,29 @@
+<ion-header-bar align-title="center" class="header"> 
+	<a href="" ui-sref="historyDetails({applNum:stfList.applNum})" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">考勤工资</h1>
+</ion-header-bar>
+<ion-content  class="has-header ">
+<!-- attendanceSalary.html -->
+	<ion-list>
+ 		<ion-item  >
+           	<span class="w140">应出勤天数</span>
+           	<span class=" stfInfoItem">{{stfList.supAttdDays | currency : ""}}<span ng-if="stfList.supAttdDays != 0 && stfList.supAttdDays != undefined">天</span></span>
+        </ion-item>
+        <ion-item >
+           	<span class="w140">实际出勤天数</span>
+           	<span class=" stfInfoItem">{{stfList.actualAttnDays | currency : ""}}<span ng-if="stfList.actualAttnDays != 0 && stfList.actualAttnDays != undefined">天</span></span>
+        </ion-item >
+        <ion-item >
+          	<span class="w140">底  薪</span>
+          	<span class=" stfInfoItem">{{stfList.basSalPerPha | currency : ""}}<span ng-if="stfList.basSalPerPha != 0 && stfList.basSalPerPha != undefined">元</span></span>
+        </ion-item>
+        <ion-item >
+          	<span class="w140">全  勤</span>
+          	<span class=" stfInfoItem">{{stfList.fullAttend | currency : ""}}<span ng-if="stfList.fullAttend != 0 && stfList.fullAttend != undefined">元</span></span>
+        </ion-item>
+        <ion-item >
+           	<span class="w140">绩效工资</span>
+           	<span class=" stfInfoItem">{{stfList.perfBonus | currency : ""}}<span ng-if="stfList.perfBonus != 0 && stfList.perfBonus != undefined">元</span></span>
+    	</ion-item>
+	</ion-list> 
+</ion-content>

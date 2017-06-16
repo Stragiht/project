@@ -1,0 +1,100 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">
+		选择人员<i class="pull-right fa fa-times" ng-click="cancel()"></i>
+	</h3>
+
+</div>
+<div class="panel-heading">
+	<accordion close-others="oneAtATime"> <accordion-group
+		is-open="true"> <accordion-heading>
+	查询<i class="pull-right fa fa-angle-right"
+		ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+	</accordion-heading>
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">人员编号：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" ng-model="stfbas.stfNum">
+			</div>
+			<label class="col-sm-2 control-label">姓名：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" ng-model="stfbas.stfNm">
+			</div>
+			<div class="col-sm-4">
+				<div class="checkbox">
+					<label class="i-checks i-checks-sm"> <input type="checkbox"
+						ng-model="stfbas.hasDirSupFlg"> <i></i> 包含其下成员
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">部门：</label>
+			<div class="col-sm-2">
+				<select ng-model="stfbas.subDep" class="form-control inline"
+					style="max-width: 115px;"
+					ng-options="zt.key as zt.text for zt in department">
+				</select>
+			</div>
+			<label class="col-sm-2 control-label">职位等级：</label>
+			<div class="col-sm-2">
+				<select ng-model="stfbas.jobPos" class="form-control inline"
+					style="max-width: 115px;"
+					ng-options="jp.posNum as jp.posNm for jp in jobPosData"
+					ng-change="changeJobPos(stfbas.jobPos)">
+				</select>
+			</div>
+			<div>
+				<select ng-model="stfbas.posLvl" class="form-control inline"
+					style="max-width: 115px;"
+					ng-options="pl.posGrdNum as pl.posGrdNm for pl in posLvlData">
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-2">
+				<a class="btn btn-info " ng-click="staffGetData()">搜索</a>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="table-responsive"
+	style="padding-left: 10px; padding-right: 10px;">
+	<label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据
+	</label> <label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+	<div ng-table="tableParams">
+		<table cellspacing="0"
+			class="table table-bordered table-condensed   table-striped"
+			style="width: 100%; margin-bottom: 20px;">
+			<tr ng-repeat="staff in $data">
+
+				<td style="font-weight: bold; min-width: 90px;"><input
+					type="radio" ng-model="selectedRD" name="selectedRD"
+					ng-true-value="1" ng-false-value="2"
+					ng-click="selectClick(staff.stfNum)" /></td>
+
+				<td title="'人员编号'" width="'80px'" style="text-align: center;"
+					ng-bind="staff.stfNum"></td>
+				<td title="'姓名'" width="'100px'"
+					style="text-align: center; word-break: break-all;"
+					ng-bind="staff.stfNm"></td>
+				<td title="'部门'" width="'100px'"
+					style="text-align: center; word-break: break-all;"
+					ng-bind="staff.depNm"></td>
+				<td title="'职位'" width="'100px'" style="text-align: center;"
+					ng-bind="staff.posNm"></td>
+				<td title="'等级'" width="'70px'" style="text-align: center;"
+					ng-bind="staff.posGrdNm"></td>
+				<td title="'所在城市'" width="'120px'"
+					style="text-align: center; word-break: break-all;"
+					ng-bind="staff.rgnNm"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-info pull-left" ng-click="ok()">确定</button>
+	<button class="btn btn-default pull-left" ng-click="cancel()">取消</button>
+</div>

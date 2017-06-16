@@ -1,0 +1,31 @@
+<div class="container w-xxl w-auto-xs" ng-controller="forgotpwdController" ng-init="app.settings.container = true;">
+  <a href class="navbar-brand block m-t"><h2>{{app.name}}</h2></a>
+  <div class="m-b-lg">
+    <div class="wrapper text-center">
+      <strong>修改密码</strong>
+    </div>
+    <form name="form" class="form-validation">
+      <div class="text-danger wrapper text-center" ng-show="authError">
+        {{authError}}
+      </div>
+      <div class="list-group list-group-sm">
+        <div class="list-group-item" style="margin-bottom: 20px">
+          <input type="password" name="oldpassword" placeholder="旧密码" class="form-control no-border" ng-model="user.oldpassword" required>
+        </div>
+        <div class="list-group-item">
+          <input type="password" name="password" placeholder="新密码" class="form-control no-border" ng-model="user.password" required ng-change="user.confirm_password = ''">
+        </div>
+        <div class="list-group-item">
+          <input type="password" name="confirm_password" placeholder="确认新密码" class="form-control no-border" ng-model="user.confirm_password"  required ui-validate="'$value==user.password'" ui-validate-watch=" 'password' ">
+        </div>
+          <span ng-show='form.confirm_password.$error.validator' style="color: red;">您输入的密码与确认密码不一致</span>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="updatePWD()" ng-disabled='form.$invalid'>确认</button>
+      <div class="text-center m-t m-b"><a ui-sref="app.home">返回首页</a></div>
+      <div class="line line-dashed"></div>
+      <!--<p class="text-center"><small>没有帐号?</small></p>-->
+      <!--<a ui-sref="system.signup" class="btn btn-lg btn-default btn-block">创建一个账户</a>-->
+    </form>
+  </div>
+  <div class="text-center" ng-include="'common/tpl/system/page_footer.html'"></div>
+</div>

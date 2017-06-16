@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+	<div class="panel-heading font-bold">选择人员
+		<button class="btn  btn-rounded  btn-default btn-sm" ng-click="cancel()" style="float:right;"><i class="glyphicon glyphicon-remove"></i></button>
+	</div>
+	<div class="panel-body">
+		<form class="bs-example form-horizontal">
+			<div class="form-group">
+        		<label class="col-sm-2 control-label">姓名：</label>  
+      			<div class="col-sm-3" style="padding-left: 0px;">
+          			<input type="text" class="form-control" ng-model="toaster.title" placeholder="输入多个人员用,分开">
+				</div>
+		      	<label class="col-sm-2 control-label">人员编号：</label>
+      			<div class="col-sm-3" style="padding-left: 0px;">
+          			<input type="text" class="form-control" ng-model="toaster.text" placeholder="输入人员编号">
+				</div>
+				<div class="col-sm-2" style="padding-left: 0px;">
+					<div class="checkbox">
+          				<label class="i-checks i-checks-sm"><input type="checkbox"><i></i>包含其下成员</label>
+        			</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">职位：</label>
+				<div class="col-sm-2" style="padding-left: 0px;">
+					<select name="account" class="form-control m-b">
+						<option>销售部</option>
+					</select>
+				</div>
+                <div class="col-sm-2" style="padding-left: 0px;">
+					<select name="account" class="form-control m-b">
+						<option>全部</option>
+					</select>
+				</div>
+                <button class="btn btn-info btn-addon" style="float:right;margin-right:80px;" ng-click="pop()">查询</button>
+			</div>
+			
+			
+			<div class="table-responsive" style="padding-left:10px;padding-right:10px;">
+				<table  cellspacing="0" class="table table-bordered table-condensed   table-striped" ng-controller="ModalssmdCtrl" ng-table="tableParams" style="width:100%;margin-bottom:20px;"  >
+  	 				<thead>
+			          	<tr>
+			          		<th>NO.</th>
+			            	<th>人员编号</th>
+			            	<th>姓名</th>
+			            	<th>职位</th>
+			            	<th>等级</th>
+			            	<th>所属区域</th>
+			          	</tr>
+			        </thead>
+					<tr ng-repeat="userinfo in $data">
+						<td style="text-align:center;min-width:20px;">
+							<label class="i-checks m-b-none"><input type="checkbox"><i></i></label>
+						</td>
+						<td style="text-align:center;">
+		                	{{userinfo.rybh}}
+		                </td>
+		                <td style="text-align:center;">
+		                    {{userinfo.xm}}
+		                </td>
+		                <td style="text-align:center;">
+		                    {{userinfo.zw}}
+		                </td>
+		                <td style="text-align:center;">
+		                    {{userinfo.dj}}
+		                </td>
+		                <td style="text-align:center;">
+		                	{{userinfo.ssqy}}
+		                </td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+
+<div class="modal-header"><button class="close" type="button" ng-click="cancel()" >×</button>
+	<h3 class="modal-title">生效</h3>
+</div>
+<div class="panel-heading">
+
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+	     
+	       <div class="col-lg-4">
+                    <div class="radio">
+                        <label class="i-checks i-checks-sm"> <input value=1 name="a" ng-model="poiSetFlg" ng-click="showorhide(1)"
+                              type="radio"> <i></i> 设置要生效的档期
+                        </label>
+                    </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="radio">
+                            <label class="i-checks i-checks-sm"> <input value=0 name="a" ng-model="poiSetFlg" ng-click="showorhide(0)"
+                                type="radio"> <i></i> 不生效
+                            </label>
+                        </div>
+                    </div>
+		</div>
+		
+		<div class="form-group" id="phaGrp">
+                <div class="col-sm-5">
+                    <select name="phaGrpOid" class="form-control ng-pristine ng-untouched ng-valid" ng-model="phaGrpOid" ng-options="phaGrpOid.key as phaGrpOid.text for phaGrpOid in phaGrpOidList" 
+                        ng-change="changePhaGrpOid(phaGrpOid)" required></select>
+                </div>
+                <div class="col-sm-3">
+                    <select name="phaId" class="form-control ng-pristine ng-untouched ng-valid" ng-model="phaId" 
+                        ng-options="data.key as data.text for data in phaIdList"  ng-change="changephaId(phaId)" required></select>
+                </div>
+            </div>
+	</form>
+</div>
+
+<div class="panel-heading">
+	<button class="btn btn-default mr_10" ng-click="cancel()">取消</button>
+	<button class="btn btn-primary mr_10" ng-click="ok()">确定</button>
+</div>

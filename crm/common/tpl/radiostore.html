@@ -1,0 +1,86 @@
+
+<div class="modal-header">
+	<h3 class="modal-title">选择门店<i class="pull-right fa fa-times" ng-click="cancel()"></i></h3>
+</div>
+<div class="panel-heading">
+	<accordion close-others="oneAtATime"> <accordion-group
+		is-open="true"> <accordion-heading>
+	查询<i class="pull-right fa fa-angle-right"
+		ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+	</accordion-heading>
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">所属城市分区：</label>
+			<div class="col-sm-2">
+				<select ng-model="cond.chnlNum" class="form-control inline" style="max-width: 115px;" ng-options="chnl.key as chnl.text for chnl in chnlList" ng-change="changeChnl(cond.chnlNum)">
+            	</select>
+            </div>
+			<div class="col-sm-2">
+	            <select ng-model="cond.majRgnNum" class="form-control inline" style="max-width: 115px;" ng-options="majRgn.key as majRgn.text for majRgn in majRgnList" ng-change="changeMajRgn(cond.chnlNum, cond.majRgnNum)">
+	            </select>
+            </div>
+			<div class="col-sm-2">
+	            <select ng-model="cond.proNum" class="form-control inline" style="max-width: 115px;" ng-options="pro.key as pro.text for pro in proList" ng-change="changePro(cond.chnlNum, cond.majRgnNum, cond.proNum)">
+	            </select>
+            </div>
+			<div class="col-sm-2">
+	            <select ng-model="cond.cityNum" class="form-control inline" style="max-width: 115px;" ng-options="city.key as city.text for city in cityList" ng-change="changeCity(cond.chnlNum, cond.cityNum)">
+	            </select>
+            </div>
+			<div class="col-sm-2">
+	            <select ng-model="cond.partiNum" class="form-control inline" style="max-width: 115px;" ng-options="parti.key as parti.text for parti in partiList" ng-change="changeParti(cond.partiNum)">
+	            </select>
+	        </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">门店编号：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" ng-model="cond.strNum">
+			</div>
+			<label class="col-sm-2 control-label">门店名称：</label>
+			<div class="col-sm-2">
+				<input type="text" class="form-control" ng-model="cond.strNm">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-2">
+				<a class="btn btn-info" ng-click="searchMultistore()">搜索</a>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="table-responsive"
+	style="padding-left: 10px; padding-right: 10px;">
+	<label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据</label>
+	<label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+	<div ng-table="tableParams">
+		<table cellspacing="0"
+			class="table table-bordered table-condensed   table-striped"
+			 style="width: 100%; margin-bottom: 20px;">
+			<tr ng-repeat="xsmd in $data">
+                
+                <td style="font-weight: bold; min-width: 90px;  ">
+                    <input type="radio" ng-model="selectedRD" name="selectedRD" ng-true-value="1" ng-false-value="2" ng-click="selectClick(xsmd.strNum)"/>
+                </td>
+                
+				<td title="'门店编号'" style="text-align: center"
+					ng-bind="xsmd.strNum"></td>
+				<td title="'门店名称'" style="text-align: center;word-break: break-all;"
+					ng-bind="xsmd.strNm"></td>
+				<td title="'所属渠道'" style="text-align: center"
+					ng-bind="xsmd.chnlNm"></td>
+				<td title="'所属销售大区'" style="text-align: center;"
+					ng-bind="xsmd.majRgnNm"></td>
+				<td title="'所属城市'" style="text-align: center;"
+					ng-bind="xsmd.cityNum"></td>
+				<td title="'区域包含城市'" style="text-align: center;"
+					ng-bind="xsmd.partiNm"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-info pull-left" ng-click="ok()">确定</button>
+	<button class="btn btn-default pull-left" ng-click="cancel()">取消</button>
+</div>

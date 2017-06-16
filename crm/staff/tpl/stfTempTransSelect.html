@@ -1,0 +1,30 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">BA借调记录
+        <a class="btn btn-success btn-addon mr_8" ui-sref="app.staff.stfTempTransInsert" user-power="WSTF01012002"> 新增BA借调记录</a>
+    </h4>
+</div>
+<div class="panel-heading" ng-controller="stfTempTransSelect">
+<div class="panel-heading">
+    <label class="control-label mt_6">共有<span class="error">{{countNumber}}</span>条数据 </label>
+    <label class="control-label mt_6" ng-if="countNumber==0">（没有符合条件的数据）</label>
+</div>
+    <div ng-table="tableParams">
+        <table class="table table-bordered table-condensed   table-striped table-hover">
+           <tr ng-repeat="stfinfo in $data">
+               <td title="'记录编号'"  style="min-width:100px; ">{{stfinfo.applNum}}</td>
+               <td title="'提交人'"  style="text-align:center;min-width:90px; ">{{stfinfo.stfNm}}</td>
+               <td title="'提交时间'"  style="text-align:center;min-width:120px; ">{{stfinfo.applTm}}</td>
+               <td title="'借调人员'"  style="text-align:center;min-width:120px; ">{{stfinfo.stfNmJD}}</td>
+               <td title="'借调开始时间'"  style="text-align:center;min-width:120px; ">{{stfinfo.secStartTm}}</td>
+               <td title="'借调结束时间'"  style="text-align:center;min-width:120px; ">{{stfinfo.secEndTm}}</td>
+               <td title="'借调天数'"  style="text-align:center;min-width:90px; ">{{stfinfo.days}}</td>
+               <td title="'借调到门店'"  style="text-align:center;min-width:160px; ">{{stfinfo.secStr}}</td>
+               <td title="'事由'"  style="text-align:center;min-width:120px; ">{{stfinfo.dicNm|dicNameFilter:"C015"}}</td>
+               <td title="'操作'" style=" min-width: 200px;" class="mr_22">
+                   <a class="mr_9" ng-click="stfUpdate(stfinfo.applNum)" ng-if="stfinfo.editFlag == 1" user-power="WSTF01012003"> 编辑</a>
+               </td>
+           </tr>
+        </table>
+    </div>    
+</div>
+

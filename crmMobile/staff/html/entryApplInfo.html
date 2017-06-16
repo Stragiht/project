@@ -1,0 +1,155 @@
+<style>
+.listvrew li {
+    padding-right: 33px;
+}
+</style>
+<div ng-show="entInfoShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ui-sref="entryAppl" ng-if="frontPage != 'entryApplApprList'" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<a ui-sref="entryApplApprList" ng-if="frontPage == 'entryApplApprList'" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">详情</h1>
+		<a class="head_right2" ng-if="entryInfo.submitFlag == 1" ng-click="submitEntryAppl()" user-power="MSTF01002003">
+			<div class="head_right_box float_l">
+				<img src="common/images/zhengque.png" width="22" height="22">
+				<p>提交</p>
+			</div>
+			<div class="float_l ml10 color06" style=" font-size:24px;  margin-top:5px;">|</div>
+		</a>
+		<a class="head_right2" ng-if="entryInfo.cancelFlag == 1" ng-click="cancelEntryAppl()" user-power="MSTF01002003">
+			<div class="head_right_box float_l">
+				<img src="common/images/xxx.png" width="22" height="22">
+				<p>取消</p>
+			</div>
+			<div class="float_l ml10 color06">|</div>
+		</a>
+		<a class="head_right" ng-if="entryInfo.editFlag == 1" ui-sref="entryApplUpdate({entApplNum:entryInfo.entApplNum,updtTm:entryInfo.updtTm})" user-power="MSTF01002003">
+			<div class="head_right_box">
+				<img src="common/images/qianbi.png" width="22" height="22">
+				<p>编辑</p>
+			</div>
+		</a>
+		<a class="head_right" ng-if="entryInfo.apprFlag == 1" ng-click="apprOpen()" user-power="MSTF01002004">
+			<div class="head_right_box">
+				<img src="common/images/zhan.png" width="22" height="22">
+				<p>审批</p>
+			</div>
+		</a>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplInfo.html -->
+		<div class="wrap">
+			<div class="index_work_bt" ng-if="entryInfo.apprFlag == 1">审批参考依据</div>
+			<ul class="listvrew clearfix mb_17" ng-if="entryInfo.apprFlag == 1">
+				<li><span class="">直属主管上一档期销售业绩</span><span class=" float_r f_10">{{entryInfo.subRgnMgrLstPhaAmt | currency:'￥'}}</span></li>
+				<li><span class="">现有同职位人数</span><span class=" float_r f_10">{{entryInfo.subRgnMgrSameStfQty}}人</span></li>
+			</ul>
+			<ul class="listvrew clearfix mb_17">
+				<li><span class="">申请编号</span><span class=" float_r">{{entryInfo.entApplNum}}</span></li>
+				<li>
+					<span class="">提交人</span>
+					<span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 14px;" ng-click="callPhone()"></span>
+					<span class=" float_r mr10">{{entryInfo.applSbmtNm}}</span>
+				</li>
+				<li><span class="">提交时间</span><span class=" float_r" style="white-space: nowrap;">{{entryInfo.sbmtTmDis}}</span></li>
+				<li><span class="">审批状态</span><span class=" color05 float_r">{{entryInfo.apprStat}}</span></li>
+			</ul>
+			<div class="index_work_bt"></div>
+			<ul class="listvrew clearfix mb_17">
+				<li><span class="">入职时间</span><span class=" float_r">{{entryInfo.stfEntDt}}</span></li>
+				<li><span class="">职位等级</span><span class=" float_r"    style="min-width: 100px;  text-align: right;">{{entryInfo.positionDis}}</span></li>
+				<li><span class="">直属主管</span><span class=" float_r">{{entryInfo.supvrStfNm}}</span></li>
+			</ul>
+			<div class="index_work_bt"></div>
+			<ul class="listvrew clearfix">
+				<li><span class="">入职人</span><span class=" float_r">{{entryInfo.stfNm}}</span></li>
+				<li><span class="">性别</span><span class=" float_r">{{entryInfo.sex}}</span></li>
+				<li><span class="">联系电话</span><span class=" float_r" >{{entryInfo.stfMobPhNum}}</span></li>
+				<li><span class="">身份证号码</span><span class=" float_r">{{entryInfo.stfIdNum}}</span></li>
+				<li>
+					<span>身份证正面图片</span>
+					<span class=" float_r"><img ng-src="{{entryInfo.idCardPosPic|imgpath}}" ng-click="pictureShow(entryInfo.idCardPosPic)" height="40" class="mt_10 float_l"></span>
+				</li>
+				<li>
+					<span>身份证反面图片</span>
+					<span class=" float_r"><img ng-src="{{entryInfo.idCardOppPic|imgpath}}" ng-click="pictureShow(entryInfo.idCardOppPic)" height="40" class="mt_10 float_l"></span>
+				</li>
+				<li><span class="">所在城市</span><span class=" float_r"  style="width: 150px;  text-align: right;">{{entryInfo.stfFrProv}} > {{entryInfo.stfFrCity}}</span></li>
+			</ul>
+			<div class="index_work_bt">所属门店</div>
+			<ul class="listvrew clearfix">
+				<li ng-repeat="store in storeList">
+					<span class="">门店{{$index + 1}}</span><span class="float_r">{{store.strNm}}</span>
+				</li>
+			</ul>
+			<div class="index_work_bt" ng-if="status.apprHisDisplay">审批历史</div>
+			<div class="shls clearfix" ng-if="status.apprHisDisplay">
+				<div class="shls_wen">
+					<div ng-repeat="apprHisInfo in approvalList">
+						<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</div>
+
+<!-- 审批 -->
+<div ng-if="apprShow">
+	<ion-header-bar align-title="center" class="header">
+		<a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">审批</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- entryApplInfo.html -->
+		<div class="wrap">
+			<ul class="listvrew clearfix mb_15">
+				<li style="padding: 7px;width: 100%;margin:0;">
+					<textarea placeholder="请输入审批意见" style="width: 100%;" rows="12"
+						ng-model="entryInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+				</li>
+			</ul>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center">
+		<div class="xiaoxi_quanxuan2">
+			<a class="btn_repoit1 mt_10 ml10" style="margin-bottom: 10px;width: 44%;" ng-click="apprEntryAppl(0)" user-power="MSTF01002004">不通过</a>
+			<a class="btn_repoit2 mt_10 mr10" style="margin-bottom: 10px;width: 44%;" ng-click="apprEntryAppl(1)" user-power="MSTF01002004">通过</a>
+		</div>
+	</ion-footer-bar>
+</div>
+
+<div ng-show="pictureShowDiv" class="phone_del" >
+    <img ng-src="{{showImgUrl}}" width="100%" alt=""/>
+    <ul>
+        <li ng-click="delImg(curIdx)" style="display: none"></li>
+        <li ng-click="cancelPicture()"></li>
+    </ul>
+</div>
+
+<div>
+	<script type="text/ng-template" id="showImg.html">
+		<div ng-include="'common/html/showImg.html'"></div>
+	</script>
+</div>

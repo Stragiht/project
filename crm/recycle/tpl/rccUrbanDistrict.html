@@ -1,0 +1,37 @@
+﻿<div  ng-controller="rccUrbanDistrictController">
+    <!-- 标题 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4" style="color:#000"> 城市分区信息
+        </h4>
+    </div>
+
+    <div class="wrapper-md" >
+        <!-- 表格 -->
+        <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+            <div style="padding:15px;">
+                <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ; border:none;outline:medium;color: #f05050" ng-model="gydst" readonly="readonly"> 条数据</lable>
+                <lable ng-if="gydst < 1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+            </div>
+            <div ng-table="tableParams">
+                <table  class="table table-bordered table-condensed table-striped table-hover"  >
+                    <tr ng-repeat="rccUrbanDistrict in $data">
+                        <td title="'分区编号'" style="text-align:center;">
+                            <span ng-bind="rccUrbanDistrict.partiNum"></span>
+                        </td>
+                        <td title="'分区名称'"  style="text-align:center;min-width:120px;">
+                            <span ng-bind="rccUrbanDistrict.partiNm"></span>
+                        </td>
+                        <td title="'所属城市'"  style="text-align:center;min-width:120px;">
+                            <span ng-bind="rccUrbanDistrict.cityNm"></span>
+                        </td>
+                        <td title="'操作'" style="text-align:center;min-width:120px;" >
+                            <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="restoreUrbanDistrict(rccUrbanDistrict.partiNum)"  user-power="WRCC01004002">还原</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>

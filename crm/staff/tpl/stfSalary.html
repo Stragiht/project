@@ -1,0 +1,165 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        生成工资报表
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+<div ng-controller="SalaryCtrl">
+    <!-- 温馨提示面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group 
+            	is-open="status.tipsopen">
+            	<accordion-heading>温馨提示<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.tipsopen, 'fa-angle-right': !status.tipsopen}"></i></accordion-heading>
+                <form name="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label text-left">1、‘工资报表’由操作者提交操作申请之后生成；</label>
+                    </div>
+                 	<div class="form-group">
+                        <label class="col-sm-12 control-label text-left">2、在提交生成工资报表操作之前请确定人员‘考勤报表’、‘销售业绩’；</label>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 温馨提示面板结束 -->
+    <!-- 生成工资入力面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group
+                    is-open="status.creatopen">
+                <accordion-heading>
+                  生成工资报表与开启审核流程操作<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.creatopen, 'fa-angle-right': !status.creatopen}"></i>
+                </accordion-heading>
+                <form name="form" class="form-horizontal">
+                    	<div class="form-group">
+                        <label class="col-sm-2 control-label">销售业绩时间：</label>
+                        <div class="col-sm-4">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="salary.saleStartTime"  is-open="opened"
+                                       datepicker-options="dateOptions" readonly="readonly"  /> <span class="input-group-btn">
+										<button type="button" class="btn btn-default"
+			                                    ng-click="open($event)">
+			                                <i class="glyphicon glyphicon-calendar"></i>
+			                            </button>
+									</span>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label" style="text-align: left;">至</label>
+                        <div class="col-sm-4">
+                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                                <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="salary.saleEndTime" is-open="opened"
+                                       datepicker-options="dateOptions" readonly="readonly" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+                                    ng-click="open($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+						</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">基本工资档期：</label>
+                        <div class="col-sm-6">
+                            <select name="account" class="form-control inline"  style="max-width: 180px;" ng-model="salary.phaGrpOid" ng-options="phaGrpOid.key as phaGrpOid.text for phaGrpOid in phaGrpOidList" ng-selected="phaGrpOid.key==salary.phaGrpOid" ng-change="changePhaGrpOid(salary.phaGrpOid)" >
+                            </select>
+                            <select name="account" class="form-control inline"  style="max-width: 180px;" ng-model="salary.phaId" ng-options="data.key as data.text for data in phaIdList" ng-selected="data.key==salary.phaId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-info btn-addon" ng-click="insertStfSalary()" ng-disabled="discreate" user-power="WSTF01021002">点击生成工资报表</button>
+                        	<button class="btn btn-info btn-addon mt_6" ng-click="stfsalaryselectlast()" ng-disabled="disselect" user-power="WSTF01021001">查看最近一次生成结果</button>
+                        	<button class="btn btn-info btn-addon mt_6" ng-click="salaryopen()" ng-disabled="disopen" user-power="WSTF01021004">开启工资报表审核</button>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 生成工资入力面板结束 -->
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group 
+            	is-open="status.selectopen">
+            	<accordion-heading>根据生成结果进行检索<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.selectopen, 'fa-angle-right': !status.selectopen}"></i></accordion-heading>
+                <form name="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">职位等级：</label>
+                        <div class="col-sm-6">
+                            <select name="account" class="form-control inline"  style="max-width: 150px;" ng-model="salary.posNum" ng-options="job.key as job.text for job in jobList" ng-change="changePosition(salary.posNum)" >
+                            </select>
+                            <select name="account" class="form-control inline"  style="max-width: 150px;" ng-model="salary.posGrdNum" ng-options="posGrd.key as posGrd.text for posGrd in posList" >
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label text-left"></label>
+                        <div class="col-sm-offset-1 col-sm-1">
+                            <button class="btn btn-info btn-addon" ng-click="stfsalaryselect()"  ng-disabled="disserch"  user-power="WSTF01021001">搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+    <!-- 导出系列按钮面板开始 -->
+    <div class="panel-heading">
+    	<button class="btn btn-default btn-addon" ng-click="outPut()"  user-power="WSTF01021005">批量导出</button>
+        <button class="btn btn-default btn-addon"  style="display: none;" ng-csv="getArray"  id="outs"  lazy-load="true" filename="{{filename}}"  add-bom="true" field-separator=",">批量导出</button>
+        <label class="control-label mt_6">共有<span class="error">{{listcount}}</span>条数据 </label><label class="control-label mt_6" ng-if="listcount==0">（没有符合条件的数据）</label>
+    </div>
+    <div class="panel-heading" ng-if="havedataflag != ''">
+        <label class="control-label mt_6">销售业绩时间： </label><label class="control-label mt_6" ng-if="saleStartTm != ''">{{saleStartTm + ' ~ ' + saleEndTm}} </label>
+        <label class="control-label mt_6">基本工资档期： </label><label class="control-label mt_6" ng-if="phaGrpNm != ''">{{phaGrpNm + ' > ' + phaNm}} </label>
+    </div>
+    <!-- 导出系列按钮面板结束 -->
+    <!-- table列表开始 -->
+    <div class="panel-heading">
+        <div ng-table="tableParams">
+            <table class="table table-bordered table-condensed   table-striped table-hover">
+                <tr ng-repeat="salaryListinfo in $data">
+                	<td header="'headerCheckbox.html'" style="font-weight: bold;"width="'90px'">
+                        <input type="checkbox" ng-model="checkboxes.items[salaryListinfo.oId]" ng-click="checkItem()"/>
+                    </td>
+                    <td title="'人员编号'"  width="'100px'">{{salaryListinfo.stfNum}}</td>
+					<td title="'姓名'"  width="'100px'">{{salaryListinfo.stfNm}}</td>
+					<td title="'部门'"  width="'100px'">{{salaryListinfo.subDep | stfBasSubDep}}</td>
+					<td title="'职位'"  width="'100px'">{{salaryListinfo.position | stfBasPosNum}}</td>
+					<td title="'等级'"  width="'100px'">{{salaryListinfo.position | stfBasPosGrdNum:salaryListinfo.posGrd}}</td>
+					<td title="'入职日期'"  width="'100px'">{{salaryListinfo.stfEntDt}}</td>
+					<td title="'最后工作日'"  width="'100px'">{{salaryListinfo.dimiDt}}</td>
+					<td title="'试用星级标准'"  width="'100px'">￥{{salaryListinfo.probStarStd | fromMoney}}</td>
+					<td title="'转正星级标准'"  width="'100px'">￥{{salaryListinfo.regularStarStd | fromMoney}}</td>
+					<td title="'考勤工资'"  width="'100px'">￥{{salaryListinfo.attendAmt | fromMoney}}</td>
+					<td title="'应加合计'"  width="'100px'">￥{{salaryListinfo.summation | fromMoney}}</td>
+					<td title="'应扣实计'"  width="'100px'">￥{{salaryListinfo.totDedu | fromMoney}}</td>
+					<td title="'实发工资'"  width="'100px'" class="text-red">￥{{salaryListinfo.netSal | fromMoney}}</td>
+					<td title="'社保'"  width="'100px'">￥{{salaryListinfo.sclSecurity | fromMoney}}</td>
+					<td title="'公积金'"  width="'100px'">￥{{salaryListinfo.accumFunds | fromMoney}}</td>
+					<td title="'应计税金额'"  width="'100px'">￥{{salaryListinfo.supTaxAmt | fromMoney}}</td>
+					<td title="'个税'"  width="'100px'">￥{{salaryListinfo.persIncomeTax | fromMoney}}</td>
+					<td title="'其它应扣'"  width="'100px'">￥{{salaryListinfo.otherDedu | fromMoney}}</td>
+					<td title="'操作'"  width="'150px'"class="mr_22">
+					    <a class="mr_9"  ng-click="stfSalarySelectByKey(salaryListinfo.oId)" user-power="WSTF01021001" >查看</a>
+					    <a class="mr_9"  ng-if="salaryListinfo.editFlag == '0'"  ng-click="stfSalaryUpdateByKey(salaryListinfo.oId)"  user-power="WSTF01021003" >编辑</a>
+					</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

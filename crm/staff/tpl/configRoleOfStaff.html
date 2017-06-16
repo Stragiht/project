@@ -1,0 +1,94 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">配置人员所属角色
+    </h4>
+</div>
+<style>
+    .nav.nav-tabs {
+        position: relative;
+        width: 9999px;
+        left: -70px;
+
+    }
+
+    .tab-container.ng-isolate-scope {
+        margin: 10px 10px 0px 10px;
+        overflow: hidden;
+    }
+
+    .tab-content {
+        border-bottom: 0px !important;
+        border-left: 0px !important;
+        border-right: 0px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+
+    .myTabCount {
+        width: calc(100% - 20px);
+        border: 1px solid #dee5e7;
+        border-top: 0px;
+        margin: 0 10px 10px 10px;
+        padding: 10px;
+    }
+
+    .myTab {
+        position: absolute;
+        left: 909px;
+        z-index: 10;
+        background-color: #FFFFFF;
+    }
+
+    .myTab > a {
+        cursor: inherit !important;
+    }
+
+    .gridStyle {
+        border: 1px solid rgb(212,212,212);
+        height: 300px
+    }
+    .headText{
+        background-color: #f1ffed;
+        text-align: center;
+    }
+    .callText{
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgba(187, 187, 188, 0.45);
+        text-align: center;
+    }
+    .ngViewport.ng-scope{
+        overflow-x: hidden;
+    }
+</style>
+<div ng-controller="configRoleOfStaffController">
+    <div style="padding: 10px">请选择要配置的角色：</div>
+    <tabset class="tab-container" style = "left: -70px;">
+        <tab class="myTab" index="0" disabled="true">
+            <tab-heading>
+                <i class="fa fa-chevron-left" ng-click='onmousedownLeft()' ng-mouseout='onmousedownLeftStop()'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-chevron-right" ng-click='onmousedownRight()'
+                   ng-mouseout='onmousedownRightStop()'></i>
+            </tab-heading>
+        </tab>
+        <tab ng-repeat='tab in tabs' tabindex="{{tab.roleId}}" select="tabSelect(tab.roleId)" active="tab.active">
+            <tab-heading>
+                {{tab.roleName}}
+            </tab-heading>
+        </tab>
+    </tabset>
+    <div class="myTabCount col-xs-12">
+        <div class="col-xs-5">
+            <div class="table-responsive">
+                <div class="gridStyle" ng-grid="haveRole" ></div>
+            </div>
+        </div>
+        <div class="col-xs-2" style="htight:300px;text-align: center;padding-top: 120px">
+            <button ng-click="LeftFoRight()" user-power="WSTF01029002" class="btn btn-sm btn-icon btn-info" style="width: 100px;margin-bottom: 10px"><i class="fa fa-angle-double-right" style="font-size: 26px"></i></button>
+            <button ng-click="RightFoLeft()" user-power="WSTF01029002" class="btn btn-sm btn-icon btn-info" style="width: 100px;"><i class="fa fa-angle-double-left" style="font-size: 26px"></i></button>
+        </div>
+        <div class="col-xs-5">
+            <div class="gridStyle" ng-grid="noRole" ></div>
+        </div>
+        <button ng-click="submitRoleData()" user-power="WSTF01029002" ng-class="{0: 'disabled'}[roleDataCon]" class="btn btn-sm btn-icon btn-info" style="width: 80px;margin-top: 15px;margin-left: 15px">提交保存</button>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div ng-controller="fcImpRepImportController">
+	<div class="bg-light lter b-b wrapper-md">
+	    <h4 class="m-n font-thin h4">新增导入销售报表</h4>
+	</div>
+	<div class="panel-body">
+		<form class="bs-example form-horizontal" name="myForm">
+			<!--<div class="form-group">-->
+				<!--<label class="col-xs-1 control-label"></label> <label-->
+					<!--class="col-xs-11 control-label text-left">-->
+					<!--<p style="font-weight: bold;">温馨提示:</p>-->
+					<!--<p>1、可下载规范格式文件,根据指定格式填写编辑后再进行导入;</p>-->
+					<!--<p>2、excel文件中一次上传数量最好不要超过1000,excel文件大小最好不要超过500K;</p>-->
+					<!--<p>3、碰到"是否启用"之类的字段，填写数字0或者1,0代表"否"，1代表"是"。</p>-->
+				<!--</label>-->
+			<!--</div>-->
+			<div class="form-group" id="test"">
+				<label class="col-xs-3 control-label" style="line-height: 129px;">马上下载规范格式文件:</label>
+				<div class="col-xs-3">
+					<a href="../import/销售报表批量导入模板.xlsx"><img src="common/img/import.jpg" width="100" alt="下载规范格式文件" /></a>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-10">
+					<label class="col-xs-3 control-label"><span
+						style="color: red;">*</span>上传文件:</label>
+					<div class="col-xs-5">
+						<input class="form-control" ng-model="fileName" readonly/>
+					</div>
+					<div class="col-xs-2  btn btn-default fileUpload">
+						<span>本地上传</span> 
+						<input id="fileInput" type="file" class="upload" ngf-pattern="'.xlsx'" accept=".xlsx" class="upload" style="height: 100%"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"></label>
+				<div class="col-xs-2">
+					<button class="btn btn-info" ng-click="importFile()">提交保存</button>
+					<button class="btn btn-info" style="display: none;" id="outFcImpRepExcelImportErrorMsg" ng-csv="csvData" add-bom="true" lazy-load="true" filename="{{csvFileName}}" field-separator="," >提交保存</button>
+					
+				</div>
+				<div class="col-xs-2">
+					<button class="btn btn-default" ng-click="fanhui()">返回</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

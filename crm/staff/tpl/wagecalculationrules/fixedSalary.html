@@ -1,0 +1,13 @@
+<div class="form-group">
+	<label class="col-sm-3 control-label">
+        <span style="color: red;">*</span>计算规则：
+    </label>
+	<div class="col-sm-3">
+		<input type="text" class="form-control" ng-model="jsgz" name="jsgz" ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" maxLength=12 required>
+		<div ng-messages="form.jsgz.$error" ng-if="(form.jsgz.$dirty && form.jsgz.$invalid)">
+			<span ng-message="required" class="error">计算规则不能为空！ </span>
+			<span ng-message="pattern" class="error">*计算规则只能输入数字.</span>
+		</div>
+	</div>
+    <label class="col-xs-1 control-label text-left">元</label>
+</div>

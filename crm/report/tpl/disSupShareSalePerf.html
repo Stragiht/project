@@ -1,0 +1,132 @@
+<div ng-controller="disSupShareSalePerf">
+	<!-- 标题信息开始 -->
+	<div class="bg-light lter b-b wrapper-md">
+	    <h4 class="m-n font-thin h4">
+        	分配业绩
+	        <a class="btn btn-default btn-addon mr_8" ui-sref="app.report.disSupSalePerfSelect" >返回分配督导销售业绩管理</a>
+	    </h4>
+	</div>
+	<!-- 标题信息结束 -->
+	
+    <!-- 基本信息开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status1.open">
+                <accordion-heading>
+                    1.基本信息
+					<i class="pull-right fa fa-angle-right"ng-class="{'fa-angle-down': status1.open, 'fa-angle-right': !status1.open}"></i>
+                </accordion-heading>
+                	<form name="form" class="form-horizontal form-validation">
+						<div class="form-group">
+						    <div class="mt_6" style="margin-left: 32px;">
+	                            <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">人员编号：{{baseInfo.stfNum}}</label>
+	                            <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">姓名：{{baseInfo.stfNm}}</label>
+	                            <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">所在城市：{{baseInfo.rgnNmAbbr}}</label>
+	                            <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">职位：{{baseInfo.posNm}}</label>
+						    </div>
+						</div>
+						<div class="form-group">
+                            <div class="mt_6" style="margin-left: 32px;">
+                                <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">销售日期：{{sellDateShowStartTime}} ~ {{sellDateShowEndTime}}</label>
+                                <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">可分配销售业绩：{{baseInfo.sumSaleAmt | currency : "￥"}}</label>
+                                <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">已分配：{{baseInfo.sumAssnAmt | currency : "￥"}}</label>
+                                <label class="col-xs-3 control-label label-text-left" style="text-align: left;padding-left: 0px;">剩余业绩：{{baseInfo.leftAmt | currency : "￥"}}</label>
+                            </div>
+						</div>
+					</form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 基本信息结束 -->
+    
+    <!-- 其下人员销售业绩开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status2.open">
+                <accordion-heading>
+                    2.其下人员销售业绩
+					<i class="pull-right fa fa-angle-right"ng-class="{'fa-angle-down': status2.open, 'fa-angle-right': !status2.open}"></i>
+                </accordion-heading>
+                
+			    <form name="form" class="form-horizontal">
+					<div class="form-group">
+					   <div style="margin-left: 32px;width:485px">
+						   <div ng-table="tableParams">
+						       <table class="table table-bordered table-condensed   table-striped table-hover">
+						       <tr ng-repeat="baInfoRep in baInfo">
+						           <td title="'人员编号'" width="'80px'">
+						              {{baInfoRep.stfNum}}
+						           </td>
+						           <td title="'姓名'" width="'80px'">
+						              {{baInfoRep.stfNm}}
+						           </td>
+						           <td title="'销售业绩'" width="'120px'" style="text-align: right;">
+						              {{baInfoRep.sumSaleAmt | currency : "￥"}}
+						           </td>
+						           <td title="'现职位等级'" width="'80px'">
+						              {{baInfoRep.posGrdNm}}
+						           </td>
+						       </tr>
+						       </table>
+						   </div>
+					   </div>
+					</div>
+				</form>
+                
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 其下人员销售业绩结束 -->
+    
+    <!-- 分配督导销售业绩开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status3.open">
+                <accordion-heading>
+                    3.分配督导销售业绩
+					<i class="pull-right fa fa-angle-right"ng-class="{'fa-angle-down': status3.open, 'fa-angle-right': !status3.open}"></i>
+                </accordion-heading>
+                
+				<form name="form" class="form-horizontal form-validation">
+					<div class="form-group">
+					   <div style="margin-left: 32px;width:800px">
+					   <div ng-table="tableParams">
+					       <table class="table table-bordered table-condensed   table-striped table-hover">
+						       <tr ng-repeat="supSalePerfInfo in supSalePerfInfo">
+						           <td title="'销售日期'" width="'80px'" >
+						              {{supSalePerfInfo.rptTm | date : "MM-dd"}}
+						           </td>
+						           <td title="'督导销售业绩'" width="'120px'" style="text-align: right;">
+						              {{supSalePerfInfo.saleAmt | currency : "￥"}}
+						           </td>
+						           <td title="'分配给其下人员'" width="'140px'" >
+						              <select name="account" class="form-control"
+											ng-model="supSalePerfInfo.assnStfNum" 
+											ng-options="zt.stfNum as zt.stfNm for zt in supOwnBASelect" ></select>
+						           </td>
+						           <td title="'分配销售业绩'" width="'150px'">
+						              <input type="text" name="stfNm" ng-model="supSalePerfInfo.assnAmt" style="text-align: right;width:140px" maxlength="13"
+											class="col-xs-10 form-control"/>&nbsp; <label class="control-label">元</label>
+						           </td>
+						           
+     						       <td title="'操作'" width="'140px'" >
+									   <a class="mr_9" ng-click="addSupSalePerfInfo('{{supSalePerfInfo.rowNum}}')" >新增分配</a>
+								       <a class="mr_9" ng-click="delSupSalePerfInfo('{{supSalePerfInfo.rowNum}}', '{{supSalePerfInfo.rptTm}}')" >删除分配</a>
+						           </td>
+						       </tr>
+					       </table>
+					   </div>
+					   </div>
+				    </div>
+				</form>
+            
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 分配督导销售业绩结束 -->
+<div class="panel-heading">
+    <h4 class="m-n font-thin h4">
+        <a class="btn btn-info btn-addon" style="float:left" ng-click="postSupSalePerfInfo()" user-power="WREP01008002">提交保存</a>
+    </h4>
+</div>
+</div>

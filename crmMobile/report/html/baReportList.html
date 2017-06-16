@@ -1,0 +1,48 @@
+<!-- 提交报表画面 -->
+<ion-header-bar align-title="center"  class="header">
+        <a ui-sref="home" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">提交报表</h1>
+	    <a href="" ng-click="gotoSubmit()" class="head_right" user-power="MREP01004002">
+	        <div class="head_right_box">
+	            <img src="common/images/tjbg.png" width="22" height="22">
+	            <p>提交报表</p>
+	        </div>
+	    </a>
+</ion-header-bar>
+<div class="bar bar-subheader" style="padding-top: 0px;" user-power="MREP01004001">
+    <div class="rzlc_bt" style="height: 44px;">
+        <div class="rzlc_bt_nei2">
+            <a href="" ng-repeat="state in stateList" ng-class="{'active':state.key == cond.state}" ng-click="tabClick('{{state.key}}')" style="line-height: 43px;">{{state.text}}</a>
+        </div>
+    </div>
+</div>
+<ion-content class="has-header has-subheader" delegate-handle="contentScroll" user-power="MREP01004001">
+<!-- baReportList.html -->
+    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+	<div class="wrap">
+	    <div class="xiaoxizhongxin_bj1" ng-if="baReportList.length > 0">
+	        <ion-list>
+	            <ion-item class="bottom_line" style="padding-top: 0px;padding-bottom: 0px;margin-left:0px;padding:0px;margin: 0px 0px;" ng-repeat="info in baReportList">
+	                <a ui-sref="baReportDetail({stfNum:info.stfNum, saleDate:info.billOfLandTm, strNum:info.strNum, pageFlg:'0'})">
+		                <div class="xiaoxi_img2_3" style="margin-left: 15px;">{{info.stfNm | stfNmLast2}}</div>
+		                <div class="xiaoxi_line_3" style="width: 79%;">
+		                    <div class="xiaoxizhongxin_text2_3">
+		                        <h2>{{info.strNm | characters : 8}} </h2>
+		                        <p>{{info.saleAmt | currency : "￥"}}</p> 
+		                        <p>{{info.billOfLandTm | dateEditFilter}}</p> 
+		                    </div>
+		                    <img src="common/images/you_btn.png" style="float: right; margin-top: 29px;margin-right: 15px;">
+		                    <span class="float_r" style="margin-right: 15px;line-height: 76px;">{{info.dicNm}}</span>
+		                </div>
+	                </a>
+	            </ion-item>
+	        </ion-list>
+	    </div>
+	    <div class="wushuju" my-nodata-show="baReportList.length == 0 && !moredata">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+	    </div>
+    </div>
+    <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>

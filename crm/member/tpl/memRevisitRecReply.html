@@ -1,0 +1,254 @@
+<!-- 标题 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4" style="color:#000;">回复
+        <a class="btn btn-info    btn-addon" ui-sref="app.member.memRevisitRec({isBack:true})"
+           style="float:right;margin:-8px 10px 0 0;">返回BA回访记录管理</a>
+    </h4>
+</div>
+
+<div class="wrapper-md" ng-controller="memRevisitRecReplyCtrl">
+
+    <!--1.回访人信息-->
+    <accordion close-others="oneAtATime">
+
+        <accordion-group is-open="status.oneopen">
+
+            <accordion-heading>
+                <div class="font-bold">1.回访人信息 <i class="pull-right fa fa-angle-right"
+                                                  ng-class="{'fa-angle-down': status.oneopen, 'fa-angle-right': !status.oneopen}"></i>
+                </div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">回访人:</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.stfNm}}</p>
+                    </div>
+                    <label class="col-lg-2 control-label">职位：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.posNm}}</p>
+                    </div>
+
+                    <label class="col-lg-2 control-label">联系电话：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.stfPhone}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">直属主管：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.supvrStfNm}}</p>
+                    </div>
+                </div>
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+    <!--2.受访会员信息-->
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.twoopen">
+
+            <accordion-heading>
+                <div class="font-bold">2.受访会员信息<i class="pull-right fa fa-angle-right"
+                                                  ng-class="{'fa-angle-down': status.twoopen, 'fa-angle-right': !status.twoopen}"></i>
+                </div>
+            </accordion-heading>
+            <form class="bs-example form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">会员编号:</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.membNum}}</p>
+                    </div>
+                    <label class="col-lg-2 control-label">姓名：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.membNm}}</p>
+                    </div>
+
+                    <label class="col-lg-2 control-label">联系电话：</label>
+
+                    <div class="col-lg-2">
+                        <p class="form-control-static">{{memRevRecInfo.phone}}</p>
+                    </div>
+
+                </div>
+
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+
+    <!--3.回访记录内容-->
+    <accordion close-others="oneAtATime">
+
+        <accordion-group is-open="status.threeopen">
+
+            <accordion-heading>
+                <div class="font-bold"> 3.回访记录内容<i class="pull-right fa fa-angle-right"
+                                                   ng-class="{'fa-angle-down': status.threeopen, 'fa-angle-right': !status.threeopen}"></i>
+                </div>
+            </accordion-heading>
+
+            <form class="bs-example form-horizontal" style="float:left;min-width:700px;padding-left: 15px;">
+
+                <!--<div class="form-group">
+                    <p><span>是否关联回访任务：</span><span>{{memRevRecInfo.isRelRevisitTsk | dicNameFilter:'C002'}}</span></p>
+                </div>
+                <div class="form-group">
+                    <p>回访时间：</p>
+                </div>
+                <div class="form-group">
+                    <p>{{memRevRecInfo.revisitTm | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                </div>
+                <div class="form-group">
+                    <p>{{memRevRecInfo.revisitCont}}</p>
+                </div>-->
+
+                <div class="form-group">
+                    <p><span>是否关联回访任务：</span><span ng-bind="memRevRecInfo.isRelRevisitTsk | dicNameFilter:'C002'"></span></p>
+                </div>
+                <div class="form-group">
+                    <p ><span>回访时间：</span><span ng-bind="memRevRecInfo.revisitTm | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+                </div>
+                <!--<div class="form-group">
+                    <p >{{memRevRecInfo.revisitTm | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                </div>-->
+                <div class="form-group">
+                    <p >回访内容：</p>
+                </div>
+                <div class="form-group">
+                    <p><span ng-bind="memRevRecInfo.revisitCont"></span></p>
+                </div>
+
+
+                <!--<div class="form-group">-->
+                <!--<div class="box clearfix" style=" width: 600px;line-height: 35px;margin-left: -15px;">
+                    <p style="border: 1px solid #ccc; width: 110px;background:#E4E4E4 url(img/down.gif) 80px no-repeat;cursor:pointer;margin-bottom:-1px; text-align: center;">回复</p>
+                    <div class="reply" style="background: #E4E4E4;border: 1px solid #ccc;">
+                    <ul >
+                        <li style="list-style: none;" >罗荣龙 回复 <span style="color: #A3B5CD;">小明：</span><span>用微信尝试联系下。</span><span style="color: #A3B5CD;">2015-10-7 18:01</span></li>
+                        <li style="list-style: none;" >
+                            <audio controls style="">
+                                <source src="" type="audio/ogg">
+                                <source src="" type="audio/mpeg">
+                            </audio>
+                        </li>
+                        <li style="list-style: none;" ><span style="color: #A3B5CD;">小明 </span>回复 罗荣龙：<span>还是不理我，怎么办？</span><span style="color: #A3B5CD;">2015-10-7 18:01</span></li>
+                    </ul>
+                    <hr/>
+                    <textarea class="form-control" rows="6" style="resize:none;width:540px;margin-left: 30px;margin-bottom: 15px;">
+
+                    </textarea>
+                        <div style="overflow: hidden;">
+                            <button type="submit" class="btn btn-primary" style="float: right;margin:0 30px 15px 0;width: 85px;">发表</button>
+                        </div>
+
+                    </div>
+                </div>-->
+
+                <div class="form-group">
+
+                    <div class="box clearfix" style=" width: 600px;line-height: 35px;margin-left:0;">
+                        <p style="position:relative;border: 1px solid #ccc; width: 110px;background:#E4E4E4;cursor:pointer;margin-bottom:-1px; text-align: center;"
+                           ng-click="openRep(memRevRecInfo.shrinkFlg,$index)" ng-if="memRevRecInfo.shrinkFlg==false"
+                           ng-model="memRevRecInfo.shrinkFlg">回复&nbsp;(<span ng-bind="memRevRecInfo.replyList.length"></span>)&nbsp;
+                           <i class="fa fa-sort-asc" aria-hidden="true" style="top: 13px;position: absolute;"></i>
+                        </p>
+
+                        <p style="position:relative;border: 1px solid #ccc; width: 110px;background:#E4E4E4;cursor:pointer;margin-bottom:-1px; text-align: center;"
+                           ng-click="openRep(memRevRecInfo.shrinkFlg,$index)" ng-if="memRevRecInfo.shrinkFlg==true"
+                           ng-model="memRevRecInfo.shrinkFlg">收起回复&nbsp;
+                            <i class="fa fa-sort-desc" aria-hidden="true" style="bottom: 13px;position: absolute;"></i>
+                        </p>
+                        <div style="background: #E4E4E4;border: 1px solid #ccc;" ng-show="memRevRecInfo.shrinkFlg==true">
+                            <ul style="margin-bottom: 0px;" ng-if="memRevRecInfo.shrinkFlg==true"
+                                ng-model="memRevRecInfo.shrinkFlg" ng-repeat="reply in memRevRecInfo.replyList">
+                                <!--<li style="list-style: none;"><span ng-bind="reply.replyUsrNm"></span> 回复 <span
+                                        style="color: #A3B5CD;"><span ng-bind="reply.beRepliedUsrNm"></span>：</span><span
+                                        ng-bind="reply.fbkCont"></span>&nbsp;&nbsp;<span style="color: #A3B5CD;"
+                                        ng-bind="reply.fbkTm | date:'yyyy-MM-dd HH:mm:ss'"></span>&nbsp;&nbsp;&nbsp;<a style="text-decoration:underline;color: #05b5ff;" ng-click="replayMsg(reply.beRepliedUsrNm,memRevRecInfo.oId,reply.oId)">回复</a>&lt;!&ndash;ng-click="replayMsg(reply.beRepliedUsrNm,reply.oId,reply.replyContId)&ndash;&gt;
+                                </li>-->
+                                <li style="list-style: none;"><span ng-bind="reply.replyUsrNm"></span> 回复 <span
+                                        style="color: #A3B5CD;"><span ng-bind="reply.beRepliedUsrNm"></span>：</span><span
+                                        ng-bind="reply.fbkCont"></span>&nbsp;&nbsp;<span style="color: #A3B5CD;"
+                                                                                         ng-bind="reply.fbkTm | date:'yyyy-MM-dd HH:mm:ss'"></span>&nbsp;&nbsp;&nbsp;<a style="text-decoration:underline;color: #05b5ff;" ng-click="replayMsg(reply.replyUsrNm,memRevRecInfo.oId,reply.oId)">回复</a><!--ng-click="replayMsg(reply.beRepliedUsrNm,reply.oId,reply.replyContId)-->
+                                </li>
+                                <li style="list-style: none;" ng-if="reply.fbkVoice && reply.fbkVoice != null && reply.fbkVoice != ''">
+                                    <audio controls style="">
+                                        <source ng-src="{{sce(reply.fbkVoice)}}" type="audio/ogg">
+                                        <source ng-src="{{sce(reply.fbkVoice)}}" type="audio/mpeg">
+                                    </audio>
+                                    <!-- <audio controls style="">
+                                         <source src="" type="audio/ogg">
+                                         <source src="" type="audio/mpeg">
+                                     </audio>-->
+                                </li>
+                                <!--<li style="list-style: none;"><span style="color: #A3B5CD;"><span
+                                        ng-bind="reply.beRepliedUsrNm"></span> </span>回复 <span
+                                        ng-bind="reply.replyUsrNm"></span>：<span ng-bind="reply.fbkCont"></span><span
+                                        style="color: #A3B5CD;" ng-bind="reply.fbkTm | date:'yyyy-MM-dd HH:mm:ss'">   </span>&nbsp;&nbsp;&nbsp;<a style="text-decoration:underline;color: #05b5ff;" ng-click="replayMsg(reply.beRepliedUsrNm,reply.oId,reply.replyContId)">回复</a></li>
+    -->
+                            </ul>
+
+                             <textarea class="form-control" rows="6"
+                                       style="resize:none;width:540px;margin-left: 30px;margin-bottom: 15px;margin-top: 15px;"
+                                       ng-if="memRevRecInfo.shrinkFlg==true" ng-model="pubRep.fbkCont"
+                                       placeholder="{{placeholderVal}}">
+
+                                                    </textarea>
+                            <div style="overflow: hidden;" ng-if="memRevRecInfo.shrinkFlg==true"
+                                 ng-model="memRevRecInfo.shrinkFlg">
+                                <button type="submit" class="btn btn-primary"
+                                        style="float: right;margin:0 30px 15px 0;width: 85px;" ng-click="publishRep()" user-power="WMEM01007002">发表
+                                </button>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+                <script type="text/javascript">
+                    /*;(function(){
+                     $(function(){
+                     $('.box .reply').hide();
+
+                     $('.box p').click(function(event) {
+                     $('.box .reply').slideToggle(300);
+
+                     if($(this).html()=='回复'){
+                     $(this).css('background','#E4E4E4 url(../common/img/up.gif)  90px no-repeat')
+                     $(this).html('收起回复')
+
+                     }else{
+                     $(this).css('background','#E4E4E4 url(../common/img/down.gif) 80px  no-repeat')
+                     $(this).html('回复')
+
+                     }
+                     });
+                     });
+                     })();*/
+                </script>
+
+            </form>
+        </accordion-group>
+    </accordion>
+
+    <!--<div style="margin-top: 30px;"class="form-group">-->
+    <!--<button class="btn btn-info    btn-addon col-lg-1 "  ui-sref="app.member.memRevisitRec">返回</button>-->
+    <!--</div>-->
+
+</div>

@@ -1,0 +1,21 @@
+<ion-header-bar align-title="center"  class="header">
+    <div  ui-sref="membInfoUpdate({membNum:curMembNum})"   class="p-Left">
+        <a class="header_left"  ><img src="common/images/fanhui_icon.png" width="14" height="20" class="back_left"></a>
+    </div>
+    <h1 style="font-size:1.4rem">肌肤类型</h1>
+</ion-header-bar>
+<ion-content  class="has-header memb_radio radio_line" overflow-scroll="false">
+    <ul>
+        <!--<li><ion-radio  ng-model="choice1" value="A" style="height: 55px;font-size:14px;" >干性</ion-radio></li>
+        <li><ion-radio  ng-model="choice2" value="A" style="height: 55px;font-size:14px;">中性</ion-radio></li>
+        <li><ion-radio  ng-model="choice3" value="A" style="height: 55px;font-size:14px;">油性</ion-radio></li>
+        <li><ion-radio  ng-model="choice4" value="A" style="height: 55px;font-size:14px;">混合性偏油</ion-radio></li>
+        <li><ion-radio  ng-model="choice5" value="A" style="height: 55px;font-size:14px;">混合性偏干</ion-radio></li>
+        <li><ion-radio  ng-model="choice6" value="A" style="height: 55px;font-size:14px;">敏感性肌肤</ion-radio></li>-->
+        <li><ion-radio ng-repeat="skin in skinTypes" style="height: 55px;"
+                       ng-value="skin.key"
+                       ng-model="membEditSkinType" ng-click="skinTypeSelect(skin.key)">
+            <span ng-bind="skin.text"></span>
+        </ion-radio></li>
+    </ul>
+</ion-content>

@@ -1,0 +1,62 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h4 class="m-n font-thin h4"> 回访事项设置 </h4>
+</div>
+
+
+
+<div class="wrapper-md" ng-controller="memRtnItemCtrl">
+
+              <form name="form" class="form-horizontal">
+
+
+                <!-- 第三行 -->
+                 <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color:red;">*</span>应用于：</label>
+                    <button class="btn btn-info btn-addon col-sm-1" style="margin-left: 15px;" ng-click="add1()">添加</button>
+                  </div>
+
+                  <!-- 第四行 -->
+                <div class="form-group">
+    
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-8">
+                      <table class="table table-bordered text-center table-condensed table-striped" style="margin-bottom: 0px;">
+                          <tr >
+                              <td style="text-align:center;min-width:60px; ">
+                                  回访事项
+                              </td>
+                              <td style="text-align:center;min-width:60px; ">
+                                  操作
+                              </td>
+                          </tr>
+
+                          <tr ng-repeat="mril in memRtnItemlist track by $index">
+                              <td>
+                                 <!-- <select  for="Select" >
+                                      <option select="select">信息提醒-提醒顾客使用方法</option>
+                                  </select>-->
+                                  <!--<select for="Select" select="select"
+                                          ng-model="mril"
+                                          ng-options="mrrr.text as mrrr.text for mrrr in allMembRtnRuleRtn">
+                                  </select>-->
+                                  <!--<input type="text" value="信息提醒-提醒顾客使用方法" style="width: 80%;"/>-->
+                                  <input type="text" ng-model="mril.mil" style="width: 80%;" maxlength="30"/>
+                              </td>
+                              <td>
+                                  <a style="text-decoration:underline;color: #05b5ff;"ng-show="$index!=-1" ng-click="del1($index)">删除</a>
+                              </td>
+                          </tr>
+                      </table>
+                  </div>
+
+                </div>
+
+
+                  <div style="margin-top:30px">
+                      <label class="col-sm-2 control-label"></label>
+                      <button class="btn btn-success" style="margin:0 35px 0 5px;" ng-click="memRtnItemSub()" user-power="WMEM01008002"> 提交保存</button>
+                      <a class="btn btn-info    btn-addon"  ui-sref="app.member.memRtnRule({isBack:true})" style="margin-left:15px;width: 85px;">返回</a>
+                  </div>
+                  </form>
+
+    </div>

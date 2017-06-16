@@ -1,0 +1,94 @@
+﻿
+<div class="panel panel-default">
+	<div class="panel-heading font-bold">选择门店  <button class="btn  btn-rounded  btn-default btn-sm"  ng-click="cancel()"  style="float:right;"><i class="glyphicon glyphicon-remove"></i></button></div>
+		<div class="panel-body">
+			<form class="bs-example form-horizontal">
+				<div class="form-group">
+				 <input type="text" class="form-control" ng-model="asda" placeholder="详细地址">
+	               <label class="col-lg-2 control-label">所属城市：</label>
+                   <div class="col-lg-2">
+                     <select name="account" class="form-control m-b">
+                        <option>广东省</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-2">
+                      <select name="account" class="form-control m-b">
+                         <option>广东市</option>
+                      </select>
+                    </div>
+				<div class="col-lg-offset-2 col-lg-2" >
+				 <button class="btn btn-info btn-addon" style="float:right;margin-right:10px;"><i class="fa  icon-magnifier"></i>查询</button>
+				</div>
+				</div>
+				<div class="form-group">
+	               <label class="col-lg-2 control-label">城市分区：</label>
+                   <div class="col-lg-2">
+                     <select name="account" class="form-control m-b">
+                        <option>销售渠道</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-2">
+                      <select name="account" class="form-control m-b">
+                         <option>全部</option>
+                      </select>
+                    </div>
+			        <div class="col-lg-2">
+                      <select name="account" class="form-control m-b">
+                         <option>全部</option>
+                      </select>
+                    </div>
+					 <div class="col-lg-2">
+                      <select name="account" class="form-control m-b">
+                         <option>全部</option>
+                      </select>
+                    </div>
+				</div>
+				<div class="form-group">
+				
+				<div class="table-responsive" style="padding-left:10px;padding-right:10px;">
+     
+<table  cellspacing="0" class="table table-bordered table-condensed   table-striped" ng-controller="ModalssmdCtrl" ng-table="tableParamsssdm" style="width:100%;margin-bottom:20px;"  >
+	  	 
+<tr ng-repeat="usersss in $data"    >
+	<td title="'No.'"  sortable="'id'" style="text-align:center;min-width:20px;">
+	<label class="i-checks m-b-none">
+                <input type="checkbox"><i></i>
+              </label>
+	</td>
+	<td title="'人员编号'" filter="{a: 'text'}"  sortable="'a'" style="font-weight: bold;min-width:120px;">
+	{{usersss.a}}
+	</td>
+	<td title="'姓名'" filter="{b: 'text'}"   sortable="'b'" style="text-align:center;min-width:120px;">
+	{{usersss.b}}
+	</td>
+	<td title="'所属部门'" filter="{c: 'text'}"   sortable="'c'" style="text-align:center;min-width:120px;">
+	{{usersss.c}}
+	</td> 
+	<td title="'职位名称'"  filter="{d: 'text'}"  sortable="'d'" style="text-align:center;min-width:120px;">
+	{{usersss.d}}
+	</td> 
+	<td title="'职位等级'" filter="{e: 'text'}"   sortable="'e'" style="text-align:center;min-width:120px;">
+	{{usersss.e}}
+	</td> 
+	<td title="'联系电话'"  filter="{f: 'text'}"  sortable="'f'" style="text-align:center;min-width:150px;">
+	{{usersss.f}}
+	</td> 
+	<td title="'入职日期'" filter="{g: 'text'}"   sortable="'g'" style="text-align:center;min-width:120px;">
+	{{usersss.g}}
+	</td> 
+	<td title="'在岗状态'" filter="{h: 'text'}"   sortable="'h'" style="text-align:center;min-width:120px;">
+	{{usersss.h}}
+	</td> 
+	<td title="'操作'"   style="text-align:center;min-width:250px;">
+	<a class="btn btn-rounded btn-sm btn-info"  ui-sref="app.staff.bjryxx"><i class="fa fa-fw icon-eye"></i> 查看</a>
+<a class="btn btn-rounded btn-sm btn-primary"  ui-sref="app.staff.bjryxx"><i class="fa fa-fw  icon-tag" ></i> 编辑</a>
+	</td> 
+					 
+          </tr>
+      
+      </table>
+    </div>
+				</div>
+			</form>
+	</div>
+</div>

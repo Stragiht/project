@@ -1,0 +1,137 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">意见反馈</h4>
+</div>
+<div class="panel-heading" ng-controller="feedBackInsert">
+    <form name="form" class="bs-example form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"><span style="color:red;">*</span>标题：</label>
+            <div class="col-lg-4">
+                <input type="text" class="form-control m-b" id="title" name = "title" ng-model="title" ng-maxlength="50" required/>
+                <div ng-messages="form.title.$error" ng-if="(form.title.$dirty && form.title.$invalid)">
+                       <span ng-message="required" class="error">标题不能为空！</span>
+                       <span ng-message="maxlength" class="error">标题最多不超过50位！</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"><span style="color:red;">*</span>影响栏目：</label>
+            <div class="col-lg-2">
+                <select id="account" name="account" ng-model="scopeModuleSelect" ng-options="nav.TEXT as nav.TEXT for nav in scopeModules" class="form-control m-b" ng-change="scopeModule()" required/> 
+            </div>
+            <div class="col-lg-2">
+                <select name="account" style="height:34px; width:136px;" ng-model="scopeGroupSelect" ng-options="nav.TEXT as nav.TEXT for nav in scopeGroups" class="form-control m-b" ng-change="scopeGroup()"/>
+            </div>
+            <div class="col-lg-2">
+                <select name="account" style="height:34px; width:162px;" ng-model="scopeFunctionSelect" ng-options="nav.TEXT as nav.TEXT for nav in scopeFunctions" class="form-control m-b"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"><span style="color:red;">*</span>问题严重程度：</label>
+            <div class="col-lg-2">
+                 <select name="account" ng-model="stf.dicNm" class="form-control m-b" ng-options="zt.key as zt.text for zt in problems"></select>
+
+             </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"><span style="color:red;">*</span>问题分类：</label>
+            <div class="col-lg-2">
+                 <select name="account" ng-model="stf.dicNms"  class="form-control m-b" ng-options="zt.key as zt.text for zt in problemsorts"></select>
+
+             </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">问题描述：</label>
+            <div class="col-lg-9">
+                <div class="panel panel-default">
+                <!--<div class="panel-body">-->
+
+                    <div class="wrapper-md">
+                        <textarea id = "feedBackResumeInfo"></textarea>
+                    </div>
+                    <!--<form class="bs-example form-horizontal">
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <div class="btn-toolbar m-b-sm btn-editor" data-role="editor-toolbar" data-target="#editor">
+                                    <div class="btn-group dropdown" dropdown>
+                                        <a class="btn btn-default" dropdown-toggle tooltip="字体">
+                                            <i class="fa fa-font"></i><b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href data-edit="fontName Serif"
+                                                style="font-family: 'Serif'">Serif</a></li>
+                                            <li><a href data-edit="fontName Sans"
+                                                style="font-family: 'Sans'">Sans</a></li>
+                                            <li><a href data-edit="fontName Arial"
+                                                style="font-family: 'Arial'">Arial</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group dropdown" dropdown>
+                                        <a class="btn btn-default" dropdown-toggle data-toggle="dropdown" tooltip="字体大小">
+                                            <i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                           <li><a href data-edit="fontSize 5" style="font-size: 24px">大</a></li>
+                                           <li><a href data-edit="fontSize 3" style="font-size: 18px">正常</a></li>
+                                           <li><a href data-edit="fontSize 1" style="font-size: 14px">小</a></li>
+                                       </ul>
+                                   </div>
+                                   <div class="btn-group">
+                                       <a class="btn btn-default" data-edit="bold"
+                                           tooltip="粗体 (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a> <a
+                                           class="btn btn-default" data-edit="italic"
+                                           tooltip="斜体 (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a> <a
+                                           class="btn btn-default" data-edit="strikethrough" tooltip="删除线"><i
+                                           class="fa fa-strikethrough"></i></a> <a class="btn btn-default"
+                                           data-edit="underline" tooltip="下划线 (Ctrl/Cmd+U)"><i
+                                           class="fa fa-underline"></i></a>
+                                   </div>
+                                   <div class="btn-group">
+                                       <a class="btn btn-default" data-edit="insertunorderedlist"
+                                           tooltip="无需列表"><i class="fa fa-list-ul"></i></a> <a
+                                           class="btn btn-default" data-edit="insertorderedlist"
+                                           tooltip="有序列表"><i class="fa fa-list-ol"></i></a> <a
+                                           class="btn btn-default" data-edit="outdent"
+                                           tooltip="减少缩进 (Shift+Tab)"><i class="fa fa-dedent"></i></a> <a
+                                           class="btn btn-default" data-edit="indent" tooltip="缩进 (Tab)"><i
+                                           class="fa fa-indent"></i></a>
+                                   </div>
+                                   <div class="btn-group">
+                                       <a class="btn btn-default" data-edit="justifyleft"
+                                           tooltip="左对齐 (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                                       <a class="btn btn-default" data-edit="justifycenter"
+                                           tooltip="居中 (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                                       <a class="btn btn-default" data-edit="justifyright"
+                                           tooltip="右对齐 (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+                                       <a class="btn btn-default" data-edit="justifyfull"
+                                           tooltip="两端对其 (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                                   </div>
+                                   <div class="btn-group">
+                                       <a class="btn btn-default" tooltip="插入图片" id="pictureBtn"><i
+                                           class="fa fa-picture-o"></i></a> <input type="file"
+                                           data-edit="insertImage"
+                                           style="position: absolute; opacity: 0; width: 41px; height: 34px" />
+                                   </div>
+                                   <div class="btn-group">
+                                       <a class="btn btn-default" data-edit="undo"
+                                           tooltip="复原 (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a> <a
+                                           class="btn btn-default" data-edit="redo"
+                                           tooltip="取消复原 (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+                                   </div>
+                                </div>
+                                <div ui-jq="wysiwyg" id="resumeInfo" class="form-control" style="overflow: scroll; height: 200px; max-height: 200px"></div>
+                            </div>
+                        </div>
+                    </form>-->
+                <!--</div>-->
+            </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label"></label>
+            <div class="col-lg-2">
+                <a class="btn btn-info btn-addon" ng-click="saveFbk()" ng-disabled="form.$invalid">提交保存</a>
+            </div>
+        </div>
+    </form>
+</div>

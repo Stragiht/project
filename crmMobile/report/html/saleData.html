@@ -1,0 +1,42 @@
+<ion-header-bar align-title="center"  class="header">
+        <a href=""  ui-sref="home" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">销售数据</h1>
+</ion-header-bar>
+<ion-content class="has-header">
+<!-- saleData.html -->
+<div class="wrap">
+		<div class="xiaoxizhongxin_bj1">
+	    	<ion-list>
+	        	<ion-item class="bottom_line" user-power="MREP01002001">
+	           	  <a ui-sref="saleAmountSum">
+	               	<div class="xiaoxi_img2"><img src="common/images/ryxsyjhz.png" width="100%"></div>
+	                <div class="xiaoxi_line">
+							<div class="xiaoxizhongxin_text2">
+	                		<h2>人员销售业绩汇总</h2>
+	                        <p>销售业绩汇总排名</p> 
+	                	</div>
+	               		<span class="float_r line_height50" style="margin-right: 16px">
+								<img src="common/images/you_btn.png" style="position: absolute;top: 22px;right: 15px;">
+							</span>
+	               </div>
+	                </a>
+	            </ion-item>
+	           	<ion-item user-power="MREP01003001" class="bottom_line" style="background: #fff;">
+           	  		<a ui-sref="dailyReportList({prePageFlg:'1'})">
+		               	<div class="xiaoxi_img2"><img src="common/images/rcxsbbmx.png" width="100%"></div>
+		                <div class="xiaoxi_line">
+							<div class="xiaoxizhongxin_text2">
+		                		<h2>日常销售报表明细</h2>
+	                        	<p>查看提交的销售报表数据</p> 
+		                	</div>
+		                	 <span class="float_r line_height50" style="margin-right: 16px">
+								<img src="common/images/you_btn.png" style="position: absolute;top: 22px;right: 15px;">
+							</span>
+		               	</div>
+                	</a>
+	            </ion-item>
+	        </ion-list>    
+	    </div>
+   	</div>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>

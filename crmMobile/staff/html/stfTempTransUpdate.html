@@ -1,0 +1,119 @@
+<style>
+	.fadeInfo.ng-enter{opacity:0;}
+	.fadeInfo{transition:0.7s linear all;}
+	.fadeInfo.ng-enter.ng-enter-active{opacity:1;}
+	.fadeInfo.ng-leave{opacity:1;}
+	.fadeInfo.ng-leave.ng-leave-active{opacity:0;}
+	.item-checkbox .checkbox .checkbox-icon{ float:right;}
+</style>
+<div ng-if="stfFormShow">
+	<ion-header-bar align-title="center" class="header"> 
+		<a class="angle_left" ng-click="fanhui()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1>编辑借调</h1>
+		<a href="" class="head_right" ng-click="saveStfTem()" user-power="MSTF01004003">
+	           <div class="btn_line"> 保存</div>
+	    </a>
+	</ion-header-bar>
+	<ion-content class="has-header ">
+	<!-- stfTempTransUpdate.html -->
+		<div class="wrap">
+		 <ul class="listvrew clearfix mb_15">
+	    	<li ng-click="supvrStfSelect()">
+	    		<span class="w140">借调BA</span>
+				<span class="float_r">
+					<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 16px;">
+		    		<span class="float_r f_10" style="margin-right: 15px">{{stfTempInfo.supvrStfDis|characters:10}}</span>
+				</span>
+			</li>
+	        <li ng-click="openStartTime()">
+		        <span class="w140">开始时间</span>
+		        <span class="float_r">
+		        <img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 16px;visibility:hidden">
+		        	<span class="float_r f_10" style="margin-right: 15px" >{{stfTempInfo.startTime}}</span>
+		        </span>
+	        </li>
+	        <li ng-click="openEndTime()">
+	        	<span class="w140">结束时间</span>
+	        	<span class="float_r">
+	        	<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 16px;visibility:hidden">
+	        		<span class="float_r f_10" style="margin-right: 15px" >{{stfTempInfo.endTime}}</span>
+        		</span>
+	        </li>
+	        <li ng-click="subStoreSelect()">
+	        	<span class="w140">借调到门店</span>
+				<input type="hidden" ng-model="stfTempInfo.subStore" />
+				<span class="float_r">
+					<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 16px;">
+	        		<span class="float_r f_10" style="margin-right: 15px">{{stfTempInfo.subStoreDis|characters:13}}</span>
+				</span>
+			</li>
+	        <li ng-click="reasonSelect()">
+	        	<span class="w140">事由</span>
+		        <span class="float_r">
+		        	<img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 16px;">
+		        	<span class="float_r f_10" style="margin-right: 15px">{{stfTempInfo.reason}}</span>
+	        	</span>
+	        </li>
+	     </ul>
+		</div>
+	</ion-content>
+</div>
+<!-- 借调到门店 -->
+<div ng-if="subStoreSelectShow">
+	<ion-header-bar align-title="center" class="header"> 
+    <a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size: 1.4rem">借调到门店</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- stfTempTransUpdate.html -->
+	<div class="wrap">
+		<div class="xzk_a" style="margin-top: 10px;margin-bottom: 10px;">
+			<a ng-repeat="chnl in chnlList" ng-click="clickChnl(chnl.chnlNum)"
+					ng-class="{'xuanzong_a':chnl.chnlNum==selectedChnl,'weixuanzong_a':chnl.chnlNum!=selectedChnl}" style="width:{{chnlWidth}}">{{chnl.chnlNm}}</a>
+		</div>
+		<ion-list ng-repeat="chnl in chnlList" ng-show="chnl.chnlNum==selectedChnl">
+			<input type="hidden" ng-model="subStore.strNum" />
+			<ion-radio ng-repeat="subStore1 in chnl.subStoreList" ng-value="subStore1.subStrNum" ng-model="subStore.checked" ng-click="clickSubStore(subStore1)">{{subStore1.strNm}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+<!-- 借调事由 -->
+<div ng-if="reasonSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">借调事由</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- stfTempTransUpdate.html -->
+	<div class="wrap">
+		<ion-list>
+		<input type="hidden" ng-model="stfTempInfo.reasonNum" />
+			<ion-radio name="reason" ng-repeat="dic in dicList" ng-checked="dic.checked" ng-model="dic.checked" ng-click="clickReason(dic)">{{dic.text}}</ion-radio>
+		</ion-list>
+	</div>
+	</ion-content>
+</div>
+<!-- 借调人员 -->
+<div ng-show="supvrStfSelectShow">
+	<ion-header-bar align-title="center" class="header">
+		<a class="angle_left" ng-click="goBack()" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+		<h1 style="font-size:1.4rem">借调BA</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+	<!-- stfTempTransUpdate.html -->
+	<div class="tishi fadeInfo" ng-if="infoShow">
+		<div class="tishi_box"><img src="common/images/tishi.png" width="20">可选择多个人员</div>
+	</div>
+	<div class="wrap">
+		<ion-list>
+			<input type="hidden" ng-model="stfTempInfo.supvrStfNum" />
+			<ion-checkbox style="padding-left: 15px;" ng-model="undStf.isCheck" ng-repeat="undStf in undStfList" ng-value="undStf.key" ng-click="clickSupvrStf()">{{undStf.text}}</ion-checkbox>
+		</ion-list>
+		<div class="wushuju" my-nodata-show="undStfList.length == 0">
+            <img src="common/images/bear.gif" >
+            <p>没有符合条件的数据</p>
+        </div>
+	</div>
+	</ion-content>
+</div>

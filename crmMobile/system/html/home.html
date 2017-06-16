@@ -1,0 +1,147 @@
+<style>
+.home-content-back {
+  background-image:-webkit-linear-gradient(#5338fe, #5338fe);
+  background-image: linear-gradient(#5338fe, #5338fe);
+  background-repeat: no-repeat;
+}
+</style>
+<ion-header-bar align-title="center"  class="header" style="z-index:100;background-color:rgba(83,56,254,1.0);" id="headerImgBar">
+        <a href="#" class="zuoche"  ui-sref="personalCenter">
+        <div style="width:30px; height:30px; margin-top: 8px;     border-radius: 50%;   overflow: hidden;  ">
+        <img ng-src="{{homeInfo.figure |  defaultFigure}}"  err-src="common/images/touxiang.png" class="zuoche_img">
+        </div>
+        </a>
+        <h1 style="font-size:1.4rem">比度克CRM系统</h1>
+</ion-header-bar>
+<div style="position: fixed; top: 0px; left: 0px; z-index: 97;background: #5338fe;width:100%;height:48px"></div>
+<img src="common/images/beijing.png" id="headerImg" width="100%" style="position: fixed;top: 47px;left: 0;z-index: 98;display:block;background:transparent;">
+<ion-content class="home-content-back" style="z-index:101;background-size:100% 10px;" delegate-handle="mainScroll" on-scroll="onScroll()" id="homeContent">
+<!-- home.html -->
+    <div class="wrap" >
+        <img src="common/images/beijing.png" width="100%" style="display:block;background:#5338fe;">
+        <div class="leftLoop" style="margin-top:-1px">
+            <div class="bd" style="padding:10px 0px;">
+                <ul class="infoList">
+                    <!--does-continue 是否可以循环滑动-->
+                    <!-- pager-click="aaa($index)" show-pager="true"点击事件-->
+                    <ion-slide-box active-slide="shouyehuadong" does-continue="false" show-pager="false"   on-slide-changed="shouyeslide($index)">
+                        <ion-slide>
+                            <li>
+                                <div class="index_phb">
+                                    <h2>本周销售业绩排行</h2>
+                                    <img src="common/images/quan.png"  class="xuanzhuan xuanzhuan-anima"  id="img0">
+                                    <div class="index_phb_box">
+                                        <img src="common/images/paiming.png" width="100%">
+                                        <div class="index_phb_text">
+                                            <h2 ng-if="homeInfo.isSales > 0">{{homeInfo.salesOrder}}</h2>
+                                            <h2 ng-if="homeInfo.isSales == 0">1</h2>
+                                        </div>
+                                    </div>
+                                    <p  style="margin-top:10px; font-size:16px; margin-bottom:0px;">{{homeInfo.salesAmt | currency:"￥ "}}</p>
+                                </div>
+                            </li>
+                        </ion-slide>
+                        <ion-slide>
+                            <li>
+                                <div class="index_phb">
+                                    <h2>本周新增会员排行</h2>
+                                    <img src="common/images/quan.png"  class="xuanzhuan"  id="img1">
+                                    <div class="index_phb_box">
+                                        <img src="common/images/paiming.png" width="100%">
+                                        <div class="index_phb_text">
+                                            <h2 ng-if="homeInfo.isSales > 0">{{homeInfo.newMemberOrder}}</h2>
+                                            <h2 ng-if="homeInfo.isSales == 0">1</h2>
+                                        </div>
+                                    </div>
+                                    <p style="margin-top:10px; font-size:16px; margin-bottom:0px;">共新增{{homeInfo.newMemberAmt}}个</p>
+                                </div>
+                            </li>
+                        </ion-slide>
+                    </ion-slide-box>
+                </ul>
+            </div>
+            <div class="hd">
+                <ul class="num"><li ng-class="{'on':shouyeslidedian}" >1</li><li ng-class="{'on':!shouyeslidedian}" >2</li></ul>
+            </div>
+        </div>
+        <!--<script type="text/javascript">jQuery(".leftLoop").slide({ mainCell:".bd ul",effect:"leftLoop",autoPlay:true,vis:2,scroll:1,trigger:"click"});</script>-->
+        <div class="index_work" ng-if="homeInfo.isHasFrequentlyUsedOperations == 1 && homeInfo.operationCnt > 0">
+            <div class="index_work_bt" style="background: #fff;">常用操作</div>
+            <ul class="index_work_ul">
+                <li class="border_r " ng-repeat="operation in frequentlyUsedOperations" operation-verify user-power-type="{{operation.userPower.type}}" function-num="{{operation.userPower.functionNum}}">
+                    <div class="index_work_wwc" ng-if="operation.key == 'FUO001' && homeInfo.isStore > 0  &&  homeInfo.isBA == 1"><img ng-src="{{operation.extend.wwc}}" /></div>
+                    <a href="" ui-sref="{{operation.clickEv.url}}" ng-if="operation.clickEv.type == 2">
+                        <div class="tn_img"><img ng-src="{{operation.img}}" /></div>
+                        <p ng-bind="operation.name"></p>
+                    </a>
+                    <a ng-if="operation.clickEv.type == 1" ng-click="{{operation.clickEv.func}}">
+                        <div class="tn_img"><img ng-src="{{operation.img}}" /></div>
+                        <p ng-bind="operation.name"></p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="index_work" id="work-area">
+            <div class="index_work_bt">工作</div>
+            <ul class="index_work_ul">
+                <li class="border_r" menu-verify="MMENU001">
+                    <a href="" ng-click="jumbIntoDetailWorkPage('MMENU001')">
+                        <div class="tn_img"><img src="common/images/gz1.png" ></div>
+                        <p>人员管理</p>
+                    </a>
+                </li>
+                <li class="border_r" menu-verify="MMENU002">
+                    <a ng-click="jumbIntoDetailWorkPage('MMENU002')">
+                        <div class="tn_img"><img src="common/images/gz2.png"></div>
+                        <p>会员管理</p>
+                    </a>
+                </li>
+                <li menu-verify="MMENU003">
+                    <a href=""  ng-click="jumbIntoDetailWorkPage('MMENU003')">
+                        <div class="tn_img"><img src="common/images/gz3.png" ></div>
+                        <p>报表统计</p>
+                    </a>
+                </li>
+               <!-- <li class="border_r">
+                    <a href="">
+                        <div class="tn_img"><img src="common/images/gz4.png"></div>
+                        <p>风险管理</p>
+                    </a>
+                </li>
+                <li class="border_r">
+                    <a href="">
+                        <div class="tn_img"><img src="common/images/gz5.png"></div>
+                        <p>费销管理</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="tn_img"><img src="common/images/gz6.png"></div>
+                        <p>销售支持</p>
+                    </a>
+                </li>
+                <li class="border_r">
+                    <a href="">
+                        <div class="tn_img"><img src="common/images/gz7.png"></div>
+                        <p>培训管理</p>
+                    </a>
+                </li>
+                <li class="border_r">
+                    <a href="">
+                        <div class="tn_img"><img src="common/images/gz8.png"></div>
+                        <p>职业进阶</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="tn_img"><img src="common/images/gz9.png"></div>
+                        <p>社区</p>
+                    </a>
+                </li>  -->
+            </ul>
+        </div>
+    </div>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>
+

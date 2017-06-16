@@ -1,0 +1,74 @@
+<style>
+.list ion-item.bottom_line {
+  margin-top: 1px;
+  margin-bottom: 0px;
+}
+.list ion-item.bottom_line:last-child {
+  background-image: none;
+}
+.list {background-color: #fff;}
+</style>
+<ion-header-bar align-title="center"  class="header">
+        <a href=""  ui-sref="stfList" class="angle_left" style="z-index:1000;left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">人员详情</h1>
+</ion-header-bar>
+<ion-content  class="has-header "  >
+<!-- stfInfo.html -->
+	   <ion-list>
+        	<ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">人员编号</span>
+               	<span class="float_r">{{stfInfo.stfNum}}</span>
+           </ion-item>
+           <ion-item class="bottom_line"  style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">姓名</span>
+               	<span class="float_r">{{stfInfo.stfNm}}</span>
+           </ion-item >
+           <ion-item class="bottom_line"  style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">部门</span>
+               	<span class="float_r">{{stfInfo.depNm}}</span>
+           </ion-item>
+           <ion-item class="bottom_line"  style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">职位等级</span>
+               	<span class="float_r">{{stfInfo.posNm}}> {{stfInfo.posGrdNm}}</span>
+           </ion-item>
+           <ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">联系电话</span>
+               	<span class="float_r">{{stfInfo.phone}}</span>
+           </ion-item>
+           <ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">入职时间</span>
+               	<span class="float_r">{{stfInfo.stfEntDt}}</span>
+           </ion-item>
+           <ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">离职时间</span>
+               	<span class="float_r">{{stfInfo.dimiDt}}</span>
+           </ion-item>
+           <ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">在职状态</span>
+               	<span  style="color: #ff0000;" class="float_r">{{stfInfo.showWorkStat}}</span>
+           </ion-item>
+           <ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">所在城市</span>
+               	<span class="float_r">{{stfInfo.rgnNm}}</span>
+           </ion-item>
+           <ion-item class="bottom_line" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140">提交会员</span>
+               	<span class="float_r">{{stfInfo.mebAmt}}个</span>
+           </ion-item>
+           <div class="item item-divider index_work_bt">
+               岗位职责
+           </div>
+           <ion-item class="bottom_line"  ng-repeat = "  superitem  in superItems" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140"  ng-if="$index == 0">直属主管</span>
+               	<span class="w140"  ng-if="$index > 0">{{superitem.posNm}}</span>
+               	<span class="float_r">{{superitem.stfNm}}</span>
+           </ion-item>
+           <div class="item item-divider index_work_bt">
+               所属门店
+           </div>
+           <ion-item class="bottom_line"  ng-repeat = "  strItem  in strItems" style="margin-left: 15px;padding-left: 0px;    border-left: none;">
+               	<span class="w140"  >门店{{$index+1}}</span>
+               	<span class="float_r">{{strItem.strNm}}</span>
+           </ion-item>
+       </ion-list> 
+</ion-content>

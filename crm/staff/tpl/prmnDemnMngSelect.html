@@ -1,0 +1,123 @@
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="demo.checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+<div ng-controller="prmnDemnMngSelect as demo">
+	<!-- 标题信息开始 -->
+	<div class="bg-light lter b-b wrapper-md">
+	    <h4 class="m-n font-thin h4">
+        	人员升降级报表
+	    </h4>
+	</div>
+	<!-- 标题信息结束 -->
+	
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    查询
+					<i class="pull-right fa fa-angle-right"ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+    			<form name="form" class="form-horizontal">
+                <span> 1.设置人员升降级规则 > 2.点击生成人员升降级报表 > 3.查看报表</span>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+		                    <div class="form-group">
+		                        <label class="col-sm-3 control-label">选择销售业绩时间段:</label>
+		                        <div class="col-sm-4">
+		                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+		                                <input type="text" class="form-control"
+		                                       datepicker-popup="yyyy-MM-dd" ng-model="mytest.phaStartTm1"
+		                                       is-open="opened"
+		                                       datepicker-options="dateOptions" 
+		                                       readOnly="true" /> 
+		                                <span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="open($event)">
+				                                <i class="glyphicon glyphicon-calendar"></i>
+				                            </button>
+										</span>
+		                            </div>
+		                        </div>
+		                        <div class="col-sm-4">
+		                            <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+		                                <input type="text" class="form-control"
+		                                       datepicker-popup="yyyy-MM-dd" ng-model="mytest.phaEndTm1"
+		                                       is-open="opened"
+		                                       datepicker-options="dateOptions" 
+		                                       readOnly="true" /> 
+		                                <span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="open($event)">
+				                                <i class="glyphicon glyphicon-calendar"></i>
+				                            </button>
+										</span>
+		                            </div>
+		                        </div>
+		                    </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-12">
+                            <button class="btn btn-info btn-addon" ng-click="tableParamsGet()" user-power="WSTF01013001">点击生成</button>
+                            <button class="btn btn-info btn-addon" ng-click="tableParamsGetLast()" user-power="WSTF01013002">查看最后一次结果</button>
+						</div>
+                    </div>
+                </form>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+    <!-- 导出系列按钮面板开始 -->
+    <div class="panel-heading">
+        <button class="btn btn-info btn-addon" add-bom="true" ng-click="exportCsv()" user-power="WSTF01013004">批量导出</button>
+        <button class="btn btn-default btn-addon mt_6" ng-csv="getArray" lazy-load="true" filename="{{exportFileNm}}" field-separator="," add-bom="true" id="export" ng-show="false"></button>
+        <button class="btn btn-info btn-addon" ng-click="updateStfInfo()" user-power="WSTF01013003">同步变更到个人信息</button><label class="control-label mt_6">共有<span class="error">{{myDataSize}}</span>条数据 </label><label ng-show="msgShowInfo == true">（没有符合条件的数据）</label>
+    </div>
+    <!-- 导出系列按钮面板结束 -->
+
+    <div class="panel-heading">
+	    <!-- table列表开始 -->	
+        <div ng-table="demo.tableParams">
+            <table class="table table-bordered table-condensed   table-striped table-hover">
+                <tr ng-repeat="userinfo in $data">
+                    <td width="'60px'"   header="'headerCheckbox.html'">
+                        <input type="checkbox"
+                               ng-model="demo.checkboxes.items[userinfo.stfNum]"
+                               ng-click="checkItem()"/> 
+                    </td><!-- 员工编号 -->
+                       <td width="'100px'" title="'人员编号'" >
+                        {{userinfo.stfNum}}
+                    </td><!-- 员工编号 -->
+                    <td title="'姓名'" width="'100px'">{{userinfo.stfNm}}  <!-- 员工姓名 -->
+                    </td>
+                    <td title="'部门'" width="'100px'">{{userinfo.depNm}}  <!-- 部门编号 -->
+                    </td>
+                    <td title="'职位'" width="'100px'">{{userinfo.posNm}}  <!-- 职位编号 -->
+                    </td>
+                    <td title="'等级'" width="'100px'">{{userinfo.posGrdNm_now}}  <!-- 职位等级编号 -->
+                    </td>
+                    <td title="'入职日期'" width="'100px'">{{userinfo.stfEntDt}}  <!-- 入职日期 -->
+                    </td>
+                    <td title="'直属主管'" width="'100px'">{{userinfo.stfNm_zg}}  <!-- 所属区域经理 -->
+                    </td>
+                    <td title="'大区总监'" width="'100px'">{{userinfo.stfNm_zj}}  <!-- 所属大区总监 -->
+                    </td>
+                    <td title="'上个档期销售业绩'" width="'120px'">￥{{userinfo.lstPhaSaleAmt}}  <!-- 上个档期销售业绩 -->
+                    </td>
+                    <td title="'前个档期销售业绩'" width="'120px'">￥{{userinfo.befLstPhaSaleAmt}}  <!-- 前个档期销售业绩 -->
+                    </td>
+                    <td title="'第前三个档期销售业绩'" width="'120px'">￥{{userinfo.twoPhaBefLstPhaSaleAmt}}  <!-- 第前三个档期销售业绩 -->
+                    </td>
+                    <td title="' 三个档期平均销售业绩'" width="'120px'">￥{{userinfo.avrAmtOf3Pha}}  <!-- 三个档期平均销售业绩 -->
+                    </td>
+                    <td title="'升降级状态'" width="'100px'">{{userinfo.grdStat}}  <!-- 升降级状态 -->
+                    </td>
+                    <td title="'降级/升级为'" width="'100px'">{{userinfo.posGrdNm_to}}  <!-- 降级/升级为 -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

@@ -1,0 +1,32 @@
+<div class="form-group">
+	<label class="col-sm-3 control-label">提成条件：</label>
+	<div class="col-sm-6">会员微商类会员关联对应人员,会员在微商渠道消费</div>
+</div>
+<div class="form-group">
+	<div class="panel-heading">
+	    <div ng-table="tableParams">
+			<table class="table table-bordered table-condensed table-striped table-hover">
+	            <tr>
+					<th style="width: 350px"><span style="color:red;">*</span>提取对象的消费范围</th>
+					<th style="width: 200px"><span style="color:red;">*</span>其可获得提成百分比</th>
+					<th style="width: 100px">操作</th>
+				</tr>
+				<tr ng-repeat="userinfo in hywsltcdata" ng-if="userinfo.delflg != 1">
+			        <td ng-if="flase">{{$index+1}}</td>
+					<td title="'提取对象的消费范围'">
+					    <input type="text" class="form-control" id="hywslhytqdxsx" name = "hywslhytqdxsx"  style="width: 165px;display:inherit;" ng-model=userinfo.xiaxian ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" required maxLength=12/>元
+					    <span style="color: red;">~</span>
+					    <input type="text" class="form-control" id="hywslhytqdxxx" name = "hywslhytqdxxx"  style="width: 165px;display:inherit;" ng-model=userinfo.shangxian ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" required maxLength=12/>元
+		            </td>
+					<td title="'其可获得提成百分比'">
+						<input type="text" class="form-control" id="hywslhytcbfb" name = "hywslhytcbfb"  style="width: 165px;display:inherit;" ng-model=userinfo.baifenbi ng-pattern="/^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/" required maxLength=5>%
+		            </td>
+					<td title="'操作'">
+						<a class="mr_9" ng-if="$index == '0'" ng-click="xzhywsltcxfqd()">新增消费范围</a>
+			            <a class="mr_9" ng-if="$index != '0'" ng-click="schywsltcxfqd($index)">删除消费范围</a>
+					</td>
+				</tr>
+		    </table>
+	    </div>
+    </div>
+</div>

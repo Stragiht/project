@@ -1,0 +1,83 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        审批排班申请
+    </h4>
+</div>
+<!-- 标题信息开始 -->
+<!--批量导出的弹出窗 -->
+<script type="text/ng-template" id="batchapproval.html">
+    <div ng-include="'common/tpl/batchapproval.html'"></div>
+</script>
+
+<div ng-controller="baShiftMngController">
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    查询<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+                <div class="form-group" user-power="WSTF01018001">
+                    <label class="col-sm-2 control-label" style="width: 170px;">审批状态：</label>
+                    <div class="btn-group">
+                        <button ng-repeat="apprRslt in apprStatList" class="btn btn-default" ng-class="{'active':apprRslt.key == selectedApprStat}"
+                                ng-model="apprRsltModel" ng-click="selectShiftMngList('{{apprRslt.key}}')">{{apprRslt.text}}
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" user-power="WSTF01018001">
+                    <label class="col-sm-2 control-label" style="width: 170px;">本档期应出勤天数：</label>
+                    <div class="btn-group">
+	                    <button ng-repeat="day in dayList" class="btn btn-default" ng-class="{'active':day.key == selectedDay}"
+	                                ng-model="dayModel" ng-click="selectDayList('{{day.key}}')">{{day.text}}
+	                    </button>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+    <!-- 总件数显示开始 -->
+    <div class="panel-heading">
+        <button class="btn btn-default btn-addon" ng-click="openAppl('sm')" user-power="WSTF01018002">批量审核</button>
+        <label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据</label><label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+    </div>
+    <!-- 总件数显示结束 -->
+
+    <!-- table列表开始 -->
+    <script type="text/ng-template" id="headerCheckbox.html">
+        <input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+        全选
+    </script>
+    <div class="panel-heading">
+        <div ng-table="tableParams">
+            <table class="table table-bordered table-condensed   table-striped table-hover">
+                <tr ng-repeat="row in $data">
+                    <td header="'headerCheckbox.html'" style="font-weight: bold; min-width: 90px;  ">
+                        <input type="checkbox" ng-model="checkboxes.items[row.schNum]" ng-click="checkItem()"/>
+                    </td>
+                    <td title="'申请编号'" style="min-width: 120px;">{{row.schNum}}</td>
+                    <td title="'人员编号'" style="min-width: 120px;">{{row.bySchStf}}</td>
+                    <td title="'姓名'" style="min-width: 120px;">{{row.stfNm}}</td>
+                    <td title="'是否中间入职'" style="min-width: 120px;">
+	                    <span ng-if="(row.stfEntDt>row.phaStartTm)" class="text-red">是</span>
+	                    <span ng-if="(row.stfEntDt<row.phaStartTm)">否</span>
+	                </td>
+                    <td title="'排班档期'" style="  min-width: 200px;">{{row.phaStartTm}}~{{row.phaEndTm}}</td>
+                    <td title="'排班表应出勤天数'" style="  min-width: 150px;">{{row.schDtNum}}天 </td>
+                    <td title="'本档期应出勤天数'" style="  min-width: 150px;">{{row.reqAttendDays}}天</td>
+                    <td title="'直属主管'" style="  min-width: 120px;">{{row.supvrStfNm}}</td>
+                    <td title="'申请时间'" style="  min-width: 150px;">{{row.sbmtTm|date:'yyyy-MM-dd HH:mm'}}</td>
+                    <td title="'审批状态'" style="  min-width: 120px;" class="text-red">{{row.apprRslt | dicNameFilter:"C018"}}</td>
+                    <td title="'操作'" class="mr_22" style="min-width: 140px;">
+                        <a class="mr_9" ng-click="infoShiftMngAppl(row.schNum)" user-power="WSTF01018001">查看</a>
+                        <a class="mr_9" ng-if="row.apprFlag == 1" ng-click="apprShiftMngAppl(row.schNum, row.updtTm)" user-power="WSTF01018002">审批</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

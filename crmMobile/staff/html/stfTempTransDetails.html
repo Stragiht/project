@@ -1,0 +1,56 @@
+<ion-header-bar align-title="center" class="header"> 
+	<a ui-sref="stfTempTransSelect" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+	<h1 style="font-size:1.4rem">详情</h1>
+	<a href="" class="head_right" ui-sref="stfTempTransUpdate({applNum:stfInfo.applNum})"  user-power="MSTF01004003">
+    	<div class="head_right_box">
+            <img src="common/images/gengxin.png" width="22" height="22">
+            <p>编辑借调</p>
+    	</div>
+    </a>
+</ion-header-bar>
+<ion-content class="has-header ">
+<!-- stfTempTransDetails.html -->
+	<ion-list>
+        	<ion-item  >
+               	<span class="w140">记录编号</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.applNum"></span>
+           </ion-item>
+           <ion-item >
+           <a href = "">
+               	<span class="w140">提交人</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.stfNm"></span>
+               	<span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 0rem;" ng-click="callPhone()"></span>
+           </a>
+           </ion-item >
+           <ion-item >
+               	<span class="w140">提交时间</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.applTm | dateFormat"></span>&nbsp;<span class=" stfInfoItem" ng-bind="stfInfo.applTm | cutTimeFilter"></span>
+           </ion-item>
+       </ion-list> 
+       <div class="index_work_bt">&nbsp</div>
+       <ion-list>
+           <ion-item  ng-repeat = "superitem  in superItems">
+               	<span class="w140"  >人员<span ng-bind="$index+1"></span></span>
+               	<span class=" stfInfoItem" ng-bind="superitem.stfNmJD"></span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt">&nbsp</div>
+       <ion-list>
+       	   <ion-item>
+               	<span class="w140">开始时间</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.secStartTm | dateFormat"></span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">结束时间</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.secEndTm | dateFormat"></span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">借调天数</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.days+'天'"></span>
+           </ion-item>
+           <ion-item >
+               	<span class="w140">借调到门店</span>
+               	<span class=" stfInfoItem" ng-bind="stfInfo.secStr"></span>
+           </ion-item>
+       </ion-list>
+</ion-content>

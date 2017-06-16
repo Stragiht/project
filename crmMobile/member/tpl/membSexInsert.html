@@ -1,0 +1,14 @@
+<ion-header-bar align-title="center"  class="header">
+    <a class="header_left" ui-sref="membBasInsert"  ></a>
+    <h1 style="font-size:1.4rem">性别</h1>
+</ion-header-bar>
+<ion-content  class="has-header memb_radio radio_line" overflow-scroll="false">
+    <!-- <ion-radio  ng-model="choice1" value="A" style="height: 55px;font-size:14px;" >女</ion-radio>
+     <ion-radio  ng-model="choice2" value="A" style="height: 55px;font-size:14px;">男</ion-radio>-->
+    <ion-radio ng-repeat="sex in sexList" style="height: 55px;"
+               ng-value="sex.value"
+               ng-model="membEditSex" ng-click="sexSelect(sex.value)">
+        <span ng-bind="sex.text"></span>
+    </ion-radio>
+</ion-content>
+

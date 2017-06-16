@@ -1,0 +1,138 @@
+<style>
+.list .bottom_line{
+background:none;
+ background-image: -webkit-linear-gradient(90deg, #ddd, #ddd 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #ddd, #ddd 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    margin-left: 15px;
+    padding-left: 0px;
+}
+</style>
+<ion-header-bar align-title="center"  class="header">
+        <a href=""  ui-sref="home" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">销售概况</h1>
+</ion-header-bar>
+<div class="bar bar-subheader" style="padding-top: 0px;" user-power="MREP01001001">
+    <div class="sales_title">
+        <a href="" ng-class="{'active':isBaShow}" ng-click="tabClick(true)">BA提交</a>
+        <a href="" ng-class="{'active':!isBaShow}" ng-click="tabClick(false)">财务导入</a>
+    </div>
+</div>
+<!-- BA提交 内容 -->
+<ion-content class="has-header has-subheader" ng-show="isBaShow" user-power="MREP01001001">
+<!-- saleSummary.html -->
+    <div class="wrap">
+	    <div class="sales_box clearfix">
+	        <div class="sales_kuan">
+	            <div class="sales_kuan_bt">
+	                <div class="btn_benyue">本月</div> 
+	            </div>
+	            <div class="sales_kuan_nr">
+	                <div class="moor_data">
+	                    <h4>总计：</h4>
+	                    <p>{{saleSummary.monthSaleAmtBa | currency : "￥"}}</p>
+	                </div>
+	                <div class="moor_data">
+	                    <h4>日平均：</h4>
+	                    <p>{{saleSummary.avgAmtBa | currency : "￥"}}</p>
+	                </div>
+	                <div class="moor_data">
+	                    <h4>最高值：</h4>
+	                    <p>{{saleSummary.maxAmtBa | currency : "￥"}}</p>
+	                </div>
+	                <div class="moor_data">
+	                    <h4>最低值：</h4>
+	                    <p>{{saleSummary.minAmtBa | currency : "￥"}}</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="xiaoxizhongxin_bj3 mt_20">
+	        <ion-list>
+	            <ion-item class="bottom_line" style="padding-top: 10px;padding-bottom: 10px" ng-click="gotoDailyReportList(saleSummary.todayBa, saleSummary.todayBa)">
+                    <div class="xiaoxizhongxin_text2">
+                        <h2>今天</h2>
+                        <p>{{saleSummary.todayBa | date : "yyyy-MM-dd"}}</p> 
+                    </div>
+                    <img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;">
+                    <span class="float_r line_height50" style="margin-right: 15px">{{saleSummary.todaySaleAmtBa | currency : "￥"}} </span>
+	            </ion-item>
+	            <ion-item class="bottom_line" style="padding-top: 10px;padding-bottom: 10px" ng-click="gotoDailyReportList(saleSummary.weekStartBa, saleSummary.weekEndBa)">
+                    <div class="xiaoxizhongxin_text2">
+                        <h2>本周</h2>
+                        <p>{{saleSummary.weekStartBa | date : "MM-dd"}} ~ {{saleSummary.weekEndBa | date : "MM-dd"}}</p> 
+                    </div>
+                    <img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;">
+                    <span class="float_r line_height50" style="margin-right: 15px">{{saleSummary.weekSaleAmtBa | currency : "￥"}}</span>
+	            </ion-item>
+	            <ion-item class="bottom_line" style="padding-top: 10px;padding-bottom: 10px" ng-click="gotoDailyReportList(saleSummary.monthStartBa, saleSummary.monthEndBa)">
+                    <div class="xiaoxizhongxin_text2">
+                        <h2>本月</h2>
+                        <p>{{saleSummary.monthStartBa | date : "MM-dd"}} ~ {{saleSummary.monthEndBa | date : "MM-dd"}}</p> 
+                    </div>
+                    <img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;">
+                    <span class="float_r line_height50" style="margin-right: 15px">{{saleSummary.monthSaleAmtBa | currency : "￥"}}</span>
+	            </ion-item>
+	        </ion-list>
+	    </div>
+    </div>
+</ion-content>
+<!-- 财务导入 内容 -->
+<ion-content class="has-header has-subheader" ng-show="!isBaShow">
+<!-- saleSummary.html -->
+    <div class="wrap">
+	    <div class="sales_box clearfix">
+	        <div class="sales_kuan">
+	            <div class="sales_kuan_bt">
+	                <div class="btn_benyue">本月</div> 
+	            </div>
+	            <div class="sales_kuan_nr">
+	                <div class="moor_data">
+	                    <h4>总计：</h4>
+	                    <p>{{saleSummary.monthSaleAmtFc | currency : "￥"}}</p>
+	                </div>
+	                <div class="moor_data">
+	                    <h4>日平均：</h4>
+	                    <p>{{saleSummary.avgAmtFc | currency : "￥"}}</p>
+	                </div>
+	                <div class="moor_data">
+	                    <h4>最高值：</h4>
+	                    <p>{{saleSummary.maxAmtFc | currency : "￥"}}</p>
+	                </div>
+	                <div class="moor_data">
+	                    <h4>最低值：</h4>
+	                    <p>{{saleSummary.minAmtFc | currency : "￥"}}</p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="xiaoxizhongxin_bj3 mt_20">
+	        <ion-list>
+	            <ion-item class="bottom_line" style="padding-top: 10px;padding-bottom: 10px">
+	                <div class="xiaoxizhongxin_text2">
+	                    <h2>上周</h2>
+	                    <p>{{saleSummary.lastWeekStartFc | date : "MM-dd"}} ~ {{saleSummary.lastWeekEndFc | date : "MM-dd"}}</p> 
+	                </div>
+	                <span class="float_r line_height50" style="margin-right: 29px">{{saleSummary.lastWeekSaleAmtFc | currency : "￥"}}</span>
+	            </ion-item>
+	            <ion-item class="bottom_line" style="padding-top: 10px;padding-bottom: 10px">
+	                <div class="xiaoxizhongxin_text2">
+	                    <h2>前周</h2>
+	                    <p>{{saleSummary.weekBeforeLastWeekStartFc | date : "MM-dd"}} ~ {{saleSummary.weekBeforeLastWeekEndFc | date : "MM-dd"}}</p> 
+	                </div>
+	                <span class="float_r line_height50" style="margin-right: 29px">{{saleSummary.weekBeforeLastWeekSaleAmtFc | currency : "￥"}}</span>
+	            </ion-item>
+	            <ion-item class="bottom_line" style="padding-top: 10px;padding-bottom: 10px">
+	                <div class="xiaoxizhongxin_text2">
+	                    <h2>本月</h2>
+	                    <p>{{saleSummary.monthStartFc | date : "MM-dd"}} ~ {{saleSummary.monthEndFc | date : "MM-dd"}}</p> 
+	                </div>
+	                <span class="float_r line_height50" style="margin-right: 29px">{{saleSummary.monthSaleAmtFc | currency : "￥"}}</span>
+	            </ion-item>
+	        </ion-list>
+	    </div>
+	</div>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>

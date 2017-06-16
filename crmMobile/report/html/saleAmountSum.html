@@ -1,0 +1,117 @@
+<style>
+    .saixuan_box2 {padding-left:4%; padding-right:4%; background:#fff;}
+    .saixuan_box2 .item {padding-left: 0px;padding-right: 0px;border-top:solid 1px #ccc; border-left:0px; border-right:0px; border-bottom:solid 1px #fff;}
+    .saixuan_box2 .radio-content .item-content {padding-left: 0px;}
+    .saixuan_box2 .radio-content .radio-icon {padding-right: 0px;}
+</style>
+<!-- 人员销售业绩汇总画面 -->
+<div ng-show="pageShow.list">
+	<ion-header-bar align-title="center"  class="header">
+        <a ui-sref="saleData" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">人员销售业绩汇总</h1>
+	    <a ng-click="showFilter(true)" class="head_right">
+	        <div class="head_right_box">
+	            <img src="common/images/saixuan.png" width="22" height="22">
+	            <p>筛选</p>
+	        </div>
+	    </a>
+	</ion-header-bar>
+	<div class="bar bar-subheader" ng-if="posList.length > 1" style="padding-top: 0px;">
+	    <div class="rzlc_bt" style="height: 44px;">
+	        <div class="rzlc_bt_nei2">
+	            <a ng-repeat="posInfo in posList" ng-class="{'active':posInfo.posNum == cond.posNum}" ng-click="tabClick('{{posInfo.posNum}}')" style="width: {{posWidth}};margin: 0px 3%;line-height: 43px;">{{posInfo.posNm}}</a>
+	        </div>
+	    </div>
+	</div>
+	<ion-content class="has-header" ng-class="{'has-subheader': posList.length > 1}" delegate-handle="contentScroll">
+	<!-- saleAmountSum.html -->
+	    <ion-refresher pulling-text="下拉刷新页面" on-refresh="doRefresh()"></ion-refresher>
+		<div class="wrap">
+		    <div class="xiaoxizhongxin_bj1" style="height:{{divHeight}}" ng-if="saleAmountSumList.length > 0">
+		        <ion-list>
+		            <ion-item class="bottom_line" style="padding-top: 0px;padding-bottom: 0px;margin-left:0px;padding:0px;margin: 0px 0px;" ng-repeat="info in saleAmountSumList">
+		                <a ng-click="showDetail(info)">
+			                <div class="xiaoxi_img2" style="margin-left: 15px;">{{info.stfNm | stfNmLast2}}</div>
+			                <div class="xiaoxi_line" style="width: 79%;">
+			                    <div class="xiaoxizhongxin_text2">
+			                        <h2>{{info.saleAmt | currency : "￥"}} </h2>
+			                        <p>单产：{{info.avgAmt | currency : "￥"}}</p> 
+			                    </div>
+			                    <img src="common/images/you_btn.png" style="top: 31px;right: 15px;float: right; margin-top: 15px;margin-right: 15px;">
+			                    <span class="float_r line_height50" style="margin-right: 15px">{{info.ranking}} </span>
+			                </div>
+		                </a>
+		            </ion-item>
+		        </ion-list>
+		    </div>
+		    <div class="wushuju" my-nodata-show="saleAmountSumList.length == 0 && !moredata">
+		        <img src="common/images/bear.gif" >
+		        <p>没有符合条件的数据</p>
+		    </div>
+	    </div>
+	    <ion-infinite-scroll ng-if="moredata" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+	</ion-content>
+</div>
+<!-- 筛选画面 -->
+<div ng-show="pageShow.filter">
+    <ion-header-bar align-title="center"  class="header">
+        <a ng-click="cancelFilter()"  class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">人员销售业绩汇总</h1>
+        <a ng-click="cancelFilter()" class="head_right">
+            <div class="head_right_box">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+        </a>
+    </ion-header-bar>
+    <ion-content class="has-header">
+	<!-- saleAmountSum.html -->
+        <div class="wrap">
+		    <div class="saixuan_box" style="height:{{shaixuanBoxHeight}}">
+		        <ul class="listvrew clearfix" style="border-top: solid 0px;">
+		            <li ng-class="{'acirve':pageShow.date}" style="line-height:54px" ng-click="showFilter(true)"><a><span class="">日期</span></a><span class="float_r"><i class="fa fa-angle-right"></i></span></li>
+		            <li ng-class="{'acirve':pageShow.staff}" style="line-height:54px" ng-click="showFilter(false)"><a><span class="">人员</span></a><span class="float_r"><i class="fa fa-angle-right"></i></span></li>
+		        </ul>
+		     </div>
+		     <div class="saixuan_box2" style="height:{{shaixuanBoxHeight}}">
+                 <div class="listvrew clearfix" ng-show="pageShow.date" style="border-bottom: 0px;">
+                     <ion-radio name="condDate" ng-value="initValue.today" ng-model="initValue.selectedDate" ng-click="dateClick(todayDate, todayDate, true)" style="border-top:0px">
+                     今日
+                     </ion-radio>
+                     <ion-radio name="condDate" ng-value="initValue.week" ng-model="initValue.selectedDate" ng-click="dateClick(weekStartDate, weekEndDate, false)">
+                     本周
+                     </ion-radio>
+                     <ion-radio name="condDate" ng-value="initValue.month" ng-model="initValue.selectedDate" ng-click="dateClick(monthStartDate, monthEndDate, false)">
+                     本月
+                     </ion-radio>
+                     <ion-toggle ng-model="toggleStatus.dateChecked" ng-checked="toggleStatus.dateChecked" ng-change="toggleChanged()">
+		        自定义
+		             </ion-toggle>
+                     <div class="item" ng-if="toggleStatus.dateChecked" style="border-top:0px;top: -6px;padding-top: 0px;">
+                         <p>
+                         <input type="text" class="zdy_time" ng-model="inputStartDate" readonly="readonly" ng-click="openDatePicker(true)" style="text-align: center;">
+                         <span class="float_l" style="line-height:30px;">&nbsp;~</span>
+                         <input type="text" class="zdy_time" ng-model="inputEndDate" readonly="readonly" ng-click="openDatePicker(false)" style="text-align: center;">
+                         </p>
+                         <a class="btn_queding" ng-click="btnDateClick(inputStartDate, inputEndDate, false)">确定</a>
+                     </div>
+                 </div>
+	             <div class="listvrew clearfix" ng-show="pageShow.staff" style="border-bottom: 0px;">
+	                 <ion-radio name="staff" ng-value="0000" ng-model="initValue.selectedStfNum" ng-click="staffClick('0000')" style="border-top:0px">
+	                    全部
+	                 </ion-radio>
+                     <ion-radio name="staff" ng-value="entryStfNum" ng-model="initValue.selectedStfNum" ng-click="staffClick(entryStfNum)">
+                        我
+                     </ion-radio>
+                     <ion-toggle ng-model="toggleStatus.staffChecked" ng-checked="toggleStatus.staffChecked" ng-change="zhidingrenyuan()">
+                        指定人员
+                     </ion-toggle>
+                     <div class="item" ng-if="toggleStatus.staffChecked" style="border-top:0px;top: -6px;padding-top: 0px;">
+                         <input type="text" class="zdy_time" ng-model="inputStfNm" maxLength="10" placeholder="请输入姓名">
+                         <a class="btn_queding" ng-click="btnStaffClick(inputStfNm)">确定</a>
+                     </div>
+	             </div>
+		     </div>
+         </div> 
+    </ion-content>
+</div>

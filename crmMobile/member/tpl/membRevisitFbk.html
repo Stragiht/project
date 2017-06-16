@@ -1,0 +1,106 @@
+<ion-header-bar align-title="center" class="header">
+    <!--<a style="height: 38px;width: 40px;display:block;position: absolute;line-height: 38px;z-index: 999;"
+       ui-sref="membRevisitTskDetail({curMembIndex:curIndex})">-->
+    <a class="header_left" ng-click="goFrontPage();"></a>
+    <h1 style="font-size:1.4rem">回访指导</h1>
+    <a href="" class="header_right2">
+        <div class="safe" ng-click="membRevFbkInsert()" user-power="MMEM01003003">保存
+        </div>
+    </a>
+</ion-header-bar>
+
+
+<ion-content class="has-header stable" overflow-scroll="false" style="bottom: 51px;">
+    <!--<ion-list>-->
+    <!--<ion-item class="item"  style="padding: 0 ;border: none;">-->
+    <!--<textarea placeholder="备注" rows="3" style="height: 150px;width:100%;outline:none;border: 0;-->
+    <!--border: solid 1px #ddd;border-style:hidden;padding-left: 10px;padding-top: 10px;"></textarea>-->
+    <!--</ion-item>-->
+    <!--</ion-list>-->
+    <ion-list  ng-click="addHide()">
+        <ion-item class="item bottom_line" style="padding: 0 ;border: none;margin-bottom: 15px;">
+            <div class="card" style="box-shadow: none;" id="body1111">
+              <textarea placeholder="请输入内容"  class="stable-bg memb_text" rows="6" style="border-radius: 5px;"  ng-model="membRevFbkData.fbkCont" id="membRevFbkTextArea"></textarea>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <!--<div style="margin-bottom: 15px;" ng-repeat="voi in voices">
+        <ul class="listen" ng-show="switchKeyOrVoice" ng-click="audioPlay(voi.voice, 1)">
+            &lt;!&ndash;ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"&ndash;&gt;
+            <img src="common/images/cv_yy_1.png" width="11" style="position: absolute;top:8px;"/>
+            &lt;!&ndash;<audio src="http://192.168.1.18:8081/uploadFiles/others/audios/20160608/65ff218a-fa17-491f-ba12-1fce1de15367.mp3"></audio>&ndash;&gt;
+            &lt;!&ndash;<li class="sy"></li>&ndash;&gt;
+        </ul>
+        <ul class="listen" ng-show="!switchKeyOrVoice" ng-click="audioPlay(voi.voice, 2)">
+            &lt;!&ndash;ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"&ndash;&gt;
+            <img src="common/images/cv_yy_2.gif" width="11" style="position: absolute;top:8px;"/>
+        </ul>
+        <br/>
+    </div>-->
+
+    <div class="p-Left"  ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice, voi)">
+        <div class="listen" ng-show="!voi.playAudio"  ><!--ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"-->
+            <!-- <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />-->
+            <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />
+            <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="voi.dura"></span>
+        </div>
+        <div class="listen" ng-show="voi.playAudio"  ><!--ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"-->
+            <img ng-src="{{audioImg}}" width="11" style="top:8px;" />
+            <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="voi.dura"></span>
+        </div>
+
+        <!--<span style="color: #ccc;position: relative;top: -5px;" ng-bind="voi.dura"></span>-->
+
+        <!--<span style="position:absolute;margin-left:105%;top:8px;color: #ccc;" ng-bind="reply.dura"></span>-->
+    </div>
+
+    <!-- <div style="margin-bottom: 15px;" ng-repeat="voi in voices">
+         <ul class="listen" ng-show="switchKeyOrVoice"  ng-click="switchAnimateVoice()">&lt;!&ndash;ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"&ndash;&gt;
+             <img src="common/images/cv_yy_1.png" width="11" style="position: absolute;top:8px;" />
+             &lt;!&ndash;<audio src="http://192.168.1.18:8081/uploadFiles/others/audios/20160608/65ff218a-fa17-491f-ba12-1fce1de15367.mp3"></audio>&ndash;&gt;
+             &lt;!&ndash;<li class="sy"></li>&ndash;&gt;
+         </ul>
+         <ul class="listen" ng-show="!switchKeyOrVoice" ng-click="switchAnimateVoice()">&lt;!&ndash;ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"&ndash;&gt;
+             <img src="common/images/cv_yy_2.gif" width="11" style="position: absolute;top:8px;"/>
+         </ul>
+         <br/>
+     </div>-->
+</ion-content>
+
+<!--底部Tab栏-->
+<ion-footer-bar style="height: 51px;">
+    <!--<div style="width: 100%;">
+        <img src="common/images/nb_keyboard.png" width="40" height="40" style="width: 11%;margin: 10px 5px 0 5px;" >
+        <label style="width: 84%;height:40px;border: solid 1px #ddd;border-radius: 5px;display: inline-block;margin-top: -32px;text-align: center; ">
+            <h2 style="line-height:40px;">按住开始语音</h2>
+        </label>
+    </div>
+-->
+    <!--<div style="width: 100%;">
+        &lt;!&ndash;键盘&ndash;&gt;
+        <img src="common/images/nb_keyboard.png" width="40" height="40" style="width: 11%;margin: 10px 5px 0 5px;" ng-show="!switchKeyOrAudio" ng-click="swichInp()">
+        <label style="width: 84%;height:40px;border: solid 1px #ddd;border-radius: 5px;display: inline-block;margin-top: -32px;text-align: center; " ng-show="!switchKeyOrAudio">
+            <h2 style="line-height:40px;">按住开始语音</h2>
+        </label>
+
+        &lt;!&ndash;语音&ndash;&gt;
+        <img src="common/images/nb_voice.png" width="40" height="40" style="width: 11%;margin: 10px 5px 0 5px;" ng-show="switchKeyOrAudio" ng-click="swichInp()">
+        <label style="width: 84%;height:40px;border: solid 1px #ddd;border-radius: 5px;display: inline-block;margin-top: -32px;padding-left: 10px; " ng-show="switchKeyOrAudio">
+            &lt;!&ndash;<h2 style="line-height:40px;"></h2>&ndash;&gt;
+            <input style="line-height:40px;" type="text"/>
+        </label>
+
+    </div>-->
+
+    <ul class="footer2 top_line">
+        <li style="width:14%">
+            <div class="voice"></div>
+        </li>
+        <li class="press"
+            on-hold="audioOnTouch()" on-release="audioOnRelease()" id="audioMembFbkText">
+            按住开始语音
+        </li>
+        <input type="hidden" id="audioPath">
+    </ul>
+</ion-footer-bar>

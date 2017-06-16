@@ -1,0 +1,111 @@
+<div ng-controller="memRevisitRecSupCtrl">
+    <div>
+        <script type="text/ng-template" id="memRadioSelect.html">
+            <div ng-include="'common/tpl/memRadioSelect.html'"></div>
+        </script>
+
+        <script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+    </div>
+
+    <!-- 标题信息开始 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4" style="color:#000">补录会员回访记录</h4>
+    </div>
+    <!-- 标题信息结束 -->
+
+    <!-- 内容 -->
+    <div class="wrapper-md">
+
+        <form name="formAttr" class="form-horizontal">
+            <!-- 第一行 -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span style="color:red;">*</span>选择会员：</label>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="memNum"  required readonly="readonly"
+                           ng-model="memNumNm">
+                    <!--<div ng-messages="formAttr.memNums.$error"-->
+                         <!--ng-if="(formAttr.memNums.$dirty && formAttr.memNums.$invalid)">-->
+                        <!--<span ng-message="required" class="error"> 会员必须输入!</span>-->
+                    <!--</div>-->
+                </div>
+                <button class="btn m-b-xs w-xs btn-default" ng-click="openSelMemb('lg')">浏览</button>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">具体内容：</label>
+                <button class="col-sm-1 btn btn-info  btn-addon" ng-click="addMemRevRecSup()" style="margin-left: 15px;"> 添加
+                </button>
+            </div>
+
+            <!-- 第二行 -->
+
+            <div ng-repeat="memRevRecSup in memRevisitRecSupList">
+                <hr/>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" style="position: relative"><span style="color:red;">*</span>回访时间：</label>
+
+                    <div class="col-sm-3">
+                        <div class="input-group w-md" ng-controller="DatepickerDemoCtrl">
+                            <input type="text" class="form-control" readonly="readonly"
+                                   datepicker-popup="yyyy-MM-dd" ng-model="memRevRecSup.revisitTm"
+                                   is-open="opened"
+                                   datepicker-options="dateOptions" required/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="col-sm-1 btn btn-info  btn-danger" ng-show="$index!=-1" ng-click="del($index)"
+                            style="color:red;float: right;margin-right: 15px;">删除
+                    </button>
+                </div>
+
+                <!-- 第三行 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color:red;">*</span>回访人员：</label>
+
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="stfNum" readonly="readonly" required
+                               ng-model="memRevRecSup.stfNumNm">
+
+                        <!--<div ng-messages="formAttr.stfNums.$error"-->
+                             <!--ng-if="(formAttr.stfNums.$dirty && formAttr.stfNums.$invalid)">-->
+                            <!--<span ng-message="required" class="error"> 回访人员必须输入!</span>-->
+                        <!--</div>-->
+                    </div>
+                    <button class="btn m-b-xs w-xs btn-default" ng-click="openMemRev($index,'lg')">浏览</button>
+                </div>
+                <!-- 第四行 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">回访内容：</label>
+
+                    <div class="col-sm-2">
+                     <textarea class="form-control" rows="5" style="width:500px;resize:none;" name="revisitCont" maxlength="1000"
+                               ng-model="memRevRecSup.revisitCont"></textarea>
+                        <!--<div ng-messages="formAttr.revisitCont.$error"-->
+                             <!--ng-if="(formAttr.revisitCont.$dirty && formAttr.revisitCont.$invalid)">-->
+                            <!--<span ng-message="required" class="error"> 回访内容必须输入!</span>-->
+                        <!--</div>-->
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+<!--
+            <button class="btn   btn-success " ui-sref="app.member.memRevisitRecSupSucc" ng-disabled="formAttr.$invalid" style="margin-left: 5px;" ng-click="memRevRecSupSub()">
+-->
+            <button class="btn   btn-success "  ng-disabled="formAttr.$invalid" style="margin-left: 5px;" ng-click="memRevRecSupSub()" user-power="WMEM01005001">
+                提交保存
+            </button>
+        </div>
+
+    </div>
+    <!-- wrapper-md-->
+</div>

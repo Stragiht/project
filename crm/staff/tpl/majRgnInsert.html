@@ -1,0 +1,115 @@
+<div ng-controller="majRegInsertController">
+	<div class="bg-light lter b-b wrapper-md">
+		<script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+		<h4 class="m-n font-thin h4">新增销售大区信息</h4>
+	</div>
+	<form name = "form" class="bs-example form-horizontal form-validation" novalidate style="margin-top: 30px">
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><span style="color:red;">*</span>大区名称：</label>
+			<div class="col-sm-3">
+				<input type="text" name="dqNmae" ng-model="majRegName" class="form-control" maxLength="20" required>
+                <div ng-messages="form.dqNmae.$error" ng-if="(form.dqNmae.$dirty && form.dqNmae.$invalid)">
+				    <span ng-message="required" class="error">大区名称不能为空</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><span style="color:red;">*</span>所属销售渠道：</label>
+			<div class="col-sm-3">
+				<select name="chnlInfos" class="form-control m-b" ng-model="chnlInfos"ng-options="data.chnlNum as data.chnlNm for data in chnlInfo" 
+					 ng-selected="data.chnlNum==chnlInfos" ng-required="true">
+				</select>
+               <div ng-messages="form.chnlInfos.$error" ng-if="(form.chnlInfos.$dirty && form.chnlInfos.$invalid)">
+				    <span ng-message="required" class="error">所属销售渠道不能为空</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">大区总监：</label>
+			<div class="col-sm-4" style="padding: 5px 0px 0px 15px;">
+				<input type="radio" name="optionsRadios" ng-model="dqzjFlag" value="0" ng-click="shows(1)" ng-checked="true">隶属人员
+				<label style="width: 6%;"></label>
+				<input type="radio" name="optionsRadios" ng-model="dqzjFlag" value="1" ng-click="shows(2)">其它
+			</div>
+		</div>
+
+		<div class="form-group" ng-show="visible1">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-3">
+				<input type="text" class="form-control" readonly="readonly" ng-model="majrgnmgrnm1">
+			</div>
+			<button class="btn btn-default" ng-click="openStaff('lg')">浏览</button>
+			<label style="padding: 5px 0px 0px 10px;">此选项不起任何功能性作用</label>
+		</div>
+		<div class="form-group" ng-show="visible2">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-3">
+				<input type="text" class="form-control" ng-model="majrgnmgrnm2">
+			</div>
+			<label style="padding: 5px 0px 0px 10px;">此选项不起任何功能性作用</label>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><span style="color:red;">*</span>区域包含城市：</label>
+				<div class="col-sm-2">
+					<button class="btn btn-default" class="btn btn-info btn-addon" ng-click="showCitys()">添加城市</button>
+			</div>
+		</div>
+		<div class="form-group" >
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-2" >
+				<select name="account" class="form-control m-b" ng-model="city" ng-options="data.rgnNum as data.rgnNm for data in provinceData" 
+				ng-selected="data.rgnNum==city" ng-change="shengChange(city)">
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-4">
+				<label style="width: 6px;"></label>
+				<div class="checkbox-inline" >
+					<input  type="checkbox" ng-model="masterShiArr" ng-click="all(masterShiArr,shiArr)">全选
+				</div>
+				<div ng-repeat="z in shiArr" class="checkbox-inline">
+					<input  type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="z.checked" ng-checked="z.checked == '1'" ng-click="chk(shiArr,1)"><span ng-bind="z.rgnNm"></span>
+				</div>
+			</div>
+		</div>
+		
+		<div ng-repeat="p in CityObj">
+			<div class="form-group" >
+			<hr>
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-2" >
+					<select name="account" ng-model="province" ng-options="data.rgnNum as data.rgnNm for data in provinceData" ng-change="cityChange(province,$index)" class="form-control m-b">
+					</select>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-4">
+					<label style="width: 6px;"></label>
+					<div class="checkbox-inline">
+						<input type="checkbox" ng-model="p.master" ng-click="all(p.master,p.shi)" >全选
+					</div>
+					<div  ng-repeat="z in p.shi" class="checkbox-inline">
+						<input class={{province}} type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="z.checked" ng-checked="z.checked == '1'" ng-click="chk(p,2)"><span ng-bind="z.rgnNm"></span>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		<!--  -->
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-xs-3">
+				<button class="btn btn-info btn-addon" ng-click="saveMajRgn(form.$valid)" ng-disabled="form.$invalid">提交保存</button>
+				<button class="btn btn-default btn-addon mt_6"  ui-sref="app.staff.majRgn">&nbsp;返回&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>

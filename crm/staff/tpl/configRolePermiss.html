@@ -1,0 +1,52 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<div ng-controller="configRolePermissController" >
+
+<div>
+    <script type="text/ng-template" id="delete.html">
+        <div ng-include="'common/tpl/delete.html'"></div>
+    </script>
+</div>
+
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        配置角色权限
+        <a class="btn btn-success btn-addon mr_8" ui-sref="app.staff.roleInsert" user-power="WSTF01031002">新增角色权限</a>
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+<!--<div>
+ <script type="text/ng-template" id="delete.html">
+            <div ng-include="'common/tpl/delete.html'"></div>
+ </script>
+</div>-->
+<!-- 导出系列按钮面板开始 -->
+<div class="panel-heading">
+    <label class="control-label mt_6">共有<span class="text-red" ng-bind="gydst"></span>条数据 </label>
+    <label class="control-label mt_6" ng-if="gydst < 1">（没有符合条件的数据）</label>
+</div>
+<!-- 导出系列按钮面板结束 -->
+<!-- table列表开始 -->
+<div class="panel-heading">
+   <div ng-table="tableParams">
+       <table class="table table-bordered table-condensed   table-striped table-hover">
+       <tr ng-repeat="roleInfo in $data">
+           <td title="'角色名称'" style="text-align:center;min-width:120px;">
+                <span ng-bind="roleInfo.roleName"></span>
+           </td>
+           <td title="'描述'" style="text-align:center;min-width:120px;">
+               <span ng-bind="roleInfo.roleDesc"></span>
+           </td>
+
+           <td title="'操作'"  style="text-align:center;min-width:180px;">
+            <a style="text-decoration:underline;color: #05b5ff;" ui-sref="app.staff.roleUpdate({roleId:roleInfo.roleId})" user-power="WSTF01031003"> 编辑</a>
+            <a style="text-decoration:underline;color: #05b5ff;" ng-click="delRole(roleInfo.roleId)" user-power="WSTF01031004"> 删除</a>
+           </td>
+       </tr>
+       </table>
+   </div>
+</div>
+<!-- table列表结束 -->
+</div>
+</html>

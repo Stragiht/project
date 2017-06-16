@@ -1,0 +1,126 @@
+<div ng-show="leaveApplInfoShow">
+<ion-header-bar align-title="center" class="header"> 
+    <a ui-sref="leaveApplManager" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size:1.4rem">详情</h1>
+     <a class="head_right2" ng-if="leaveApplInfo.submitFlag == 1" ng-click="submitLeaveAppl()" user-power="MSTF01008003">
+            <div class="head_right_box float_l">
+                <img src="common/images/zhengque.png" width="22" height="22">
+                <p>提交</p>
+            </div>
+            <div class="float_l ml10 color06">|</div>
+        </a>
+        <a class="head_right2" ng-if="leaveApplInfo.cancelFlag == 1" ng-click="cancelLeaveAppl()" user-power="MSTF01008003">
+            <div class="head_right_box float_l">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+            <div class="float_l ml10 color06">|</div>
+        </a>
+        <a class="head_right" ng-if="leaveApplInfo.editFlag == 1" ui-sref="leaveApplUpdate({leaveNm:leaveApplInfo.applNum})" user-power="MSTF01008003">
+            <div class="head_right_box">
+                <img src="common/images/qianbi.png" width="22" height="22">
+                <p>编辑</p>
+            </div>
+        </a>
+        <a class="head_right" ng-if="leaveApplInfo.apprFlag == 1" ng-click="apprOpen()" user-power="MSTF01008004">
+            <div class="head_right_box">
+                <img src="common/images/zhan.png" width="22" height="22">
+                <p>审批</p>
+            </div>
+        </a>
+</ion-header-bar>
+<ion-content class="has-header" style="bottom:0px;">
+<!-- leaveApplInfo.html -->
+    <ion-list>
+		    <span style="display:none" class="f_10 leaveApplInfoItem">{{leaveApplInfo.oId}}</span>
+		    <span style="display:none" class="f_10 leaveApplInfoItem">{{leaveApplInfo.updtTm}}</span>
+            <ion-item  >
+                <span class="w140">申请编号</span>
+                <span class="f_10" style="color:#b1b1b1;">{{leaveApplInfo.applNum}}</span>
+           </ion-item>
+           <ion-item >
+           <a href = "">
+                <span class="w140">提交人</span>
+                <span class="f_10" style="color:#b1b1b1;">{{leaveApplInfo.stfNum}}</span>
+                <span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 0rem;" ng-click="callPhone()"></span>
+           </a>
+           </ion-item >
+           <ion-item >
+                <span class="w140">提交时间</span>
+                <span class="f_10" style="color:#b1b1b1;">{{leaveApplInfo.sbmtTm}}</span>
+           </ion-item>
+           <ion-item >
+                <span class="w140">审批状态</span>
+                <span class="color05 f_10">{{leaveApplInfo.apprRslt}}</span>
+           </ion-item>
+       </ion-list> 
+       <div class="index_work_bt">&nbsp</div>
+       <ion-list>
+           <ion-item>
+                <span class="w140">请假天数</span>
+                <span class="color05 f_10">{{leaveApplInfo.days}}天</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt">&nbsp</div>
+       <ion-list>
+           <ion-item  ng-repeat = "detailItem  in detailItems">
+                <span class="w140">{{detailItem.leaveTm}}</span>
+                <span class="f_10" style="color:#b1b1b1;">{{detailItem.dicNm}}</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt" ng-if="status.apprHisDisplay">审批历史</div>
+       <div class="shls clearfix" ng-if="status.apprHisDisplay">
+				<div class="shls_wen">
+					<div ng-repeat="apprHisInfo in approvalList">
+						<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+</ion-content>
+</div>
+<!-- 审批 -->
+<div ng-show="apprShow">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">审批</h1>
+    </ion-header-bar>
+    <ion-content class="has-header" style="bottom:0px;">
+    <!-- leaveApplInfo.html -->
+        <div class="wrap">
+            <ul class="listvrew clearfix mb_15">
+                <li style="padding: 7px;width: 100%;margin:0;">
+                    <textarea placeholder="请输入审批意见" style="width: 100%;" rows="12"
+                        ng-model="leaveApplInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+    <ion-footer-bar align-title="center">
+        <div class="xiaoxi_quanxuan2">
+            <a class="btn_repoit1 btn_ww mt_10 ml10" user-power="MSTF01008004" style="margin-bottom: 10px;" ng-click="apprLeaveAppl('0')">不通过</a>
+            <a class="btn_repoit2 btn_ww mt_10 mr10" user-power="MSTF01008004" style="margin-bottom: 10px;" ng-click="apprLeaveAppl('1')">通过</a>
+        </div>
+    </ion-footer-bar>
+</div>

@@ -1,0 +1,84 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+	<h4 class="m-n font-thin h4">人员信息批量修改</h4>
+</div>
+<!-- 标题信息结束 -->
+
+<script type="text/ng-template" id="headerCheckbox.html">
+    <input type="checkbox" ng-model="demo.checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+    全选
+</script>
+
+<div ng-controller="stfBasAllEditUpdate">
+	<!-- 查询面板开始 -->
+	<div class="panel-heading">
+		<form name="form" class="form-horizontal">
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.open"> <accordion-heading>
+			1.被编辑的人员<i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+			</accordion-heading>
+
+			<div class="form-group">
+				<label class="col-sm-12 control-label" ng-model="contents" style="text-align: left;"> {{contents}}</label>
+			</div>
+
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.open"> <accordion-heading>
+			2.编辑内容<i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+			</accordion-heading>
+			<div class="form-group">
+				<div>
+					<table
+						class="table table-bordered table-condensed   table-striped table-hover">
+						<thead>
+							<tr style="border-color: #eaeff0">
+								<th ng-if="posNumsss">职位名称</th>
+								<th ng-if="supvrStfNumsss">直属主管</th>
+								<th ng-if="workStatsss">在岗状态</th>
+							</tr>
+						</thead>
+						<tr>
+							<td ng-if="posNumsss">
+								<select style = "width:150px;display:inherit;font-weight: normal;" name="posNum" ng-change="selectc()" class="form-control" ng-model="stfbastable.posNum" ng-options="zt.key as zt.text for zt in jobs" required></select>
+								<select style = "width:150px;display:inherit;font-weight: normal;" name="posGrdNum" class="form-control" ng-model="stfbastable.posGrdNum" ng-options="zt.key as zt.text for zt in posgrdnum"></select>
+							</td>
+							<td ng-if="supvrStfNumsss">
+							 	<input type="text"  class="form-control" ng-model="stfbas.supvrStfNums" readonly="readonly" ng-click="openStaff('lg',$index)"/>
+							</td>
+							<td ng-if="workStatsss">
+								<select name="account" ng-model="stfbastable.workStat" class="form-control" ng-options="zt.key as zt.text for zt in zhuangtai" required></select>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<div class="form-group">
+				<div class="col-sm-4">
+					<div class="col-sm-5">
+						<button class="btn btn-info  mr_10" ng-click="inserter()"
+							ng-disabled="form.$invalid||isSubmit"
+							user-power="WSTF01002002">提交保存</button>
+					</div>
+					<div class="col-sm-5">
+						<button class="btn btn-default  mr_10"  ui-sref="app.staff.stfBasAllUpdate" >
+							返回</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div>
+		<script type="text/ng-template" id="stafAllUpdateWindow.html">
+            <div ng-include="'common/tpl/stafAllUpdateWindow.html'"></div>
+        </script>
+	</div>
+	     <div>
+        <script type="text/ng-template" id="radiostaff.html">
+            <div ng-include="'common/tpl/radiostaff.html'"></div>
+        </script>
+      </div>
+</div>

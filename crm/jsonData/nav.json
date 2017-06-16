@@ -1,0 +1,834 @@
+{
+  "CRMNAV": [
+    {
+      "FM": "WSYS02",
+      "TEXT": "首页",
+      "URL": "app.home",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "快捷入口",
+          "URL": "",
+          "ICON": "icon-layers chuti text-primary ",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSYS02002",
+              "TEXT": "新增商品",
+              "URL": "app.goods.gdsInsert",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSYS02003",
+              "TEXT": "新增会员",
+              "URL": "app.member.memInsert",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSYS02004",
+              "TEXT": "新增人员",
+              "URL": "app.staff.stfBasInsert",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WGDS01",
+      "TEXT": "商品管理",
+      "URL": "app.goods",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "商品基础信息",
+          "URL": "",
+          "ICON": "fa fa-qrcode text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WGDS01001",
+              "TEXT": "商品信息",
+              "URL": "app.goods.gdsBas",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "商品操作",
+          "URL": "",
+          "ICON": "fa fa-building-o text-success",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WGDS01002",
+              "TEXT": "新增商品",
+              "URL": "app.goods.gdsInsert",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WGDS01003",
+              "TEXT": "商品批量导入",
+              "URL": "app.goods.gdsBatImport",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WGDS01004",
+              "TEXT": "商品批量修改",
+              "URL": "app.goods.gdsBatUpdate",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "基础设置",
+          "URL": "",
+          "ICON": "fa fa-exchange text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WGDS01005",
+              "TEXT": "商品分类",
+              "URL": "app.goods.gdsCls",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WGDS01006",
+              "TEXT": "商品品牌",
+              "URL": "app.goods.gdsBrd",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WGDS01007",
+              "TEXT": "商品属性",
+              "URL": "app.goods.gdsProp",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WMEM01",
+      "TEXT": "会员管理",
+      "URL": "app.member",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "会员基础信息",
+          "URL": "",
+          "ICON": "fa fa-qrcode text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WMEM01001",
+              "TEXT": "会员信息",
+              "URL": "app.member.memBas",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WMEM01002",
+              "TEXT": "会员组别",
+              "URL": "app.member.memGrp",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "会员操作",
+          "URL": "",
+          "ICON": "fa fa-building-o text-success",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WMEM01003",
+              "TEXT": "批量修改会员信息",
+              "URL": "app.member.memBatUpdate",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WMEM01004",
+              "TEXT": "补录会员购买记录",
+              "URL": "app.member.memBuyRecSup",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WMEM01005",
+              "TEXT": "补录会员回访记录",
+              "URL": "app.member.memRevisitRecSup",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "BA回访",
+          "URL": "",
+          "ICON": "fa fa-exchange text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WMEM01006",
+              "TEXT": "BA回访任务",
+              "URL": "app.member.memRevisitTsk",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WMEM01007",
+              "TEXT": "BA回访记录",
+              "URL": "app.member.memRevisitRec",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WMEM01008",
+              "TEXT": "回访规则设置",
+              "URL": "app.member.memRtnRule",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WSTF01",
+      "TEXT": "人员管理",
+      "URL": "app.staff",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "人员基础信息",
+          "URL": "",
+          "ICON": "fa fa-qrcode text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSTF01001",
+              "TEXT": "人员信息",
+              "URL": "app.staff.stfBas",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01002",
+              "TEXT": "人员信息批量修改",
+              "URL": "app.staff.stfBasAllUpdate",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "基础架构信息",
+          "URL": "",
+          "ICON": "fa fa-building-o text-success",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSTF01003",
+              "TEXT": "部门管理",
+              "URL": "app.staff.depMngSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01004",
+              "TEXT": "职位管理",
+              "URL": "app.staff.jobposSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01005",
+              "TEXT": "销售大区信息",
+              "URL": "app.staff.majRgn",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01006",
+              "TEXT": "城市分区信息",
+              "URL": "app.staff.urbandistrictinformationSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01007",
+              "TEXT": "销售门店信息",
+              "URL": "app.staff.storesSelect({strType : 0,pageSize : 0,pageNum : 0})",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01008",
+              "TEXT": "销售档期管理",
+              "URL": "app.staff.salesScheduleManage",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "人员变动",
+          "URL": "",
+          "ICON": "fa fa-exchange text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSTF01009",
+              "TEXT": "入职流程",
+              "URL": "app.staff.entryAppl",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01010",
+              "TEXT": "离职流程",
+              "URL": "app.staff.dimiAppl",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01011",
+              "TEXT": "BA晋升督导流程",
+              "URL": "app.staff.baPromote",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01012",
+              "TEXT": "BA借调记录",
+              "URL": "app.staff.stfTempTransSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01013",
+              "TEXT": "人员升降级报表",
+              "URL": "app.staff.prmnDemnMngSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01014",
+              "TEXT": "人员升降级规则",
+              "URL": "app.staff.prmnDemnRuleManage",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "考勤管理",
+          "URL": "",
+          "ICON": "icon-eye chuti text-info",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSTF01015",
+              "TEXT": "生成考勤报表",
+              "URL": "app.staff.genAttendReport",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01016",
+              "TEXT": "审批考勤报表",
+              "URL": "app.staff.appAttendReport",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01017",
+              "TEXT": "查看考勤报表历史",
+              "URL": "app.staff.genAttendReportHistory",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01018",
+              "TEXT": "审批排班申请",
+              "URL": "app.staff.baShiftMng",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01019",
+              "TEXT": "请假管理",
+              "URL": "app.staff.leaveManagement",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01020",
+              "TEXT": "考勤规则设置",
+              "URL": "app.staff.attendRule",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "工资管理",
+          "URL": "",
+          "ICON": "fa fa-credit-card text-success",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSTF01021",
+              "TEXT": "生成工资报表",
+              "URL": "app.staff.stfSalary",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01022",
+              "TEXT": "审批工资报表",
+              "URL": "app.staff.stfSalaryAppl",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01023",
+              "TEXT": "查看工资报表历史",
+              "URL": "app.staff.stfSalaryHistory",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01024",
+              "TEXT": "社保批量导入",
+              "URL": "app.staff.socialSecurityBathImport",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01025",
+              "TEXT": "城市底薪基数管理",
+              "URL": "app.staff.cityBaseSalaryManagement",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01026",
+              "TEXT": "职位补助标准管理",
+              "URL": "app.staff.postSubsidyStandardManagement",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01027",
+              "TEXT": "法定假日补助标准管理",
+              "URL": "app.staff.legalLolidays",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01028",
+              "TEXT": "工资计算规则",
+              "URL": "app.staff.wageCalculationRules",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "权限管理",
+          "URL": "",
+          "ICON": "icon-lock-open chuti text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSTF01029",
+              "TEXT": "配置人员所属角色",
+              "URL": "app.staff.configRoleOfStaff",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01030",
+              "TEXT": "功能排序管理",
+              "URL": "app.staff.configFuncOrder",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSTF01031",
+              "TEXT": "配置角色权限",
+              "URL": "app.staff.configRolePermiss",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WREP01",
+      "TEXT": "统计报表",
+      "URL": "app.report",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "销售数据",
+          "URL": "",
+          "ICON": "fa fa-signal text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WREP01001",
+              "TEXT": "销售概况",
+              "URL": "app.report.saleSummary",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WREP01002",
+              "TEXT": "人员销售业绩汇总",
+              "URL": "app.report.stfSaleAmountSum",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WREP01003",
+              "TEXT": "日常销售报表提交明细",
+              "URL": "app.report.baSaleReportDtl",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WREP01004",
+              "TEXT": "财务导入销售报表明细",
+              "URL": "app.report.fcSaleReportDtl",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "确定销售业绩",
+          "URL": "",
+          "ICON": "fa fa-bar-chart-o text-success",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WREP01005",
+              "TEXT": "销售报表导入",
+              "URL": "app.report.fcImpRepSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WREP01006",
+              "TEXT": "比对销售报表",
+              "URL": "app.report.stfRptSaleInfoSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WREP01007",
+              "TEXT": "审批销售报表",
+              "URL": "app.report.repApplSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WREP01008",
+              "TEXT": "分配督导销售业绩",
+              "URL": "app.report.disSupSalePerfSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WSYS04",
+      "TEXT": "互动记录",
+      "URL": "app.interactive",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "意见反馈",
+          "URL": "",
+          "ICON": "",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSYS04001",
+              "TEXT": "新增",
+              "URL": "app.interactive.feedBackInsert",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSYS04002",
+              "TEXT": "网站意见反馈",
+              "URL": "app.interactive.fbkInfoSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WSYS04003",
+              "TEXT": "APP意见反馈",
+              "URL": "app.interactive.appfbkInfoSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WSYS03",
+      "TEXT": "消息中心",
+      "URL": "app.system",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "站内信",
+          "URL": "",
+          "ICON": "fa fa-envelope-o text-primary chuti",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSYS03001",
+              "TEXT": "消息列表",
+              "URL": "app.system.msgListSelect",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WRCC01",
+      "TEXT": "回收站",
+      "URL": "app.recycle",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "基础架构信息",
+          "URL": "",
+          "ICON": "fa fa-building-o text-success",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WRCC01001",
+              "TEXT": "部门管理",
+              "URL": "app.recycle.rccDepMng",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WRCC01002",
+              "TEXT": "职位管理",
+              "URL": "app.recycle.rccJobPosMng",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WRCC01003",
+              "TEXT": "销售大区信息",
+              "URL": "app.recycle.rccMajRgn",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WRCC01004",
+              "TEXT": "城市分区信息",
+              "URL": "app.recycle.rccUrbanDistrict",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WRCC01005",
+              "TEXT": "销售门店信息",
+              "URL": "app.recycle.rccStores({strType : 0,pageSize : 0,pageNum : 0})",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            },
+            {
+              "FP": "WRCC01006",
+              "TEXT": "销售档期管理",
+              "URL": "app.recycle.rccSalesSchedule",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "FM": "WSET01",
+      "TEXT": "系统设置",
+      "URL": "app.site",
+      "ICON": "",
+      "IF": "",
+      "VALUE": [
+        {
+          "FP": "",
+          "TEXT": "数据权限设置",
+          "URL": "",
+          "ICON": "icon-lock-open chuti text-primary",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSET01001",
+              "TEXT": "人员基础信息",
+              "URL": "app.site.setStfInfoMgmt",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "消息发送设置",
+          "URL": "",
+          "ICON": "fa fa-envelope-o text-success chuti",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSET01002",
+              "TEXT": "操作人员信息",
+              "URL": "app.site.setOperatorInfoMgmt",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        },
+        {
+          "FP": "",
+          "TEXT": "版本管理",
+          "URL": "",
+          "ICON": "fa fa-file-o text-primary chuti",
+          "IF": "",
+          "VALUE": [
+            {
+              "FP": "WSET01003",
+              "TEXT": "版本历史",
+              "URL": "app.site.setVerMgmt",
+              "ICON": "",
+              "IF": "",
+              "VALUE": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

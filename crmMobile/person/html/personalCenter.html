@@ -1,0 +1,52 @@
+<ion-content>
+<!-- personalCenter.html -->
+    <div class="wrap">
+    	<div class="">
+    		<img src="common/images/grzx.jpg" width="100%" class="float_l" height="100">
+	        <div class="grxz_title" ng-click="personalDetail()" >
+				<div class="grxz_title_tx"><img ng-if="ifXs=='0'" src="{{info.figure |  defaultFigure}}"width=" 100%"/><img ng-if="ifXs=='1'" src="common/images/touxiang.png"width=" 100%"/></div>
+				<div class="grxz_title_text">
+					<h2 ng-bind="info.stfNm"><span id="testspan"></span></h2>
+					<p ng-bind="info.phone"></p>
+				</div>
+				<a href="" class="sandian2" user-power="MPER01005001"><span style="padding-left:20px;padding-right:1px;"><img src="common/images/sandian2.png" width="3"></span></a>
+			</div>
+		</div>
+		<ul class="listvrew clearfix float_l">
+			<li style="width:100%" ng-click="moneyCard()" user-power="MPER01004001">
+				<a href="" >
+					<img src="common/images/gr2.png" width="20" class="float_l mt_17 mr10">
+					<span>工资卡</span>
+					<span class="float_r line_height50">
+						<img src="common/images/you_btn.png" style="position: relative;top: 6px;right: 0px;">
+					</span>
+					<span class="float_r mr10 mb2 fn_15" style="margin-right: 16px;">{{info.bnkCardSettingStatus}}</span>
+				</a>
+			</li>
+			<li style="width:100%" ng-click="modPwd()" user-power="MPER01001001">
+				<a href="" >
+				<img src="common/images/gr3.png" width="20" class="float_l mt_17 mr10">
+				<span>修改密码</span>
+				<span class="float_r line_height50"><img src="common/images/you_btn.png" style="position: relative;top: 6px;right: 0px;"></span>
+				</a>
+			</li>
+			<li style="width:100%" ng-click="feedback()" user-power="MPER01002001">
+				<a href="">
+					<img src="common/images/gr4.png" width="20" class="float_l mt_17 mr10">
+					<span>意见反馈</span>
+					<span class="float_r line_height50"><img src="common/images/you_btn.png" style="position: relative;top: 6px;right: 0px;"></span>
+				</a>
+			</li>
+		</ul>
+		<ul class="listvrew clearfix mt_17 float_l">
+  	  			<li style="width:100%"  ng-click="setup()">
+  	  				<a href="">
+  	  					<img src="common/images/gr5.png" width="20" class="float_l mt_17 mr10">
+  	  					<span>设置</span>
+						<span class="float_r line_height50"><img src="common/images/you_btn.png" style="position: relative;top: 6px;right: 0px;"></span>
+  	  				</a>
+  	  			</li>
+   		</ul>
+	</div>
+</ion-content>
+<ion-footer-bar align-title="center"></ion-footer-bar>

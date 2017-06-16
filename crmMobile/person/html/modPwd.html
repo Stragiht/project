@@ -1,0 +1,19 @@
+<ion-header-bar align-title="center"  class="header">
+	<a href="#"  ui-sref="personalCenter" class="angle_left" style="left:15px"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">修改密码</h1>
+    <a href="" class="head_right" ng-click="next()" style="margin-top:8px;font-size:1.2rem" user-power="MPER01001001"><i>下一步</i></a>
+</ion-header-bar>
+<ion-content >
+<!-- modPwd.html -->
+    <div class="wrap" >
+        <ul class="listvrew clearfix bottom_line">
+    	    <li class="bottom_line" style="padding-right: 0px;">
+    	    	<span class="float_l">输入原密码</span>
+    	    	<input name=""  type="{{passtype}}" class="password" ng-model="mod.oldPassword" style="margin-left:20px;width:45%;"/>
+    	    	<div ng-if="passtype == 'text'" ng-click="showPassword()" style="float: right; width: 76px; height:50px;padding-right: 30px;"><img src="common/images/eye2.png" class="float_r mt_25"  width="20"></div>
+            	<div ng-if="passtype == 'password'" ng-click="showPassword()" style="float: right; width: 76px; height:50px;padding-right: 30px;"><img src="common/images/eye.png" class="float_r mt_25" width="20"></div>
+    	    </li>
+        </ul>
+    </div>
+</ion-content>
+

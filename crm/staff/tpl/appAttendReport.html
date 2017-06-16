@@ -1,0 +1,95 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">
+        审批考勤报表
+    </h4>
+</div>
+<!-- 标题信息开始 -->
+
+<script type="text/ng-template" id="batchapproval.html">
+    <div ng-include="'common/tpl/batchapproval.html'"></div>
+</script>
+
+<div ng-controller="appAttendReportController">
+    <!-- 查询面板开始 -->
+    <div class="panel-heading">
+        <accordion close-others="oneAtATime">
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    查询<i class="pull-right fa fa-angle-right"
+                         ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                </accordion-heading>
+                <div class="form-group" user-power="WSTF01016001">
+                    <label class="col-sm-2 control-label">审批状态：</label>
+                    <div class="btn-group">
+                        <button ng-repeat="apprStat in apprStatList" class="btn btn-default" ng-class="{'active':apprStat.key == selectedApprStat}"
+                                ng-model="apprStatModel" ng-click="buttonSelect('{{apprStat.key}}')">
+                            {{apprStat.text}}
+                        </button>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+    <!-- 查询面板结束 -->
+    <!-- 总件数显示开始 -->
+    <div class="panel-heading">
+        <button class="btn btn-default btn-addon" ng-click="openAppl('sm')" user-power="WSTF01016004">批量审核</button>
+        <label class="control-label mt_6">共有<span class="text-red">{{recordCount}}</span>条数据</label>
+        <label class="control-label mt_6" ng-if="recordCount==0">（没有符合条件的数据）</label>
+    </div>
+    <!-- 总件数显示结束 -->
+
+    <!-- table列表开始 -->
+    <script type="text/ng-template" id="headerCheckbox.html">
+        <input type="checkbox" ng-model="checkboxes.checked" ng-click="checkAll()" class="select-all" value=""/>
+        全选
+    </script>
+    <div class="panel-heading">
+        <div ng-table="tableParams">
+            <table class="table table-bordered table-condensed   table-striped table-hover">
+                <tr ng-repeat="attendreport in $data">
+                    <td header="'headerCheckbox.html'" style="font-weight: bold;" width="'90px'">
+                        <input type="checkbox" ng-model="checkboxes.items[attendreport.stfNum]" ng-click="checkItem()"/>
+                    </td>
+                    <td title="'申请编号'" width="'150px'" >{{attendreport.applNum}}
+                    </td>
+                    <td title="'人员编号'" width="'100px'" >{{attendreport.stfNum}}
+                    </td>
+                    <td title="'姓名'" width="'100px'">{{attendreport.stfNm}}
+                    </td>
+                    <td title="'部门'" width="'100px'">{{attendreport.depNm}}
+                    </td>
+                    <td title="'职位'" width="'100px'">{{attendreport.posNm}}
+                    </td>
+                    <td title="'考勤档期'" width="'150px'">{{attendreport.phaGrpNm}} > {{attendreport.phaNm}}
+                    </td>
+                    <td title="'是否全勤'"  width="'100px'"  class="text-red">{{attendreport.fullAttnDays | dicNameFilter:"C002"}}
+                    </td>
+                    <td title="'应出勤天数'" width="'100px'">{{attendreport.supAttdDays}}天
+                    </td>
+                    <td title="'实际出勤天数'"  width="'100px'"><span ng-if="attendreport.actualAttnDays==0">-</span><span ng-if="attendreport.actualAttnDays!=0">{{attendreport.actualAttnDays}}天</span>
+                    </td>
+                    <td title="'应发工资天数'"  width="'100px'"><span ng-if="attendreport.supPayDays==0">-</span><span ng-if="attendreport.supPayDays!=0">{{attendreport.supPayDays}}天</span>
+                    </td>
+                    <td title="'请假天数'"  width="'100px'"><span ng-if="attendreport.persLeaveDays==0">-</span><span ng-if="attendreport.persLeaveDays!=0">{{attendreport.persLeaveDays}}天</span>
+                    </td>
+                    <td title="'借调天数'"  width="'100px'"><span ng-if="attendreport.secDays==0">-</span><span ng-if="attendreport.secDays!=0">{{attendreport.secDays}}天</span>
+                    </td>
+                    <td title="'旷工天数'"  width="'100px'"><span ng-if="attendreport.absentDays==0">-</span><span ng-if="attendreport.absentDays!=0">{{attendreport.absentDays}}天</span>
+                    </td>
+                    <td title="'审批状态'"  width="'100px'" class="text-red">{{attendreport.apprStat | dicNameFilter:"C018"}}
+                    </td>
+                    <td title="'操作'" class="mr_22"  width="'150px'">
+                        <a class="mr_9" ng-click="selectLeave(attendreport.oid)" user-power="WSTF01016001">查看</a>
+                        <a class="mr_9" ng-if="attendreport.editFlag == 1" ng-click="selectLeaveDeit(attendreport.oid, attendreport.updtTm)"
+                           user-power="WSTF01016003">编辑</a>
+                        <a class="mr_9" ng-if="attendreport.applFlag == 1" ng-click="selectLeaveApp(attendreport.oid, attendreport.updtTm)"
+                           user-power="WSTF01016004">审批</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- table列表结束 -->
+</div>

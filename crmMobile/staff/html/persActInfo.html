@@ -1,0 +1,156 @@
+<div ng-show="persActInfoShow">
+<ion-header-bar align-title="center" class="header"> 
+    <a ui-sref="persActSelect" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+    <h1 style="font-size:1.4rem">晋升详情</h1>
+     <a class="head_right2" ng-if="persActInfo.submitFlag == 1" ng-click="submitPersAct()" user-power="MSTF01005004">
+            <div class="head_right_box float_l">
+                <img src="common/images/zhengque.png" width="22" height="22">
+                <p>提交</p>
+            </div>
+            <div class="float_l ml10 color06">|</div>
+        </a>
+        <a class="head_right2" ng-if="persActInfo.cancelFlag == 1" ng-click="cancelBaPormoteAppl()" user-power="MSTF01005004">
+            <div class="head_right_box float_l">
+                <img src="common/images/xxx.png" width="22" height="22">
+                <p>取消</p>
+            </div>
+            <div class="float_l ml10 color06">|</div>
+        </a>
+        <a class="head_right" style="float: right;right: 0px;width: 55px;text-align: center;" ng-if="persActInfo.editFlag == 1" ui-sref="persActUpdate({applNum:persActInfo.applNum})" user-power="MSTF01005004">
+            <div class="head_right_box">
+                <img src="common/images/qianbi.png" width="22" height="22">
+                <p>编辑</p>
+            </div>
+        </a>
+        <a class="head_right" ng-if="persActInfo.apprFlag == 1" ng-click="apprOpen()" user-power="MSTF01005003">
+            <div class="head_right_box">
+                <img src="common/images/zhan.png" width="22" height="22">
+                <p>审批</p>
+            </div>
+        </a>
+</ion-header-bar>
+<ion-content class="has-header " style="bottom:0px;">
+<!-- persActInfo.html -->
+	<div ng-if="persActInfo.apprFlag == 1" class="index_work_bt" style="border-bottom:0px">参考依据</div>
+	<ion-list ng-if="persActInfo.apprFlag == 1">
+		<ion-item>
+			<span class="w140">晋升人员上档期业绩</span>
+			<span class=" float_r" style="color:#b1b1b1;">￥{{persActInfo.posChgStfLstPhaAcmp}}</span>
+		</ion-item>
+		<ion-item>
+			<span class="w140">近三档期平均业绩</span>
+			<span class=" float_r" style="color:#b1b1b1;">￥{{persActInfo.avgOfLst3PhaSaleAmt}}</span>
+		</ion-item>
+	</ion-list>
+	<div class="index_work_bt" style="border-bottom:0px"></div>
+    <ion-list>
+           <ion-item  >
+                <span class="w140">申请编号</span>
+                <span class="float_r persActInfoItem" style="color:#b1b1b1;">{{persActInfo.applNum}}</span>
+                <span class="float_r persActInfoItem" style="display:none">{{persActInfo.updtTm}}</span>
+           </ion-item>
+           <ion-item >
+	           <a href = "">
+	                <span class="w140">提交人</span>
+	                <span class="float_r"><img src="common/images/shouji.png" class="shouji_huang" style="margin-top: 0rem;" ng-click="callPhone()"></span>
+	                <span class=" float_r mr10">{{persActInfo.applicant}}</span>
+	           </a>
+           </ion-item >
+           <ion-item >
+                <span class="w140">提交时间</span>
+                <span class="float_r persActInfoItem" style="color:#b1b1b1;">{{persActInfo.applSbmtTm}}</span>
+           </ion-item>
+           <ion-item >
+                <span class="w140">审批状态</span>
+                <span class="color05 float_r persActInfoItem">{{persActInfo.apprStat1}}</span>
+           </ion-item>
+       </ion-list> 
+       <div class="index_work_bt" style="border-bottom:0px">&nbsp</div>
+       <ion-list>
+           <ion-item>
+                <span class="w140">晋升人员</span>
+                <span class="float_r persActInfoItem" style="color:#b1b1b1;">{{persActInfo.posChgStf}}</span>
+           </ion-item>
+           <ion-item>
+                <span class="w140">原来职位</span>
+                <span class="float_r persActInfoItem" style="color:#b1b1b1;">{{persActInfo.oldPos}}<span ng-if="persActInfo.oldPosGrdNum != null &&  persActInfo.oldPosGrdNum != ''"> > {{persActInfo.oldPosGrdNum}}</span></span>
+           </ion-item>
+           <ion-item>
+                <span class="w140">晋升职位</span>
+                <span class="float_r persActInfoItem" style="color:#b1b1b1;">{{persActInfo.newPos}}>{{persActInfo.posGrdNum}}</span>
+           </ion-item>
+           <ion-item>
+                <span class="w140">直属主管</span>
+                <span class="float_r persActInfoItem" style="color:#b1b1b1;">{{persActInfo.supvrStfNum}}</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt" style="border-bottom:0px">管理人员</div>
+       <ion-list>
+           <ion-item  ng-repeat = "superitem  in superItems">
+                <span class="w140"  >人员{{$index+1}}</span>
+                <span class="float_r stfInfoItem" style="color:#b1b1b1;">{{superitem.mngStf}}</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt" style="border-bottom:0px">管理门店</div>
+       <ion-list>
+           <ion-item  ng-repeat = "storeitem  in storeItems">
+                <span class="w140"  >门店{{$index+1}}</span>
+                <span class="float_r stfInfoItem" style="color:#b1b1b1;">{{storeitem.mngStr}}</span>
+           </ion-item>
+       </ion-list>
+       <div class="index_work_bt" ng-if="status.apprHisDisplay" style="border-bottom:0px">审批历史</div>
+           <div class="shls clearfix" ng-if="status.apprHisDisplay">
+				<div class="shls_wen">
+					<div ng-repeat="apprHisInfo in approvalList">
+						<div class="shls_wen_box2" ng-if="approvalList.length > 1 && $index == 0 && (apprHisInfo.status =='编辑' || apprHisInfo.status =='待审批')">
+							<div class="ziyuan3"><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p></p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="approvalList.length > 1 && $index == 0 && apprHisInfo.status !='编辑' && apprHisInfo.status !='待审批'">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box" ng-if="$index > 0 && $index < approvalList.length - 1">
+							<div class="ziyuan"></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+
+						<div class="shls_wen_box border_none" ng-if="$index == approvalList.length - 1">
+							<div class="ziyuan2 "><i class="fa fa-check" aria-hidden="true"></i></div>
+							<h4>{{apprHisInfo.stfNm}}&nbsp;{{apprHisInfo.status}}</h4>
+							<p>{{apprHisInfo.updtTm}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+</ion-content>
+</div>
+<!-- 审批 -->
+<div ng-show="apprShow">
+    <ion-header-bar align-title="center" class="header">
+        <a ng-click="goBack()" class="angle_left" style="left: 15px;"><img src="common/images/back_btn.png" width="18"></a>
+        <h1 style="font-size:1.4rem">审批</h1>
+    </ion-header-bar>
+    <ion-content class="has-header">
+    <!-- persActInfo.html -->
+        <div class="wrap">
+            <ul class="listvrew clearfix mb_15">
+                <li style="padding: 7px;width: 100%;margin:0;">
+                    <textarea placeholder="请输入审批意见" style="width: 100%;" rows="12"
+                        ng-model="persActInfo.apprCommonts" ng-maxlength="1000" maxLength="1000"></textarea>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+    <ion-footer-bar align-title="center">
+        <div class="xiaoxi_quanxuan2">
+            <a class="btn_repoit1 btn_ww mt_10 ml10" user-power="MSTF01005003" style="margin-bottom: 10px;" ng-click="apprLeaveAppl('0')">不通过</a>
+            <a class="btn_repoit2 btn_ww mt_10 mr10" user-power="MSTF01005003" style="margin-bottom: 10px;" ng-click="apprLeaveAppl('1')">通过</a>
+        </div>
+    </ion-footer-bar>
+</div>

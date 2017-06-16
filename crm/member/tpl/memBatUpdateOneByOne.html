@@ -1,0 +1,73 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4">一个个编辑</h4>
+</div>
+
+<div class="wrapper-md">
+    <ng-form class="bs-example form-horizontal" name="formAttr">
+    <div class="table-responsive" style="padding-left:10px;padding-right:10px; "
+         ng-controller="memBatUpdateOneByOneCtrl">
+        <div>
+            <script type="text/ng-template" id="radiostaff.html">
+                <div ng-include="'common/tpl/radiostaff.html'"></div>
+            </script>
+        </div>
+
+        <table class="table table-bordered table-condensed   table-striped"
+               style=" margin-bottom:20px;top:50px;">
+
+            <tr>
+                <th title="'姓名'" style="text-align:center;min-width:120px; ">
+                    姓名<span style="color:red;">*</span>
+                </th>
+                <th title="'联系电话'" style="text-align:center;min-width:120px; ">
+                    联系电话<span style="color:red;">*</span>
+                </th>
+
+                <th title="'会员组别'" style="text-align:center;min-width:120px; ">
+                    会员组别<span style="color:red;">*</span>
+                </th>
+                <th title="'创建人员'" style="text-align:center;min-width:240px; ">
+                    创建人员
+                </th>
+            </tr>
+            <tr ng-repeat="memOBO in memBatUpdateOneByOne">
+                <td style="text-align:center;">
+                    <input class="form-control" type="text" ng-model="memOBO.membNm"
+                           name="membNm" required />
+                    <!--<div ng-messages="formAttr.membNm.$error"-->
+                         <!--ng-if="(formAttr.membNm.$dirty && formAttr.membNm.$invalid)">-->
+                        <!--<span ng-message="required" class="error"> 姓名必须输入！</span>-->
+                    <!--</div>-->
+                </td>
+                <td style="text-align:center;">
+                    <!--<input type="text" ng-model="memOBO.phone"/>-->
+                    <input type="text"  class="form-control" name="phone"
+                           ng-model="memOBO.phone" required maxLength="11"
+                           ng-pattern="/^0\d{2,3}-?\d{7,8}$|^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/"/>
+                    <!--<div ng-messages="formAttr.phone.$error"-->
+                         <!--ng-if="(formAttr.phone.$dirty && formAttr.phone.$invalid)">-->
+                        <!--<span ng-message="required" class="error"> 联系电话必须输入！</span>-->
+                        <!--<span ng-message="pattern" class="error"> 无效号码！ </span>-->
+                    <!--</div>-->
+                </td>
+
+                <td style="text-align:center;">
+
+                    <select name="subDep" required class="form-control"
+                            ng-model="memOBO.grpId"
+                            ng-options="zb.key as zb.text for zb in membGrps">
+                    </select>
+                </td>
+                <td class="form-group">
+                    <input class="form-control col-sm-3" style="max-width: 150px;" type="text" value="" ng-model="memOBO.crtdStfNumNm" readonly="readonly"/>
+                    <button class="btn btn-default col-sm-2" style="min-width: 50px;margin-left: 5px;" ng-click="openMemUpdOneByOne($index,'lg')" >浏览</button>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button class="btn   btn-success " ng-disabled="formAttr.$invalid" style="margin:0 35px 0 10px" ng-click="memBatUpdOneByOne()"  user-power="WMEM01003001"> 提交保存</button>
+            <button class="btn btn-info" ui-sref="app.member.memBatUpdate({isBack:true})" style="width: 85px;">返回</button>
+        </div>
+    </div>
+        </ng-form>
+</div>

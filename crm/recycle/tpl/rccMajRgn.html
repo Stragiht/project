@@ -1,0 +1,46 @@
+﻿<div ng-controller="rccMajRgnController">
+    <!-- 标题 -->
+    <div class="bg-light lter b-b wrapper-md">
+        <h4 class="m-n font-thin h4" style="color:#000"> 销售大区信息
+        </h4>
+    </div>
+
+    <div class="wrapper-md" >
+        <!-- 表格 -->
+        <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+            <div style="padding:15px;">
+                <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll; border:none;outline:medium;color: #f05050" ng-model="gydst" readonly="readonly"> 条数据</lable>
+                <lable ng-if="gydst < 1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+            </div>
+            <div ng-table="tableParams">
+                <table  class="table table-bordered table-condensed table-striped table-hover"  >
+                    <tr ng-repeat="rccMajRgn in $data">
+                        <td title="'大区名称'" style="text-align:center;min-width:120px;">
+                            <span ng-bind="rccMajRgn.majRgnNm"></span>
+                        </td>
+                        <td title="'所属销售渠道'"  style="text-align:center;min-width:120px;">
+                        <span ng-bind="(rccMajRgn.subChnl | chnlInfoFilter)"></span>
+                          <!--   <span ng-bind="rccMajRgn.subChnl"></span> -->
+                        </td>
+                        <!--<td title="'大区总监'"  style="text-align:center;min-width:120px;">
+                            <span ng-bind="rccMajRgn.majRgnMgrNm"></span>
+                        </td>
+                        <td title="'包含城市'"  style="text-align:center;min-width:120px;">
+                         &lt;!&ndash;    <span ng-bind="rccMajRgn.cityList[0].rgnNm"></span> &ndash;&gt;
+                            <span ng-repeat="item in rccMajRgn.cityList">
+                        		<span ng-bind="item.rgnNm"></span>
+                          		<span ng-if="$last"></span>
+                          		<span ng-if="!$last">、</span>
+                      		</span>
+                        </td>-->
+                        <td title="'操作'" style="text-align:center;min-width:120px;" >
+                            <a style=" text-decoration:underline;color: #05b5ff;"  ng-click="restoreMajRgn(rccMajRgn.majRgnNum)"  user-power="WRCC01003002">还原</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+﻿
+<div ng-controller="rccDepMngController">
+
+    <div>
+        <script type="text/ng-template" id="restore.html">
+            <div ng-include="'common/tpl/restore.html'"></div>
+        </script>
+    </div>
+    <!-- 标题 -->
+    <div class="bg-light lter b-b wrapper-md">
+      <h4 class="m-n font-thin h4" style="color:#000"> 部门管理
+      </h4>
+    </div>
+
+    <div class="wrapper-md" >
+          <!-- 表格 -->
+        <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+            <div style="padding:15px;">
+                <lable>共有<input type="text"  style="width:30px; text-align:center; background:no-repeat 0 0 scroll ; border:none;outline:medium;color: #f05050"ng-model="gydst" readonly="readonly"> 条数据</lable>
+                <lable ng-if="gydst < 1"><span style="margin-left: 20px;">( 没有符合条件的数据 )</span></lable>
+            </div>
+            <div ng-table="tableParams">
+               <table  class="table table-bordered table-condensed table-striped table-hover"  >
+                    <tr ng-repeat="rccDep in $data">
+                      <td title="'部门编号'" style="text-align:center;">
+                          <span ng-bind="rccDep.depNum"></span>
+                      </td>
+                      <td title="'部门名称'"  style="text-align:center;min-width:120px;">
+                          <span ng-bind="rccDep.depNm"></span>
+                      </td>
+                      <td title="'操作'" style="text-align:center;min-width:120px;" >
+                          <a style=" text-decoration:underline;color: #05b5ff;" ng-click="restoreDep(rccDep.depNum)" user-power="WRCC01001002">还原</a>
+                      </td>
+                  </tr>
+
+              </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>

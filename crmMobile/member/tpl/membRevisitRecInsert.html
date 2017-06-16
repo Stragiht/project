@@ -1,0 +1,106 @@
+<ion-header-bar align-title="center" class="header">
+   <!-- <a style="height: 38px;width: 40px;display:block;position: absolute;line-height: 38px;z-index: 999;" ui-sref="membRevisitTskDetail({curMembIndex:curIndex})">-->
+
+    <a class="header_left" ng-click="goFrontPage()"></a>
+    <h1 style="font-size:1.4rem">新增记录
+    </h1>
+    <a href="" class="header_right2">
+        <div class="safe" ng-click="membRevRecInsert()" user-power="MMEM01003002">保存
+        </div>
+    </a>
+</ion-header-bar>
+
+
+<ion-content class="has-header stable phone_delete" overflow-scroll="false" style="bottom: 51px;">
+    <ion-list >
+        <!--<ion-item class="item" style="padding: 0 ;border: none;">
+            <div class="card ">
+            <textarea class="stable-bg" rows="5" placeholder="请填写回访内容" style="height: 150px;width:100%;outline:none;border: 0;
+            border-style:hidden;padding-left: 10px;padding-top: 10px;" ng-model="membRevRecData.revisitCont"></textarea>
+            </div>
+            <div class="tjtp_img">
+                <p style="color: #ddd;">添加</p>
+                <p style="color: #ddd;">图片</p>
+            </div>
+        </ion-item>-->
+
+
+        <!--<ion-item class="item item-divider" style="padding: 0 0 1px 0;border: none;">-->
+            <!--<div class="memInfoItem_line6" style="height: 30px;"></div>-->
+        <!--</ion-item>-->
+
+        <ion-item class="bottom_line" style="padding:0 5%;border: none;white-space: inherit;margin-bottom: 15px;">
+
+            <div  style="margin: 20px 0;box-shadow: none;">
+                    <textarea style="font-size:16px;"  class="stable-bg memb_text" rows="7" placeholder="请填写回访内容"  id="membRevRecInsertTextarea"  ng-model="membRevRecData.revisitCont" style="width:100%;outline:none;border: 0; resize: none;
+            border-style:hidden;padding:10px;"></textarea>
+            </div>
+            <ul>
+                <li class="tjtp_img"  ng-repeat="im in imgss" ng-click="pictureShow(im.img, $index); ">
+                    <img  width="55" height="55" alt="" ng-src="{{im.img | imgpath}}"/>
+                </li>
+                <li class="tjtp_img" style="padding: 8px;background:url(common/images/cv_tj.png)  no-repeat;background-size: cover;float: left;" ng-click="addImg()" >
+                    <div style="color: #ddd;white-space:pre-wrap ;width: 39px;float: left;">添加照片</div>
+                </li>
+
+            </ul>
+
+        </ion-item>
+
+    </ion-list>
+   <!-- <div style="margin-bottom: 15px;">
+        <div style="width: 100px;height: 35px;border: solid 1px #ddd;border-radius: 5px;margin:10px;display: inline-block;padding: 9px;" ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)">
+            <img src="common/images/yy.png" width="15"/>
+            &lt;!&ndash;<audio src="http://192.168.1.18:8081/uploadFiles/others/audios/20160608/65ff218a-fa17-491f-ba12-1fce1de15367.mp3"></audio>&ndash;&gt;
+        </div>
+    </div>-->
+
+    <div class="p-Left"  ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice, voi)">
+        <div class="listen" ng-show="!voi.playAudio" ><!--ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"-->
+            <!-- <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />-->
+            <img src="common/images/cv_yy_1.png" width="11" style="top:8px;" />
+            <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="voi.dura"></span>
+        </div>
+        <div class="listen" ng-show="voi.playAudio" ><!--ng-repeat="voi in voicdss" ng-click="audioPlay(voi.voice)"-->
+            <img ng-src="{{audioImg}}" width="11" style="top:8px;" />
+            <span style="position:absolute;left:105%;top:8px;color: #ccc;" ng-bind="voi.dura"></span>
+        </div>
+        <!--<span style="color: #ccc;position: relative;top: -5px;" ng-bind="voi.dura"></span>-->
+        <!--<span style="position:absolute;margin-left:105%;top:8px;color: #ccc;" ng-bind="reply.dura"></span>-->
+    </div>
+
+</ion-content>
+
+<!--底部Tab栏-->
+<ion-footer-bar >
+    <ul class="footer2 top_line">
+        <li style="width:14%" >
+            <div class="voice" ng-click="swichInp()"></div>
+        </li>
+        <li class="press" on-hold="audioOnTouch()" on-release="audioOnRelease()" id="audioMembInsertText">
+            按住开始语音
+        </li>
+        <input type="hidden" id="audioPath">
+    </ul>
+    <!-- <ul class="footer top_line" ng-show="switchKeyOrAudio" >
+         <li style="width:15%" >
+             <div class="voice" ng-click="swichInp()"></div>
+         </li>
+         <li style="width:70%;height:40px;line-height:40px;border: solid 1px #ddd;border-radius: 5px;text-align: center;">
+             &lt;!&ndash; <input type="text" style="background: #f8f8f8;width: 100%;word-wrap: break-word; padding: 0 5px;"/>&ndash;&gt;
+             <textarea type="text" style="background: #f8f8f8;width: 100%;word-wrap: break-word; padding: 0 5px;resize:none;outline:none;border:0 none;" rows="4" ng-model="sendContent"></textarea>
+         </li>
+         <li style="width:15%;" >
+             <button class="button button-balanced" ng-click="sendRevContent()">发送</button>
+         </li>
+     </ul>-->
+</ion-footer-bar>
+
+
+<div ng-show="pictureShowDiv" class="phone_del" >
+    <img ng-src="{{showImgUrl}}" width="100%" alt=""/>
+    <ul>
+        <li ng-click="delImg(curIdx)"></li>
+        <li ng-click="cancelPicture()"></li>
+    </ul>
+</div>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<div>  
+	        <fieldset>  
+	            <table>  
+	                <tbody>
+                        <tr>  
+                            <td>往大数据测试用表中登录1000万条数据</td>  
+	                        <td><button id="login" onclick="sendAjaxReq()">登录</button></td>  
+	                    </tr>
+                        <tr>  
+                            <td colspan="2"><div id="message" style="margin-left:50%;font-weight:bold;color:red"></div></td>  
+                        </tr>  
+	                </tbody>            
+	            </table>  
+	        </fieldset>  
+	    </div>
+	    
+	</div>
+	<br/><br/>
+    <div>
+        <div>  
+            <fieldset>  
+            <table>
+                <tbody>
+                    <tr>
+                        <td colspan="3">验证从1000万条数据中取数据</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td><input id="from" type=text value=""/>&nbsp;  -  &nbsp;<input id="to" type=text value=""/></td>
+                        <td><button id="search" onclick="getBigData()">检索</button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><div id="results" ></div></td>
+                    </tr>
+                </tbody>
+            </table> 
+            </fieldset>  
+        </div>
+    </div>
+	
+	<script type="text/javascript" src="../../common/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../../common/js/common.js"></script>
+	<!-- Ajax -->
+	<script type="text/javascript">
+        function createAjaxObj() {
+			var req;
+			if (window.XMLHttpRequest) {
+				req = new XMLHttpRequest();
+			} else {
+				req = new ActiveXObject("Msxml2.XMLHTTP"); //ie
+			}
+			return req;
+		}
+
+		function sendAjaxReq() {
+			var req = createAjaxObj();
+			var divNode = document.getElementById("message");
+            divNode.innerHTML = "登录中，请稍候";
+			req.open("GET", "/CrmWeb/api/bigData/insert");
+			req.setRequestHeader("accept", "application/json");
+			req.onreadystatechange = function() {
+			    var divNode = document.getElementById("message");
+				if(req.readyState==4) {
+					if (req.status==200) {
+					    var result = JSON.parse( req.responseText );
+						for(var index in result) {
+							divNode.innerHTML = result[index].message;
+						}
+					} else {
+						var result = JSON.parse( req.responseText );
+						for(var index in result) {
+							divNode.innerHTML = result[index].message;
+						}
+					}
+				}
+			}
+			req.send(null);
+		}
+		
+        function getBigData() {
+            var req = createAjaxObj();
+            req.open("GET", "/CrmWeb/api/bigData/getBigData/" + $("#from").val() + "/" + $("#to").val());
+            req.setRequestHeader("accept", "application/json");
+            req.onreadystatechange = function() {
+                if(req.readyState==4) {
+                    if (req.status==200) {
+                        var result = eval( req.responseText );
+                        var divNode = document.getElementById("results");
+                        divNode.innerHTML = "";
+                        for(var index in result) {
+                            var value = "oid=" + result[index].oid ;
+                            if(index>0) {
+                                value = "<br/>" + value;
+                            }
+                            divNode.innerHTML += value;
+                        }
+                    } else {
+                        var result = JSON.parse( req.responseText );
+                        for(var index in result) {
+                            alert(result[index].message);
+                        }
+                    }
+                }
+            }
+            req.send(null);
+        }
+	</script>
+</body>
+</html>

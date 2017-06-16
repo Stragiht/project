@@ -1,0 +1,89 @@
+<!-- 标题信息开始 -->
+<div class="bg-light lter b-b wrapper-md">
+    <h4 class="m-n font-thin h4" style="color: #000;">
+        一个个编辑
+        <button class="btn btn-info btn-addon" style="float:right;margin:-8px 10px 0 0;" ui-sref="app.goods.gdsBatUpdate({isBack:true})"> 返回商品批量修改管理</button>
+    </h4>
+</div>
+<!-- 标题信息结束 -->
+<!-- 导出系列按钮面板开始 -->
+<div class="wrapper-md" ng-controller="gdsUpdateOneByOneCtrl">
+    <!-- 表格 -->
+    <form  class="form-horizontal" name="formAttr">
+        <div class="table-responsive" style="padding-left:10px;padding-right:10px; " >
+
+            <table  class="table table-bordered table-condensed   table-striped" style=" margin-bottom:20px;margin-:;top:50px;"  >
+
+                <tr>
+                    <td title="'规格名称'"  style="text-align:center;min-width:120px; ">
+                        规格名称<span style="color:red;">*</span>
+                        <!--<span style="color:red;">*</span>-->
+                    </td>
+                    <td title="'净含量'"  style="text-align:center;min-width:180px; ">
+                        净含量
+                    </td>
+                    <td title="'市场售价'"   style="text-align:center;min-width:180px; ">
+                        市场售价<span style="color:red;">*</span>
+                    </td>
+                    <td title="'商品缩略图'"  style="text-align:center;min-width:180px; ">
+                        商品缩略图
+                    </td>
+
+                </tr>
+                <tr ng-repeat="gdsbuobo in gdsBatUpdateOneByOne">
+
+                   <!-- <td style="text-align:center;min-width:120px; ">
+                        <input type="text" value="洗颜专科 柔澈泡沫 洁面乳 120g"/>
+                    </td>
+                    <td class="row" >
+                        <input type="text" value="120" style="width: 60px;" />
+                        <select style="height: 26px;">
+                            <option select="select">g</option>
+                            <option select="select">ml</option>
+                        </select>
+                    </td>
+                    <td style="text-align:center;min-width:180px; ">
+                        <input type="text" value="" />
+                    </td>
+                    <td style="text-align:center;min-width:180px; ">
+                        <input type="text" value="" /><button  style="height: 26px;margin: -5px 0 0 5px;;line-height: 10px;">浏览</button>
+                    </td>-->
+                    <td style="text-align:center;min-width:120px;" >
+                        <input type="text" ng-model="gdsbuobo.gdsSpecDtlNm" required style="border:1px solid #ddd;height: 34px;line-height: 34;padding-left: 12px;"/>
+                    </td>
+                    <td class="row" >
+                        <input type="text" value="120" ng-model="gdsbuobo.gdsSpec" style="width: 60px;border:1px solid #ddd;height: 34px;line-height: 34;padding-left: 12px;"/>
+                        <!--<select style="height: 26px;">
+                            <option select="select">g</option>
+                            <option select="select">ml</option>
+                        </select>-->
+                        <select select="select" style="border:1px solid #ddd;height: 34px;line-height: 34;"
+                                ng-model="gdsbuobo.gdsSpecUnitNum"
+                                ng-options="gsu.key as gsu.text for gsu in gdsSpecUnits">
+                        </select>
+                    </td>
+                    <td style="text-align:center;min-width:180px; ">
+                        <input type="text" name="pric" value="" ng-model="gdsbuobo.curPc" required maxLength="10" ng-pattern="/^(0|[1-9]\d*)(\.\d{1,2})?$/" style="border:1px solid #ddd;height: 34px;line-height: 34;padding-left: 12px;"/>
+                    </td>
+                    <td style="text-align:center;min-width:180px; ">
+                            <a href="javascript:;" class="a-upload mt_6" style="vertical-align: middle;">
+                                <img ng-src="{{gdsbuobo.gdsThum.fileArray[0].basePath+gdsbuobo.gdsThum.fileArray[0].fileUrl}}" style="width: 25px; height: 25px;">
+                            </a>
+                            <a href="javascript:;" class="a-upload mt_6" style="vertical-align: middle;">
+                                <input type="file" id="fileInputTh" style="height: 37px;margin: -5px 0 0 5px;;line-height: 10px;background:#c0c0c0!important;" ng-click="selectImg($event, gdsbuobo.gdsThum)" accept=".png,.jpg"/> 浏览
+                            </a>
+                            <input type="text" style="display: none" ng-model="insert.figure"/>
+                                    <input type="button" value="上传" ng-click="uploadImg(gdsbuobo.gdsThum)"
+                                           class="btn btn-default btn-addon mt_5" user-power="WGDS01004001"style="margin-bottom: 3px;"/>
+                            <input type="text" style="display: none" ng-model="insert.figure"/>
+                                    <input type="button" value="删除" ng-click="delImgItem(gdsbuobo.gdsThum, gdsbuobo.gdsThum.fileArray[0])" class="btn btn-default btn-addon mt_5" style="margin-bottom: 3px;"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <a>
+            <button class="btn btn-success" style="margin:20px 0 20px 35px" ng-click="gdsUpdOneByOne()" ng-disabled="formAttr.$invalid"  user-power="WGDS01004001"> 提交保存</button>
+        </a>
+    </form>
+</div>
+<!-- 导出系列按钮面板结束 -->

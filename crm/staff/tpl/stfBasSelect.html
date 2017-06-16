@@ -1,0 +1,508 @@
+<div class="bg-light lter b-b wrapper-md"  >
+	<h4 class="m-n font-thin h4">查看</h4>
+</div>
+<div class="wrapper-md" ng-controller="stfBasSelect">
+
+	<tabset class="tab-container"> <tab> <tab-heading>
+	人员信息 </tab-heading>
+	<div class="panel-heading">
+		<!--1.基本信息-->
+		<form class="form-horizontal">
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.jbxxopen"> <accordion-heading>
+			1.基本信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.jbxxopen, 'fa-angle-right': !status.jbxxopen}">
+			</i> </accordion-heading>
+
+			<div class="form-group">
+				<label class="col-xs-3 control-label">人员编号： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.stfNum}} </label>
+				<label class="col-xs-3 control-label"> 姓名： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.stfNm}} </label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 性别： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.sex|dicNameFilter:"C003"}}
+				</label>
+				<label class="col-xs-3 control-label"> 联系电话： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.phone}} </label>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label">身份证号码： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.stfIdNum}}
+				</label>
+				<label class="col-xs-3 control-label"> 所在城市： </label>
+				<!--<label class="col-xs-3 control-label text-left">{{insert.locProv|stfBasPCV}}>{{insert.locCity|stfBasPCV}}-->
+				<label class="col-xs-3 control-label text-left">
+					<span ng-bind="insert.locProv|stfBasPCV"></span>
+					<span ng-if="(insert.locProv | isNotNullFilter) && (insert.locProv != '0000') && (insert.locCity | isNotNullFilter) && (insert.locCity != '0000')">></span>
+					<span ng-bind="insert.locCity|stfBasPCV"></span>
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 籍   贯： </label>
+				<label class="col-xs-3 control-label text-left"><span ng-if="insert.homeAddrProv | isNotNullFilter">{{insert.homeAddrProv | stfBasPCV}}</span><span ng-if="(insert.homeAddrCity != '0000') && (insert.homeAddrCity | isNotNullFilter)">></span><span>{{insert.homeAddrCity | stfBasPCV}}</span></label>
+				<label class="col-xs-3 control-label"> 现员工编号： </label>
+				<label class="col-xs-3 control-label text-left">{{insert.currStfNum}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 紧急联系人： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.emerContact}}
+			</label> <label class="col-xs-3 control-label"> 紧急联系人联系电话： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.emerContactPhNum}}
+			</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 婚姻状况： </label>
+				<label class="col-xs-3 control-label text-left"> {{insert.maritalStatus | dicNameFilter:"C049"}}</label>
+				<label class="col-xs-3 control-label"> 纸质材料是否齐全： </label>
+				<label class="col-xs-3 control-label text-left">{{insert.materialCompleteFlag | dicNameFilter:"C002"}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 所属销售渠道： </label> <label
+					class="col-xs-3 control-label text-left"> {{chnlNm}}
+				</label> 
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 备注： </label>
+				<div class="col-xs-4">
+					<textarea class="form-control" rows="3" readonly="readonly"
+						ng-model="insert.remark" maxLength=1000>
+              	</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 年龄： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.ages}} </label> <label
+					class="col-xs-3 control-label"> 出生日期： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.dtOfBirth|date:"yyyy-MM-dd"}}
+				</label>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 邮箱： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.mailbox}}
+				</label> <label class="col-xs-3 control-label"> 工作经验： </label> <label
+					class="col-xs-2 control-label text-left">{{insert.workExp}}
+					年 </label>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 学历： </label> <label
+					class="col-xs-2 control-label text-left">{{insert.degree|dicNameFilter:"C009"}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 家庭住址： </label>
+				<label class="col-xs-5 control-label text-left">{{insert.homeAddrDtl}} </label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label">用户头像图片： </label>
+				<div class="col-xs-5">
+                    <div style="padding: 15px 0px 20px 0px">
+						<div class="hbox hbox-auto-xs">
+							<div class="inline bg-white" style="position: relative;">
+								<div class="bg-light" ng-if="insert.figure!=null&& insert.figure != ''&&insert.figure != undefined" style="border-radius: 50%;">
+									<img ng-src="{{insert.figure|imgpath}}"
+										style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;" />
+								</div>
+								<div
+									style="width: 96px; height: 96px; border-radius: 50%; margin-right: 40px; overflow: hidden; background: url(staff/img/defaultavatar.jpg) no-repeat"
+									ng-if="insert.figure == undefined || insert.figure == null || insert.figure == ''"
+									class="ng-scope">
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.gwzzxxopen"> <accordion-heading>
+			2.岗位职责信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.gwzzxxopen, 'fa-angle-right': !status.gwzzxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 在岗状态： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.workStat|dicNameFilter:"C001"}}
+				</label> <label class="col-xs-3 control-label">入职时间： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.stfEntDt|date:"yyyy-MM-dd"}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 转正时间： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.regularStfDt|date:"yyyy-MM-dd"}}
+				</label> <label class="col-xs-3 control-label"> 离职时间： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.dimiDt|date:"yyyy-MM-dd"}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 所属部门： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.subDep|stfBasSubDep}}
+				</label> <!--<label class="col-xs-3 control-label"> 职位名称： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.posNum|stfBasPosNum}}
+				</label>-->
+				<label class="col-xs-3 control-label"> 职位等级： </label>
+				<label
+						class="col-xs-3 control-label text-left">
+
+					<span ng-bind="insert.posNum | stfBasPosNum"></span><span ng-if="(insert.posGrdNum | isNotNullFilter) && insert.posGrdNum != '0000'">></span><span ng-bind="insert.posGrdNum | stfBasPosLvlFilter"></span>
+
+				</label>
+			</div>
+			<!--<div class="form-group"  >
+				<label class="col-xs-3 control-label"> 职位等级： </label>
+			 <label
+                    class="col-xs-3 control-label text-left">
+
+				 <span ng-bind="insert.posNum | stfBasPosNum"></span><span ng-if="(insert.posGrdNum | isNotNullFilter) && insert.posGrdNum != '0000'">></span><span ng-bind="insert.posGrdNum | stfBasPosLvlFilter"></span>
+
+			 </label>
+				
+			</div>-->
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 是否计算工资： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.calcSalFlg|dicNameFilter:"C002"}}
+				</label>
+			</div>
+			<div class="form-group" ng-if="insert.hasDirSupFlg=='1'">
+				<label class="col-xs-3 control-label">直属主管： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.supvrStfNums}}
+				</label>
+			</div>
+			<div class="form-group" ng-if="status.supvrStfInfoDisabled && insert.hasDirSupFlg=='1'">
+				<label class="col-xs-2 control-label"></label>
+				<div class="col-xs-5 control-label">
+					<table class="table table-bordered">
+						<tr>
+							<th colspan="2">直属主管相关信息</th>
+						</tr>
+						<tr>
+							<td style="text-align: right; width: 50%;">直属主管职位：</td>
+							<td>{{supvrStfPosNum|stfBasPosNum}}</td>
+						</tr>
+						<tr ng-repeat="supvrStfInfo in supvrStfList">
+							<td style="text-align: right; width: 50%;">所属{{supvrStfInfo.posNum|stfBasPosNum}}：</td>
+							<td>{{supvrStfInfo.stfnm}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime" ng-if="marknum=='0'">
+			<accordion-group is-open="status.ssmdopen"> <accordion-heading>
+			3.所属门店 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.gzkxxopen, 'fa-angle-right': !status.gzkxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label text-left"> 所属门店： </label>
+
+				<div ng-if="ssmdno">
+					<span class="error"> 所属门店不能为空！ </span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> </label>
+				<div class="col-xs-12">
+					<div ng-table="mdtableParams">
+						<table
+							class="table table-bordered table-condensed   table-striped table-hover">
+							<tr ng-repeat="userinfo in $data">
+								<td title="'门店编号'" style="min-width: 120px;">
+									<span ng-bind="userinfo.strNum"></span>
+								</td>
+								<td title="'门店名称'" style="min-width: 120px;">
+									<span ng-bind="userinfo.strNm"></span>
+								</td>
+								<td title="'所属渠道'" style="min-width: 120px;">
+									<span ng-bind="userinfo.chnlNm"></span>
+								</td>
+								<td title="'所属销售大区'" style="min-width: 120px;">
+									<span ng-bind="userinfo.majRgnNm"></span>
+								</td>
+								<td title="'所属城市'" style="min-width: 120px;">
+									<span ng-bind="userinfo.cityNum"></span>
+								</td>
+								<td title="'所属城市分区'" style="min-width: 120px;">
+									<span ng-bind="userinfo.partiNm"></span>
+								</td>
+
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.gzkxxopen"> <accordion-heading>
+			{{4-marknum}}.工资卡信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.gzkxxopen, 'fa-angle-right': !status.gzkxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 银行卡名称： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.bnkCardBnkNm|dicNameFilter:"C010"}}
+				</label> <label class="col-xs-3 control-label"> 银行卡号： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.bnkCardNum}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 银行正面图片： </label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label"> </label>
+				<div class="col-xs-8">
+					<div class="wrapper-md" style="margin-left: 50px;">
+						<div class="hbox hbox-auto-xs">
+							<div class="col">
+								<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs"
+									style="height: 240px; width: 340px;">
+									<div class="bg-light" style="height: 220px; width: 320px;">
+										<img ng-src="{{insert.bnkCardPic|imgpath}}"
+											style="height: 220px; width: 320px;" ng-if="insert.bnkCardPic!=null" />
+										 
+                                        <!--<img ng-src="../crm/staff/img/default.jpg" style="height: 220px; width: 320px;" ng-if="insert.bnkCardPic==null" />-->
+                                        <img ng-src="" style="height: 220px; width: 320px;" ng-if="insert.bnkCardPic==null" />
+
+									</div>
+									  
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.zjdzsmxxopen"> <accordion-heading>
+			{{5-marknum}}.证件电子扫描件信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.zjdzsmxxopen, 'fa-angle-right': !status.zjdzsmxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label">身份证图片： </label>
+
+			</div>
+			<div class="form-group">
+				<div class="col-xs-6">
+					<div class="wrapper-md">
+
+						<div class="hbox hbox-auto-xs">
+							<div class="col">
+								<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs"
+									style="height: 240px; width: 340px;">
+									<div class="bg-light" style="height: 220px; width: 320px;">
+										<img ng-src="{{insert.idCardPosPic|imgpath}}"
+											style="height: 220px; width: 320px;" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="wrapper-md">
+						<div class="hbox hbox-auto-xs">
+							<div class="col">
+								<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs"
+									style="height: 240px; width: 340px;">
+									<div class="bg-light" style="height: 220px; width: 320px;">
+										<img ng-src="{{insert.idCardOppPic|imgpath}}"
+											style="height: 220px; width: 320px;" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 健康证图片： </label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label"> </label>
+				<div class="col-xs-8">
+					<div class="wrapper-md">
+
+						<div class="hbox hbox-auto-xs">
+							<div class="col">
+								<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs"
+									style="height: 240px; width: 340px;">
+									<!--<div class="bg-light" style="height: 220px; width: 320px;">
+										<img ng-src="{{insert.healthCertPic|imgpath}}"
+											style="height: 220px; width: 320px;" ng-if="insert.healthCertPic!=null" />
+											 <img ng-src="../crm/staff/img/default.jpg" style="height: 220px; width: 320px;" ng-if="insert.healthCertPic==null" />
+									</div>-->
+									<div class="bg-light" style="height: 220px; width: 320px;">
+										<img ng-src="{{insert.healthCertPic|imgpath}}"
+											 style="height: 220px; width: 320px;" ng-if="insert.healthCertPic!=null" />
+										<img ng-src="" style="height: 220px; width: 320px;" ng-if="insert.healthCertPic==null" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.grjlxxopen"> <!--5.个人简历信息--> <accordion-heading>
+			{{6-marknum}}.个人简历信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.grjlxxopen, 'fa-angle-right': !status.grjlxxopen}">
+			</i> </accordion-heading>
+			<!--<div class="form-group" ng-if="insert.resumeFileNm!=undefined">-->
+			<div class="form-group" ng-if="insert.resumeFileNm | isNotNullFilter">
+				<label class="col-xs-3 control-label text-left"> <a
+					class="mr_9" style="color: blue" target="_blank"
+					href="{{insert.resumeFileNm|imgpath}}">【上传附件链接】 </a>
+				</label>
+			</div>
+			<div class="col-sm-12">
+				<div ui-jq="wysiwyg" id="resumeInfo" class="form-control" readonly="readonly"
+					style="overflow: scroll; height: 200px; max-height: 200px">
+					<article id="word-display"
+							 ng-bind-html="insert.resumeInfo|trustHtml"></article>
+				</div>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.ldhtxxopen"> <accordion-heading>
+			{{7-marknum}}.劳动合同信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down':status.ldhtxxopen, 'fa-angle-right': !status.ldhtxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 劳动合同编号： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.laborContractNum}}
+				</label> <label class="col-xs-3 control-label"> 劳动合同类型： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.laborContractType|dicNameFilter:"C011"}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 签订劳动合同起始时间： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.laborConrtactStartTm|date:"yyyy-MM-dd"}}
+				</label> <label class="col-xs-3 control-label"> 劳动合同终止时间： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.laborContractEndTm|date:"yyyy-MM-dd"}}
+				</label>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.sbxxopen"> <accordion-heading>
+			{{8-marknum}}.社保信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.sbxxopen, 'fa-angle-right': !status.sbxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 社保编号： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.ssAcctNum}}
+				</label>
+
+				<!--<label class="col-xs-3 control-label"> 购买地： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.ssPruProv|stfBasPCV}}<span ng-if="insert.ssPruCity.length>0">></span>{{insert.ssPruCity|stfBasPCV}}
+				</label>-->
+
+				<label class="col-xs-3 control-label"> 购买地： </label>
+				<label class="col-xs-3 control-label text-left">
+					<span ng-bind="insert.ssPruProv | stfBasPCV"></span>
+					<span ng-if="(insert.ssPruProv | isNotNullFilter) && (insert.ssPruProv != '0000') && (insert.ssPruCity | isNotNullFilter) && (insert.ssPruCity != '0000')">></span>
+					<span ng-bind="insert.ssPruCity|stfBasPCV"></span>
+				</label>
+
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 购买日期： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.ssPruDt|date:"yyyy-MM-dd"}}
+				</label> <label class="col-xs-3 control-label"> 停止购买日期： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.stopSSDt|date:"yyyy-MM-dd"}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 社保卡发放状态： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.ssCardStat|dicNameFilter:"C012"}}
+				</label>
+
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.gjjxxopen"> <accordion-heading>
+			{{9-marknum}}.公积金信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.gjjxxopen, 'fa-angle-right': !status.gjjxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 公积金编号： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.accumFundsNum}}
+				</label>
+
+				<!--<label class="col-xs-3 control-label"> 购买地： </label>
+				<label class="col-xs-3 control-label text-left">{{insert.accumFundProv|stfBasPCV}}
+					<span ng-if="insert.accumFundCity.length>1">></span>{{insert.accumFundCity|stfBasPCV}}
+				</label>-->
+
+				<label class="col-xs-3 control-label"> 购买地： </label>
+				<label class="col-xs-3 control-label text-left">
+					<span ng-bind="insert.accumFundProv | stfBasPCV"></span>
+					<span ng-if="(insert.accumFundProv | isNotNullFilter) && (insert.accumFundProv != '0000') && (insert.accumFundCity | isNotNullFilter) && (insert.accumFundCity != '0000')">></span>
+					<span ng-bind="insert.accumFundCity|stfBasPCV"></span>
+				</label>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 购买日期： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.accumFundDt|date:"yyyy-MM-dd"}}
+				</label> <label class="col-xs-3 control-label"> 停止购买日期： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.stopBuyDt|date:"yyyy-MM-dd"}}
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 公积金卡发放状态： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.accumFundCardStat|dicNameFilter:"C012"}}
+				</label>
+			</div>
+			</accordion-group> </accordion>
+			<accordion close-others="oneAtATime"> <accordion-group
+				is-open="status.zhxxopen"> <accordion-heading>
+			{{10-marknum}}.CRM账号信息 <i class="pull-right fa fa-angle-right"
+				ng-class="{'fa-angle-down': status.zhxxopen, 'fa-angle-right': !status.zhxxopen}">
+			</i> </accordion-heading>
+			<div class="form-group">
+				<label class="col-xs-3 control-label"> 是否开通WEB端权限： </label> <label
+					class="col-xs-3 control-label text-left">{{insert.crtAcctFlg|dicNameFilter:"C002"}}
+				</label>
+			</div>
+             <div class="form-group">
+                <label class="col-xs-3 control-label"> 是否开通APP端权限： </label> <label
+                    class="col-xs-3 control-label text-left">{{insert.crtAcctAppFlg|dicNameFilter:"C002"}}
+                </label>
+            </div>
+			</accordion-group> </accordion>
+ 
+		</form>
+	</div>
+
+	</tab> <tab> <tab-heading> 操作记录 </tab-heading>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form class="bs-example form-horizontal">
+				<div class="form-group">
+					<div ng-table="tableParams" id="mydiv">
+						<table cellspacing="0"
+							class="table table-bordered table-condensed table-hover table-striped">
+							<tbody>
+								<tr ng-repeat="userinfo in $data">
+									<td title="'操作时间'" style="min-width: 140px;">
+										{{userinfo.optTm |date:"yyyy-MM-dd HH:mm:ss"}}</td>
+									<td title="'操作人'" style="min-width: 80px;">
+										{{userinfo.crtdUsr}}.{{userinfo.stfNm}}</td>
+									<td title="'修改内容'" style="min-width: 480px;">
+										{{userinfo.mdyCont}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</div>
+			</form>
+		</div>
+	</div>
+	</tab>	 </tabset><button class="btn btn-default  mr_10" ui-sref="app.staff.stfBas">
+				返回</button>
+</div>

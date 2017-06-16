@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+	<head>
+		<title>版本历史</title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="../../common/vendor/jquery/jquery.min.js"></script>
+		<script type="text/javascript">
+			
+			$(function(){
+				init();
+			});
+		
+			
+			function init(){
+				post("./../../../api/systemSetting/getVerLogInfo", function(data){
+					$("#logDesc").text("").append(data == null || data.data == null || data.data.logDesc == null ? "" : data.data.logDesc);
+				});
+			}
+			
+			
+			function post(url, callback){
+				$.ajax({
+					url: url,
+					type: "POST",
+					contentType: "application/x-www-form-urlencoded",
+					dataType: "json",
+					success: function(data){
+						callback(data);
+					}
+				});
+			}
+		</script>
+	</head>
+	
+	<body style="width:100%;text-align: center;">
+		<div style="width:80%;margin: 5rem auto;text-align: left;" id = "logDesc"></div>
+	</body>
+</html>
+
+
